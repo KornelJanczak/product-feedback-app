@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Inputs = z.infer<typeof registerFormSchema>;
 
@@ -32,16 +33,14 @@ export default function RegisterForm() {
   });
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    try {
+      await createUser(data);
 
-    const result = await createUser(data);
-
-    if (!result) {
-      console.log("Something went wrong");
-      return;
+      toast.success("Your account has been registered!");
+      form.reset();
+    } catch {
+      return toast.error("Something went wrong");
     }
-
-    form.reset();
   };
 
   return (
@@ -71,6 +70,7 @@ export default function RegisterForm() {
                     placeholder="Username"
                     {...field}
                     className="lg:text-base"
+                    type="text"
                   />
                 </FormControl>
                 <FormMessage className="lg:text-base" />
@@ -88,6 +88,7 @@ export default function RegisterForm() {
                     placeholder="Email address"
                     {...field}
                     className="lg:text-base"
+                    type="email"
                   />
                 </FormControl>
                 <FormMessage className="lg:text-base" />
@@ -105,6 +106,7 @@ export default function RegisterForm() {
                     placeholder="Password"
                     {...field}
                     className="lg:text-base"
+                    type="password"
                   />
                 </FormControl>
                 <FormMessage className="lg:text-base" />
@@ -122,7 +124,7 @@ export default function RegisterForm() {
                     placeholder="Repeat password"
                     {...field}
                     className="lg:text-base"
-                    type=""
+                    type="password"
                   />
                 </FormControl>
                 <FormMessage className="lg:text-base" />
