@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/twMerge";
+import { cn } from "@/lib/utils";
 
 export const jost = Jost({
   subsets: ["latin"],
