@@ -1,14 +1,31 @@
 "use server";
-import { registerFormSchema } from "@/app/models/@register-schema";
+import { registerFormSchema } from "@/models/@register-schema";
+import prisma from "@/lib/db";
+import * as z from "zod";
+import { revalidatePath } from "next/cache";
 
+type Inputs = z.infer<typeof registerFormSchema>;
+export default async function createUser(values: Inputs) {
+  try {
+    const validateFields = registerFormSchema.safeParse(values);
 
-export default async function createUser(formData: FormData) {
-  console.log(formData);
+    if (!validateFields.success)
+      return { error: validateFields.error.flatten().fieldErrors };
 
-  const validateFields = registerFormSchema.safeParse(formData);
+    const user = await prisma.user.create({
+      data: {
+        userName: values.username,
+        email: values.username,
+        password: values.password,
+      },
+    });
 
-  if (!validateFields.success)
-    return { error: validateFields.error.flatten().fieldErrors };
+    revalidatePath("/login");
 
-  return {};
+    return user;
+  } catch (err) {
+    return {
+      error: err,
+    };
+  }
 }

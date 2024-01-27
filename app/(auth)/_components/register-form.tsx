@@ -1,6 +1,6 @@
 "use client";
 import createUser from "@/server-actions/create-user";
-import { registerFormSchema } from "@/app/models/@register-schema";
+import { registerFormSchema } from "@/models/@register-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -31,18 +31,13 @@ export default function RegisterForm() {
     },
   });
 
-  const processForm: SubmitHandler<FormData | Inputs> = async (data) => {
+  const processForm: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
 
-    const result = await createUser(data as FormData);
+    const result = await createUser(data);
 
     if (!result) {
       console.log("Something went wrong");
-      return;
-    }
-
-    if (result.error) {
-      console.log(result.error);
       return;
     }
 

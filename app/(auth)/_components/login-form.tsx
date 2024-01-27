@@ -1,6 +1,6 @@
 "use client";
 import createUser from "@/server-actions/create-user";
-import { registerFormSchema } from "@/app/models/@register-schema";
+import { registerFormSchema } from "@/models/@register-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";

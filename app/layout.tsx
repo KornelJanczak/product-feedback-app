@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 export const jost = Jost({
@@ -22,6 +23,7 @@ export default function RootLayout({
         className={`${jost.className} bg-darkWhite`}
         suppressHydrationWarning={true}
       >
+        <Toaster position="top-center" />
         {children}
       </body>
     </html>
