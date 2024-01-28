@@ -1,5 +1,22 @@
 import * as z from "zod";
 
+const validation = z.object({
+  email: z.string().email({ message: "Email must contain @ symbol." }),
+  password: z
+    .string()
+    .min(5, { message: "Password must contain at lesat 5 symbol" })
+    .regex(/[A-Z]/, {
+      message: "Password must contain at least one uppercase letter.",
+    })
+    .regex(/[a-z]/, {
+      message: "Password must contain at least one lowercase letter.",
+    })
+    .regex(/[0-9]/, { message: "Password must contain at least one digit." })
+    .regex(/[@#$%^&+=!]/, {
+      message: "Password must contain at least one special character.",
+    }),
+});
+
 export const registerFormSchema = z
   .object({
     username: z.string().min(2, {
@@ -16,7 +33,7 @@ export const registerFormSchema = z
         message: "Password must contain at least one lowercase letter.",
       })
       .regex(/[0-9]/, { message: "Password must contain at least one digit." })
-      .regex(/[@#$%^&+=]/, {
+      .regex(/[@#$%^&+=!]/, {
         message: "Password must contain at least one special character.",
       }),
     repeatPassword: z.string(),
