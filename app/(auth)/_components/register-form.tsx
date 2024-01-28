@@ -3,7 +3,7 @@ import createUser from "@/server-actions/create-user";
 import { registerFormSchema } from "@/models/@register-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import SubmitBtn from "./submit-btn";
 import {
   Form,
   FormControl,
@@ -34,12 +34,13 @@ export default function RegisterForm() {
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     try {
-      await createUser(data);
-
+      const user = await createUser(data);
+      if (!user) toast.error("Something went wrong");
       toast.success("Your account has been registered!");
-      form.reset();
     } catch {
-      return toast.error("Something went wrong");
+      toast.error("Something went wrong");
+    } finally {
+      form.reset();
     }
   };
 
@@ -49,6 +50,7 @@ export default function RegisterForm() {
         <form
           className="max-w-md w-full"
           onSubmit={form.handleSubmit(processForm)}
+          // action={formAction}
         >
           <div className="flex justify-between items-center">
             <h3 className="font-bold text-xl pb-2">Register</h3>
@@ -131,12 +133,7 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <Button
-            className="mt-5 w-full bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 lg:mt-7"
-            type="submit"
-          >
-            Register
-          </Button>
+          <SubmitBtn>Register</SubmitBtn>
         </form>
       </Form>
     </section>

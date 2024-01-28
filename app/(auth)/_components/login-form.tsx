@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
+import SubmitBtn from "./submit-btn";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -73,12 +74,7 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
-          <Button
-            className="mt-5 w-full bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 lg:mt-7"
-            type="submit"
-          >
-            Register
-          </Button>
+          <SubmitBtn>Login</SubmitBtn>
         </form>
       </Form>
     </section>

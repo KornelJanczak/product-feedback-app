@@ -24,15 +24,15 @@ export default async function createUser(values: Inputs) {
 
     const hashPass = await bcrypt.hash(values.password, 10);
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         userName: values.username,
         email: values.email,
         password: hashPass,
       },
     });
+    return user;
   } catch (err) {
     throw new Error("Failed to create account!");
   }
-  redirect("/login");
 }
