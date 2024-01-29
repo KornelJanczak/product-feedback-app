@@ -5,15 +5,6 @@ export default function Nav() {
         <h2 className="text-lg font-bold">Feedback Product</h2>
         <p>asdadsa</p>
         <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
-        <p>ad</p>
       </div>
     </header>
   );
