@@ -3,7 +3,7 @@ export default function Nav() {
     <header className="sm:bg-[url('/public/assets/suggestions/mobile/background-header.png')] text pt-4">
       <div className="container">
         <h2 className="text-lg font-bold">Feedback Product</h2>
-        <p>asd</p>
+        <p></p>
       </div>
     </header>
   );
