@@ -17,4 +17,28 @@ model User{
   password String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
+  feedbackSections FeedbackSection[]
+}
+
+
+model FeedbackSection {
+  id        String   @id @default(cuid())
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  feedbacks   FeedbackToFeedbackSection[]
+}
+
+model Feedback {
+  id               String  @id @default(cuid())
+  name             String
+  feedbackSections FeedbackToFeedbackSection[]
+}
+
+model FeedbackToFeedbackSection {
+  feedbackSection   FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+  feedbackSectionId String
+  feedback   Feedback @relation(fields: [feedbackId], references: [id])
+  feedbackId String
+
+  @@id([feedbackSectionId, feedbackId])
 }
