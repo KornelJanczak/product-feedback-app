@@ -7,7 +7,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import IconClose from "@/public/icons/icon-left";
 import IconHamburger from "@/public/icons/icon-hamburger";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signOut, useSession } from "next-auth/react";
@@ -25,14 +24,16 @@ export default function MobileSheet() {
         <IconHamburger />
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader>
+        <SheetHeader className="flex items-center justify-center">
           <div className="pt-2 flex items-center justify-center">
             <Avatar className="w-36 h-36">
               <AvatarImage src="https://github.com/shadcn.png" className="" />
               <AvatarFallback className="">CN</AvatarFallback>
             </Avatar>
           </div>
-          <SheetTitle className="pt-1 text-dark font-bold">Hello {data?.user?.name}!</SheetTitle>
+          <SheetTitle className="pt-1 text-dark font-bold">
+            Hello {data?.user?.name}!
+          </SheetTitle>
           <div className="flex items-center justify-center gap-x-4 pt-4">
             <Button
               className="bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300"
@@ -47,6 +48,9 @@ export default function MobileSheet() {
               Sign Out <IconLeft />
             </Button>
           </div>
+          <Button className="bg-dark hover:opacity-70 hover:bg-dark hover:transition duration-300" onClick={()=> router.push("/friends")}>
+            Find Friends!
+          </Button>
         </SheetHeader>
       </SheetContent>
     </Sheet>
