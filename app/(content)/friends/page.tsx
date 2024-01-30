@@ -1,6 +1,8 @@
 import getCurrentUser from "@/lib/get-current-user";
+import FindBar from "./_components/find-bar";
+import { any } from "zod";
 
-async function getUsers() {
+async function getUsers(userName: string) {
   try {
     const currentUser = await getCurrentUser();
 
@@ -12,13 +14,22 @@ async function getUsers() {
 
     if (!currentUser || !userExist) return [];
 
-    const users = await prisma?.user.findMany({
-      where: {
-        NOT: {
-          id: currentUser.id,
+    let users;
+
+    if (!userName)
+      users = await prisma?.user.findMany({
+        where: {
+          NOT: {
+            id: currentUser.id,
+          },
         },
-      },
-    });
+      });
+    else
+      users = await prisma?.user.findMany({
+        where: {
+          userName,
+        },
+      });
 
     return users;
   } catch {
@@ -26,8 +37,19 @@ async function getUsers() {
   }
 }
 
-export default async function FriendsPage() {
-  const users = await getUsers();
+export default async function FriendsPage({
+  searchParams,
+}: {
+  searchParams: string;
+}) {
+  const searchValues: string[] = Object.values(searchParams);
+  const users = await getUsers(searchValues[0]);
 
-  return <div></div>;
+  console.log(users);
+  
+  return (
+    <>
+      <FindBar />
+    </>
+  );
 }

@@ -13,13 +13,15 @@ import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import IconLeft from "@/public/icons/icon-left";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function MobileSheet() {
   const { data } = useSession();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <IconHamburger />
       </SheetTrigger>
@@ -48,7 +50,13 @@ export default function MobileSheet() {
               Sign Out <IconLeft />
             </Button>
           </div>
-          <Button className="bg-dark hover:opacity-70 hover:bg-dark hover:transition duration-300" onClick={()=> router.push("/friends")}>
+          <Button
+            className="bg-dark hover:opacity-70 hover:bg-dark hover:transition duration-300"
+            onClick={() => {
+              setOpen((open) => !open);
+              router.push("/friends");
+            }}
+          >
             Find Friends!
           </Button>
         </SheetHeader>
