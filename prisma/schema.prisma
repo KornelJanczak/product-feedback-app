@@ -21,6 +21,8 @@ model User{
   feedbackSections UserToFeedbackSection[]
   friendOf Friend[] @relation("friendOf")
   friends  Friend[] @relation("friends")
+  friendRequestOf FriendRequest[] @relation("friendRequestOf")
+  friendRequest FriendRequest[] @relation("friendRequest")
 }
 
 
@@ -32,6 +34,13 @@ model Friend {
   @@id([friendId, friendOfId])
 }
 
+model FriendRequest{
+  friendRequestOfId String
+  friendRequestId String
+  friendRequestOf User @relation("friendRequestOf", fields: [friendRequestOfId], references: [id])
+  friendRequest User @relation("friendRequest", fields: [friendRequestId], references: [id])
+  @@id([friendRequestId, friendRequestOfId])
+}
 
 
 model FeedbackSection {

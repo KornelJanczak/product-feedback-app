@@ -1,6 +1,6 @@
 import getCurrentUser from "@/lib/get-current-user";
-import FindBar from "./_components/find-bar";
-import { any } from "zod";
+import { Suspense } from "react";
+import FriendsSection from "../_components/friends-section";
 
 async function getUsers(userName: string) {
   try {
@@ -45,11 +45,9 @@ export default async function FriendsPage({
   const searchValues: string[] = Object.values(searchParams);
   const users = await getUsers(searchValues[0]);
 
-  console.log(users);
-  
   return (
-    <>
-      <FindBar />
-    </>
+    <Suspense fallback={<p>Loading...</p>}>
+      <FriendsSection users={users as Friend[]} />
+    </Suspense>
   );
 }

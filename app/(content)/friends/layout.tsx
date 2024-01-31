@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import Nav from "../_components/nav";
+import FindBar from "./_components/find-bar";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      {/* <Nav /> */}
+      <FindBar />
       {children}
     </>
   );
