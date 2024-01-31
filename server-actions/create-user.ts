@@ -1,37 +1,34 @@
 "use server";
 import { registerFormSchema } from "@/models/@auth-schema";
 import prisma from "@/lib/db";
-import * as z from "zod";
 import bcryptjs from "bcryptjs";
+import { action } from "@/lib/safe-action-client";
 
-type Inputs = z.infer<typeof registerFormSchema>;
-export default async function createUser(values: Inputs) {
-  try {
-    const validateFields = registerFormSchema.safeParse(values);
+export const createSafeUser = action(
+  registerFormSchema,
+  async ({ username, email, password }) => {
+    try {
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          email,
+        },
+      });
 
-    if (!validateFields.success)
-      return { error: validateFields.error.flatten().fieldErrors };
+      if (existingUser) return { error: "User already existing!" };
 
-    const existingUser = await prisma.user.findFirst({
-      where: {
-        email: values.email,
-      },
-    });
+      const hashPass = await bcryptjs.hash(password, 10);
 
-    if (existingUser) throw new Error("User already existing!");
+      const user = await prisma.user.create({
+        data: {
+          userName: username,
+          email: email,
+          password: hashPass,
+        },
+      });
 
-    const hashPass = await bcryptjs.hash(values.password, 10);
-
-    const user = await prisma.user.create({
-      data: {
-        userName: values.username,
-        email: values.email,
-        password: hashPass,
-      },
-    });
-    return user;
-  } catch (err) {
-    throw new Error("Failed to create account!");
+      return { success: user };
+    } catch {
+      return { error: "Something went wrong" };
+    }
   }
-}
-
+);

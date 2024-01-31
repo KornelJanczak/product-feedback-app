@@ -1,5 +1,5 @@
 "use client";
-import createUser from "@/server-actions/create-user";
+import { createSafeUser } from "@/server-actions/create-user";
 import { registerFormSchema } from "@/models/@auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -16,19 +16,15 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useAction } from "next-safe-action/hooks";
 
 type Inputs = z.infer<typeof registerFormSchema>;
 
 export default function RegisterForm() {
   const router = useRouter();
-  const [pending, setPending] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
-    resetOptions: {
-      keepTouched: true,
-    },
     defaultValues: {
       username: "",
       email: "",
@@ -37,19 +33,22 @@ export default function RegisterForm() {
     },
   });
 
-  const processForm: SubmitHandler<Inputs> = async (data) => {
-    setPending(true);
-    try {
-      const user = await createUser(data);
-      if (!user) toast.error("Something went wrong");
+  const { execute, status, result } = useAction(createSafeUser, {
+    onSuccess({ error }) {
+      if (error) toast.error(error);
       toast.success("Your account has been registered!");
       router.push("/login");
-    } catch {
-      toast.error("Something went wrong");
-    } finally {
+    },
+    onError({ serverError }) {
+      toast.error(serverError);
+    },
+    onExecute() {
       form.reset();
-      setPending(false);
-    }
+    },
+  });
+
+  const processForm: SubmitHandler<Inputs> = async (data) => {
+    execute(data);
   };
 
   return (
@@ -144,7 +143,7 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <SubmitBtn pending={pending}>Register</SubmitBtn>
+          <SubmitBtn pending={status === "executing"}>Register</SubmitBtn>
         </form>
       </Form>
     </section>
