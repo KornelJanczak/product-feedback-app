@@ -64,6 +64,9 @@ export default async function FriendsPage({
   const searchValues: string[] = Object.values(searchParams);
   const users = await getUsers(searchValues[0]);
 
+console.log(users);
+
+
   return (
     <Suspense fallback={<p>Loading...</p>}>
       <FriendsSection users={users as Friend[]} />

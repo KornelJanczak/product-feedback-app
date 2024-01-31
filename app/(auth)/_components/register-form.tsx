@@ -1,5 +1,5 @@
 "use client";
-import { createSafeUser } from "@/server-actions/create-user";
+import { createSafeUser } from "@/server-actions/user/create-user";
 import { registerFormSchema } from "@/models/@auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";

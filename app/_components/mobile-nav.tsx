@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import IconLeft from "@/public/icons/icon-left";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import SettingsIcon from "@/public/icons/settings";
 
 export default function MobileSheet() {
   const { data } = useSession();
@@ -38,10 +39,10 @@ export default function MobileSheet() {
           </SheetTitle>
           <div className="flex items-center justify-center gap-x-4 pt-4">
             <Button
-              className="bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300"
+              className="bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 flex gap-x-1"
               onClick={() => router.push("/account")}
             >
-              Account Settings
+              Account Settings <SettingsIcon />
             </Button>
             <Button
               className="bg-red hover:opacity-70 hover:bg-red hover:transition duration-300 flex gap-x-1"

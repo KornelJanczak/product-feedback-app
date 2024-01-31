@@ -10,11 +10,12 @@ interface SubmitBtnProps {
   pending?: boolean;
   children: ReactNode;
   formAction?: any;
-  onClick?: any
+  onClick?: any;
+  addUser?: boolean;
 }
 
 const SubmitBtn: React.FC<SubmitBtnProps> = React.memo(
-  ({ className, children, pending, formAction, onClick }) => {
+  ({ className, children, pending, formAction, onClick, addUser }) => {
     const { pending: statusPending } = useFormStatus();
     return (
       <Button
@@ -25,7 +26,7 @@ const SubmitBtn: React.FC<SubmitBtnProps> = React.memo(
         onClick={onClick}
       >
         {pending || statusPending ? (
-          <ClipLoader size={24} color="#3A4374" />
+          <ClipLoader size={24} color="#ffffff" />
         ) : (
           children
         )}
