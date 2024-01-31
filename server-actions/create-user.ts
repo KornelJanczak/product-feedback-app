@@ -3,6 +3,7 @@ import { registerFormSchema } from "@/models/@auth-schema";
 import prisma from "@/lib/db";
 import bcryptjs from "bcryptjs";
 import { action } from "@/lib/safe-action-client";
+import { revalidatePath } from "next/cache";
 
 export const createSafeUser = action(
   registerFormSchema,
@@ -26,6 +27,7 @@ export const createSafeUser = action(
         },
       });
 
+      revalidatePath("/friends");
       return { success: user };
     } catch {
       return { error: "Something went wrong" };

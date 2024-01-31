@@ -1,41 +1,38 @@
+"use server";
 import getCurrentUser from "@/lib/get-current-user";
 import { action } from "@/lib/safe-action-client";
-import { inputSchema } from "@/models/@input-schema";
+import * as z from "zod";
 
-// export default async function sendFriendRequest(userId: string) {
-//   try {
-//     const currentUser = await getCurrentUser();
+const idSchema = z.object({
+  userId: z.string().min(1),
+});
 
-//     console.log(currentUser);
-
-//     if (!currentUser) throw new Error("Unauthorized!");
-
-//     const friendRequest = await prisma?.friendRequest.create({
-//       data: {
-//         friendRequestOfId: currentUser.id,
-//         friendRequestId: userId,
-//       },
-//     });
-
-//     return friendRequest;
-//   } catch {
-//     throw new Error("Something went wrong!");
-//   }
-// }
-
-const sendFriendRequest = action(inputSchema, async ({ inputValue }) => {
+export const sendFriendRequest = action(idSchema, async ({ userId }) => {
   try {
     const currentUser = await getCurrentUser();
-    console.log(currentUser);
-    if (!currentUser) throw new Error("Unauthorized!");
+
+    if (!currentUser) return { error: "Unauthorized!" };
+
+    const existingFriendRequest = await prisma?.friendRequest.findFirst({
+      where: {
+        friendRequestOfId: currentUser.id,
+        friendRequestId: userId,
+      },
+    });
+
+    if (existingFriendRequest) return { error: "Friend request exist!" };
+
     const friendRequest = await prisma?.friendRequest.create({
       data: {
         friendRequestOfId: currentUser.id,
         friendRequestId: userId,
       },
     });
-    return friendRequest;
+
+    return { success: friendRequest };
   } catch {
-    throw new Error("Something went wrong!");
+    return {
+      error: "Something went wrong!",
+    };
   }
 });

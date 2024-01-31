@@ -1,36 +1,30 @@
 "use client";
 import SubmitBtn from "@/app/(auth)/_components/submit-btn";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useForm, useFormState } from "react-hook-form";
+import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
+import { sendFriendRequest } from "@/server-actions/send-friend-request";
 
 export default function FriendsSection({ users }: { users: Friend[] }) {
-  console.log(users);
-
-  const form = useForm
+  const { status, execute, result } = useAction(sendFriendRequest, {
+    // onSuccess({ error }) {
+    //   if (error) toast.error(error);
+    //   toast.success("Request has been sended!");
+    // },
+    // onError({ serverError }) {
+    //   toast.error(serverError);
+    // },
+  });
 
   return (
     <section className="container pt-2">
-      <ul className="flex items-center justify-center p-2">
+      <ul className="flex flex-col items-center justify-center gap-2 p-2">
         {users.map(({ id, userName, image }) => {
-          // const sendRequest = async () => {
-          //   try {
-          //     const request = await sendFriendRequest(id);
-          //     console.log(request);
-
-          //     if (!request) toast.error("Something went wrong!");
-          //     toast.success("Friend request has been sended!");
-          //   } catch {
-          //     toast.error("Something went wrong!");
-          //   }
-          // };
-
-          // const {} = useAction(sendFriendRequest, {});
-
-          const onSubmit = () => {};
-
           return (
-            <li key={id} className="bg-basicWhite p-4">
+            <li
+              key={id}
+              className="flex flex-col items-center justify-center bg-basicWhite p-4"
+            >
               <Avatar className="w-36 h-36">
                 <AvatarImage
                   src="https://github.com/shadcn.png"
@@ -38,12 +32,18 @@ export default function FriendsSection({ users }: { users: Friend[] }) {
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <form className="flex-col gap-2">
+              <div className="flex-col gap-2">
                 <h3 className="text-center text-xl py-2">{userName}</h3>
                 <div>
-                  <SubmitBtn className="mt-0">Add user</SubmitBtn>
+                  <SubmitBtn
+                    className="mt-0"
+                    pending={status === "executing"}
+                    onClick={() => execute({ userId: id })}
+                  >
+                    Add user
+                  </SubmitBtn>
                 </div>
-              </form>
+              </div>
             </li>
           );
         })}
