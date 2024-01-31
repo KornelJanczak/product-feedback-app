@@ -33,7 +33,7 @@ export default function RegisterForm() {
     },
   });
 
-  const { execute, status, result } = useAction(createSafeUser, {
+  const { execute, status } = useAction(createSafeUser, {
     onSuccess({ error }) {
       if (error) toast.error(error);
       toast.success("Your account has been registered!");

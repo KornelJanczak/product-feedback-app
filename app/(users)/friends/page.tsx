@@ -1,6 +1,6 @@
 import getCurrentUser from "@/lib/get-current-user";
 import { Suspense } from "react";
-import FriendsSection from "../_components/friends-section";
+import FriendsSection from "../../_components/friends-section";
 
 async function getUsers(userName: string) {
   try {

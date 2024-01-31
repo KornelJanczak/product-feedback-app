@@ -1,9 +1,6 @@
 "use client";
 import SubmitBtn from "@/app/(auth)/_components/submit-btn";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useAction } from "@/hooks/use-action";
-import sendFriendRequest from "@/server-actions/send-friend-request";
-import { useFormStatus } from "react-dom";
 import { useForm, useFormState } from "react-hook-form";
 import { toast } from "sonner";
 
