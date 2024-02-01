@@ -66,12 +66,15 @@ export default async function FriendsPage({
 
   console.log(users);
 
-  if (!users?.length) <section className="container pt-2"></section>;
-  if (users?.length)
+  // if (!users?.length) <section className="container pt-2"> </section>;
+  if (users!.length > 0)
     return (
-      <Suspense fallback={<p>Loading...</p>}>
-        <section className="container pt-2">
-          <ul className="flex flex-col items-center justify-center gap-2 p-2">
+      <section className="container sm:pt-0">
+        <Suspense fallback={<p>Loading...</p>}>
+          <ul
+            className="flex flex-col items-center justify-center gap-2 p-2 w-full 
+          sm:grid sm:grid-cols-2 sm:p-0 sm:gap-x-8 md:grid-cols-3 md:gap-x-4"
+          >
             {users!.map(({ id, userName, friendRequestExist }) => (
               <FriendCard
                 userName={userName}
@@ -80,7 +83,7 @@ export default async function FriendsPage({
               />
             ))}
           </ul>
-        </section>
-      </Suspense>
+        </Suspense>
+      </section>
     );
 }

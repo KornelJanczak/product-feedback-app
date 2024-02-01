@@ -44,7 +44,7 @@ export default function AccountPanel({
           friendBtnClass
         }
         onClick={() => {
-          onClick!();
+          onClick!;
           router.push("/friends");
         }}
       >
