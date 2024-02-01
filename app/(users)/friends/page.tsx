@@ -1,6 +1,6 @@
 import getCurrentUser from "@/lib/get-current-user";
 import { Suspense } from "react";
-import FriendCard from "@/app/_components/friend-card";
+import FriendCard from "@/app/(users)/_components/friend-card";
 
 async function getUsers(userName: string) {
   try {

@@ -1,7 +1,8 @@
 "use client";
-import ResponsiveImage from "@/components/ui/responsive-image";
+import ResponsiveImage from "@/components/responsive-image";
 import MobileSheet from "./mobile-nav";
 import { usePathname } from "next/navigation";
+import AccountPanel from "../app/(users)/_components/account-panel";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -10,16 +11,16 @@ export default function Nav() {
     pathname.slice(1).charAt(0).toUpperCase() + pathname.slice(2);
 
   return (
-    <>
-      <header className="text md:container md:py-5 md:relative">
+    <header className="text md:container md:py-5 md:flex">
+      <div className="md:relative md:w-full">
         <ResponsiveImage
           images={{
             desktop: "/assets/suggestions/desktop/background-header.png",
             mobile: "/assets/suggestions/mobile/background-header.png",
             tablet: "/assets/suggestions/tablet/background-header.png",
           }}
-          pictureClassName="w-full w-full md:h-16 md:w-1/3 md:rounded-lg"
-          imgClassName="w-full h-16 md:h-44 md:w-1/3 md:rounded-lg"
+          pictureClassName="w-full w-full md:h-16 md:w-full md:rounded-lg"
+          imgClassName="w-full h-16 md:h-44 md:w-full md:rounded-lg"
           altText="Gradient image"
           width={340}
           height={72}
@@ -30,7 +31,7 @@ export default function Nav() {
           w-full
           justify-between mx-auto my-0 
           md:bottom-0 md:instet-x-auto md:inset-y-1/2
-          md:w-1/3
+          md:w-full
           md:flex-col
           "
         >
@@ -42,7 +43,15 @@ export default function Nav() {
           </span>
           <MobileSheet />
         </div>
-      </header>
-    </>
+      </div>
+      <div className="hidden md:flex w-full">CHUJ</div>
+      <div className="hidden md:flex items-center justify-center">
+        <AccountPanel
+          className="gap-1"
+          classNameBox="md:flex flex-col gap-2"
+          friendBtnClass="mt-1"
+        />
+      </div>
+    </header>
   );
 }
