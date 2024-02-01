@@ -2,5 +2,5 @@ interface Friend {
   id: string;
   userName: string;
   image?: string;
-  friendRequestExist?: true;
+  friendRequestExist?: boolean;
 }
