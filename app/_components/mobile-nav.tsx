@@ -23,11 +23,11 @@ export default function MobileSheet() {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger>
+      <SheetTrigger className="md:hidden">
         <IconHamburger />
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader className="flex items-center justify-center">
+        <SheetHeader className="flex items-center justify-center md:hidden">
           <div className="pt-2 flex items-center justify-center">
             <Avatar className="w-36 h-36">
               <AvatarImage src="https://github.com/shadcn.png" className="" />

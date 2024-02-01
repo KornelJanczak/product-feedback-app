@@ -8,9 +8,9 @@ export default function FindBar() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   return (
-    <section className="py-6 bg-dark">
+    <section className="md:container">
       <form
-        className="container flex items-center gap-2"
+        className="flex items-center gap-2 py-6 px-6 bg-dark md:rounded-lg md:container"
         onSubmit={(e) => {
           e.preventDefault();
           router.push(`friends?=${inputRef.current?.value}`);

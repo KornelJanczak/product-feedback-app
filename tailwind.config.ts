@@ -15,10 +15,10 @@ const config = {
       padding: {
         DEFAULT: "1.25rem",
         sm: "1.25rem",
-        md: "1.25rem",
-        lg: "2,5rem",
-        xl: "2,5rem",
-        "2xl": "2,5rem",
+        md: "1.rem",
+        lg: "2rem",
+        xl: "2rem",
+        "2xl": "2rem",
       },
       screens: {
         default: "1400px",

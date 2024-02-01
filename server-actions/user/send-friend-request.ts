@@ -1,6 +1,7 @@
 "use server";
 import getCurrentUser from "@/lib/get-current-user";
 import { action } from "@/lib/safe-action-client";
+import { revalidatePath } from "next/cache";
 import * as z from "zod";
 
 const idSchema = z.object({
@@ -29,6 +30,7 @@ export const sendFriendRequest = action(idSchema, async ({ userId }) => {
       },
     });
 
+    revalidatePath("/friends");
     return { success: friendRequest };
   } catch {
     return {

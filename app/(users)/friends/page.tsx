@@ -1,6 +1,5 @@
 import getCurrentUser from "@/lib/get-current-user";
 import { Suspense } from "react";
-import FriendsSection from "../../_components/friends-section";
 import FriendCard from "@/app/_components/friend-card";
 
 async function getUsers(userName: string) {
@@ -67,20 +66,21 @@ export default async function FriendsPage({
 
   console.log(users);
 
-  return (
-    <Suspense fallback={<p>Loading...</p>}>
-      {/* <FriendsSection users={users as Friend[]} /> */}
-      <section className="container pt-2">
-        <ul className="flex flex-col items-center justify-center gap-2 p-2">
-          {users!.map(({ id, userName, friendRequestExist }) => (
-            <FriendCard
-              userName={userName}
-              id={id}
-              friendRequestExist={friendRequestExist}
-            />
-          ))}
-        </ul>
-      </section>
-    </Suspense>
-  );
+  if (!users?.length) <section className="container pt-2"></section>;
+  if (users?.length)
+    return (
+      <Suspense fallback={<p>Loading...</p>}>
+        <section className="container pt-2">
+          <ul className="flex flex-col items-center justify-center gap-2 p-2">
+            {users!.map(({ id, userName, friendRequestExist }) => (
+              <FriendCard
+                userName={userName}
+                id={id}
+                friendRequestExist={friendRequestExist}
+              />
+            ))}
+          </ul>
+        </section>
+      </Suspense>
+    );
 }

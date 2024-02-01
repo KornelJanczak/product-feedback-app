@@ -1,5 +1,4 @@
 "use client";
-import SubmitBtn from "@/app/(auth)/_components/submit-btn";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
@@ -7,6 +6,7 @@ import { sendFriendRequest } from "@/server-actions/user/send-friend-request";
 import AddUserIcon from "@/public/icons/add-user";
 import DeleteUserIcon from "@/public/icons/delete-user";
 import { deleteFriendRequest } from "@/server-actions/user/delete-friend-request";
+import FriendButton from "./friend-button";
 
 export default function FriendCard({
   userName,
@@ -52,23 +52,23 @@ export default function FriendCard({
         <h3 className="text-center text-xl py-2">{userName}</h3>
         <div>
           {!friendRequestExist ? (
-            <SubmitBtn
+            <FriendButton
               className="mt-0 flex gap-x-1"
-              pending={status === "executing"}
               onClick={() => execute({ userId: id })}
+              pending={status === "executing"}
+              icon={<AddUserIcon />}
             >
-              <AddUserIcon />
               Add User
-            </SubmitBtn>
+            </FriendButton>
           ) : (
-            <SubmitBtn
+            <FriendButton
               className="mt-0 flex gap-x-1"
-              pending={deleteStatus === "executing"}
               onClick={() => deleteExecute({ userId: id })}
+              pending={deleteStatus === "executing"}
+              icon={<DeleteUserIcon />}
             >
-              <DeleteUserIcon />
               Cancel Invitation
-            </SubmitBtn>
+            </FriendButton>
           )}
         </div>
       </div>
