@@ -27,7 +27,7 @@ export default function FriendCard({
       className="flex flex-row items-center justify-between w-full bg-basicWhite p-4 
       gap-x-4 sm:flex-col sm:gap-x-2 sm:p-4"
     >
-      <Avatar className="w-36 h-36">
+      <Avatar className="w-28 h-28">
         <AvatarImage src="https://github.com/shadcn.png" alt="User image" />
         <AvatarFallback className="text-center">{userName}</AvatarFallback>
       </Avatar>

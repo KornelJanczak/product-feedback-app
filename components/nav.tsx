@@ -11,7 +11,8 @@ export default function Nav() {
     pathname.slice(1).charAt(0).toUpperCase() + pathname.slice(2);
 
   return (
-    <header className="text md:container md:py-5 md:flex">
+    <header className="text md:container md:py-5 md:flex md:w-full 
+    lg:max-w-80 lg:flex lg:flex-col lg:m-0 lg:px-0 lg:py-0">
       <div className="md:relative md:w-full">
         <ResponsiveImage
           images={{
