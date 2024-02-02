@@ -1,19 +1,23 @@
 "use client";
 import SubmitBtn from "@/app/(auth)/_components/submit-btn";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useRef } from "react";
 import SelectFilter from "./select-filter";
 
 export default function FindBar() {
   const router = useRouter();
+  const param = useParams();
   const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <form
       className="flex w-full items-center gap-2 py-6 px-6 bg-dark md:rounded-lg md:container"
       onSubmit={(e) => {
         e.preventDefault();
-        router.push(`friends?=${inputRef.current?.value}`);
+        router.push(
+          `${param.friendsFilter}?=${inputRef.current?.value}`
+        );
       }}
     >
       <SelectFilter />

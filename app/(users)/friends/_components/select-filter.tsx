@@ -6,22 +6,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function SelectFilter() {
   const router = useRouter();
+  const { friendsFilter } = useParams();
   const changeHandler = (value: string) => {
-    router.push(`/friends%${value}`);
-    
+    router.push(`/friends/${value}`);
   };
 
   return (
-    <Select onValueChange={changeHandler}>
+    <Select onValueChange={changeHandler} value={friendsFilter as string}>
       <SelectTrigger className="w-[180px] text-grey sm:w-full">
-        <SelectValue placeholder="Find!" />
+        <SelectValue placeholder="Suggestions" />
       </SelectTrigger>
       <SelectContent className="px-0 mt-2 text-grey">
-        <SelectItem value="friend-sugesstions">Friend Suggestions</SelectItem>
+        <SelectItem value="sugesstions">Friend Suggestions</SelectItem>
         <SelectItem value="recived-invitations">
           Received Invitations
         </SelectItem>

@@ -45,7 +45,7 @@ export default function AccountPanel({
         }
         onClick={() => {
           onClick!;
-          router.push("/friends");
+          router.push("/friends/sugesstions");
         }}
       >
         Find Friends!
