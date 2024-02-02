@@ -21,6 +21,7 @@ export default function FriendCard({
   const { status: deleteStatus, execute: deleteExecute } =
     useAction(deleteFriendRequest);
 
+    //filter slug
   return (
     <li
       key={id}

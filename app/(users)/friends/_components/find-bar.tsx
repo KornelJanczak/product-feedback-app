@@ -3,6 +3,7 @@ import SubmitBtn from "@/app/(auth)/_components/submit-btn";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import SelectFilter from "./select-filter";
 
 export default function FindBar() {
   const router = useRouter();
@@ -15,13 +16,15 @@ export default function FindBar() {
         router.push(`friends?=${inputRef.current?.value}`);
       }}
     >
+      <SelectFilter />
+
       <Input
         type="text"
         placeholder="Username"
         ref={inputRef}
         className="border-transparent focus:border-transparent focus:ring-0"
       ></Input>
-      <SubmitBtn className="mt-0 w-48">Find</SubmitBtn>
+      <SubmitBtn className="mt-0 w-7/12 lg:mt-0">Find</SubmitBtn>
     </form>
   );
 }

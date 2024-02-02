@@ -1,6 +1,8 @@
 import getCurrentUser from "@/lib/get-current-user";
 import { Suspense } from "react";
-import FriendsContainer from "../_components/friends-container";
+import FriendsContainer from "../../_components/friends-container";
+import NoResult from "@/components/no-result";
+import invitedUsers from "@/lib/invited-users";
 
 async function getUsers(userName: string) {
   try {
@@ -31,24 +33,7 @@ async function getUsers(userName: string) {
         },
       });
 
-    const requests = await prisma?.friendRequest.findMany({
-      where: {
-        friendRequestOfId: currentUser.id,
-      },
-    });
-
-    const checkedUsers = users?.map((user) => {
-      const isExist = requests?.find(
-        (request) => request.friendRequestId === user.id
-      );
-      if (isExist)
-        return {
-          ...user,
-          friendRequestExist: true,
-        };
-
-      return { ...user, friendRequestExist: false };
-    });
+    const checkedUsers = invitedUsers(users as Friend[], currentUser);
 
     return checkedUsers;
   } catch {
@@ -64,8 +49,18 @@ export default async function FriendsPage({
   const searchValues: string[] = Object.values(searchParams);
   const users = await getUsers(searchValues[0]);
 
-  console.log(users);
+  if (users!.length === 0)
+    return (
+      <NoResult
+        title="There is no users."
+        description="The user with this name has not been found. Please provide the correct username and try again."
+      />
+    );
 
-  // if (!users?.length) <section className="container pt-2"> </section>;
-  if (users!.length > 0) return <FriendsContainer users={users as Friend[]} />;
+  if (users!.length > 0)
+    return (
+      <Suspense fallback={<p>Loading...</p>}>
+        <FriendsContainer users={users as Friend[]} />
+      </Suspense>
+    );
 }

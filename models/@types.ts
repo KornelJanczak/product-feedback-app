@@ -4,3 +4,9 @@ interface Friend {
   image?: string;
   friendRequestExist?: boolean;
 }
+
+interface User {
+  email: string;
+  name: string;
+  id: string;
+}
