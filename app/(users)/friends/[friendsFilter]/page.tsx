@@ -5,48 +5,25 @@ import NoResult from "@/components/no-result";
 import getInvitedUsers from "@/lib/user/get-invited-users";
 import getUserFriends from "@/lib/user/get-user-friends";
 import getRecivedInvitations from "@/lib/user/get-recived-invitations";
+import getSuggestionUsers from "@/lib/user/get-sugesstion-users";
 
 async function getUsers(userName: string, param: string) {
   try {
     const currentUser = await getCurrentUser();
-
-    let users;
-
-    users = await prisma?.user.findMany({
-      where: {
-        NOT: {
-          id: currentUser.id,
-        },
-        userName: userName || undefined,
-      },
-      include: {
-        friendRequest: {
-          where: {
-            friendRequestId: currentUser.id,
-          },
-        },
-      },
-    });
-
-    // Checking if users have been invited to friends by current user
-    const invitedUsers = await getInvitedUsers(
-      users as Friend[],
-      currentUser as User
-    );
 
     // Param handler choose function for each param type
     const paramHandlers: {
       [key: string]: () => any;
     } = {
       // Return all users from db with the exception of current user
-      suggestions: () => invitedUsers,
+      sugesstions: async () => await getSuggestionUsers(currentUser, userName),
 
       // Filter sended invitations
-      "sended-invitations": () =>
-        invitedUsers.filter((user) => user.friendRequestExist === true),
+      "sended-invitations": async () =>
+        await getInvitedUsers(currentUser, userName),
 
       // Show only user friends
-      "your-friends": async () => await getUserFriends(currentUser),
+      "your-friends": async () => await getUserFriends(currentUser, userName),
 
       // Return Recived invitations based on param function send prisma query
       "recived-invitations": async () =>
@@ -56,7 +33,7 @@ async function getUsers(userName: string, param: string) {
     // Execute paramHandlers based on param value
     if (paramHandlers[param]) return paramHandlers[param]();
 
-    return invitedUsers;
+    return [];
   } catch {
     throw new Error("Failed to get users. Please try again later.");
   }

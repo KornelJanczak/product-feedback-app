@@ -1,25 +1,24 @@
-export default async function getUserFriends(currentUser: User) {
-  const userFriends = await prisma?.friend.findMany({
+export default async function getUserFriends(
+  currentUser: User,
+  userName: string
+) {
+  const userFriends = await prisma?.user.findMany({
     where: {
-      friendOfId: currentUser.id,
-    },
-    select: {
       friends: {
-        select: {
-          id: true,
-          userName: true,
-          email: true,
+        some: {
+          friendOfId: currentUser.id,
         },
       },
+      userName: userName || undefined,
     },
   });
 
   // Change Arr structure
-  const friendsArr = userFriends?.map(({ friends }) => {
+  const friendsArr = userFriends?.map((friend) => {
     return {
-      id: friends.id,
-      userName: friends.userName,
-      email: friends.email,
+      id: friend.id,
+      userName: friend.userName,
+      email: friend.email,
       userFriend: true,
     };
   });

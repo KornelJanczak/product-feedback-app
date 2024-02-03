@@ -14,16 +14,21 @@ export const acceptFriendRequest = action(idSchema, async ({ userId }) => {
 
     if (!currentUser) return { error: "Unauthorized!" };
 
-    const friend = await prisma?.friend.create({
+    const firstUser = await prisma?.friend.create({
       data: {
         friendOfId: currentUser.id,
         friendId: userId,
       },
     });
 
-    console.log(friend, "CREATE");
+    const secondUser = await prisma?.friend.create({
+      data: {
+        friendOfId: userId,
+        friendId: currentUser.id,
+      },
+    });
 
-    // if (!friend) return { error: "Add to friend failed!" };
+    if (!firstUser || !secondUser) return { error: "Add to friend failed!" };
 
     const deletedRequest = await prisma?.friendRequest.delete({
       where: {
@@ -37,7 +42,7 @@ export const acceptFriendRequest = action(idSchema, async ({ userId }) => {
     console.log(deletedRequest, "DELETE");
 
     revalidatePath("/friends/[slug]");
-    return { success: { friend, deletedRequest } };
+    return { success: { secondUser, firstUser, deletedRequest } };
   } catch {
     return { error: "Something went wrong!" };
   }

@@ -1,25 +1,24 @@
 export default async function getInvitedUsers(
-  users: Friend[],
-  currentUser: User
+  currentUser: User,
+  userName: string
 ) {
   try {
-    const requests = await prisma?.friendRequest.findMany({
+    const requests = await prisma?.user.findMany({
       where: {
-        friendRequestOfId: currentUser.id,
+        friendRequest: {
+          some: {
+            friendRequestOfId: currentUser.id,
+          },
+        },
+        userName: userName || undefined,
       },
     });
 
-    const invitedUsers = users?.map((user) => {
-      const isExist = requests?.find(
-        (request) => request.friendRequestId === user.id
-      );
-      if (isExist)
-        return {
-          ...user,
-          friendRequestExist: true,
-        };
-
-      return { ...user, friendRequestExist: false };
+    const invitedUsers = requests?.map((user) => {
+      return {
+        ...user,
+        friendRequestExist: true,
+      };
     });
 
     return invitedUsers;
