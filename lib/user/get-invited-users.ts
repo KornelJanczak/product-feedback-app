@@ -1,4 +1,7 @@
-export default async function invitedUsers(users: Friend[], currentUser: User) {
+export default async function getInvitedUsers(
+  users: Friend[],
+  currentUser: User
+) {
   try {
     const requests = await prisma?.friendRequest.findMany({
       where: {
@@ -6,7 +9,7 @@ export default async function invitedUsers(users: Friend[], currentUser: User) {
       },
     });
 
-    const checkedUsers = users?.map((user) => {
+    const invitedUsers = users?.map((user) => {
       const isExist = requests?.find(
         (request) => request.friendRequestId === user.id
       );
@@ -19,7 +22,7 @@ export default async function invitedUsers(users: Friend[], currentUser: User) {
       return { ...user, friendRequestExist: false };
     });
 
-    return checkedUsers;
+    return invitedUsers;
   } catch {
     throw new Error("Something went wrong!");
   }

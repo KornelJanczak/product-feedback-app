@@ -1,5 +1,5 @@
 "use server";
-import getCurrentUser from "@/lib/get-current-user";
+import getCurrentUser from "@/lib/user/get-current-user";
 import { action } from "@/lib/safe-action-client";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";

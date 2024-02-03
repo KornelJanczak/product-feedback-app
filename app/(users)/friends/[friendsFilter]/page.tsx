@@ -1,8 +1,10 @@
-import getCurrentUser from "@/lib/get-current-user";
+import getCurrentUser from "@/lib/user/get-current-user";
 import { Suspense } from "react";
 import FriendsContainer from "../../_components/friends-container";
 import NoResult from "@/components/no-result";
-import invitedUsers from "@/lib/invited-users";
+import getInvitedUsers from "@/lib/user/get-invited-users";
+import getUserFriends from "@/lib/user/get-user-friends";
+import getRecivedInvitations from "@/lib/user/get-recived-invitations";
 
 async function getUsers(userName: string, param: string) {
   try {
@@ -27,7 +29,7 @@ async function getUsers(userName: string, param: string) {
     });
 
     // Checking if users have been invited to friends by current user
-    const checkedUsers = await invitedUsers(
+    const invitedUsers = await getInvitedUsers(
       users as Friend[],
       currentUser as User
     );
@@ -37,41 +39,24 @@ async function getUsers(userName: string, param: string) {
       [key: string]: () => any;
     } = {
       // Return all users from db with the exception of current user
-      suggestions: () => checkedUsers,
+      suggestions: () => invitedUsers,
 
       // Filter sended invitations
       "sended-invitations": () =>
-        (users = checkedUsers.filter(
-          (user) => user.friendRequestExist === true
-        )),
+        invitedUsers.filter((user) => user.friendRequestExist === true),
 
-      "your-friends": () => {},
+      // Show only user friends
+      "your-friends": async () => await getUserFriends(currentUser),
 
       // Return Recived invitations based on param function send prisma query
-      "recived-invitations": async () => {
-        const friendInvitationsSenders = await prisma?.user.findMany({
-          where: {
-            friendRequestOf: {
-              some: {
-                friendRequestId: currentUser.id,
-              },
-            },
-            userName: userName || undefined,
-          },
-        });
-
-        const invitationsSenders = friendInvitationsSenders?.map((friend) => {
-          return { ...friend, existingInvitation: true };
-        });
-
-        return invitationsSenders;
-      },
+      "recived-invitations": async () =>
+        await getRecivedInvitations(currentUser, userName),
     };
 
     // Execute paramHandlers based on param value
     if (paramHandlers[param]) return paramHandlers[param]();
 
-    return users;
+    return invitedUsers;
   } catch {
     throw new Error("Failed to get users. Please try again later.");
   }
