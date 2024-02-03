@@ -8,13 +8,22 @@ const idSchema = z.object({
   userId: z.string().min(1),
 });
 
-export const deleteFriendRequest = action(idSchema, async ({ userId }) => {
+export const acceptFriendRequest = action(idSchema, async ({ userId }) => {
   try {
     const currentUser = await getCurrentUser();
 
-    if (!currentUser) return { error: "Unauthenticated" };
+    if (!currentUser) return { error: "Unauthorized!" };
 
-    const request = await prisma?.friendRequest.delete({
+    const friend = await prisma?.friend.create({
+      data: {
+        friendOfId: currentUser.id,
+        friendId: userId,
+      },
+    });
+
+    if (!friend) return { error: "Add to friend failed!" };
+
+    await prisma?.friendRequest.delete({
       where: {
         friendRequestId_friendRequestOfId: {
           friendRequestOfId: currentUser.id,
@@ -23,10 +32,8 @@ export const deleteFriendRequest = action(idSchema, async ({ userId }) => {
       },
     });
 
-    if (!request) return { error: "Something went wrong!" };
-
     revalidatePath("/friends/[slug]");
-    return { success: request };
+    return friend;
   } catch {
     return { error: "Something went wrong!" };
   }

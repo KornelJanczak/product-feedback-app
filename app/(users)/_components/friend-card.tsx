@@ -1,7 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAction } from "next-safe-action/hooks";
-import { toast } from "sonner";
 import { sendFriendRequest } from "@/server-actions/user/send-friend-request";
 import AddUserIcon from "@/public/icons/add-user";
 import DeleteUserIcon from "@/public/icons/delete-user";
@@ -11,6 +10,7 @@ import FriendButton from "./friend-button";
 export default function FriendCard({
   userName,
   friendRequestExist,
+  existingInvitation,
   id,
   image,
 }: Friend) {
@@ -21,7 +21,12 @@ export default function FriendCard({
   const { status: deleteStatus, execute: deleteExecute } =
     useAction(deleteFriendRequest);
 
-    //filter slug
+    console.log(existingInvitation);
+    console.log(friendRequestExist);
+    
+    
+
+  //filter slug
   return (
     <li
       key={id}
@@ -37,7 +42,6 @@ export default function FriendCard({
         <div className="flex items-center justify-center">
           {!friendRequestExist ? (
             <FriendButton
-              className="mt-0 flex gap-x-1 sm:w-11/12"
               onClick={() => execute({ userId: id })}
               pending={status === "executing"}
               icon={<AddUserIcon />}
@@ -46,7 +50,6 @@ export default function FriendCard({
             </FriendButton>
           ) : (
             <FriendButton
-              className="mt-0 flex gap-x-1 sm:w-11/12"
               onClick={() => deleteExecute({ userId: id })}
               pending={deleteStatus === "executing"}
               icon={<DeleteUserIcon />}

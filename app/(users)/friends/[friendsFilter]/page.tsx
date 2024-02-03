@@ -56,7 +56,11 @@ async function getUsers(userName: string, param: string) {
           },
         });
 
-        return friendInvitationsSenders;
+        const invitationsSenders = friendInvitationsSenders?.map((friend) => {
+          return { ...friend, existingInvitation: true };
+        });
+
+        return invitationsSenders;
       },
     };
 

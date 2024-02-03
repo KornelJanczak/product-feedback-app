@@ -8,7 +8,7 @@ export default function FriendButton({
   children,
   pending,
 }: {
-  className: string;
+  className?: string;
   onClick: () => void;
   icon: ReactNode;
   children: ReactNode;
@@ -18,7 +18,7 @@ export default function FriendButton({
     <Button
       className={
         className +
-        "  w-full bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 "
+        "  w-full bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 mt-0 flex gap-x-1 sm:w-11/12 "
       }
       onClick={onClick}
       aria-disabled={pending}

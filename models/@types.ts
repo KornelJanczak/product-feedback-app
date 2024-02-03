@@ -3,6 +3,7 @@ interface Friend {
   userName: string;
   image?: string;
   friendRequestExist?: boolean;
+  existingInvitation?: boolean;
 }
 
 interface User {

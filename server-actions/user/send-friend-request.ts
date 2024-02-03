@@ -30,7 +30,7 @@ export const sendFriendRequest = action(idSchema, async ({ userId }) => {
       },
     });
 
-    revalidatePath("/friends");
+    revalidatePath("/friends/[slug]");
     return { success: friendRequest };
   } catch {
     return {
