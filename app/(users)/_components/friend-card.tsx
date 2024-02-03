@@ -6,6 +6,7 @@ import AddUserIcon from "@/public/icons/add-user";
 import DeleteUserIcon from "@/public/icons/delete-user";
 import { deleteFriendRequest } from "@/server-actions/user/delete-friend-request";
 import FriendButton from "./friend-button";
+import { acceptFriendRequest } from "@/server-actions/user/accept-friend-request";
 
 export default function FriendCard({
   userName,
@@ -21,10 +22,12 @@ export default function FriendCard({
   const { status: deleteStatus, execute: deleteExecute } =
     useAction(deleteFriendRequest);
 
-    console.log(existingInvitation);
-    console.log(friendRequestExist);
-    
-    
+  // Accept friend request handler
+  const { status: acceptStatus, execute: acceptExecute } =
+    useAction(acceptFriendRequest);
+
+  console.log(existingInvitation);
+  console.log(friendRequestExist);
 
   //filter slug
   return (
@@ -40,7 +43,7 @@ export default function FriendCard({
       <div className="flex-col gap-2 w-full">
         <h3 className="text-xl py-2 mr-auto sm:text-center">{userName}</h3>
         <div className="flex items-center justify-center">
-          {!friendRequestExist ? (
+          {!friendRequestExist && (
             <FriendButton
               onClick={() => execute({ userId: id })}
               pending={status === "executing"}
@@ -48,7 +51,8 @@ export default function FriendCard({
             >
               Add User
             </FriendButton>
-          ) : (
+          )}
+          {friendRequestExist && (
             <FriendButton
               onClick={() => deleteExecute({ userId: id })}
               pending={deleteStatus === "executing"}
@@ -56,6 +60,25 @@ export default function FriendCard({
             >
               Cancel Invitation
             </FriendButton>
+          )}
+          {existingInvitation && (
+            <div className="flex flex-col items-center w-full gap-1">
+              <FriendButton
+                onClick={() => acceptExecute({ userId: id })}
+                pending={acceptStatus === "executing"}
+                icon={<AddUserIcon />}
+              >
+                Accept Request
+              </FriendButton>
+              <FriendButton
+                className="bg-dark hover:bg-dark"
+                onClick={() => deleteExecute({ userId: id })}
+                pending={deleteStatus === "executing"}
+                icon={<DeleteUserIcon />}
+              >
+                Reject Request
+              </FriendButton>
+            </div>
           )}
         </div>
       </div>

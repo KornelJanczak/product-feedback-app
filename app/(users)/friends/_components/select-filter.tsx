@@ -26,6 +26,7 @@ export default function SelectFilter() {
           Received Invitations
         </SelectItem>
         <SelectItem value="sended-invitations">Sended Invitations</SelectItem>
+        <SelectItem value="your-friends">Your Friends</SelectItem>
       </SelectContent>
     </Select>
   );

@@ -41,7 +41,11 @@ async function getUsers(userName: string, param: string) {
 
       // Filter sended invitations
       "sended-invitations": () =>
-        checkedUsers.filter((user) => user.friendRequestExist === true),
+        (users = checkedUsers.filter(
+          (user) => user.friendRequestExist === true
+        )),
+
+      "your-friends": () => {},
 
       // Return Recived invitations based on param function send prisma query
       "recived-invitations": async () => {
@@ -67,7 +71,7 @@ async function getUsers(userName: string, param: string) {
     // Execute paramHandlers based on param value
     if (paramHandlers[param]) return paramHandlers[param]();
 
-    return checkedUsers;
+    return users;
   } catch {
     throw new Error("Failed to get users. Please try again later.");
   }

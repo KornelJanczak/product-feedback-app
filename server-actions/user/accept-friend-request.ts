@@ -21,19 +21,23 @@ export const acceptFriendRequest = action(idSchema, async ({ userId }) => {
       },
     });
 
-    if (!friend) return { error: "Add to friend failed!" };
+    console.log(friend, "CREATE");
 
-    await prisma?.friendRequest.delete({
+    // if (!friend) return { error: "Add to friend failed!" };
+
+    const deletedRequest = await prisma?.friendRequest.delete({
       where: {
         friendRequestId_friendRequestOfId: {
-          friendRequestOfId: currentUser.id,
-          friendRequestId: userId,
+          friendRequestOfId: userId,
+          friendRequestId: currentUser.id,
         },
       },
     });
 
+    console.log(deletedRequest, "DELETE");
+
     revalidatePath("/friends/[slug]");
-    return friend;
+    return { success: { friend, deletedRequest } };
   } catch {
     return { error: "Something went wrong!" };
   }

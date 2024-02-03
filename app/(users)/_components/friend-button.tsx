@@ -17,8 +17,7 @@ export default function FriendButton({
   return (
     <Button
       className={
-        className +
-        "  w-full bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 mt-0 flex gap-x-1 sm:w-11/12 "
+        "  w-full bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 mt-0 flex gap-x-1 sm:w-11/12 " + className
       }
       onClick={onClick}
       aria-disabled={pending}
