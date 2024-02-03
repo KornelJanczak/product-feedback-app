@@ -10,47 +10,62 @@ async function getUsers(userName: string, param: string) {
 
     let users;
 
-    const userExist = await prisma?.user.findUnique({
+    users = await prisma?.user.findMany({
       where: {
-        id: currentUser.id,
+        NOT: {
+          id: currentUser.id,
+        },
+        userName: userName || undefined,
+      },
+      include: {
+        friendRequest: {
+          where: {
+            friendRequestId: currentUser.id,
+          },
+        },
       },
     });
 
-    if (!currentUser || !userExist) return [];
-
-    if (!userName)
-      users = await prisma?.user.findMany({
-        where: {
-          NOT: {
-            id: currentUser.id,
-          },
-        },
-      });
-    else
-      users = await prisma?.user.findMany({
-        where: {
-          userName,
-        },
-      });
-
+    // Checking if users have been invited to friends by current user
     const checkedUsers = await invitedUsers(
       users as Friend[],
       currentUser as User
     );
 
-    switch (param) {
-      case "sugesstions":
-        return checkedUsers;
-      case "sended-invitations":
-        const userWitInv = checkedUsers.filter(
-          (user) => user.friendRequestExist === true
-        );
-        return userWitInv;
-    }
+    // Param handler choose function for each param type
+    const paramHandlers: {
+      [key: string]: () => any;
+    } = {
+      // Return all users from db with the exception of current user
+      suggestions: () => checkedUsers,
+
+      // Filter sended invitations
+      "sended-invitations": () =>
+        checkedUsers.filter((user) => user.friendRequestExist === true),
+
+      // Return Recived invitations based on param function send prisma query
+      "recived-invitations": async () => {
+        const friendInvitationsSenders = await prisma?.user.findMany({
+          where: {
+            friendRequestOf: {
+              some: {
+                friendRequestId: currentUser.id,
+              },
+            },
+            userName: userName || undefined,
+          },
+        });
+
+        return friendInvitationsSenders;
+      },
+    };
+
+    // Execute paramHandlers based on param value
+    if (paramHandlers[param]) return paramHandlers[param]();
 
     return checkedUsers;
   } catch {
-    return [];
+    throw new Error("Failed to get users. Please try again later.");
   }
 }
 
@@ -61,11 +76,11 @@ export default async function FriendsPage({
   params: any;
   searchParams: string;
 }) {
-  const param: string | undefined | unknown = Object.values(params)[0];
-  const searchValues: string[] = Object.values(searchParams);
-  const users = await getUsers(searchValues[0], param as string);
+  const [param] = Object.values(params);
+  const [searchValue] = Object.values(searchParams);
+  const users = await getUsers(searchValue, param as string);
 
-  if (users?.length === 0)
+  if (users.length === 0)
     return (
       <NoResult
         title="There is no users."
@@ -73,7 +88,7 @@ export default async function FriendsPage({
       />
     );
 
-  if (users?.length > 0)
+  if (users.length > 0)
     return (
       <Suspense fallback={<p>Loading...</p>}>
         <FriendsContainer users={users as Friend[]} />
