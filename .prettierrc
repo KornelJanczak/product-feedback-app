@@ -1,4 +1,0 @@
-{
-  "semi": true,
-  "overrides": [{ "files": "legacy/*", "options": { "semi": false } }]
-}

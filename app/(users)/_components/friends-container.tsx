@@ -8,6 +8,7 @@ export default function FriendsContainer({ users }: { users: Friend[] }) {
       {users!.map(
         ({ id, userName, friendRequestExist, existingInvitation }) => (
           <FriendCard
+            key={id}
             userName={userName}
             id={id}
             friendRequestExist={friendRequestExist}
