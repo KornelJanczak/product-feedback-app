@@ -22,6 +22,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
     CredentialsProvider({
+      id: "credentials",
       name: "credentials",
       credentials: {},
       async authorize(credentials) {
