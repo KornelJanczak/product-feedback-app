@@ -109,11 +109,11 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      if (url.startsWith("/")) return `${baseUrl}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return baseUrl;
-      return baseUrl;
-      // return "/";
+      // if (url.startsWith("/")) return `${baseUrl}`;
+      // // Allows callback URLs on the same origin
+      // else if (new URL(url).origin === baseUrl) return baseUrl;
+      // return baseUrl;
+      return "/";
     },
   },
 };
