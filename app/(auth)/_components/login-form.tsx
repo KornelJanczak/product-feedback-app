@@ -35,8 +35,12 @@ export default function LoginForm() {
   const processForm: SubmitHandler<Inputs> = async (data) => {
     setPending(true);
     try {
-      await signIn("credentials", data);
-      toast.success("You are logged!");
+      const login = await signIn("credentials", { ...data });
+
+      if (login?.ok) {
+        toast.success("You are logged!");
+        router.push("/");
+      }
     } catch {
       toast.error("Something went wrong");
     } finally {
