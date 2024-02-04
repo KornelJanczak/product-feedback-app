@@ -35,7 +35,7 @@ export default function LoginForm() {
   const processForm: SubmitHandler<Inputs> = async (data) => {
     setPending(true);
     try {
-      const login = await signIn("credentials", { ...data });
+      const login = await signIn("credentials", { ...data, redirect: false });
 
       if (login?.ok) {
         toast.success("You are logged!");
