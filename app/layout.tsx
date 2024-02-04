@@ -6,7 +6,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import AuthProvider from "@/providers/session-provider";
 
-export const jost = Jost({
+const jost = Jost({
   subsets: ["latin"],
 });
 
