@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   description: "Create your own section!",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
