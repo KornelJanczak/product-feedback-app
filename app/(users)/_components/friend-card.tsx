@@ -6,6 +6,7 @@ export default function FriendCard({
   userName,
   friendRequestExist,
   existingInvitation,
+  userFriend,
   id,
   image,
 }: Friend) {
@@ -26,6 +27,7 @@ export default function FriendCard({
           userId={id}
           friendRequestExist={friendRequestExist}
           existingInvitation={existingInvitation}
+          userFriend={userFriend}
         />
       </div>
     </li>

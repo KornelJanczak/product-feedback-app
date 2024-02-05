@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import FriendCard from "./friend-card";
 export default function FriendsContainer({ users }: { users: Friend[] }) {
   return (
@@ -7,13 +7,20 @@ export default function FriendsContainer({ users }: { users: Friend[] }) {
       sm:grid sm:grid-cols-2 sm:p-0 sm:gap-x-8 md:grid-cols-3 md:gap-x-4"
     >
       {users!.map(
-        ({ id, userName, friendRequestExist, existingInvitation }) => (
+        ({
+          id,
+          userName,
+          friendRequestExist,
+          existingInvitation,
+          userFriend,
+        }) => (
           <FriendCard
             key={id}
             userName={userName}
             id={id}
             friendRequestExist={friendRequestExist}
             existingInvitation={existingInvitation}
+            userFriend={userFriend}
           />
         )
       )}

@@ -1,7 +1,6 @@
 "use server";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { action } from "@/lib/safe-action-client";
-import { revalidatePath } from "next/cache";
 import { userActionSchema } from "@/models/@actions-schemas";
 import prisma from "@/lib/db";
 import { revalidateFriends } from "@/lib/user/revalidate-friends";

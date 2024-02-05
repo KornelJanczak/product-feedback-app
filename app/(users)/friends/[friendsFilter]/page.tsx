@@ -53,6 +53,9 @@ export default async function FriendsPage({
   
   const users = await getUsers(searchValue, param as string);
 
+  console.log(users);
+  
+
   if (users.length === 0)
     return (
       <NoResult
