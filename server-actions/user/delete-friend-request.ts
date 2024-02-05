@@ -25,7 +25,7 @@ export const deleteFriendRequest = action(idSchema, async ({ userId }) => {
 
     if (!request) return { error: "Something went wrong!" };
 
-    revalidatePath("/friends/[slug]");
+    revalidatePath("/friends/[friendFilter]");
     return { success: request };
   } catch {
     return { error: "Something went wrong!" };

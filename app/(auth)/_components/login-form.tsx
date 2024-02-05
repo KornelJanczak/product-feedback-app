@@ -19,7 +19,6 @@ import { toast } from "sonner";
 import { loginFormSchema } from "@/models/@auth-schema";
 import { useAction } from "next-safe-action/hooks";
 
-
 export default function LoginForm() {
   const router = useRouter();
   const [pending, setPending] = useState<boolean>(false);
@@ -55,6 +54,8 @@ export default function LoginForm() {
     // } finally {
     //   setPending(false);
     // }
+    setPending(true);
+
     signIn("credentials", { ...data, redirect: false }).then((callback) => {
       setPending(false);
       console.log(callback);
