@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+
+model User{
+  id String @id @default(cuid())
+  userName String
+  email String
+  password String?
+  createDate DateTime @default(now())
+  updateDate DateTime @updatedAt
+  feedbackSections UserToFeedbackSection[]
+  friendOf Friend[] @relation("friendOf")
+  friends  Friend[] @relation("friends")
+  friendRequestOf FriendRequest[] @relation("friendRequestOf")
+  friendRequest FriendRequest[] @relation("friendRequest")
+}
+
+
+model Friend {
+  friendOfId String
+  friendId  String
+  friendOf   User @relation("friendOf", fields: [friendOfId], references: [id])
+  friends    User @relation("friends", fields: [friendId], references: [id])
+  @@id([friendId, friendOfId])
+}
+
+model FriendRequest{
+  friendRequestOfId String
+  friendRequestId String
+  friendRequestOf User @relation("friendRequestOf", fields: [friendRequestOfId], references: [id])
+  friendRequest User @relation("friendRequest", fields: [friendRequestId], references: [id])
+  @@id([friendRequestId, friendRequestOfId])
+}
+
+
+model FeedbackSection {
+  id        String   @id @default(cuid())
+  // author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  description String
+  type String
+  feedbacks   Feedback[]
+  users       UserToFeedbackSection[]
+}
+
+
+model Feedback {
+  id String  @id @default(cuid())
+  name String
+  // feedbackSections FeedbackToFeedbackSection[]
+  feedbackSectionId  String
+  feedbackSection    FeedbackSection  @relation(fields: [feedbackSectionId], references: [id])
+}
+
+
+model UserToFeedbackSection {
+  userId   String
+  feedbackSectionId String
+  user  User @relation(fields: [userId], references: [id])
+  feedbackSection  FeedbackSection  @relation(fields: [feedbackSectionId], references: [id])
+  role String
+  @@id([userId, feedbackSectionId])
+}
+
+
+
+
+
+// model FeedbackToFeedbackSection {
+//   feedbackSection   FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+//   feedbackSectionId String
+//   feedback   Feedback @relation(fields: [feedbackId], references: [id])
+//   feedbackId String
+//   @@id([feedbackSectionId, feedbackId])
+// }
+
+
+
+
+// model AccessibleFeedbackSection {
+//   user            User @relation(fields: [userId], references: [id])
+//   userId          String
+//   feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+//   feedbackSectionId String
+//   @@id([userId, feedbackSectionId])
+// }

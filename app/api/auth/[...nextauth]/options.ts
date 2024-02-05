@@ -34,8 +34,7 @@ export const authOptions: NextAuthOptions = {
             password: string;
           };
 
-          console.log(email, password);
-          const user = await prisma?.user.findFirst({
+          const user = await prisma.user.findFirst({
             where: {
               email,
             },
@@ -113,13 +112,13 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    // async redirect({ url, baseUrl }) {
-    //   // if (url.startsWith("/")) return `${baseUrl}`;
-    //   // // Allows callback URLs on the same origin
-    //   // else if (new URL(url).origin === baseUrl) return baseUrl;
-    //   // return baseUrl;
-    //   return "/";
-    // },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return baseUrl;
+      return baseUrl;
+      // return "/";
+    },
   },
 };
 

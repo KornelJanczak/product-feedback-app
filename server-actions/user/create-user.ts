@@ -8,12 +8,16 @@ import { revalidatePath } from "next/cache";
 export const createSafeUser = action(
   registerFormSchema,
   async ({ username, email, password }) => {
+    console.log(username, email, password);
+
     try {
       const existingUser = await prisma.user.findFirst({
         where: {
           email,
         },
       });
+
+      console.log(existingUser);
 
       if (existingUser) return { error: "User already existing!" };
 
@@ -26,6 +30,9 @@ export const createSafeUser = action(
           password: hashPass,
         },
       });
+
+      console.log(user);
+      
 
       revalidatePath("/friends");
       return { success: user };

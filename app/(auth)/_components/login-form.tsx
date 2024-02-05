@@ -11,12 +11,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import SubmitBtn from "./submit-btn";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { loginFormSchema } from "@/models/@auth-schema";
+import { useAction } from "next-safe-action/hooks";
+import { loginAction } from "@/server-actions/user/login";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -32,24 +34,44 @@ export default function LoginForm() {
     },
   });
 
-  const processForm: SubmitHandler<Inputs> = async (data) => {
-    setPending(true);
-    try {
-      const login = await signIn("credentials", {
-        ...data,
-        redirect: false,
-        callbackUrl: "/",
-      });
+  const { execute } = useAction(loginAction);
 
-      if (login?.ok) {
-        toast.success("You are logged!");
-        router.push("/");
-      }
-    } catch {
-      toast.error("Something went wrong");
-    } finally {
+  const processForm: SubmitHandler<Inputs> = (data) => {
+    // execute({
+    //   type: "credentials",
+    //   password: data.password,
+    //   email: data.email,
+    // });
+    // setPending(true);
+    // try {
+    //   const login = await signIn("credentials", data);
+
+    //   console.log(login, "LOGIN");
+
+    //   if (login?.ok) {
+    //     toast.success("You are logged!");
+    //     router.push("/");
+    //   }
+    // } catch {
+    //   toast.error("Something went wrong");
+    // } finally {
+    //   setPending(false);
+    // }
+    signIn("credentials", { ...data, redirect: false }).then((callback) => {
       setPending(false);
-    }
+      console.log(callback);
+      router.push("/");
+
+      if (callback?.ok) {
+        router.push("/");
+        toast.success("You are logged!");
+      }
+
+      if (callback?.error) {
+        toast.error("Something went wrong");
+      }
+    });
+    // router.push("/");
   };
 
   return (
