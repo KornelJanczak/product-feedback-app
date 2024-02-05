@@ -1,9 +1,10 @@
+import prisma from "@/lib/db";
 export default async function getInvitedUsers(
   currentUser: User,
   userName: string
 ) {
   try {
-    const requests = await prisma?.user.findMany({
+    const requests = await prisma.user.findMany({
       where: {
         friendRequest: {
           some: {
@@ -14,7 +15,7 @@ export default async function getInvitedUsers(
       },
     });
 
-    const invitedUsers = requests?.map((user) => {
+    const invitedUsers = requests.map((user) => {
       return {
         ...user,
         friendRequestExist: true,

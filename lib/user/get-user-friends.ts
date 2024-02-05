@@ -1,8 +1,9 @@
+import prisma from "@/lib/db";
 export default async function getUserFriends(
   currentUser: User,
   userName: string
 ) {
-  const userFriends = await prisma?.user.findMany({
+  const userFriends = await prisma.user.findMany({
     where: {
       friends: {
         some: {
@@ -14,7 +15,7 @@ export default async function getUserFriends(
   });
 
   // Change Arr structure
-  const friendsArr = userFriends?.map((friend) => {
+  const friendsArr = userFriends.map((friend) => {
     return {
       id: friend.id,
       userName: friend.userName,

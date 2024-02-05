@@ -1,9 +1,10 @@
+import prisma from "@/lib/db";
 export default async function getSuggestionUsers(
   currentUser: User,
   userName: string
 ) {
   try {
-    const friends = await prisma?.friend.findMany({
+    const friends = await prisma.friend.findMany({
       where: {
         friendOfId: currentUser.id,
       },
@@ -14,7 +15,7 @@ export default async function getSuggestionUsers(
 
     const friendIds = friends!.map((friend) => friend.friendId);
 
-    const users = await prisma?.user.findMany({
+    const users = await prisma.user.findMany({
       where: {
         NOT: {
           id: {
@@ -25,7 +26,7 @@ export default async function getSuggestionUsers(
       },
     });
 
-    const requests = await prisma?.friendRequest.findMany({
+    const requests = await prisma.friendRequest.findMany({
       where: {
         friendRequestOfId: currentUser.id,
       },
@@ -35,7 +36,7 @@ export default async function getSuggestionUsers(
       requests?.map((request) => request.friendRequestId)
     );
 
-    const invitedUsers = users?.map((user) => {
+    const invitedUsers = users.map((user) => {
       const friendRequestExist = requestsSet.has(user.id);
       return { ...user, friendRequestExist };
     });
