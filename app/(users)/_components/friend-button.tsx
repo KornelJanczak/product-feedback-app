@@ -8,6 +8,7 @@ import DeleteUserIcon from "@/public/icons/delete-user";
 import { deleteFriendRequest } from "@/server-actions/user/delete-friend-request";
 import { acceptFriendRequest } from "@/server-actions/user/accept-friend-request";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useParams } from "next/navigation";
 
 export default function FriendButton({
   userId,
@@ -18,6 +19,8 @@ export default function FriendButton({
   friendRequestExist?: boolean;
   existingInvitation?: boolean;
 }) {
+  const { friendsFilter } = useParams();
+
   // Send friend request handler
   const { status, execute } = useAction(sendFriendRequest);
 
