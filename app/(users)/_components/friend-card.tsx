@@ -22,13 +22,11 @@ export default function FriendCard({
       <div className="flex flex-col w-full justify-center sm:items-center">
         <h3 className="text-xl mr-auto sm:text-center sm:mr-0">{userName}</h3>
         <span className="text-grey sm:text-center ">@nikuskamien123</span>
-        {/* <div className="flex items-center justify-center"> */}
         <FriendButton
           userId={id}
           friendRequestExist={friendRequestExist}
           existingInvitation={existingInvitation}
         />
-        {/* </div> */}
       </div>
     </li>
   );

@@ -1,3 +1,4 @@
+"use client"
 import FriendCard from "./friend-card";
 export default function FriendsContainer({ users }: { users: Friend[] }) {
   return (

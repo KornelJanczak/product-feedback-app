@@ -1,11 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ReactNode } from "react";
 import { useAction } from "next-safe-action/hooks";
 import { sendFriendRequest } from "@/server-actions/user/send-friend-request";
 import AddUserIcon from "@/public/icons/add-user";
 import DeleteUserIcon from "@/public/icons/delete-user";
-import { deleteFriendRequest } from "@/server-actions/user/delete-friend-request";
+import { rejectOrDeleteFriendRequest } from "@/server-actions/user/reject-or-delete-friend-request";
 import { acceptFriendRequest } from "@/server-actions/user/accept-friend-request";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useParams } from "next/navigation";
@@ -19,33 +18,31 @@ export default function FriendButton({
   friendRequestExist?: boolean;
   existingInvitation?: boolean;
 }) {
-  const { friendsFilter } = useParams();
-
-  // Send friend request handler
-  const { status, execute } = useAction(sendFriendRequest);
-
-  // Delete friend request handler
-  const { status: deleteStatus, execute: deleteExecute } =
-    useAction(deleteFriendRequest);
-
-  // Accept friend request handler
-  const { status: acceptStatus, execute: acceptExecute } =
-    useAction(acceptFriendRequest);
-
+  const { friendsFilter: param }: { friendsFilter: string } = useParams();
   const btnClass =
     "w-full bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 mt-0 flex gap-x-1 sm:w-11/12 ";
 
-  console.log(friendRequestExist, "FRIENDREQEXIST");
-  console.log(existingInvitation, "EXINVEXIST");
+  // Send friend request
+  const { status: sendStatus, execute: sendExecute } =
+    useAction(sendFriendRequest);
+
+  // Accept friend request
+  const { status: acceptStatus, execute: acceptExecute } =
+    useAction(acceptFriendRequest);
+
+  // Reject or Delete friend request
+  const { status: rejOrDelStatus, execute: rejOrDelExecute } = useAction(
+    rejectOrDeleteFriendRequest
+  );
 
   if (friendRequestExist)
     return (
       <Button
         className={btnClass}
-        onClick={() => deleteExecute({ userId })}
-        aria-disabled={deleteStatus === "executing"}
+        onClick={() => rejOrDelExecute({ userId, param, actionType: "delete" })}
+        aria-disabled={rejOrDelStatus === "executing"}
       >
-        {deleteStatus === "executing" ? (
+        {rejOrDelStatus === "executing" ? (
           <ClipLoader size={20} color="#ffffff" />
         ) : (
           <DeleteUserIcon />
@@ -58,10 +55,10 @@ export default function FriendButton({
     return (
       <Button
         className={btnClass}
-        onClick={() => execute({ userId })}
-        aria-disabled={status === "executing"}
+        onClick={() => sendExecute({ userId, param })}
+        aria-disabled={sendStatus === "executing"}
       >
-        {status === "executing" ? (
+        {sendStatus === "executing" ? (
           <ClipLoader size={20} color="#ffffff" />
         ) : (
           <AddUserIcon />
@@ -75,7 +72,7 @@ export default function FriendButton({
       <div className="flex flex-col items-center w-full gap-1 pt-1 sm:pt-2">
         <Button
           className={btnClass}
-          onClick={() => acceptExecute({ userId })}
+          onClick={() => acceptExecute({ userId, param })}
           aria-disabled={acceptStatus === "executing"}
         >
           {acceptStatus === "executing" ? (
@@ -87,10 +84,12 @@ export default function FriendButton({
         </Button>
         <Button
           className={btnClass + " bg-dark hover:bg-dark"}
-          onClick={() => deleteExecute({ userId })}
-          aria-disabled={deleteStatus === "executing"}
+          onClick={() =>
+            rejOrDelExecute({ userId, param, actionType: "reject" })
+          }
+          aria-disabled={rejOrDelStatus === "executing"}
         >
-          {deleteStatus === "executing" ? (
+          {rejOrDelStatus === "executing" ? (
             <ClipLoader size={20} color="#ffffff" />
           ) : (
             <DeleteUserIcon />

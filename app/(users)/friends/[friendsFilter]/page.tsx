@@ -11,6 +11,7 @@ async function getUsers(userName: string, param: string) {
   try {
     const currentUser = await getCurrentUser();
 
+    
     // Param handler choose function for each param type
     const paramHandlers: {
       [key: string]: () => any;
@@ -48,6 +49,8 @@ export default async function FriendsPage({
 }) {
   const [param] = Object.values(params);
   const [searchValue] = Object.values(searchParams);
+  console.log(param, searchValue);
+  
   const users = await getUsers(searchValue, param as string);
 
   if (users.length === 0)

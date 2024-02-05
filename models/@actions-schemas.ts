@@ -1,6 +1,12 @@
 import * as z from "zod";
 
-export const userActionSchema = z.object({
+const basicUserSchema = {
   userId: z.string().min(1),
-  param: z.string().min(1),
+  // param: z.string().min(1),
+};
+
+export const userActionSchema = z.object({ ...basicUserSchema });
+export const rejOrDelActionSchema = z.object({
+  actionType: z.string(),
+  ...basicUserSchema,
 });
