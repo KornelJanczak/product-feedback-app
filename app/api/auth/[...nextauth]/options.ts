@@ -7,7 +7,7 @@ import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 
 export const authOptions: NextAuthOptions = {
-  // adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
