@@ -7,11 +7,18 @@ import { revalidatePath } from "next/cache";
 
 export const createSafeUser = action(
   registerFormSchema,
-  async ({ username, email, password }) => {
+  async ({ username, email, password, firstName, lastName }) => {
     try {
       const existingUser = await prisma.user.findFirst({
         where: {
-          email,
+          OR: [
+            {
+              email,
+            },
+            {
+              userName: username,
+            },
+          ],
         },
       });
 
@@ -21,13 +28,15 @@ export const createSafeUser = action(
 
       const user = await prisma.user.create({
         data: {
+          email,
+          firstName,
+          lastName,
           userName: username,
-          email: email,
           password: hashPass,
         },
       });
 
-      revalidatePath("/friends");
+      revalidatePath("/register");
       return { success: user };
     } catch {
       return { error: "Something went wrong" };

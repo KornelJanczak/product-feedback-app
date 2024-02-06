@@ -34,8 +34,7 @@ export default function RegisterForm() {
   });
 
   const { execute, status } = useAction(createSafeUser, {
-    onSuccess({ error }) {
-      if (error) toast.error(error);
+    onSuccess() {
       toast.success("Your account has been registered!");
       router.push("/login");
     },
@@ -76,6 +75,44 @@ export default function RegisterForm() {
                 <FormControl>
                   <Input
                     placeholder="Username"
+                    {...field}
+                    className="md:text-base"
+                    type="text"
+                    required
+                  />
+                </FormControl>
+                <FormMessage className="md:text-base" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem className="pt-2 md:pt-3">
+                <FormLabel className="md:text-base">First name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="First name"
+                    {...field}
+                    className="md:text-base"
+                    type="text"
+                    required
+                  />
+                </FormControl>
+                <FormMessage className="md:text-base" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className="pt-2 md:pt-3">
+                <FormLabel className="md:text-base">Last name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Last name"
                     {...field}
                     className="md:text-base"
                     type="text"
