@@ -33,7 +33,7 @@ export default function LoginForm() {
     },
   });
 
-  const processForm: SubmitHandler<Inputs> = (data) => {
+  const processForm: SubmitHandler<Inputs> = async (data) => {
     // execute({
     //   type: "credentials",
     //   password: data.password,
@@ -54,22 +54,24 @@ export default function LoginForm() {
     // } finally {
     //   setPending(false);
     // }
-    setPending(true);
+    // setPending(true);
 
-    signIn("credentials", { ...data, redirect: false }).then((callback) => {
-      setPending(false);
-      console.log(callback);
-      router.push("/");
+    signIn("credentials", { ...data, redirect: false, callbackUrl: "/" }).then(
+      (callback) => {
+        setPending(false);
+        // console.log(callback);
+        // router.push("/");
 
-      if (callback?.ok) {
-        router.push("/");
-        toast.success("You are logged!");
+        if (callback?.ok) {
+          router.push("/");
+          toast.success("You are logged!");
+        }
+
+        if (callback?.error) {
+          toast.error("Something went wrong");
+        }
       }
-
-      if (callback?.error) {
-        toast.error("Something went wrong");
-      }
-    });
+    );
     // router.push("/");
   };
 

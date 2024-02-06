@@ -9,9 +9,14 @@ type User = {
   };
 };
 
+export async function getSession() {
+  const session: User | null = await getServerSession(authOptions);
+  return session;
+}
+
 export default async function getCurrentUser() {
   try {
-    const data: User | null = await getServerSession(authOptions);
+    const data: User | null = await getSession();
 
     if (!data) throw new Error("User doesn't exist!");
 
