@@ -20,8 +20,11 @@ model User{
   lastName String?
   email String
   password String?
+  image String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
+  profile Profile? @relation(fields: [profileId], references: [id])
+  profileId String? @unique
   feedbackSections UserToFeedbackSection[]
   friendOf Friend[] @relation("friendOf")
   friends  Friend[] @relation("friends")
@@ -29,6 +32,15 @@ model User{
   friendRequest FriendRequest[] @relation("friendRequest")
 }
 
+
+model Profile {
+  id String  @id @default(cuid())
+  user User?
+  description String?
+  location String?
+  bgImage String?
+  preferRole String?
+}
 
 model Friend {
   friendOfId String
@@ -49,7 +61,6 @@ model FriendRequest{
 
 model FeedbackSection {
   id        String   @id @default(cuid())
-  // author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   description String
   type String
