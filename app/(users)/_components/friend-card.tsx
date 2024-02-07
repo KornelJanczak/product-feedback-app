@@ -1,9 +1,12 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 import FriendButton from "./friend-button";
 
 export default function FriendCard({
   userName,
+  firstName,
+  lastName,
   friendRequestExist,
   existingInvitation,
   userFriend,
@@ -18,11 +21,15 @@ export default function FriendCard({
     >
       <Avatar className="w-28 h-28">
         <AvatarImage src="https://github.com/shadcn.png" alt="User image" />
-        <AvatarFallback className="text-center">{userName}</AvatarFallback>
+        <AvatarFallback className="text-center">
+          <Skeleton className="w-28 h-28 rounded-full bg-[#0000001c]" />
+        </AvatarFallback>
       </Avatar>
       <div className="flex flex-col w-full justify-center sm:items-center">
-        <h3 className="text-xl mr-auto sm:text-center sm:mr-0">{userName}</h3>
-        <span className="text-grey sm:text-center ">@nikuskamien123</span>
+        <h3 className="text-xl mr-auto sm:text-center sm:mr-0">
+          {firstName} {lastName}
+        </h3>
+        <span className="text-grey sm:text-center ">@{userName}</span>
         <FriendButton
           userId={id}
           friendRequestExist={friendRequestExist}

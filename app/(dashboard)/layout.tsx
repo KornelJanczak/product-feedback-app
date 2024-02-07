@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import FindBar from "../_components/find-bar";
-import Nav from "@/components/nav";
+import Nav from "../../components/nav";
+import FindBar from "../(users)/friends/[friendsFilter]/_components/find-bar";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Nav />
       <main className="lg:col-start-2 lg:col-end-5">
         <section className="px-0 md:container lg:px-0">
-          <FindBar />
+          {/* <FindBar /> */}
           {children}
         </section>
       </main>

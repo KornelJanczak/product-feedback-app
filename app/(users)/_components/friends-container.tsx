@@ -1,11 +1,9 @@
 "use client";
 import FriendCard from "./friend-card";
+import UlCard from "./ul-card";
 export default function FriendsContainer({ users }: { users: Friend[] }) {
   return (
-    <ul
-      className="flex flex-col items-center justify-center gap-2 p-4 w-full 
-      sm:grid sm:grid-cols-2 sm:p-0 sm:gap-x-8 md:grid-cols-3 md:gap-x-4"
-    >
+    <UlCard>
       {users!.map(
         ({
           id,
@@ -13,17 +11,21 @@ export default function FriendsContainer({ users }: { users: Friend[] }) {
           friendRequestExist,
           existingInvitation,
           userFriend,
+          lastName,
+          firstName,
         }) => (
           <FriendCard
             key={id}
             userName={userName}
             id={id}
+            lastName={lastName}
+            firstName={firstName}
             friendRequestExist={friendRequestExist}
             existingInvitation={existingInvitation}
             userFriend={userFriend}
           />
         )
       )}
-    </ul>
+    </UlCard>
   );
 }

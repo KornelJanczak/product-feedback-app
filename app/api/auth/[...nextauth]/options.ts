@@ -82,17 +82,24 @@ export const authOptions: NextAuthOptions = {
         }
       }
     },
-    async jwt({ token }) {
+    async jwt({ token, user }) {
+      if (!token) return {};
       const dbUser = await prisma.user.findFirst({
         where: {
           email: token.email as string,
         },
       });
 
-      if (!dbUser) return token;
+      if (!dbUser) {
+        token.id = user!.id;
+        token.name = user.name;
+        return token;
+      }
 
       return {
         id: dbUser.id,
+        firstName: dbUser.firstName,
+        lastName: dbUser.lastName,
         email: dbUser.email,
         name: dbUser.userName,
       };
@@ -105,6 +112,8 @@ export const authOptions: NextAuthOptions = {
           user: {
             email: token.email,
             name: token.name,
+            firstName: token.firstName,
+            lastName: token.lastName,
             id: token.id,
           },
         };

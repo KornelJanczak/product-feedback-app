@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 type User = {
   user: {
     email: string;
+    lastName?: string;
+    firstName?: string;
     name: string;
     id: string;
   };
@@ -23,6 +25,8 @@ export default async function getCurrentUser() {
     return {
       email: data.user.email,
       name: data.user.name,
+      firstName: data.user.firstName,
+      lastName: data.user.lastName,
       id: data.user.id,
     };
   } catch {

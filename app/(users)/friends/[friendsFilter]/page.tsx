@@ -6,12 +6,12 @@ import getInvitedUsers from "@/lib/user/get-invited-users";
 import getUserFriends from "@/lib/user/get-user-friends";
 import getRecivedInvitations from "@/lib/user/get-recived-invitations";
 import getSuggestionUsers from "@/lib/user/get-sugesstion-users";
+import SkeletonCard from "./_components/skeleton";
 
 async function getUsers(userName: string, param: string) {
   try {
     const currentUser = await getCurrentUser();
 
-    
     // Param handler choose function for each param type
     const paramHandlers: {
       [key: string]: () => any;
@@ -33,10 +33,11 @@ async function getUsers(userName: string, param: string) {
 
     // Execute paramHandlers based on param value
     if (paramHandlers[param]) return paramHandlers[param]();
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     return [];
   } catch {
-    throw new Error("Failed to get users. Please try again later.");
+    return [];
   }
 }
 
@@ -49,12 +50,15 @@ export default async function FriendsPage({
 }) {
   const [param] = Object.values(params);
   const [searchValue] = Object.values(searchParams);
-  console.log(param, searchValue);
-  
+
   const users = await getUsers(searchValue, param as string);
 
-  console.log(users);
-  
+  if (users.length > 0)
+    return (
+      <Suspense fallback={<SkeletonCard length={users.length} />}>
+        <FriendsContainer users={users as Friend[]} />
+      </Suspense>
+    );
 
   if (users.length === 0)
     return (
@@ -62,12 +66,5 @@ export default async function FriendsPage({
         title="There is no users."
         description="The user with this name has not been found. Please provide the correct username and try again."
       />
-    );
-
-  if (users.length > 0)
-    return (
-      <Suspense fallback={<p>Loading...</p>}>
-        <FriendsContainer users={users as Friend[]} />
-      </Suspense>
     );
 }

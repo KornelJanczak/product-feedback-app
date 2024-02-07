@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import SubmitBtn from "./submit-btn";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { loginFormSchema } from "@/models/@auth-schema";
-import { useAction } from "next-safe-action/hooks";
+import { Button } from "@/components/ui/button";
+import GithubIcon from "@/public/icons/github";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -34,34 +35,9 @@ export default function LoginForm() {
   });
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
-    // execute({
-    //   type: "credentials",
-    //   password: data.password,
-    //   email: data.email,
-    // });
-    // setPending(true);
-    // try {
-    //   const login = await signIn("credentials", data);
-
-    //   console.log(login, "LOGIN");
-
-    //   if (login?.ok) {
-    //     toast.success("You are logged!");
-    //     router.push("/");
-    //   }
-    // } catch {
-    //   toast.error("Something went wrong");
-    // } finally {
-    //   setPending(false);
-    // }
-    // setPending(true);
-
     signIn("credentials", { ...data, redirect: false, callbackUrl: "/" }).then(
       (callback) => {
         setPending(false);
-        // console.log(callback);
-        // router.push("/");
-
         if (callback?.ok) {
           router.push("/");
           toast.success("You are logged!");
@@ -72,66 +48,76 @@ export default function LoginForm() {
         }
       }
     );
-    // router.push("/");
   };
 
   return (
-    <section className="container h-screen flex items-center justify-center pb-60">
-      <Form {...form}>
-        <form
-          className="max-w-md w-full"
-          onSubmit={form.handleSubmit(processForm)}
+    <section className="container flex justify-center">
+      <div className="max-w-md w-full h-screen flex flex-col items-center justify-center pb-60">
+        <div className=" w-full flex justify-between items-center pb-2">
+          <h3 className="font-bold text-xl pb-2 text-secondDark">Login</h3>
+          <span
+            className="text-lg cursor-pointer underline text-secondDark hover:text-pink hover:transition duration-300"
+            onClick={() => router.push("/register")}
+          >
+            Register
+          </span>
+        </div>
+        <Button
+          className="w-full flex gap-1 items-center justify-center"
+          onClick={() => signIn("github", { redirect: false })}
         >
-          <div className="flex justify-between items-center">
-            <h3 className="font-bold text-xl pb-2 text-secondDark">Login</h3>
-            <span
-              className="text-lg cursor-pointer underline text-secondDark hover:text-pink hover:transition duration-300"
-              onClick={() => router.push("/register")}
-            >
-              Register
-            </span>
-          </div>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="pt-2 md:pt-3">
-                <FormLabel className="md:text-base">Email address</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Email address"
-                    {...field}
-                    className="md:text-base"
-                    type="email"
-                    required
-                  />
-                </FormControl>
-                <FormMessage className="md:text-base" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="pt-2 md:pt-3">
-                <FormLabel className="md:text-base">Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Password"
-                    {...field}
-                    className="md:text-base"
-                    type="password"
-                    required
-                  />
-                </FormControl>
-                <FormMessage className="md:text-base" />
-              </FormItem>
-            )}
-          />
-          <SubmitBtn pending={pending}>Login</SubmitBtn>
-        </form>
-      </Form>
+          <GithubIcon />
+          Continue with GitHub
+        </Button>
+        <div className="w-full flex items-center gap-4 pt-4">
+          <div className="flex-grow h-px bg-gray-300"></div>
+          <div className=" text-grey after:">OR</div>
+          <div className="flex-grow h-px bg-gray-300"></div>
+        </div>
+        <Form {...form}>
+          <form className="w-full" onSubmit={form.handleSubmit(processForm)}>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="pt-2 md:pt-3">
+                  <FormLabel className="md:text-base">Email address</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Email address"
+                      {...field}
+                      className="md:text-base"
+                      type="email"
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage className="md:text-base" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="pt-2 md:pt-3">
+                  <FormLabel className="md:text-base">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Password"
+                      {...field}
+                      className="md:text-base"
+                      type="password"
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage className="md:text-base" />
+                </FormItem>
+              )}
+            />
+            <SubmitBtn pending={pending}>Login</SubmitBtn>
+          </form>
+        </Form>
+      </div>
     </section>
   );
 }
