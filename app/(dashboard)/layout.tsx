@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Nav />
       <main className="lg:col-start-2 lg:col-end-5">
         <section className="px-0 md:container lg:px-0">
-          {/* <FindBar /> */}
+          <FindBar />
           {children}
         </section>
       </main>
