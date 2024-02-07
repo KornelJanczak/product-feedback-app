@@ -20,7 +20,7 @@ export default async function getCurrentUser() {
   try {
     const data: User | null = await getSession();
 
-    if (!data) throw new Error("User doesn't exist!");
+    if (!data) return null
 
     return {
       email: data.user.email,
@@ -30,6 +30,6 @@ export default async function getCurrentUser() {
       id: data.user.id,
     };
   } catch {
-    throw new Error("User doesn't exist!");
+    return null
   }
 }

@@ -7,33 +7,34 @@ import getUserFriends from "@/lib/user/get-user-friends";
 import getRecivedInvitations from "@/lib/user/get-recived-invitations";
 import getSuggestionUsers from "@/lib/user/get-sugesstion-users";
 import SkeletonCard from "./_components/skeleton";
+import { redirect } from "next/navigation";
 
-async function getUsers(userName: string, param: string) {
+async function getUsers(currentUser: User, userName: string, param: string) {
   try {
-    const currentUser = await getCurrentUser();
-
     // Param handler choose function for each param type
     const paramHandlers: {
-      [key: string]: () => any;
+      [key: string]: (currentUser: User, userName: string) => any;
     } = {
       // Return all users from db with the exception of current user
-      sugesstions: async () => await getSuggestionUsers(currentUser, userName),
+      sugesstions: async (currentUser, userName) =>
+        await getSuggestionUsers(currentUser, userName),
 
       // Filter sended invitations
-      "sended-invitations": async () =>
+      "sended-invitations": async (currentUser, userName) =>
         await getInvitedUsers(currentUser, userName),
 
       // Show only user friends
-      "your-friends": async () => await getUserFriends(currentUser, userName),
+      "your-friends": async (currentUser, userName) =>
+        await getUserFriends(currentUser, userName),
 
       // Return Recived invitations based on param function send prisma query
-      "recived-invitations": async () =>
+      "recived-invitations": async (currentUser, userName) =>
         await getRecivedInvitations(currentUser, userName),
     };
 
     // Execute paramHandlers based on param value
-    if (paramHandlers[param]) return paramHandlers[param]();
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    if (paramHandlers[param])
+      return paramHandlers[param](currentUser, userName);
 
     return [];
   } catch {
@@ -51,7 +52,11 @@ export default async function FriendsPage({
   const [param] = Object.values(params);
   const [searchValue] = Object.values(searchParams);
 
-  const users = await getUsers(searchValue, param as string);
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) redirect("/login");
+
+  const users = await getUsers(currentUser, searchValue, param as string);
 
   if (users.length > 0)
     return (
