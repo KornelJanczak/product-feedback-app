@@ -23,7 +23,7 @@ model User{
   image String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
-  profile Profile? @relation(fields: [profileId], references: [id])
+  // profile Profile? @relation(fields: [profileId], references: [id])
   profileId String? @unique
   feedbackSections UserToFeedbackSection[]
   friendOf Friend[] @relation("friendOf")
@@ -33,14 +33,16 @@ model User{
 }
 
 
-model Profile {
-  id String  @id @default(cuid())
-  user User?
-  description String?
-  location String?
-  bgImage String?
-  preferRole String?
-}
+// model Profile {
+//   id String  @id @default(cuid())
+//   user User?
+//   bgImage String?
+//   description String?
+//   company String?
+//   location String?
+//   preferRole String?
+//   gitHub String?
+// }
 
 model Friend {
   friendOfId String
