@@ -14,3 +14,17 @@ interface User {
   name: string;
   id: string;
 }
+
+interface UserProfile {
+  id: string;
+  userName: string;
+  lastName?: string;
+  email: string;
+  firstName?: string;
+  image?: string;
+  createDate: Date;
+  updateDate: Date;
+  profileId?: string;
+  profile?: string;
+  bgImage?: string;
+}

@@ -1,13 +1,13 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { Suspense } from "react";
 import FriendsContainer from "../../_components/friends-container";
-import NoResult from "@/components/no-result";
 import getInvitedUsers from "@/lib/user/get-invited-users";
 import getUserFriends from "@/lib/user/get-user-friends";
 import getRecivedInvitations from "@/lib/user/get-recived-invitations";
 import getSuggestionUsers from "@/lib/user/get-sugesstion-users";
 import SkeletonCard from "./_components/skeleton";
 import { redirect } from "next/navigation";
+import FindBar from "./_components/find-bar";
 
 async function getUsers(currentUser: User, userName: string, param: string) {
   try {
@@ -58,18 +58,14 @@ export default async function FriendsPage({
 
   const users = await getUsers(currentUser, searchValue, param as string);
 
-  if (users.length > 0)
     return (
-      <Suspense fallback={<SkeletonCard length={users.length} />}>
-        <FriendsContainer users={users as Friend[]} />
-      </Suspense>
+      <>
+        <FindBar />
+        <Suspense fallback={<SkeletonCard length={users.length} />}>
+          <FriendsContainer users={users as Friend[]} />
+        </Suspense>
+      </>
     );
 
-  if (users.length === 0)
-    return (
-      <NoResult
-        title="There is no users."
-        description="The user with this name has not been found. Please provide the correct username and try again."
-      />
-    );
+
 }
