@@ -3,13 +3,13 @@
 
 generator client {
   provider = "prisma-client-js"
-  // output   = "./generated/client"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 
@@ -23,7 +23,7 @@ model User{
   image String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
-  // profile Profile? @relation(fields: [profileId], references: [id])
+  profile Profile? @relation(fields: [profileId], references: [id])
   profileId String? @unique
   feedbackSections UserToFeedbackSection[]
   friendOf Friend[] @relation("friendOf")
@@ -33,16 +33,16 @@ model User{
 }
 
 
-// model Profile {
-//   id String  @id @default(cuid())
-//   user User?
-//   bgImage String?
-//   description String?
-//   company String?
-//   location String?
-//   preferRole String?
-//   gitHub String?
-// }
+model Profile {
+  id String  @id @default(cuid())
+  user User?
+  bgImage String?
+  description String?
+  company String?
+  location String?
+  preferRole String?
+  gitHub String?
+}
 
 model Friend {
   friendOfId String

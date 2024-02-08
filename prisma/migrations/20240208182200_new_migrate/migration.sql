@@ -2,12 +2,29 @@
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "userName" TEXT NOT NULL,
+    "firstName" TEXT,
+    "lastName" TEXT,
     "email" TEXT NOT NULL,
     "password" TEXT,
+    "image" TEXT,
     "createDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" TIMESTAMP(3) NOT NULL,
+    "profileId" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Profile" (
+    "id" TEXT NOT NULL,
+    "bgImage" TEXT,
+    "description" TEXT,
+    "company" TEXT,
+    "location" TEXT,
+    "preferRole" TEXT,
+    "gitHub" TEXT,
+
+    CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -53,6 +70,12 @@ CREATE TABLE "UserToFeedbackSection" (
 
     CONSTRAINT "UserToFeedbackSection_pkey" PRIMARY KEY ("userId","feedbackSectionId")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_profileId_key" ON "User"("profileId");
+
+-- AddForeignKey
+ALTER TABLE "User" ADD CONSTRAINT "User_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Friend" ADD CONSTRAINT "Friend_friendOfId_fkey" FOREIGN KEY ("friendOfId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
