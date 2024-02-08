@@ -23,8 +23,8 @@ model User{
   image String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
-  profile Profile? @relation(fields: [profileId], references: [id])
-  profileId String? @unique
+
+  profile Profile? 
   feedbackSections UserToFeedbackSection[]
   friendOf Friend[] @relation("friendOf")
   friends  Friend[] @relation("friends")
@@ -34,8 +34,10 @@ model User{
 
 
 model Profile {
-  id String  @id @default(cuid())
-  user User?
+
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+
   bgImage String?
   description String?
   company String?
@@ -110,4 +112,37 @@ model UserToFeedbackSection {
 //   feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
 //   feedbackSectionId String
 //   @@id([userId, feedbackSectionId])
+// }
+
+
+
+// model User{
+//   id String @id @default(cuid())
+//   userName String
+//   firstName String? 
+//   lastName String?
+//   email String
+//   password String?
+//   image String?
+//   createDate DateTime @default(now())
+//   updateDate DateTime @updatedAt
+//   profile Profile? @relation(fields: [profileId], references: [id])
+//   profileId String? @unique
+//   feedbackSections UserToFeedbackSection[]
+//   friendOf Friend[] @relation("friendOf")
+//   friends  Friend[] @relation("friends")
+//   friendRequestOf FriendRequest[] @relation("friendRequestOf")
+//   friendRequest FriendRequest[] @relation("friendRequest")
+// }
+
+
+// model Profile {
+//   id String  @id @default(cuid())
+//   user User?
+//   bgImage String?
+//   description String?
+//   company String?
+//   location String?
+//   preferRole String?
+//   gitHub String?
 // }
