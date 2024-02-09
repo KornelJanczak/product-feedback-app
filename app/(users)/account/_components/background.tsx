@@ -1,30 +1,35 @@
 "use client";
 import PictureIcon from "@/public/icons/picture";
-import { updateProfileBgImage } from "@/server-actions/user/update-profile-bg-image";
+import { updateImage } from "@/server-actions/user/update-image";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import React, { ChangeEvent, useRef } from "react";
+import Image from "next/image";
 
 export default function ProfileBackground({ image }: { image?: string }) {
   const imageInput = useRef<HTMLInputElement>(null);
+
   const handlePickClick = () => {
-    imageInput.current?.click();
+    if (imageInput.current) imageInput.current.click();
   };
-  const { execute } = useAction(updateProfileBgImage, {});
+  const { execute } = useAction(updateImage, {});
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
     const file = event.target.files?.[0];
 
-    if (!file)
-      toast.error("Update backround image has failed! Try again later.");
+    // if (!file)
+    // toast.error("Update backround image has failed! Try again later.");
 
     const fileReader = new FileReader();
 
+    console.log(file);
     fileReader.onload = () => {
-      execute({ bgImage: fileReader.result as string });
-    };
+      if (fileReader.result)
+        execute({ image: fileReader.result as string, imageType: "profile" });
 
-    fileReader.readAsDataURL(file!);
+      fileReader.readAsDataURL(file!);
+    };
   };
 
   if (!image)
