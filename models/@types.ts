@@ -15,16 +15,23 @@ interface User {
   id: string;
 }
 
-interface UserProfile {
+type UserProfile = {
   id: string;
   userName: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  firstName?: string;
-  image?: string;
+  password: string;
+  image: null | string;
   createDate: Date;
   updateDate: Date;
-  profileId?: string;
-  profile?: string;
-  bgImage?: string;
-}
+  profile: {
+    userId: string;
+    bgImage: null | string;
+    description: null | string;
+    company: null | string;
+    location: null | string;
+    preferRole: null | string;
+    gitHub: null | string;
+  };
+};

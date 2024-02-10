@@ -5,8 +5,6 @@ import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { revalidatePath } from "next/cache";
 import createImage from "@/lib/user/create-image";
-import fs from "fs";
-import { resolve } from "path";
 
 const updateImageSchema = z.object({
   image: z.string().min(1),
