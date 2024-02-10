@@ -1,38 +1,53 @@
-import * as fs from "fs";
-import path from "path";
-import uniqid from "uniqid";
+import { S3 } from "@aws-sdk/client-s3";
 
-export default async function createImage(image: string, imageType: string) {
+const s3 = new S3({
+  region: "eu-north-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+  },
+});
+
+export default async function createImage(
+  image: string,
+  imageType: string,
+  userId: string
+): Promise<string | { error: string }> {
   try {
-    const randomId = uniqid();
-
-    const typePath =
-      imageType === "avatar" ? "/avatar-images" : "/profile-images";
-
-    if (imageType !== "avatar" && imageType !== "profile")
+    if ((imageType !== "avatar" && imageType !== "profile") || !userId)
       return { error: "Invalid imageType" };
 
-    //@ts-ignore
-    const extension = path.extname(image);
-    const fileName = `${typePath}${randomId}.${extension}`;
+    const file = dataURLtoFile(image, userId);
 
-    console.log(fileName);
-    
+    const fileName: string = `${userId}-${imageType}.${
+      file.type.split("/")[1]
+    }`;
+    const bufferedImage = await file.arrayBuffer();
 
-    const stream = fs.createWriteStream(`public/images/${fileName}`);
-    //@ts-ignore
-    const bufferedImage = await image.arrayBuffer();
-
-    stream.write(Buffer.from(bufferedImage), (error) => {
-      if (error) {
-        return { error: "Saving image failed!" };
-      }
+    await s3.putObject({
+      Bucket: process.env.BUCKET_NAME,
+      Key: fileName,
+      Body: Buffer.from(bufferedImage),
+      ContentType: file.type,
     });
 
-    const imagePath = `/images/${fileName}`;
-
-    return imagePath;
+    return fileName;
   } catch {
     return { error: "Something went wrong!" };
   }
+}
+
+// Helper function which convret base64 string to file
+function dataURLtoFile(dataurl: any, filename: string) {
+  var arr = dataurl.split(","),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], filename, { type: mime });
 }

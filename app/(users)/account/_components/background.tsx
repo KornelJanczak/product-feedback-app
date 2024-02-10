@@ -8,33 +8,33 @@ import Image from "next/image";
 
 export default function ProfileBackground({ image }: { image?: string }) {
   const imageInput = useRef<HTMLInputElement>(null);
+  const { execute } = useAction(updateImage, {});
 
   const handlePickClick = () => {
     if (imageInput.current) imageInput.current.click();
   };
-  const { execute } = useAction(updateImage, {});
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const fileReader = new FileReader();
     if (!event.target.files) return;
     const file = event.target.files?.[0];
 
-    // if (!file)
-    // toast.error("Update backround image has failed! Try again later.");
+    if (!file) toast.error("Update backround image has failed! Try again.");
 
-    const fileReader = new FileReader();
-
-    console.log(file);
     fileReader.onload = () => {
-      if (fileReader.result)
-        execute({ image: fileReader.result as string, imageType: "profile" });
-
-      fileReader.readAsDataURL(file!);
+      execute({ image: fileReader.result as string, imageType: "profile" });
     };
+
+    fileReader.readAsDataURL(file!);
+  };
+
+  const submitForm = (e: any) => {
+    e.preventDefault();
   };
 
   if (!image)
     return (
-      <div className="relative w-full bg-dark h-52">
+      <form className="relative w-full bg-dark h-52" onSubmit={submitForm}>
         <input
           className="hidden"
           type="file"
@@ -43,15 +43,14 @@ export default function ProfileBackground({ image }: { image?: string }) {
           name="bgImagePicker"
           ref={imageInput}
           onChange={handleImageChange}
-          required
         />
         <button
           className="absolute z-10 rounded right-4 bottom-4 bg-pink p-1.5 hover:cursor-pointer"
-          type="button"
+          type="submit"
           onClick={handlePickClick}
         >
           <PictureIcon />
         </button>
-      </div>
+      </form>
     );
 }

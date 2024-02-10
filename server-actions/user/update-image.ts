@@ -5,6 +5,7 @@ import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { revalidatePath } from "next/cache";
 import createImage from "@/lib/user/create-image";
+import fs from "fs";
 
 const updateImageSchema = z.object({
   image: z.string().min(1),
@@ -15,12 +16,15 @@ export const updateImage = action(
   updateImageSchema,
   async ({ image, imageType }) => {
     try {
-      console.log("CHUJ");
       const currentUser = await getCurrentUser();
 
       if (!currentUser) return { error: "Unauthorizated!" };
 
-      const img = await createImage(image, imageType);
+      const img = (await createImage(
+        image,
+        imageType,
+        currentUser.id
+      )) as string;
 
       if (!img) return { error: "The creation of background image failed!" };
       let prismaQuery;
@@ -31,7 +35,7 @@ export const updateImage = action(
             id: currentUser!.id,
           },
           data: {
-            image,
+            image: img,
           },
         });
       } else {
@@ -40,11 +44,11 @@ export const updateImage = action(
             userId: currentUser?.id,
           },
           update: {
-            bgImage: image,
+            bgImage: img,
           },
           create: {
             userId: currentUser?.id,
-            bgImage: image,
+            bgImage: img,
           },
         });
       }
