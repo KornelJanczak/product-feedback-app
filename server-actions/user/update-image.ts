@@ -6,6 +6,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { revalidatePath } from "next/cache";
 import createImage from "@/lib/user/create-image";
 import fs from "fs";
+import { resolve } from "path";
 
 const updateImageSchema = z.object({
   image: z.string().min(1),
@@ -57,6 +58,8 @@ export const updateImage = action(
         return { error: "The creation of the user profile has failed!" };
 
       revalidatePath("/account");
+
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return { success: prismaQuery };
     } catch {
       return { error: "An error occurred while updating the image!" };
