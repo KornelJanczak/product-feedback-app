@@ -6,8 +6,7 @@ const AWS_URL =
   "https://korneljanczak-product-feedback-app.s3.eu-north-1.amazonaws.com/";
 
 export default function ProfileBackground({ image }: { image?: string }) {
-console.log('a');
-
+  console.log("a");
 
   if (!image)
     return (
@@ -26,7 +25,7 @@ console.log('a');
           width={375}
           height={120}
         />
-        <ImageButton type="profile" />;
+        <ImageButton type="profile" />
       </div>
     );
   }

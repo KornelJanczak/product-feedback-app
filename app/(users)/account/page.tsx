@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import UserAvatar from "./_components/user-avatar";
 import prisma from "@/lib/db";
 import ProfileBackground from "./_components/profile-background";
+import { ProfileSettings } from "./_components/profile-settings";
 
 async function getUserProfile(currentUser: User) {
   const userProfile = await prisma.user.findUnique({
@@ -24,11 +25,10 @@ export default async function AccountPage() {
 
   if (!currentUser) redirect("/login");
 
-  const { profile, userName, lastName, firstName, image } =
+  const { profile, userName, lastName, firstName, image, email } =
     (await getUserProfile(currentUser as User)) as UserProfile;
 
-    console.log(profile);
-    
+  console.log(profile);
 
   return (
     <div className="relative">
@@ -38,6 +38,12 @@ export default async function AccountPage() {
         image={image as string}
         lastName={lastName}
         firstName={firstName}
+      />
+      <ProfileSettings
+        userName={userName}
+        lastName={lastName}
+        firstName={firstName}
+        email={email}
       />
     </div>
   );

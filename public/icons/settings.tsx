@@ -5,7 +5,7 @@ export default function SettingsIcon() {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="#ffffff"
+      stroke="#3A4374"
       className="w-6 h-6"
       width={20}
       height={20}
