@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ImageButton from "./image-button";
+import ImageButton from "./use-image-button";
 
 const AWS_URL =
   "https://korneljanczak-product-feedback-app.s3.eu-north-1.amazonaws.com/";

@@ -2,7 +2,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import UserAvatar from "./_components/user-avatar";
 import prisma from "@/lib/db";
-import ProfileBackground from "./_components/image-background";
+import ProfileBackground from "./_components/profile-background";
 
 async function getUserProfile(currentUser: User) {
   const userProfile = await prisma.user.findUnique({
@@ -22,15 +22,15 @@ async function getUserProfile(currentUser: User) {
 export default async function AccountPage() {
   const currentUser = await getCurrentUser();
 
+  if (!currentUser) redirect("/login");
+
   const { profile, userName, lastName, firstName, image } =
     (await getUserProfile(currentUser as User)) as UserProfile;
 
-  console.log(profile);
-
-  if (!currentUser) redirect("/login");
+    console.log(profile);
+    
 
   return (
-    // <section className="container flex justify-center items-center pt-8">
     <div className="relative">
       <ProfileBackground image={profile.bgImage as string} />
       <UserAvatar
@@ -40,6 +40,5 @@ export default async function AccountPage() {
         firstName={firstName}
       />
     </div>
-    // </section>
   );
 }

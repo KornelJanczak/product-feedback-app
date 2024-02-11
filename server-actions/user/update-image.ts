@@ -56,8 +56,6 @@ export const updateImage = action(
         return { error: "The creation of the user profile has failed!" };
 
       revalidatePath("/account");
-
-      await new Promise((resolve) => setTimeout(resolve, 2000));
       return { success: prismaQuery };
     } catch {
       return { error: "An error occurred while updating the image!" };

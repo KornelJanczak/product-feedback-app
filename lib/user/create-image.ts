@@ -19,9 +19,11 @@ export default async function createImage(
 
     const file = dataURLtoFile(image, userId);
 
-    const fileName: string = `${userId}-${imageType}.${
-      file.type.split("/")[1]
-    }`;
+    const originalFileExtension = file.name.split(".").pop();
+    const fileName: string = `${userId}-${imageType}.${originalFileExtension}`;
+    // const fileName: string = `${userId}-${imageType}.${
+    //   file.type.split("/")[1]
+    // }`;
     const bufferedImage = await file.arrayBuffer();
 
     await s3.putObject({

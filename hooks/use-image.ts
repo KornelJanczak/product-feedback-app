@@ -8,24 +8,22 @@ const duration = 2000;
 
 export const useImage = (imageType: "avatar" | "profile") => {
   const imageInput = useRef<HTMLInputElement>(null);
+  const toastId = "loadingToast";
 
   const { execute, status } = useAction(updateImage, {
     onSuccess() {
+      toast.dismiss(toastId);
       toast.success("Image has been uploaded!");
     },
-    // onError({ fetchError, serverError }) {
-    //   //   if (fetchError) toast.error(fetchError, { duration });
-    //   //   else if (serverError) toast.error(serverError, { duration });
-    //   //   else toast.error("Image uploading has beed failed!", { duration });
-    // },
   });
 
   useEffect(() => {
-    console.log(status);
-
-    if (status === "executing") toast.loading("Loading...");
-    else if (status == "hasErrored")
-      toast.error("Image uploading has beed failed!", { duration: 5000 });
+    if (status === "executing") {
+      toast.loading("Loading...", { id: toastId });
+    } else if (status == "hasErrored") {
+      toast.dismiss(toastId);
+      toast.error("Image uploading has beed failed!");
+    }
   }, [status]);
 
   const handlePickClick = () => {
