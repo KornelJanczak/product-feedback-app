@@ -5,8 +5,10 @@ export default function DescriptionIcon() {
       fill="none"
       viewBox="0 0 24 24"
       stroke-width="1.5"
-      stroke="currentColor"
+      stroke="#3A4374"
       className="w-6 h-6"
+      width={20}
+      height={20}
     >
       <path
         stroke-linecap="round"

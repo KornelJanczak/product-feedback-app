@@ -6,74 +6,51 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ReactNode } from "react";
 
 export function SettingsDialog({
   open,
   onOpen,
+  data,
 }: {
+  data: { type: string; data: string | null | undefined; icon: ReactNode }[];
   open: boolean;
   onOpen: () => void;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpen}>
-      <DialogTrigger asChild>
-        {/* <Button variant="outline">Edit Profile</Button> */}
-      </DialogTrigger>
-      <DialogContent className="max-w-80 rounded sm:max-w-[425px]">
+      <DialogContent className="max-w-80 sm:max-w-md rounded">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-secondDark">Edit profile</DialogTitle>
+          <DialogDescription className="text-grey">
             Make changes to your profile here. Click save when you re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
-            />
-          </div>
+          {data.map((item, i) => (
+            <div key={i} className="grid grid-cols-4 items-center gap-4 ">
+              <Label htmlFor={item.type} className="">
+                {item.type}
+              </Label>
+              <Input
+                id={item.type}
+                defaultValue={item.data as string}
+                className="col-span-3"
+              />
+            </div>
+          ))}
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button
+            type="submit"
+            className="bg-pink hover:opacity-70
+         hover:bg-pink hover:transition duration-300"
+          >
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

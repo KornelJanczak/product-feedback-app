@@ -7,7 +7,7 @@ export default function EditIcon() {
       width={20}
       height={20}
       strokeWidth="1.5"
-      stroke="#3A4374"
+      stroke="#fff"
       className="w-6 h-6"
     >
       <path

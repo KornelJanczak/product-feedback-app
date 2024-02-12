@@ -5,8 +5,10 @@ export default function CompanyIcon() {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="currentColor"
+      stroke="#3A4374"
       className="w-6 h-6"
+      height={20}
+      width={20}
     >
       <path
         strokeLinecap="round"
