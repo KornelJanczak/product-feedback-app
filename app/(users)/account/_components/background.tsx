@@ -6,6 +6,8 @@ const AWS_URL =
   "https://korneljanczak-product-feedback-app.s3.eu-north-1.amazonaws.com/";
 
 export default function ProfileBackground({ image }: { image?: string }) {
+  const bgImage = `${AWS_URL}${image}?${new Date().getTime()}`;
+
   if (!image)
     return (
       <div className="relative w-full bg-dark h-52">
@@ -18,7 +20,7 @@ export default function ProfileBackground({ image }: { image?: string }) {
       <div className="relative w-full h-52">
         <Image
           alt="user-background-image"
-          src={AWS_URL + image}
+          src={bgImage}
           className="w-full h-full"
           width={375}
           height={120}
