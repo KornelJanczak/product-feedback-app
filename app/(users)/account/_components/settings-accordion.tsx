@@ -7,7 +7,7 @@ import {
 import SettingsGradientIcon from "@/public/icons/settings-gradient";
 import UserIcon from "@/public/icons/user";
 import EmailIcon from "@/public/icons/email";
-import Settings from "./settings";
+import Settings from "./settings-content";
 import PreferRoleIcon from "@/public/icons/prefer-role";
 import DescriptionIcon from "@/public/icons/description";
 import LocationIcon from "@/public/icons/location";

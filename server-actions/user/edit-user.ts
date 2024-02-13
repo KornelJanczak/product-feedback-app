@@ -24,7 +24,7 @@ const profileSchema = z.object({
   gitHub: z.string().min(1),
 });
 
-const editUserInfoSchema = z.discriminatedUnion("actionType", [
+export const editUserInfoSchema = z.discriminatedUnion("actionType", [
   accountSchema,
   profileSchema,
 ]);

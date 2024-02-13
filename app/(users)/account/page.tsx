@@ -1,9 +1,9 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import UserAvatar from "./_components/user-avatar";
+import UserAvatar from "./_components/profile-avatar";
 import prisma from "@/lib/db";
-import ProfileBackground from "./_components/profile-background";
-import { ProfileSettings } from "./_components/profile-settings";
+import ProfileBackground from "./_components/background";
+import { ProfileSettings } from "./_components/settings-accordion";
 
 async function getUserProfile(currentUser: User) {
   const userProfile = await prisma.user.findUnique({

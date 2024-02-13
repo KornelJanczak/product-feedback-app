@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { AccordionContent } from "@/components/ui/accordion";
 import EditIcon from "@/public/icons/edit";
-import { SettingsDialog } from "./dialog";
+import { SettingsDialog } from "./settings-dialog";
 import { ReactNode } from "react";
 import { useState } from "react";
 

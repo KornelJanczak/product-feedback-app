@@ -20,10 +20,12 @@ import { useAction } from "next-safe-action/hooks";
 
 type Inputs = z.infer<typeof registerFormSchema>;
 
+
+// Zrefaktoryzować przy użyciu mapy
 export default function RegisterForm() {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof registerFormSchema>>({
+  const form = useForm<Inputs>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       username: "",
