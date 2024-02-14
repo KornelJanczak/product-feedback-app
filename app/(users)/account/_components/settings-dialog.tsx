@@ -8,6 +8,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { editUser, editUserInfoSchema } from "@/server-actions/user/edit-user";
@@ -25,7 +33,12 @@ export function SettingsDialog({
   data,
   actionType,
 }: {
-  data: { type: string; data: string | null | undefined; icon: ReactNode }[];
+  data: {
+    type: string;
+    data: string | null | undefined;
+    icon: ReactNode;
+    name: settingsName;
+  }[];
   open: boolean;
   actionType?: "profile" | "account";
   onOpen: () => void;
@@ -57,7 +70,7 @@ export function SettingsDialog({
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-    
+
     execute(data);
   };
 
@@ -70,32 +83,58 @@ export function SettingsDialog({
             Make changes to your profile here. Click save when you re done.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={form.handleSubmit(processForm)}>
-          <div className="grid gap-4 py-4">
-            {data.map((item, i) => (
-              <div key={i} className="grid grid-cols-4 items-center gap-4 ">
-                <Label htmlFor={item.type} className="">
-                  {item.type}
-                </Label>
-                <Input
-                  id={item.type}
-                  defaultValue={item.data as string}
-                  className="col-span-3"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(processForm)}>
+            <div className="grid gap-4 py-4">
+              {data.map((item, i) => (
+                <FormField
+                  control={form.control}
+                  name={item.name}
+                  key={i}
+                  render={({ field }) => (
+                    <FormItem className="pt-2 md:pt-3">
+                      <FormLabel className="md:text-base">
+                        {item.type}
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder={item.type}
+                          defaultValue={item.data as string}
+                          {...field}
+                          className="md:text-base"
+                          type={item.name !== "email" ? "text" : "email"}
+                          // required
+                        />
+                      </FormControl>
+                      <FormMessage className="md:text-base" />
+                    </FormItem>
+                  )}
                 />
-              </div>
-            ))}
-          </div>
-          {/* <DialogFooter> */}
+              ))}
+            </div>
+            {/* <DialogFooter> */}
             <Button
               type="submit"
               className="bg-pink hover:opacity-70
-         hover:bg-pink hover:transition duration-300"
+            hover:bg-pink hover:transition duration-300"
             >
               Save changes
             </Button>
-          {/* </DialogFooter> */}
-        </form>
+            {/* </DialogFooter> */}
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
 }
+
+// <div key={i} className="grid grid-cols-4 items-center gap-4 ">
+//   <Label htmlFor={item.type} className="">
+//     {item.type}
+//   </Label>
+//   <Input
+//     id={item.type}
+//     defaultValue={item.data as string}
+//     className="col-span-3"
+//   />
+// </div>

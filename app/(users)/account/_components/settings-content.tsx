@@ -11,7 +11,12 @@ export default function Settings({
   onClick,
   type,
 }: {
-  dataArr: { type: string; data: string | null | undefined; icon: ReactNode }[];
+  dataArr: {
+    type: string;
+    data: string | null | undefined;
+    icon: ReactNode;
+    name: settingsName;
+  }[];
   onClick?: () => void;
   type: "profile" | "account";
 }) {

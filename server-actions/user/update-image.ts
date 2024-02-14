@@ -25,7 +25,7 @@ export const updateImage = action(
         currentUser.id
       )) as string;
 
-      if (!img) return { error: "The creation of background image failed!" };
+      if (!img) return { error: "The creation of image failed!" };
       let prismaQuery;
 
       if (imageType === "avatar") {

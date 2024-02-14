@@ -37,19 +37,45 @@ export function ProfileSettings({
   preferRole,
   gitHub,
 }: IProfileSettings) {
+  
   const accountSettings = [
-    { type: "User name", data: userName, icon: <UserIcon /> },
-    { type: "First name", data: firstName, icon: <UserIcon /> },
-    { type: "Last name", data: lastName, icon: <UserIcon /> },
-    { type: "Email", data: email, icon: <EmailIcon /> },
+    { type: "User name", data: userName, icon: <UserIcon />, name: "userName" },
+    {
+      type: "First name",
+      data: firstName,
+      icon: <UserIcon />,
+      name: "firstName",
+    },
+    {
+      type: "Last name",
+      data: lastName,
+      icon: <UserIcon />,
+      name: "lastName",
+    },
+    { type: "Email", data: email, icon: <EmailIcon />, name: "email" },
   ];
 
   const profileSettings = [
-    { type: "Prefer Role", data: preferRole, icon: <PreferRoleIcon /> },
-    { type: "Bio", data: description, icon: <DescriptionIcon /> },
-    { type: "Location", data: location, icon: <LocationIcon /> },
-    { type: "Company", data: company, icon: <CompanyIcon /> },
-    { type: "GitHub", data: gitHub, icon: <LinkIcon /> },
+    {
+      type: "Prefer Role",
+      data: preferRole,
+      icon: <PreferRoleIcon />,
+      name: "preferRole",
+    },
+    {
+      type: "Bio",
+      data: description,
+      icon: <DescriptionIcon />,
+      name: "description",
+    },
+    {
+      type: "Location",
+      data: location,
+      icon: <LocationIcon />,
+      name: "location",
+    },
+    { type: "Company", data: company, icon: <CompanyIcon />, name: "company" },
+    { type: "GitHub", data: gitHub, icon: <LinkIcon />, name: "gitHub" },
   ];
 
   return (

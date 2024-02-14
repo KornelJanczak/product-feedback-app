@@ -35,3 +35,15 @@ type UserProfile = {
     gitHub: null | string;
   };
 };
+
+type settingsName =
+  | "actionType"
+  | "userName"
+  | "firstName"
+  | "lastName"
+  | "email"
+  | "preferRole"
+  | "description"
+  | "company"
+  | "location"
+  | "gitHub";
