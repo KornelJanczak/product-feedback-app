@@ -3,8 +3,14 @@ import { redirect } from "next/navigation";
 import UserAvatar from "./_components/profile-avatar";
 import prisma from "@/lib/db";
 import ProfileBackground from "./_components/background";
-import { ProfileSettings } from "./_components/settings-accordion";
-
+import { Settings } from "./_components/settings-accordion";
+import UserIcon from "@/public/icons/user";
+import EmailIcon from "@/public/icons/email";
+import PreferRoleIcon from "@/public/icons/prefer-role";
+import DescriptionIcon from "@/public/icons/description";
+import LocationIcon from "@/public/icons/location";
+import CompanyIcon from "@/public/icons/company";
+import LinkIcon from "@/public/icons/link";
 async function getUserProfile(currentUser: User) {
   const userProfile = await prisma.user.findUnique({
     where: {
@@ -28,7 +34,65 @@ export default async function AccountPage() {
   const { profile, userName, lastName, firstName, image, email } =
     (await getUserProfile(currentUser as User)) as UserProfile;
 
-  console.log(profile);
+  const accountSettings: settings = [
+    {
+      type: "User name",
+      data: userName,
+      icon: <UserIcon />,
+      name: "userName",
+    },
+    {
+      type: "First name",
+      data: firstName,
+      icon: <UserIcon />,
+      name: "firstName",
+    },
+    {
+      type: "Last name",
+      data: lastName,
+      icon: <UserIcon />,
+      name: "lastName",
+    },
+    {
+      type: "Email",
+      data: email,
+      icon: <EmailIcon />,
+      name: "email",
+    },
+  ];
+
+  const profileSettings: settings = [
+    {
+      type: "Prefer Role",
+      data: profile.preferRole,
+      icon: <PreferRoleIcon />,
+      name: "preferRole",
+    },
+    {
+      type: "Bio",
+      data: profile.description,
+      icon: <DescriptionIcon />,
+      name: "description",
+    },
+    {
+      type: "Location",
+      data: profile.location,
+      icon: <LocationIcon />,
+      name: "location",
+    },
+    {
+      type: "Company",
+      data: profile.company,
+      icon: <CompanyIcon />,
+      name: "company",
+    },
+    {
+      type: "GitHub",
+      data: profile.gitHub,
+      icon: <LinkIcon />,
+      name: "gitHub",
+    },
+  ];
 
   return (
     <div className="relative">
@@ -39,11 +103,9 @@ export default async function AccountPage() {
         lastName={lastName}
         firstName={firstName}
       />
-      <ProfileSettings
-        userName={userName}
-        lastName={lastName}
-        firstName={firstName}
-        email={email}
+      <Settings
+        accountSettings={accountSettings}
+        profileSettings={profileSettings}
       />
     </div>
   );

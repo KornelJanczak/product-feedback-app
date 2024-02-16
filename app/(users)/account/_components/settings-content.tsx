@@ -1,24 +1,22 @@
 "use client";
+import { useState } from "react";
+import { updateAccount } from "./settings-accordion";
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { AccordionContent } from "@/components/ui/accordion";
 import EditIcon from "@/public/icons/edit";
-import { SettingsDialog } from "./settings-dialog";
-import { ReactNode } from "react";
-import { useState } from "react";
+import React, { ReactNode } from "react";
 
-export default function Settings({
+export default function SettingsContent({
   dataArr,
-  type,
+  dialog,
+  onClick,
 }: {
-  dataArr: {
-    type: string;
-    data: string | null | undefined;
-    icon: ReactNode;
-    name: settingsName;
-  }[];
-  type: "profile" | "account";
+  dataArr: settings;
+  onClick: () => void;
+  dialog: ReactNode;
 }) {
-  const [open, setOpen] = useState<boolean>(false);
+  // const [open, setOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -37,18 +35,13 @@ export default function Settings({
          hover:bg-pink hover:transition duration-300
          sm:absolute
          "
-          onClick={() => setOpen((open) => !open)}
+          onClick={onClick}
         >
-          Edit {type}
+          Edit
           <EditIcon />
         </Button>
       </AccordionContent>
-      <SettingsDialog
-        data={dataArr as settings}
-        open={open}
-        onOpen={() => setOpen((open) => !open)}
-        actionType={type}
-      />
+      {dialog}
     </>
   );
 }

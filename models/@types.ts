@@ -36,21 +36,23 @@ type UserProfile = {
   };
 };
 
-type settingsName =
-  | "actionType"
-  | "userName"
-  | "firstName"
-  | "lastName"
-  | "email"
+type settingsAccount = "userName" | "firstName" | "lastName" | "email";
+
+type settingsProfile =
   | "preferRole"
   | "description"
   | "company"
   | "location"
   | "gitHub";
 
+type settingsName = settingsAccount | settingsProfile;
+
 type settings = {
   type: string;
-  data: string | undefined;
+  data: string | null;
   icon: React.ReactNode;
-  name: settingsName;
+  name: settingsAccount;
 }[];
+
+
+

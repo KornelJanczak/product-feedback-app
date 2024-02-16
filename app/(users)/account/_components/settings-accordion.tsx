@@ -5,97 +5,51 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import SettingsGradientIcon from "@/public/icons/settings-gradient";
-import UserIcon from "@/public/icons/user";
-import EmailIcon from "@/public/icons/email";
-import Settings from "./settings-content";
-import PreferRoleIcon from "@/public/icons/prefer-role";
-import DescriptionIcon from "@/public/icons/description";
-import LocationIcon from "@/public/icons/location";
-import CompanyIcon from "@/public/icons/company";
-import LinkIcon from "@/public/icons/link";
+import SettingsContent from "./settings-content";
+import { useAction } from "next-safe-action/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  updateUser,
+  updateUserSchema,
+} from "@/server-actions/user/update-user";
+import {
+  updateProfile,
+  updateProfileSchema,
+} from "@/server-actions/user/update-profile";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { SettingsDialog } from "./settings-dialog";
+import { useState } from "react";
+import * as z from "zod";
 
-interface IProfileSettings {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  description?: string;
-  company?: string;
-  location?: string;
-  preferRole?: string;
-  gitHub?: string;
-}
+export type updateAccount = z.infer<typeof updateUserSchema>;
+export type updateProfile = z.infer<typeof updateProfileSchema>;
 
-export function ProfileSettings({
-  userName,
-  firstName,
-  lastName,
-  email,
-  description,
-  company,
-  location,
-  preferRole,
-  gitHub,
-}: IProfileSettings) {
-  const accountSettings: settings = [
-    {
-      type: "User name",
-      data: userName,
-      icon: <UserIcon />,
-      name: "userName",
+export function Settings({
+  accountSettings,
+  profileSettings,
+}: {
+  accountSettings: settings;
+  profileSettings: settings;
+}) {
+  const updateForm = useForm<updateAccount>({
+    resolver: zodResolver(updateUserSchema),
+    defaultValues: {
+      userName: accountSettings[0].data as string,
+      firstName: accountSettings[1].data as string,
+      lastName: accountSettings[2].data as string,
+      email: accountSettings[3].data as string,
     },
-    {
-      type: "First name",
-      data: firstName,
-      icon: <UserIcon />,
-      name: "firstName",
-    },
-    {
-      type: "Last name",
-      data: lastName,
-      icon: <UserIcon />,
-      name: "lastName",
-    },
-    {
-      type: "Email",
-      data: email,
-      icon: <EmailIcon />,
-      name: "email",
-    },
-  ];
+  });
 
-  const profileSettings: settings = [
-    {
-      type: "Prefer Role",
-      data: preferRole,
-      icon: <PreferRoleIcon />,
-      name: "preferRole",
-    },
-    {
-      type: "Bio",
-      data: description,
-      icon: <DescriptionIcon />,
-      name: "description",
-    },
-    {
-      type: "Location",
-      data: location,
-      icon: <LocationIcon />,
-      name: "location",
-    },
-    {
-      type: "Company",
-      data: company,
-      icon: <CompanyIcon />,
-      name: "company",
-    },
-    {
-      type: "GitHub",
-      data: gitHub,
-      icon: <LinkIcon />,
-      name: "gitHub",
-    },
-  ];
+  const { execute: executeUpdateAccount } = useAction(updateUser);
+
+  const { execute: executeUpdateProfile } = useAction(updateProfile);
+
+  const processForm: SubmitHandler<updateAccount> = (data) => {
+    executeUpdateAccount(data);
+  };
+
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <Accordion type="single" collapsible className="container w-full pt-40">
@@ -104,14 +58,26 @@ export function ProfileSettings({
           <SettingsGradientIcon />
           <span className="mr-auto pl-2">Account Settings</span>
         </AccordionTrigger>
-        <Settings dataArr={accountSettings} type="account" />
+        <SettingsContent
+          dataArr={accountSettings}
+          onClick={() => setOpen((open) => !open)}
+          dialog={
+            <SettingsDialog
+              processForm={processForm}
+              form={updateForm}
+              data={accountSettings}
+              open={open}
+              onOpen={() => setOpen((open) => !open)}
+            />
+          }
+        />
       </AccordionItem>
       <AccordionItem value="item-2">
         <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
           <SettingsGradientIcon />
           <span className="mr-auto pl-2">Profile Settings</span>
         </AccordionTrigger>
-        <Settings dataArr={profileSettings} type="profile" />
+        {/* <SettingsContent dataArr={profileSettings} /> */}
       </AccordionItem>
     </Accordion>
   );
