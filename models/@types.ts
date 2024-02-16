@@ -47,3 +47,10 @@ type settingsName =
   | "company"
   | "location"
   | "gitHub";
+
+type settings = {
+  type: string;
+  data: string | undefined;
+  icon: React.ReactNode;
+  name: settingsName;
+}[];

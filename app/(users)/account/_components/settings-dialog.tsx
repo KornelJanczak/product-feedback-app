@@ -33,33 +33,15 @@ export function SettingsDialog({
   data,
   actionType,
 }: {
-  data: {
-    type: string;
-    data: string | null | undefined;
-    icon: ReactNode;
-    name: settingsName;
-  }[];
+  data: settings;
   open: boolean;
-  actionType?: "profile" | "account";
+  actionType: "profile" | "account";
   onOpen: () => void;
 }) {
-  const accountValues = {
-    userName: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-  };
-
-  const profileValues = {
-    preferRole: "",
-    description: "",
-    location: "",
-    company: "",
-    gitHub: "",
-  };
-
-  const defaultValues =
-    actionType === "profile" ? profileValues : accountValues;
+  const defaultValues = data.reduce((result, item) => {
+    result[item.name] = item.data;
+    return result;
+  }, {} as Record<string, string | null | undefined>);
 
   const form = useForm<Inputs>({
     resolver: zodResolver(editUserInfoSchema),
@@ -71,7 +53,7 @@ export function SettingsDialog({
   const processForm: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
 
-    execute(data);
+    // execute(data);
   };
 
   return (
@@ -85,33 +67,31 @@ export function SettingsDialog({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(processForm)}>
-            <div className="grid gap-4 py-4">
-              {data.map((item, i) => (
-                <FormField
-                  control={form.control}
-                  name={item.name}
-                  key={i}
-                  render={({ field }) => (
-                    <FormItem className="pt-2 md:pt-3">
-                      <FormLabel className="md:text-base">
-                        {item.type}
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder={item.type}
-                          defaultValue={item.data as string}
-                          {...field}
-                          className="md:text-base"
-                          type={item.name !== "email" ? "text" : "email"}
-                          // required
-                        />
-                      </FormControl>
-                      <FormMessage className="md:text-base" />
-                    </FormItem>
-                  )}
-                />
-              ))}
-            </div>
+            {/* <div className="grid gap-4 py-4"> */}
+            {data.map((item, i) => (
+              <FormField
+                control={form.control}
+                name={item.name}
+                key={i}
+                render={({ field }) => (
+                  <FormItem className="pt-2 md:pt-3">
+                    <FormLabel className="md:text-base">{item.type}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={item.type}
+                        defaultValue={item.data as string}
+                        {...field}
+                        className="md:text-base"
+                        type={item.name !== "email" ? "text" : "email"}
+                        // required
+                      />
+                    </FormControl>
+                    <FormMessage className="md:text-base" />
+                  </FormItem>
+                )}
+              />
+            ))}
+            {/* </div> */}
             {/* <DialogFooter> */}
             <Button
               type="submit"

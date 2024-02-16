@@ -8,7 +8,6 @@ import { useState } from "react";
 
 export default function Settings({
   dataArr,
-  onClick,
   type,
 }: {
   dataArr: {
@@ -17,7 +16,6 @@ export default function Settings({
     icon: ReactNode;
     name: settingsName;
   }[];
-  onClick?: () => void;
   type: "profile" | "account";
 }) {
   const [open, setOpen] = useState<boolean>(false);
@@ -46,9 +44,10 @@ export default function Settings({
         </Button>
       </AccordionContent>
       <SettingsDialog
-        data={dataArr}
+        data={dataArr as settings}
         open={open}
         onOpen={() => setOpen((open) => !open)}
+        actionType={type}
       />
     </>
   );

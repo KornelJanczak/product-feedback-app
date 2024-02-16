@@ -37,9 +37,13 @@ export function ProfileSettings({
   preferRole,
   gitHub,
 }: IProfileSettings) {
-  
-  const accountSettings = [
-    { type: "User name", data: userName, icon: <UserIcon />, name: "userName" },
+  const accountSettings: settings = [
+    {
+      type: "User name",
+      data: userName,
+      icon: <UserIcon />,
+      name: "userName",
+    },
     {
       type: "First name",
       data: firstName,
@@ -52,10 +56,15 @@ export function ProfileSettings({
       icon: <UserIcon />,
       name: "lastName",
     },
-    { type: "Email", data: email, icon: <EmailIcon />, name: "email" },
+    {
+      type: "Email",
+      data: email,
+      icon: <EmailIcon />,
+      name: "email",
+    },
   ];
 
-  const profileSettings = [
+  const profileSettings: settings = [
     {
       type: "Prefer Role",
       data: preferRole,
@@ -74,8 +83,18 @@ export function ProfileSettings({
       icon: <LocationIcon />,
       name: "location",
     },
-    { type: "Company", data: company, icon: <CompanyIcon />, name: "company" },
-    { type: "GitHub", data: gitHub, icon: <LinkIcon />, name: "gitHub" },
+    {
+      type: "Company",
+      data: company,
+      icon: <CompanyIcon />,
+      name: "company",
+    },
+    {
+      type: "GitHub",
+      data: gitHub,
+      icon: <LinkIcon />,
+      name: "gitHub",
+    },
   ];
 
   return (
