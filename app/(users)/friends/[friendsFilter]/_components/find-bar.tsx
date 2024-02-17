@@ -15,9 +15,8 @@ export default function FindBar() {
       className="flex w-full items-center gap-2 py-6 px-6 bg-dark md:rounded-lg md:container"
       onSubmit={(e) => {
         e.preventDefault();
-        router.push(
-          `${param.friendsFilter}?=${inputRef.current?.value}`
-        );
+
+        router.push(`${param.friendsFilter}?=${inputRef.current?.value}`);
       }}
     >
       <SelectFilter />

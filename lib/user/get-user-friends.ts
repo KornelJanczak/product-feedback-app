@@ -19,6 +19,8 @@ export default async function getUserFriends(
     return {
       id: friend.id,
       userName: friend.userName,
+      firstName: friend.firstName,
+      lastName: friend.lastName,
       email: friend.email,
       userFriend: true,
     };

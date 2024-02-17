@@ -1,7 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ImageButton from "./use-image-button";
-import { useEffect, useState } from "react";
 
 const AWS_URL =
   "https://korneljanczak-product-feedback-app.s3.eu-north-1.amazonaws.com/";

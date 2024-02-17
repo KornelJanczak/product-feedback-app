@@ -12,6 +12,10 @@ import LocationIcon from "@/public/icons/location";
 import CompanyIcon from "@/public/icons/company";
 import LinkIcon from "@/public/icons/link";
 import FriendsContainer from "../_components/friends-container";
+import FindBar from "@/components/find-bar";
+import { Suspense } from "react";
+import getUserFriends from "@/lib/user/get-user-friends";
+import SkeletonCard from "../friends/[friendsFilter]/_components/skeleton";
 async function getUserProfile(currentUser: User) {
   const userProfile = await prisma.user.findUnique({
     where: {
@@ -27,7 +31,11 @@ async function getUserProfile(currentUser: User) {
   return userProfile;
 }
 
-export default async function AccountPage() {
+export default async function AccountPage({
+  searchParams,
+}: {
+  searchParams: string;
+}) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) redirect("/login");
@@ -65,39 +73,41 @@ export default async function AccountPage() {
   const profileSettings = [
     {
       type: "Prefer Role",
-      data: profile.preferRole,
+      data: profile?.preferRole,
       icon: <PreferRoleIcon />,
       name: "preferRole",
     },
     {
       type: "Bio",
-      data: profile.description,
+      data: profile?.description,
       icon: <DescriptionIcon />,
       name: "description",
     },
     {
       type: "Location",
-      data: profile.location,
+      data: profile?.location,
       icon: <LocationIcon />,
       name: "location",
     },
     {
       type: "Company",
-      data: profile.company,
+      data: profile?.company,
       icon: <CompanyIcon />,
       name: "company",
     },
     {
       type: "GitHub",
-      data: profile.gitHub,
+      data: profile?.gitHub,
       icon: <LinkIcon />,
       name: "gitHub",
     },
   ];
+  const [searchValue] = Object.values(searchParams);
+  const userFriends = await getUserFriends(currentUser, searchValue);
 
   return (
     <div className="relative">
-      <ProfileBackground image={profile.bgImage as string} />
+      <ProfileBackground image={profile?.bgImage as string} />
       <UserAvatar
         username={userName}
         image={image as string}
@@ -108,7 +118,13 @@ export default async function AccountPage() {
         accountSettings={accountSettings as settings}
         profileSettings={profileSettings as settings}
       />
-  
+      <div className="px-4 pt-14 rounded">
+        <h2 className="text-3xl font-medium pb-2 pt-4 text-dark">Your friends!</h2>
+        <FindBar params="account/" className="rounded" />
+      </div>
+      <Suspense fallback={<SkeletonCard length={userFriends.length} />}>
+        <FriendsContainer users={userFriends as Friend[]} />
+      </Suspense>
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function FriendCard({
         </AvatarFallback>
       </Avatar>
       <div className="flex flex-col w-full justify-center sm:items-center">
-        <h3 className="text-xl mr-auto sm:text-center sm:mr-0">
+        <h3 className="text-dark font-medium text-xl mr-auto sm:text-center sm:mr-0">
           {firstName} {lastName}
         </h3>
         <span className="text-grey sm:text-center ">@{userName}</span>

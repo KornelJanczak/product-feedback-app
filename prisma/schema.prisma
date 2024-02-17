@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  previewFeatures = ["driverAdapters", "fullTextIndex", "fullTextSearch"]
 }
 
 datasource db {
@@ -30,6 +30,7 @@ model User{
   friends  Friend[] @relation("friends")
   friendRequestOf FriendRequest[] @relation("friendRequestOf")
   friendRequest FriendRequest[] @relation("friendRequest")
+
 }
 
 
