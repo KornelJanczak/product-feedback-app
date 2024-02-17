@@ -1,6 +1,6 @@
 "use client";
 import { createSafeUser } from "@/server-actions/user/create-user";
-import { registerFormSchema } from "@/models/@auth-schema";
+import { registerFormSchema } from "@/schemas/@auth-actions-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import SubmitBtn from "./submit-btn";
@@ -13,19 +13,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAction } from "next-safe-action/hooks";
-
-type Inputs = z.infer<typeof registerFormSchema>;
-
+import { registerInputs } from "@/models/@auth-actions-types";
 
 // Zrefaktoryzować przy użyciu mapy
 export default function RegisterForm() {
   const router = useRouter();
 
-  const form = useForm<Inputs>({
+  const form = useForm<registerInputs>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       username: "",
@@ -48,7 +45,7 @@ export default function RegisterForm() {
     },
   });
 
-  const processForm: SubmitHandler<Inputs> = async (data) => {
+  const processForm: SubmitHandler<registerInputs> = async (data) => {
     execute(data);
   };
 

@@ -1,5 +1,5 @@
 "use server";
-import { registerFormSchema } from "@/models/@auth-schema";
+import { registerFormSchema } from "@/schemas/@auth-actions-schemas";
 import prisma from "@/lib/db";
 import bcryptjs from "bcryptjs";
 import { action } from "@/lib/safe-action-client";

@@ -8,17 +8,15 @@ import SettingsGradientIcon from "@/public/icons/settings-gradient";
 import SettingsContent from "./settings-content";
 import { useAction } from "next-safe-action/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  updateUser,
-  updateUserSchema,
-} from "@/server-actions/user/update-user";
+import { updateUser } from "@/server-actions/user/update-user";
+import { updateUserSchema } from "@/schemas/@user-actions-schemas";
 import {
   updateProfile,
   updateProfileSchema,
 } from "@/server-actions/user/update-profile";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { SettingsDialog } from "./settings-dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 export type updateAccount = z.infer<typeof updateUserSchema>;
@@ -31,6 +29,12 @@ export function Settings({
   accountSettings: settings;
   profileSettings: settings;
 }) {
+  console.log(accountSettings);
+
+  useEffect(() => {
+    console.log("");
+  });
+
   const updateForm = useForm<updateAccount>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
@@ -45,8 +49,8 @@ export function Settings({
 
   const { execute: executeUpdateProfile } = useAction(updateProfile);
 
-  const processForm: SubmitHandler<updateAccount> = (data) => {
-    executeUpdateAccount(data);
+  const processForm = async (data: z.infer<typeof updateUserSchema>) => {
+    console.log(data);
   };
 
   const [open, setOpen] = useState<boolean>(false);

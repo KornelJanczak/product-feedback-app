@@ -16,7 +16,7 @@ import SubmitBtn from "./submit-btn";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { loginFormSchema } from "@/models/@auth-schema";
+import { loginFormSchema } from "@/schemas/@auth-actions-schemas";
 import { Button } from "@/components/ui/button";
 import GithubIcon from "@/public/icons/github";
 
