@@ -34,7 +34,7 @@ export default async function AccountPage() {
   const { profile, userName, lastName, firstName, image, email } =
     (await getUserProfile(currentUser as User)) as UserProfile;
 
-  const accountSettings: settings = [
+  const accountSettings = [
     {
       type: "User name",
       data: userName,
@@ -61,7 +61,7 @@ export default async function AccountPage() {
     },
   ];
 
-  const profileSettings: settings = [
+  const profileSettings = [
     {
       type: "Prefer Role",
       data: profile.preferRole,
@@ -104,8 +104,8 @@ export default async function AccountPage() {
         firstName={firstName}
       />
       <Settings
-        accountSettings={accountSettings}
-        profileSettings={profileSettings}
+        accountSettings={accountSettings as settings}
+        profileSettings={profileSettings as settings}
       />
     </div>
   );

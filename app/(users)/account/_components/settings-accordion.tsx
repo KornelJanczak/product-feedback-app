@@ -6,21 +6,13 @@ import {
 } from "@/components/ui/accordion";
 import SettingsGradientIcon from "@/public/icons/settings-gradient";
 import SettingsContent from "./settings-content";
-import { useAction } from "next-safe-action/hooks";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { updateUser } from "@/server-actions/user/update-user";
-import { updateUserSchema } from "@/schemas/@user-actions-schemas";
-import {
-  updateProfile,
-  updateProfileSchema,
-} from "@/server-actions/user/update-profile";
 import { SettingsDialog } from "./settings-dialog";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-
-export type updateAccount = z.infer<typeof updateUserSchema>;
-export type updateProfile = z.infer<typeof updateProfileSchema>;
+import { updateUser } from "@/server-actions/user/update-user";
+import { CombinedFormInputs } from "@/models/@user-actions-types";
+import { updateUserSchema } from "@/schemas/@user-actions-schemas";
+import { updateProfile } from "@/server-actions/user/update-profile";
+import { updateProfileSchema } from "@/schemas/@user-actions-schemas";
+import { useUserSettings } from "@/hooks/use-settings";
 
 export function Settings({
   accountSettings,
@@ -29,31 +21,24 @@ export function Settings({
   accountSettings: settings;
   profileSettings: settings;
 }) {
-  console.log(accountSettings);
+  const {
+    processForm: accountProcess,
+    form: accountForm,
+    open: accountOpen,
+    setOpen: accountSetOpen,
+  } = useUserSettings(updateUser, updateUserSchema, accountSettings, "account");
 
-  useEffect(() => {
-    console.log("");
-  });
-
-  const updateForm = useForm<updateAccount>({
-    resolver: zodResolver(updateUserSchema),
-    defaultValues: {
-      userName: accountSettings[0].data as string,
-      firstName: accountSettings[1].data as string,
-      lastName: accountSettings[2].data as string,
-      email: accountSettings[3].data as string,
-    },
-  });
-
-  const { execute: executeUpdateAccount } = useAction(updateUser);
-
-  const { execute: executeUpdateProfile } = useAction(updateProfile);
-
-  const processForm = async (data: z.infer<typeof updateUserSchema>) => {
-    console.log(data);
-  };
-
-  const [open, setOpen] = useState<boolean>(false);
+  const {
+    processForm: profileProcess,
+    form: profileForm,
+    open: profileOpen,
+    setOpen: profileSetOpen,
+  } = useUserSettings(
+    updateProfile,
+    updateProfileSchema,
+    profileSettings,
+    "profile"
+  );
 
   return (
     <Accordion type="single" collapsible className="container w-full pt-40">
@@ -64,14 +49,14 @@ export function Settings({
         </AccordionTrigger>
         <SettingsContent
           dataArr={accountSettings}
-          onClick={() => setOpen((open) => !open)}
+          onClick={() => accountSetOpen((open) => !open)}
           dialog={
             <SettingsDialog
-              processForm={processForm}
-              form={updateForm}
+              processForm={accountProcess}
+              form={accountForm as CombinedFormInputs | any | undefined}
               data={accountSettings}
-              open={open}
-              onOpen={() => setOpen((open) => !open)}
+              open={accountOpen}
+              onOpen={() => accountSetOpen((open) => !open)}
             />
           }
         />
@@ -81,7 +66,19 @@ export function Settings({
           <SettingsGradientIcon />
           <span className="mr-auto pl-2">Profile Settings</span>
         </AccordionTrigger>
-        {/* <SettingsContent dataArr={profileSettings} /> */}
+        <SettingsContent
+          dataArr={profileSettings}
+          onClick={() => profileSetOpen((open) => !open)}
+          dialog={
+            <SettingsDialog
+              processForm={profileProcess}
+              form={profileForm as CombinedFormInputs | any | undefined}
+              data={profileSettings}
+              open={profileOpen}
+              onOpen={() => profileSetOpen((open) => !open)}
+            />
+          }
+        />
       </AccordionItem>
     </Accordion>
   );

@@ -15,6 +15,22 @@ export const updateUser = action(
 
       if (!currentUser) return { error: "Unauthorizated!" };
 
+      const existingUserName = await prisma.user.findFirst({
+        where: {
+          userName,
+        },
+      });
+
+      if (existingUserName) return { error: "Username is already taken!" };
+
+      const existingEmail = await prisma.user.findFirst({
+        where: {
+          email: email,
+        },
+      });
+
+      if (existingEmail) return { error: "Email is already taken!" };
+
       const user = await prisma.user.update({
         where: {
           id: currentUser.id,

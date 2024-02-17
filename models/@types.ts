@@ -45,14 +45,9 @@ type settingsProfile =
   | "location"
   | "gitHub";
 
-type settingsName = settingsAccount | settingsProfile;
-
 type settings = {
   type: string;
   data: string | null;
   icon: React.ReactNode;
-  name: settingsAccount;
+  name: settingsAccount & settingsProfile ;
 }[];
-
-
-

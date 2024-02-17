@@ -17,13 +17,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SubmitHandler, UseFormReturn, useForm } from "react-hook-form";
-import { updateAccount, updateProfile } from "./settings-accordion";
+import {
+  updateProfileReturn,
+  updateProfileSubmitHandler,
+  updateUserReturn,
+  updateUserSubmitHandler,
+} from "@/models/@user-actions-types";
 
-import { updateUserSchema } from "@/schemas/@user-actions-schemas";
-import * as z from "zod";
-
-import { zodResolver } from "@hookform/resolvers/zod";
+type CombinedFormReturn = updateUserReturn & updateProfileReturn;
+type CombinedFormSumbit = updateUserSubmitHandler & updateProfileSubmitHandler;
 
 export function SettingsDialog({
   open,
@@ -34,34 +36,10 @@ export function SettingsDialog({
 }: {
   data: settings;
   open: boolean;
-  form: UseFormReturn<updateAccount>;
-  processForm: SubmitHandler<updateAccount>;
+  form: CombinedFormReturn;
+  processForm: CombinedFormSumbit;
   onOpen: () => void;
 }) {
-  // type updateAccount = z.infer<typeof updateUserSchema>;
-
-  // const processForm1: SubmitHandler<updateAccount> = async (data) => {
-  //   console.log(data);
-
-  //   // executeUpdateAccount(data);
-  // };
-
-  // const updateForm = useForm<updateAccount>({
-  //   resolver: zodResolver(updateUserSchema),
-  //   defaultValues: {
-  //     userName: "",
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //   },
-  // });
-
-  // const processForm1: SubmitHandler<updateAccount> = async (data) => {
-  //   console.log(data);
-
-  //   // executeUpdateAccount(data);
-  // };
-
   return (
     <Dialog open={open} onOpenChange={onOpen}>
       <DialogContent className="max-w-80 sm:max-w-md rounded">
@@ -101,15 +79,15 @@ export function SettingsDialog({
                 );
               })}
             </div>
-            {/* <DialogFooter> */}
-            <Button
-              type="submit"
-              className="bg-pink hover:opacity-70
+            <DialogFooter>
+              <Button
+                type="submit"
+                className="bg-pink hover:opacity-70
             hover:bg-pink hover:transition duration-300"
-            >
-              Save changes
-            </Button>
-            {/* </DialogFooter> */}
+              >
+                Save changes
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>

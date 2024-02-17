@@ -1,7 +1,4 @@
 "use client";
-import { useState } from "react";
-import { updateAccount } from "./settings-accordion";
-import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { AccordionContent } from "@/components/ui/accordion";
 import EditIcon from "@/public/icons/edit";
@@ -16,8 +13,6 @@ export default function SettingsContent({
   onClick: () => void;
   dialog: ReactNode;
 }) {
-  // const [open, setOpen] = useState<boolean>(false);
-
   return (
     <>
       <AccordionContent className="sm:relative flex flex-col gap-y-3">
