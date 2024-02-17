@@ -11,6 +11,7 @@ import DescriptionIcon from "@/public/icons/description";
 import LocationIcon from "@/public/icons/location";
 import CompanyIcon from "@/public/icons/company";
 import LinkIcon from "@/public/icons/link";
+import FriendsContainer from "../_components/friends-container";
 async function getUserProfile(currentUser: User) {
   const userProfile = await prisma.user.findUnique({
     where: {
@@ -107,6 +108,7 @@ export default async function AccountPage() {
         accountSettings={accountSettings as settings}
         profileSettings={profileSettings as settings}
       />
+  
     </div>
   );
 }

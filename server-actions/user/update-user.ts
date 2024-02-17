@@ -17,6 +17,9 @@ export const updateUser = action(
 
       const existingUserName = await prisma.user.findFirst({
         where: {
+          NOT: {
+            id: currentUser.id,
+          },
           userName,
         },
       });
@@ -25,6 +28,9 @@ export const updateUser = action(
 
       const existingEmail = await prisma.user.findFirst({
         where: {
+          NOT: {
+            id: currentUser.id,
+          },
           email: email,
         },
       });

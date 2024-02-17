@@ -52,6 +52,8 @@ export function Settings({
           onClick={() => accountSetOpen((open) => !open)}
           dialog={
             <SettingsDialog
+              dialogTitle="Edit account"
+              dialogDescription="Make changes to your account here. Click save when you re done."
               processForm={accountProcess}
               form={accountForm as CombinedFormInputs | any | undefined}
               data={accountSettings}
@@ -70,13 +72,17 @@ export function Settings({
           dataArr={profileSettings}
           onClick={() => profileSetOpen((open) => !open)}
           dialog={
-            <SettingsDialog
-              processForm={profileProcess}
-              form={profileForm as CombinedFormInputs | any | undefined}
-              data={profileSettings}
-              open={profileOpen}
-              onOpen={() => profileSetOpen((open) => !open)}
-            />
+       
+              <SettingsDialog
+                dialogTitle="Edit profile"
+                dialogDescription="Make changes to your profile here. Click save when you re done."
+                processForm={profileProcess}
+                form={profileForm as CombinedFormInputs | any | undefined}
+                data={profileSettings}
+                open={profileOpen}
+                onOpen={() => profileSetOpen((open) => !open)}
+              />
+
           }
         />
       </AccordionItem>

@@ -33,25 +33,29 @@ export function SettingsDialog({
   data,
   form,
   processForm,
+  dialogTitle,
+  dialogDescription,
 }: {
   data: settings;
   open: boolean;
   form: CombinedFormReturn;
   processForm: CombinedFormSumbit;
+  dialogTitle: string;
+  dialogDescription: string;
   onOpen: () => void;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpen}>
-      <DialogContent className="max-w-80 sm:max-w-md rounded">
+      <DialogContent className="max-w-80 sm:max-w-md md:max-w-lg rounded">
         <DialogHeader>
-          <DialogTitle className="text-secondDark">Edit profile</DialogTitle>
+          <DialogTitle className="text-secondDark">{dialogTitle}</DialogTitle>
           <DialogDescription className="text-grey">
-            Make changes to your profile here. Click save when you re done.
+            {dialogDescription}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(processForm)}>
-            <div className="grid gap-4 py-4">
+            <div className="grid gap-2 py-2">
               {data.map((item, i) => {
                 return (
                   <FormField
@@ -79,7 +83,7 @@ export function SettingsDialog({
                 );
               })}
             </div>
-            <DialogFooter>
+            <DialogFooter className="pt-4">
               <Button
                 type="submit"
                 className="bg-pink hover:opacity-70
