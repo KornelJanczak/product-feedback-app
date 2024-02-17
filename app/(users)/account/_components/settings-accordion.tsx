@@ -41,7 +41,7 @@ export function Settings({
   );
 
   return (
-    <Accordion type="single" collapsible className="container w-full pt-40">
+    <Accordion type="single" collapsible className="container w-full pt-48">
       <AccordionItem value="item-1 ">
         <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
           <SettingsGradientIcon />

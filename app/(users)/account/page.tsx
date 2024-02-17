@@ -107,7 +107,9 @@ export default async function AccountPage({
 
   return (
     <div className="relative">
-      <ProfileBackground image={profile?.bgImage as string} />
+      <Suspense fallback={<div className="h-100 w-100 bg-red"></div>}>
+        <ProfileBackground image={profile?.bgImage as string} />
+      </Suspense>
       <UserAvatar
         username={userName}
         image={image as string}
@@ -119,8 +121,15 @@ export default async function AccountPage({
         profileSettings={profileSettings as settings}
       />
       <div className="px-4 pt-14 rounded">
-        <h2 className="text-3xl font-medium pb-2 pt-4 text-dark">Your friends!</h2>
-        <FindBar params="account/" className="rounded" />
+        <h2 className="text-3xl font-medium pb-3 pt-4 text-dark">
+          Your friends
+        </h2>
+        <FindBar
+          params="account/"
+          className="rounded"
+          inputClassName="w-9/12"
+          buttonClassName="w-3/12"
+        />
       </div>
       <Suspense fallback={<SkeletonCard length={userFriends.length} />}>
         <FriendsContainer users={userFriends as Friend[]} />

@@ -7,7 +7,8 @@ import getRecivedInvitations from "@/lib/user/get-recived-invitations";
 import getSuggestionUsers from "@/lib/user/get-sugesstion-users";
 import SkeletonCard from "./_components/skeleton";
 import { redirect } from "next/navigation";
-import FindBar from "./_components/find-bar";
+import FindBar from "@/components/find-bar";
+import SelectFilter from "./_components/select-filter";
 
 async function getUsers(currentUser: User, userName: string, param: string) {
   try {
@@ -58,14 +59,14 @@ export default async function FriendsPage({
 
   const users = await getUsers(currentUser, searchValue, param as string);
 
-    return (
-      <>
-        <FindBar />
-        <Suspense fallback={<SkeletonCard length={users.length} />}>
-          <FriendsContainer users={users as Friend[]} />
-        </Suspense>
-      </>
-    );
-
-
+  return (
+    <>
+      <FindBar>
+        <SelectFilter />
+      </FindBar>
+      <Suspense fallback={<SkeletonCard length={users.length} />}>
+        <FriendsContainer users={users as Friend[]} />
+      </Suspense>
+    </>
+  );
 }

@@ -11,8 +11,12 @@ export default function FindBar({
   children,
   params,
   className,
+  inputClassName,
+  buttonClassName,
 }: {
   className?: string;
+  inputClassName?: string;
+  buttonClassName?: string;
   children?: ReactNode;
   params?: string;
 }) {
@@ -23,12 +27,16 @@ export default function FindBar({
   return (
     <form
       className={cn(
-        "flex w-full items-center gap-2 py-6 px-6 bg-dark md:rounded-lg md:container",
+        "flex w-full items-center gap-2 py-4 px-5 bg-dark md:rounded-lg md:container",
         className
       )}
       onSubmit={(e) => {
         e.preventDefault();
-        router.push(`${params}?=${inputRef.current?.value}`);
+        router.push(
+          `${param.friendsFilter ? param.friendsFilter : params}?=${
+            inputRef.current?.value
+          }`
+        );
         if (inputRef.current) {
           inputRef.current.value = "";
         }
@@ -39,12 +47,17 @@ export default function FindBar({
         type="text"
         placeholder="Username"
         ref={inputRef}
-        className="border-transparent focus:border-transparent focus:ring-0"
+        className={cn(
+          "w-2/5 border-transparent focus:border-transparent focus:ring-0",
+          inputClassName
+        )}
       ></Input>
       <Button
         type="submit"
-        className="flex gap-1 bg-pink hover:opacity-60 hover:bg-pink hover:transition 
-      duration-300 mt-0 w-4/12 lg:mt-0"
+        className={cn(
+          "flex gap-1 w-1/5 bg-pink hover:opacity-60 hover:bg-pink hover:transition duration-300 mt-0  lg:mt-0",
+          buttonClassName
+        )}
       >
         Search
         <SearchIcon />

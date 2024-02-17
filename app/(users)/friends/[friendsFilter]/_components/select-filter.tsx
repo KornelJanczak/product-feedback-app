@@ -17,7 +17,7 @@ export default function SelectFilter() {
 
   return (
     <Select onValueChange={changeHandler} value={friendsFilter as string}>
-      <SelectTrigger className="w-[180px] text-grey sm:w-full">
+      <SelectTrigger className="w-2/5 text-grey ">
         <SelectValue placeholder="Suggestions" />
       </SelectTrigger>
       <SelectContent className="px-0 mt-2 text-grey">
