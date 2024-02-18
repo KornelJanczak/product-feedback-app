@@ -22,6 +22,7 @@ const config = {
       },
       screens: {
         default: "1400px",
+        xs: "500px",
         sm: "720px",
         md: "768px",
         lg: "1024px",

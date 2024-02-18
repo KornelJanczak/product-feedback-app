@@ -1,10 +1,7 @@
-"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ImageButton from "./use-image-button";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const AWS_URL =
-  "https://korneljanczak-product-feedback-app.s3.eu-north-1.amazonaws.com/";
+import DeleteImageButton from "./delete-image-button";
 
 export default function UserAvatar({
   username,
@@ -20,8 +17,8 @@ export default function UserAvatar({
   const firstAndLastNameExist = firstName && lastName;
 
   const avatar = image
-    ? `${AWS_URL}${image}?${new Date().getTime()}`
-    : "https://github.com/shadcn.png";
+    ? `${process.env.AWS_URL}${image}?${new Date().getTime()}`
+    : `https://github.com/shadcn.png?${new Date().getTime()}`;
 
   return (
     <div className="container absolute top-28 w-full flex flex-col items-center justify-center">
@@ -29,9 +26,16 @@ export default function UserAvatar({
         <Avatar className="w-44 h-44">
           <AvatarImage src={avatar} />
           <AvatarFallback>
-            <Skeleton className="h-full w-full bg-[#0000001c]" />
+            <Skeleton className="h-full w-full bg-[#0000002c]" />
           </AvatarFallback>
         </Avatar>
+        {image && (
+          <DeleteImageButton
+            className="rounded-full right-0 ml-2 bottom-11"
+            imageName={image as string}
+            type="avatar"
+          />
+        )}
         <ImageButton type="avatar" />
       </div>
       <div className="flex flex-col">

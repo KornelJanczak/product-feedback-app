@@ -2,6 +2,7 @@
 import { useImage } from "@/hooks/use-image";
 import PictureIcon from "@/public/icons/picture";
 import CameraIcon from "@/public/icons/camera";
+import { cn } from "@/lib/utils";
 
 export default function ImageButton({ type }: { type: "profile" | "avatar" }) {
   const { imageInput, handleImageChange, handlePickClick } = useImage(type);
@@ -9,7 +10,7 @@ export default function ImageButton({ type }: { type: "profile" | "avatar" }) {
   const absoluteSpace =
     type === "profile"
       ? "rounded right-4 bottom-4"
-      : "rounded-full right-1 bottom-2";
+      : "rounded-full right-3 bottom-2";
 
   return (
     <>
@@ -21,7 +22,10 @@ export default function ImageButton({ type }: { type: "profile" | "avatar" }) {
         onChange={handleImageChange}
       />
       <button
-        className={`absolute z-10  ${absoluteSpace} bg-pink p-1.5 hover:cursor-pointer`}
+        className={cn(
+          `absolute z-10 bg-pink p-1.5 hover:cursor-pointer`,
+          absoluteSpace
+        )}
         type="button"
         onClick={handlePickClick}
       >

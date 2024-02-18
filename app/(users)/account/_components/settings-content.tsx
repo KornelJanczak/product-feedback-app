@@ -21,7 +21,14 @@ export default function SettingsContent({
             <span className="text-grey text-base flex gap-x-1.5 ">
               {item.icon}
               <strong className="text-secondDark">{item.type}: </strong>
-              {item.data ? item.data : "no information available."}
+              {item.type === "GitHub" && (
+                <a href={item.data as string}>
+                  {item.data ? item.data : "no information available."}
+                </a>
+              )}
+              {item.type !== "GitHub" && (
+                <p>{item.data ? item.data : "no information available."}</p>
+              )}
             </span>
           </div>
         ))}

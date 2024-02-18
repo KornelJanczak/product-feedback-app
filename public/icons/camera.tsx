@@ -5,8 +5,8 @@ export default function CameraIcon() {
       fill="#AD1EFA"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      width={28}
-      height={28}
+      width={24}
+      height={24}
       stroke="#ffffff"
       className="w-6 h-6"
     >

@@ -1,6 +1,6 @@
 "use server";
 import * as z from "zod";
-import { action } from "@/lib/safe-action-client";
+import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { revalidatePath } from "next/cache";

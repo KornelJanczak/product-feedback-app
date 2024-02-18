@@ -2,7 +2,7 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { updateUserSchema } from "@/schemas/@user-actions-schemas";
 import prisma from "@/lib/db";
-import { action } from "@/lib/safe-action-client";
+import { action } from "@/lib/clients/safe-action-client";
 import { revalidatePath } from "next/cache";
 
 export const updateUser = action(

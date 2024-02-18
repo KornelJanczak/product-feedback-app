@@ -2,7 +2,7 @@
 import { registerFormSchema } from "@/schemas/@auth-actions-schemas";
 import prisma from "@/lib/db";
 import bcryptjs from "bcryptjs";
-import { action } from "@/lib/safe-action-client";
+import { action } from "@/lib/clients/safe-action-client";
 import { revalidatePath } from "next/cache";
 
 export const createSafeUser = action(
