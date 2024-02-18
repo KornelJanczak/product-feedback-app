@@ -1,6 +1,7 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ImageButton from "./use-image-button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AWS_URL =
   "https://korneljanczak-product-feedback-app.s3.eu-north-1.amazonaws.com/";
@@ -27,7 +28,9 @@ export default function UserAvatar({
       <div className="relative">
         <Avatar className="w-44 h-44">
           <AvatarImage src={avatar} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>
+            <Skeleton className="h-full w-full bg-[#0000001c]" />
+          </AvatarFallback>
         </Avatar>
         <ImageButton type="avatar" />
       </div>

@@ -16,6 +16,9 @@ import FindBar from "@/components/find-bar";
 import { Suspense } from "react";
 import getUserFriends from "@/lib/user/get-user-friends";
 import SkeletonCard from "../friends/[friendsFilter]/_components/skeleton";
+
+import { Skeleton } from "@/components/ui/skeleton";
+
 async function getUserProfile(currentUser: User) {
   const userProfile = await prisma.user.findUnique({
     where: {
@@ -107,7 +110,11 @@ export default async function AccountPage({
 
   return (
     <div className="relative">
-      <Suspense fallback={<div className="h-100 w-100 bg-red"></div>}>
+      <Suspense
+        fallback={
+          <Skeleton className="w-full h-56 rounded-none bg-[#0000001c]" />
+        }
+      >
         <ProfileBackground image={profile?.bgImage as string} />
       </Suspense>
       <UserAvatar

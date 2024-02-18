@@ -1,4 +1,3 @@
-"use client";
 import FriendCard from "./friend-card";
 import UlCard from "./ul-card";
 import NoResult from "@/components/no-result";
