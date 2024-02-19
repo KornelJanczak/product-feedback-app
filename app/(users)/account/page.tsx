@@ -128,15 +128,15 @@ export default async function AccountPage({
         lastName={lastName}
         firstName={firstName}
       />
-      <div className="xl:flex xl:pt-40">
+      <div className="lg:mt-40 xl:flex xl:gap-x-10">
         <Settings
           accountSettings={accountSettings as settings}
           profileSettings={profileSettings as settings}
         />
 
-        <div className="p-4 mt-14 xl:pt-0 bg-basicWhite">
+        <div className="p-5 mt-14 lg:mt-0 bg-basicWhite lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
           <div className="flex items-center justify-between pb-6 pt-4">
-            <h2 className="text-3xl font-medium text-dark">Your friends</h2>
+            <h2 className="text-2xl font-semibold text-dark">Your friends</h2>
             <Link
               href={"/friends/your-friends"}
               className="text-lg text-pink text-semibold"

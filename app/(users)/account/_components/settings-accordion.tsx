@@ -41,51 +41,53 @@ export function Settings({
   );
 
   return (
-  
-      <Accordion type="single" collapsible className="w-full px-4 pt-48 xl:pt-0 xl:w-6/12">
-        <AccordionItem value="item-1 ">
-          <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
-            <SettingsGradientIcon />
-            <span className="mr-auto pl-2">Account Settings</span>
-          </AccordionTrigger>
-          <SettingsContent
-            dataArr={accountSettings}
-            onClick={() => accountSetOpen((open) => !open)}
-            dialog={
-              <SettingsDialog
-                dialogTitle="Edit account"
-                dialogDescription="Make changes to your account here. Click save when you re done."
-                processForm={accountProcess}
-                form={accountForm as CombinedFormInputs | any | undefined}
-                data={accountSettings}
-                open={accountOpen}
-                onOpen={() => accountSetOpen((open) => !open)}
-              />
-            }
-          />
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
-            <SettingsGradientIcon />
-            <span className="mr-auto pl-2">Profile Settings</span>
-          </AccordionTrigger>
-          <SettingsContent
-            dataArr={profileSettings}
-            onClick={() => profileSetOpen((open) => !open)}
-            dialog={
-              <SettingsDialog
-                dialogTitle="Edit profile"
-                dialogDescription="Make changes to your profile here. Click save when you re done."
-                processForm={profileProcess}
-                form={profileForm as CombinedFormInputs | any | undefined}
-                data={profileSettings}
-                open={profileOpen}
-                onOpen={() => profileSetOpen((open) => !open)}
-              />
-            }
-          />
-        </AccordionItem>
-      </Accordion>
-   
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full p-5 mt-48 lg:mt-0 lg:order-2 lg:p-4 xl:w-7/12 xl:mt-14 xl:p-2"
+    >
+      <AccordionItem value="item-1 ">
+        <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
+          <SettingsGradientIcon />
+          <span className="mr-auto pl-2">Account Settings</span>
+        </AccordionTrigger>
+        <SettingsContent
+          dataArr={accountSettings}
+          onClick={() => accountSetOpen((open) => !open)}
+          dialog={
+            <SettingsDialog
+              dialogTitle="Edit account"
+              dialogDescription="Make changes to your account here. Click save when you re done."
+              processForm={accountProcess}
+              form={accountForm as CombinedFormInputs | any | undefined}
+              data={accountSettings}
+              open={accountOpen}
+              onOpen={() => accountSetOpen((open) => !open)}
+            />
+          }
+        />
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
+          <SettingsGradientIcon />
+          <span className="mr-auto pl-2">Profile Settings</span>
+        </AccordionTrigger>
+        <SettingsContent
+          dataArr={profileSettings}
+          onClick={() => profileSetOpen((open) => !open)}
+          dialog={
+            <SettingsDialog
+              dialogTitle="Edit profile"
+              dialogDescription="Make changes to your profile here. Click save when you re done."
+              processForm={profileProcess}
+              form={profileForm as CombinedFormInputs | any | undefined}
+              data={profileSettings}
+              open={profileOpen}
+              onOpen={() => profileSetOpen((open) => !open)}
+            />
+          }
+        />
+      </AccordionItem>
+    </Accordion>
   );
 }
