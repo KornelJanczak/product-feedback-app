@@ -1,6 +1,6 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { Suspense } from "react";
-import FriendsContainer from "../../_components/friends-container";
+import Container from "./_components/container";
 import getInvitedUsers from "@/lib/user/get-invited-users";
 import getUserFriends from "@/lib/user/get-user-friends";
 import getRecivedInvitations from "@/lib/user/get-recived-invitations";
@@ -65,7 +65,7 @@ export default async function FriendsPage({
         <SelectFilter />
       </FindBar>
       <Suspense fallback={<SkeletonCard length={users.length} />}>
-        <FriendsContainer users={users as Friend[]} />
+        <Container users={users as Friend[]} />
       </Suspense>
     </>
   );

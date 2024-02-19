@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import FriendButton from "./friend-button";
+import ActionButton from "./action-button";
 
-export default function FriendCard({
+export default function Card({
   userName,
   firstName,
   lastName,
@@ -18,7 +18,7 @@ export default function FriendCard({
       className="flex flex-row items-center justify-between w-full bg-basicWhite p-4 
       gap-x-4 sm:flex-col sm:gap-x-2 sm:p-4"
     >
-      <Avatar className="w-28 h-28">
+      <Avatar className="w-28 h-28 ">
         <AvatarImage src="https://github.com/shadcn.png" alt="User image" />
         <AvatarFallback className="text-center">
           <Skeleton className="w-28 h-28 rounded-full bg-[#0000001c]" />
@@ -29,7 +29,7 @@ export default function FriendCard({
           {firstName} {lastName}
         </h3>
         <span className="text-grey sm:text-center ">@{userName}</span>
-        <FriendButton
+        <ActionButton
           userId={id}
           friendRequestExist={friendRequestExist}
           existingInvitation={existingInvitation}

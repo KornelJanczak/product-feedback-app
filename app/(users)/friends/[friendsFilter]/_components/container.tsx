@@ -1,10 +1,10 @@
-import FriendCard from "./friend-card";
-import UlCard from "./ul-card";
+import Card from "./card";
+import Wrapper from "./wrapper";
 import NoResult from "@/components/no-result";
-export default function FriendsContainer({ users }: { users: Friend[] }) {
+export default function Container({ users }: { users: Friend[] }) {
   if (users.length > 0)
     return (
-      <UlCard>
+      <Wrapper>
         {users!.map(
           ({
             id,
@@ -15,7 +15,7 @@ export default function FriendsContainer({ users }: { users: Friend[] }) {
             lastName,
             firstName,
           }) => (
-            <FriendCard
+            <Card
               key={id}
               userName={userName}
               id={id}
@@ -27,7 +27,7 @@ export default function FriendsContainer({ users }: { users: Friend[] }) {
             />
           )
         )}
-      </UlCard>
+      </Wrapper>
     );
 
   if (users.length === 0)

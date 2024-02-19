@@ -9,7 +9,7 @@ import { acceptFriendRequest } from "@/server-actions/user/accept-friend-request
 import ClipLoader from "react-spinners/ClipLoader";
 import { useRouter } from "next/navigation";
 
-export default function FriendButton({
+export default function ActionButton({
   userId,
   friendRequestExist,
   existingInvitation,

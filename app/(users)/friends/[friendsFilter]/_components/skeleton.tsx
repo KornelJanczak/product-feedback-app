@@ -1,4 +1,4 @@
-import UlCard from "@/app/(users)/_components/ul-card";
+import UlCard from "@/app/(users)/friends/[friendsFilter]/_components/wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SkeletonCard({ length }: { length: number }) {

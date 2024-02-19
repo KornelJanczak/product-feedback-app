@@ -2,7 +2,7 @@
 import ResponsiveImage from "@/components/responsive-image";
 import MobileSheet from "./mobile-nav";
 import { usePathname } from "next/navigation";
-import AccountPanel from "../app/(users)/_components/account-panel";
+import AccountPanel from "./account-panel";
 
 export default function Nav() {
   const pathname = usePathname();

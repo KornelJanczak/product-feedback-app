@@ -11,26 +11,28 @@ import DescriptionIcon from "@/public/icons/description";
 import LocationIcon from "@/public/icons/location";
 import CompanyIcon from "@/public/icons/company";
 import LinkIcon from "@/public/icons/link";
-import FriendsContainer from "../_components/friends-container";
+import FriendsContainer from "./_components/profile-friends-container";
 import FindBar from "@/components/find-bar";
 import { Suspense } from "react";
 import getUserFriends from "@/lib/user/get-user-friends";
 import SkeletonCard from "../friends/[friendsFilter]/_components/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
+import FriendCard from "./_components/profile-friend-card";
 
 async function getUserProfile(currentUser: User) {
-  const userProfile = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       id: currentUser.id,
     },
     include: {
       profile: true,
+      friends: true,
     },
   });
 
-  if (!userProfile) return {};
+  if (!user) return {};
 
-  return userProfile;
+  return user;
 }
 
 export default async function AccountPage({
@@ -107,6 +109,8 @@ export default async function AccountPage({
   const [searchValue] = Object.values(searchParams);
   const userFriends = await getUserFriends(currentUser, searchValue);
 
+  console.log(userFriends);
+
   return (
     <div className="relative">
       <Suspense
@@ -132,16 +136,21 @@ export default async function AccountPage({
             <h2 className="text-3xl font-medium pb-3 pt-4 text-dark">
               Your friends
             </h2>
-            <FindBar
+            {/* <FindBar
               params="account/"
               className="rounded"
               inputClassName="w-9/12"
               buttonClassName="w-3/12"
-            />
+            /> */}
+            <FriendsContainer>
+              {userFriends.map(({ id }) => (
+                <FriendCard key={id} />
+              ))}
+            </FriendsContainer>
           </div>
-          <Suspense fallback={<SkeletonCard length={userFriends.length} />}>
+          {/* <Suspense fallback={<SkeletonCard length={userFriends.length} />}>
             <FriendsContainer users={userFriends as Friend[]} />
-          </Suspense>
+          </Suspense> */}
         </div>
       </div>
     </div>

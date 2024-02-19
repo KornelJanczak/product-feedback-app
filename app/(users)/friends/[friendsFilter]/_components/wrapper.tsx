@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export default function UlCard({ children }: { children: ReactNode }) {
+export default function Wrapper({ children }: { children: ReactNode }) {
   return (
     <ul
       className="flex flex-col items-center justify-center gap-2 p-4 w-full 

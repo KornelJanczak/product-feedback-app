@@ -10,7 +10,7 @@ import IconHamburger from "@/public/icons/icon-hamburger";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import AccountPanel from "../app/(users)/_components/account-panel";
+import AccountPanel from "./account-panel";
 
 export default function MobileSheet() {
   const [open, setOpen] = useState(false);
