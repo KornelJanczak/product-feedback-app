@@ -11,18 +11,18 @@ export default async function ProfileBackground({ image }: { image?: string }) {
 
   if (!image)
     return (
-      <div className="relative w-full bg-dark h-52">
+      <div className="relative w-full bg-dark h-56 md:rounded">
         <ImageButton type="profile" />
       </div>
     );
 
   if (image) {
     return (
-      <div className="relative w-full h-56">
+      <div className="relative w-full h-56 md:rounded">
         <Image
           alt="user-background-image"
           src={bgImage}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover md:rounded"
           placeholder="blur"
           blurDataURL={img}
           quality={100}

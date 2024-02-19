@@ -1,5 +1,4 @@
 import EmptyIcon from "@/public/icons/empty";
-
 export default function NoResult({
   title,
   description,

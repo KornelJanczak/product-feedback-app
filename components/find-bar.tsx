@@ -1,5 +1,4 @@
 "use client";
-import SubmitBtn from "@/app/(auth)/_components/submit-btn";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";

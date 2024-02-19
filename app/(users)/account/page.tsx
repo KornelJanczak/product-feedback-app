@@ -110,7 +110,9 @@ export default async function AccountPage({
   return (
     <div className="relative">
       <Suspense
-        fallback={<Skeleton className="w-full h-56 rounded-none bg-[#0000002c]" />}
+        fallback={
+          <Skeleton className="w-full h-56 rounded-none bg-[#0000002c]" />
+        }
       >
         <ProfileBackground image={profile?.bgImage as string} />
       </Suspense>
@@ -120,24 +122,28 @@ export default async function AccountPage({
         lastName={lastName}
         firstName={firstName}
       />
-      <Settings
-        accountSettings={accountSettings as settings}
-        profileSettings={profileSettings as settings}
-      />
-      <div className="px-4 pt-14 rounded">
-        <h2 className="text-3xl font-medium pb-3 pt-4 text-dark">
-          Your friends
-        </h2>
-        <FindBar
-          params="account/"
-          className="rounded"
-          inputClassName="w-9/12"
-          buttonClassName="w-3/12"
+      <div className="xl:flex xl:pt-40">
+        <Settings
+          accountSettings={accountSettings as settings}
+          profileSettings={profileSettings as settings}
         />
+        <div className="xl:w-6/12">
+          <div className="px-4 pt-14 xl:pt-0">
+            <h2 className="text-3xl font-medium pb-3 pt-4 text-dark">
+              Your friends
+            </h2>
+            <FindBar
+              params="account/"
+              className="rounded"
+              inputClassName="w-9/12"
+              buttonClassName="w-3/12"
+            />
+          </div>
+          <Suspense fallback={<SkeletonCard length={userFriends.length} />}>
+            <FriendsContainer users={userFriends as Friend[]} />
+          </Suspense>
+        </div>
       </div>
-      <Suspense fallback={<SkeletonCard length={userFriends.length} />}>
-        <FriendsContainer users={userFriends as Friend[]} />
-      </Suspense>
     </div>
   );
 }

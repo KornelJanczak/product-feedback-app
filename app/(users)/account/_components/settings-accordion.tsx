@@ -41,38 +41,38 @@ export function Settings({
   );
 
   return (
-    <Accordion type="single" collapsible className="container w-full pt-48">
-      <AccordionItem value="item-1 ">
-        <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
-          <SettingsGradientIcon />
-          <span className="mr-auto pl-2">Account Settings</span>
-        </AccordionTrigger>
-        <SettingsContent
-          dataArr={accountSettings}
-          onClick={() => accountSetOpen((open) => !open)}
-          dialog={
-            <SettingsDialog
-              dialogTitle="Edit account"
-              dialogDescription="Make changes to your account here. Click save when you re done."
-              processForm={accountProcess}
-              form={accountForm as CombinedFormInputs | any | undefined}
-              data={accountSettings}
-              open={accountOpen}
-              onOpen={() => accountSetOpen((open) => !open)}
-            />
-          }
-        />
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
-          <SettingsGradientIcon />
-          <span className="mr-auto pl-2">Profile Settings</span>
-        </AccordionTrigger>
-        <SettingsContent
-          dataArr={profileSettings}
-          onClick={() => profileSetOpen((open) => !open)}
-          dialog={
-       
+  
+      <Accordion type="single" collapsible className="w-full px-4 pt-48 xl:pt-0 xl:w-6/12">
+        <AccordionItem value="item-1 ">
+          <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
+            <SettingsGradientIcon />
+            <span className="mr-auto pl-2">Account Settings</span>
+          </AccordionTrigger>
+          <SettingsContent
+            dataArr={accountSettings}
+            onClick={() => accountSetOpen((open) => !open)}
+            dialog={
+              <SettingsDialog
+                dialogTitle="Edit account"
+                dialogDescription="Make changes to your account here. Click save when you re done."
+                processForm={accountProcess}
+                form={accountForm as CombinedFormInputs | any | undefined}
+                data={accountSettings}
+                open={accountOpen}
+                onOpen={() => accountSetOpen((open) => !open)}
+              />
+            }
+          />
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
+            <SettingsGradientIcon />
+            <span className="mr-auto pl-2">Profile Settings</span>
+          </AccordionTrigger>
+          <SettingsContent
+            dataArr={profileSettings}
+            onClick={() => profileSetOpen((open) => !open)}
+            dialog={
               <SettingsDialog
                 dialogTitle="Edit profile"
                 dialogDescription="Make changes to your profile here. Click save when you re done."
@@ -82,10 +82,10 @@ export function Settings({
                 open={profileOpen}
                 onOpen={() => profileSetOpen((open) => !open)}
               />
-
-          }
-        />
-      </AccordionItem>
-    </Accordion>
+            }
+          />
+        </AccordionItem>
+      </Accordion>
+   
   );
 }

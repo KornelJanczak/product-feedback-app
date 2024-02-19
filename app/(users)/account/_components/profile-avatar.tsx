@@ -21,7 +21,7 @@ export default function UserAvatar({
     : `https://github.com/shadcn.png?${new Date().getTime()}`;
 
   return (
-    <div className="container absolute top-28 w-full flex flex-col items-center justify-center">
+    <div className=" absolute top-28 w-full flex flex-col items-center justify-center">
       <div className="relative">
         <Avatar className="w-44 h-44">
           <AvatarImage src={avatar} />
@@ -46,4 +46,4 @@ export default function UserAvatar({
     </div>
   );
 }
-//
+

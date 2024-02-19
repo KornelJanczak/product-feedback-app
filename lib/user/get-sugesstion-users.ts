@@ -4,45 +4,46 @@ export default async function getSuggestionUsers(
   userName: string
 ) {
   try {
-    const friends = await prisma.friend.findMany({
+    const user = await prisma.user.findUnique({
       where: {
-        friendOfId: currentUser.id,
+        id: currentUser.id,
       },
-      select: {
-        friendId: true,
+      include: {
+        friends: true,
+        friendRequest: true,
+        friendRequestOf: true,
       },
     });
 
-    const friendIds = friends!.map((friend) => friend.friendId);
+    const friendIds = user!.friends!.map((friend) => friend.friendOfId);
+    const userWithInvIds = user!.friendRequest.map(
+      (user) => user.friendRequestOfId
+    );
 
     const users = await prisma.user.findMany({
       where: {
         NOT: {
           id: {
-            in: [currentUser.id, ...friendIds],
+            in: [currentUser.id, ...friendIds, ...userWithInvIds],
           },
         },
         userName: userName || undefined,
       },
     });
 
-    const requests = await prisma.friendRequest.findMany({
-      where: {
-        friendRequestOfId: currentUser.id,
-      },
-    });
-
-    const requestsSet = new Set(
-      requests?.map((request) => request.friendRequestId)
+    const requestsSet = Array.from(
+      new Set(user?.friendRequestOf.map((request) => request.friendRequestId))
     );
 
-    const invitedUsers = users.map((user) => {
-      const friendRequestExist = requestsSet.has(user.id);
+    const suggestionUsers = users.map((user) => {
+      const friendRequestExist = requestsSet.includes(user.id);
       return { ...user, friendRequestExist };
     });
 
-    return invitedUsers;
+    return suggestionUsers;
   } catch {
-    throw new Error("Something went wrong!");
+    throw new Error(
+      "Failed to retrieve suggestion users. Please try again later!"
+    );
   }
 }

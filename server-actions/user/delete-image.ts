@@ -21,8 +21,6 @@ export const deleteImage = action(
 
       let prismaQuery;
 
-      console.log(imageName);
-
       if (imageType === "avatar") {
         prismaQuery = await prisma.user.update({
           where: {
