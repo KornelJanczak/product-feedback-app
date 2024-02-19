@@ -18,6 +18,7 @@ import getUserFriends from "@/lib/user/get-user-friends";
 import SkeletonCard from "../friends/[friendsFilter]/_components/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import FriendCard from "./_components/profile-friend-card";
+import Link from "next/link";
 
 async function getUserProfile(currentUser: User) {
   const user = await prisma.user.findUnique({
@@ -107,9 +108,10 @@ export default async function AccountPage({
     },
   ];
   const [searchValue] = Object.values(searchParams);
-  const userFriends = await getUserFriends(currentUser, searchValue);
-
-  console.log(userFriends);
+  const userFriends = (await getUserFriends(currentUser, searchValue)).slice(
+    0,
+    9
+  );
 
   return (
     <div className="relative">
@@ -131,26 +133,29 @@ export default async function AccountPage({
           accountSettings={accountSettings as settings}
           profileSettings={profileSettings as settings}
         />
-        <div className="xl:w-6/12">
-          <div className="px-4 pt-14 xl:pt-0">
-            <h2 className="text-3xl font-medium pb-3 pt-4 text-dark">
-              Your friends
-            </h2>
-            {/* <FindBar
-              params="account/"
-              className="rounded"
-              inputClassName="w-9/12"
-              buttonClassName="w-3/12"
-            /> */}
-            <FriendsContainer>
-              {userFriends.map(({ id }) => (
-                <FriendCard key={id} />
-              ))}
-            </FriendsContainer>
+
+        <div className="p-4 mt-14 xl:pt-0 bg-basicWhite">
+          <div className="flex items-center justify-between pb-6 pt-4">
+            <h2 className="text-3xl font-medium text-dark">Your friends</h2>
+            <Link
+              href={"/friends/your-friends"}
+              className="text-lg text-pink text-semibold"
+            >
+              Show more friends
+            </Link>
           </div>
-          {/* <Suspense fallback={<SkeletonCard length={userFriends.length} />}>
-            <FriendsContainer users={userFriends as Friend[]} />
-          </Suspense> */}
+          <FriendsContainer>
+            {userFriends.map(({ id, userName, firstName, lastName, image }) => (
+              <FriendCard
+                key={id}
+                id={id}
+                userName={userName}
+                firstName={firstName}
+                lastName={lastName}
+                image={image}
+              />
+            ))}
+          </FriendsContainer>
         </div>
       </div>
     </div>
