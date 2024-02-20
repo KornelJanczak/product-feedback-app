@@ -1,64 +1,64 @@
-"use server";
-import * as z from "zod";
-import { action } from "@/lib/clients/safe-action-client";
-import prisma from "@/lib/db";
-import getCurrentUser from "@/lib/user/get-current-user";
-import { revalidatePath } from "next/cache";
-import createImage from "@/lib/user/create-image";
+// "use server";
+// import * as z from "zod";
+// import { action } from "@/lib/clients/safe-action-client";
+// import prisma from "@/lib/db";
+// import getCurrentUser from "@/lib/user/get-current-user";
+// import { revalidatePath } from "next/cache";
+// import createImage from "@/lib/user/create-image";
 
-const updateImageSchema = z.object({
-  image: z.string().min(1),
-  imageType: z.union([z.literal("avatar"), z.literal("profile")]),
-});
+// const updateImageSchema = z.object({
+//   image: z.string().min(1),
+//   imageType: z.union([z.literal("avatar"), z.literal("profile")]),
+// });
 
-export const updateImage = action(
-  updateImageSchema,
-  async ({ image, imageType }) => {
-    try {
-      const currentUser = await getCurrentUser();
+// export const updateImage = action(
+//   updateImageSchema,
+//   async ({ image, imageType }) => {
+//     try {
+//       const currentUser = await getCurrentUser();
 
-      if (!currentUser) return { error: "Unauthorizated!" };
+//       if (!currentUser) return { error: "Unauthorizated!" };
 
-      const img = (await createImage(
-        image,
-        imageType,
-        currentUser.id
-      )) as string;
+//       const img = (await createImage(
+//         image,
+//         imageType,
+//         currentUser.id
+//       )) as string;
 
-      if (!img) return { error: "The creation of image failed!" };
-      let prismaQuery;
+//       if (!img) return { error: "The creation of image failed!" };
+//       let prismaQuery;
 
-      if (imageType === "avatar") {
-        prismaQuery = await prisma.user.update({
-          where: {
-            id: currentUser!.id,
-          },
-          data: {
-            image: img,
-          },
-        });
-      } else {
-        prismaQuery = await prisma.profile.upsert({
-          where: {
-            userId: currentUser?.id,
-          },
-          update: {
-            bgImage: img,
-          },
-          create: {
-            userId: currentUser?.id,
-            bgImage: img,
-          },
-        });
-      }
+//       if (imageType === "avatar") {
+//         prismaQuery = await prisma.user.update({
+//           where: {
+//             id: currentUser!.id,
+//           // },
+//           data: {
+//             image: img,
+//           },
+//         });
+//       } else {
+//         prismaQuery = await prisma.profile.upsert({
+//           where: {
+//             userId: currentUser?.id,
+//           },
+//           update: {
+//             bgImage: img,
+//           },
+//           create: {
+//             userId: currentUser?.id,
+//             bgImage: img,
+//           },
+//         });
+//       }
 
-      if (!prismaQuery)
-        return { error: "The creation of the user profile has failed!" };
+//       if (!prismaQuery)
+//         return { error: "The creation of the user profile has failed!" };
 
-      revalidatePath("/account");
-      return { success: prismaQuery };
-    } catch {
-      return { error: "An error occurred while updating the image!" };
-    }
-  }
-);
+//       revalidatePath("/account");
+//       return { success: prismaQuery };
+//     } catch {
+//       return { error: "An error occurred while updating the image!" };
+//     }
+//   }
+// );

@@ -1,5 +1,5 @@
 "use client";
-import { updateImage } from "@/server-actions/user/update-image";
+// import { updateImage } from "@/server-actions/user/update-image";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
