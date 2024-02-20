@@ -10,29 +10,6 @@ const duration = 2000;
 export const useImage = (imageType: "avatar" | "profile") => {
   const imageInput = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string | null>(null);
-  const toastId = "loadingToast";
-
-  // const { execute, status } = useAction(updateImage, {
-  //   onSuccess() {
-  //     toast.dismiss(toastId);
-  //     toast.success("Image has been uploaded!");
-  //   },
-  // });
-
-  // const handleChangeImage = async (ev: any) => {
-  //   console.log(ev);
-
-  //   // await uploadImage();
-  // };
-
-  // useEffect(() => {
-  //   if (status === "executing") {
-  //     toast.loading("Loading...", { id: toastId });
-  //   } else if (status == "hasErrored") {
-  //     toast.dismiss(toastId);
-  //     toast.error("Image uploading has beed failed!");
-  //   }
-  // }, [status]);
 
   const handlePickClick = () => {
     if (imageInput.current) imageInput.current.click();
@@ -50,7 +27,6 @@ export const useImage = (imageType: "avatar" | "profile") => {
 
     fileReader.onload = async () => {
       uploadImage(fileReader.result as string, imageType);
-      // execute({ image: fileReader.result as string, imageType });
     };
 
     fileReader.readAsDataURL(file!);

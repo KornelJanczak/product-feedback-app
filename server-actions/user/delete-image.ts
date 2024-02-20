@@ -4,7 +4,8 @@ import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { revalidatePath } from "next/cache";
-import s3 from "@/lib/clients/s3-client";
+import s3Client from "@/lib/clients/s3-client";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 const deleteImageSchema = z.object({
   imageName: z.string().min(1),
@@ -41,10 +42,17 @@ export const deleteImage = action(
         });
       }
 
-      await s3.deleteObject({
-        Bucket: process.env.BUCKET_NAME,
-        Key: imageName,
-      });
+      // await s3.deleteObject({
+      //   Bucket: process.env.BUCKET_NAME,
+      //   Key: imageName,
+      // });
+
+      await s3Client.send(
+        new DeleteObjectCommand({
+          Bucket: process.env.BUCKET_NAME,
+          Key: imageName,
+        })
+      );
 
       if (!prismaQuery) return { error: "Deleting the photo failed!" };
 

@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       );
 
-    // revalidatePath("/account");
+    revalidatePath("/account");
     return NextResponse.json({ success: prismaQuery }, { status: 200 });
   } catch {
     return NextResponse.json(

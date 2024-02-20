@@ -1,4 +1,5 @@
-import s3 from "../clients/s3-client";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import s3Client from "../clients/s3-client";
 
 export default async function createImage(
   image: string,
@@ -15,12 +16,21 @@ export default async function createImage(
     const fileName: string = `${userId}-${imageType}.${originalFileExtension}`;
     const bufferedImage = await file.arrayBuffer();
 
-    await s3.putObject({
-      Bucket: process.env.BUCKET_NAME,
-      Key: fileName,
-      Body: Buffer.from(bufferedImage),
-      ContentType: file.type,
-    });
+    // await s3Client.send(new PutObjectCommand(({
+    //   Bucket: process.env.BUCKET_NAME,
+    //   Key: fileName,
+    //   Body: Buffer.from(bufferedImage),
+    //   ContentType: file.type,
+    // }));
+
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: process.env.BUCKET_NAME,
+        Key: fileName,
+        Body: Buffer.from(bufferedImage),
+        ContentType: file.type,
+      })
+    );
 
     return fileName;
   } catch {
