@@ -5,11 +5,9 @@ import { authOptions } from "../api/auth/[...nextauth]/options";
 
 export default async function Home() {
   const isLogged = await getServerSession(authOptions);
-  console.log(isLogged);
+  console.log(isLogged, "CHUJ");
 
   if (!isLogged) redirect("/login");
-
-  
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>

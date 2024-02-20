@@ -57,6 +57,8 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account }) {
+      console.log(user, account);
+
       if (account?.provider == "credentials") return user;
 
       if (account?.provider === "github") {

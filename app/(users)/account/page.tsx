@@ -11,14 +11,12 @@ import DescriptionIcon from "@/public/icons/description";
 import LocationIcon from "@/public/icons/location";
 import CompanyIcon from "@/public/icons/company";
 import LinkIcon from "@/public/icons/link";
-import FriendsContainer from "./_components/profile-friends-container";
-import FindBar from "@/components/find-bar";
+import FriendsContainer from "./_components/friends-container";
 import { Suspense } from "react";
 import getUserFriends from "@/lib/user/get-user-friends";
-import SkeletonCard from "../friends/[friendsFilter]/_components/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
-import FriendCard from "./_components/profile-friend-card";
-import Link from "next/link";
+import FriendCard from "./_components/friend-card";
+import FriendHeader from "./_components/friend-header";
 
 async function getUserProfile(currentUser: User) {
   const user = await prisma.user.findUnique({
@@ -117,7 +115,10 @@ export default async function AccountPage({
     <div className="relative">
       <Suspense
         fallback={
-          <Skeleton className="w-full h-56 rounded-none bg-[#0000002c]" />
+          <Skeleton
+            className="w-full h-56 rounded-none bg-[#0000002c]
+           sm:h-72 lg:h-80 md:rounded-lg"
+          />
         }
       >
         <ProfileBackground image={profile?.bgImage as string} />
@@ -128,22 +129,14 @@ export default async function AccountPage({
         lastName={lastName}
         firstName={firstName}
       />
-      <div className="lg:mt-40 xl:flex xl:gap-x-10">
+      <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10">
         <Settings
           accountSettings={accountSettings as settings}
           profileSettings={profileSettings as settings}
         />
 
-        <div className="p-5 mt-14 lg:mt-0 bg-basicWhite lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
-          <div className="flex items-center justify-between pb-6 pt-4">
-            <h2 className="text-2xl font-semibold text-dark">Your friends</h2>
-            <Link
-              href={"/friends/your-friends"}
-              className="text-lg text-pink text-semibold"
-            >
-              Show more friends
-            </Link>
-          </div>
+        <div className="p-5 mt-5  bg-basicWhite md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
+          <FriendHeader />
           <FriendsContainer>
             {userFriends.map(({ id, userName, firstName, lastName, image }) => (
               <FriendCard

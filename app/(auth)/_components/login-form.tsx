@@ -35,6 +35,8 @@ export default function LoginForm() {
   });
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
+    setPending(true);
+
     signIn("credentials", { ...data, redirect: false, callbackUrl: "/" }).then(
       (callback) => {
         setPending(false);
