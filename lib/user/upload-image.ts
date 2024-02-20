@@ -7,10 +7,17 @@ export async function uploadImage(
 ) {
   if (image) {
     const uploadPromise = new Promise((resolve, reject) => {
-      const data = { image, imageType };
+      // const data = { image, imageType };
+
+      const formData = new FormData();
+      formData.set("image", image);
+      formData.set("imageType", imageType);
+
+      console.log(formData);
+      
 
       axios
-        .post<{ success: any; error: string }>("/api/update-image", data)
+        .post<{ success: any; error: string }>("/api/update-image", formData)
         .then((response) => {
           if (response.status === 200) {
             resolve(response.data);

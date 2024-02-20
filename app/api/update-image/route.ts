@@ -6,9 +6,15 @@ import createImage from "@/lib/user/create-image";
 
 export async function POST(request: NextRequest) {
   try {
-    const { image, imageType } = await request.json();
+    const formData = await request.formData();
 
-    console.log(image, imageType);
+    // console.log(image, imageType);
+
+    const image = formData.get("image") as File;
+    const imageType = formData.get("imageType") as "profile" | "avatar";
+
+    console.log(image);
+    
 
     const currentUser = await getCurrentUser();
 

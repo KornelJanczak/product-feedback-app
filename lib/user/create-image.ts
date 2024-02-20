@@ -2,7 +2,7 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import s3Client from "../clients/s3-client";
 
 export default async function createImage(
-  image: string,
+  image: File,
   imageType: string,
   userId: string
 ): Promise<string | { error: string }> {
@@ -10,11 +10,11 @@ export default async function createImage(
     if ((imageType !== "avatar" && imageType !== "profile") || !userId)
       return { error: "Invalid imageType" };
 
-    const file = dataURLtoFile(image, userId);
+    // const file = dataURLtoFile(image, userId);
 
-    const originalFileExtension = file.name.split(".").pop();
+    const originalFileExtension = image.name.split(".").pop();
     const fileName: string = `${userId}-${imageType}.${originalFileExtension}`;
-    const bufferedImage = await file.arrayBuffer();
+    const bufferedImage = await image.arrayBuffer();
 
     // await s3Client.send(new PutObjectCommand(({
     //   Bucket: process.env.BUCKET_NAME,
@@ -27,8 +27,9 @@ export default async function createImage(
       new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
         Key: fileName,
+        ACL: "public-read",
         Body: Buffer.from(bufferedImage),
-        ContentType: file.type,
+        ContentType: image.type,
       })
     );
 
