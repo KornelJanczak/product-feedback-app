@@ -66,10 +66,10 @@ export async function POST(request: NextRequest) {
 
     revalidatePath("/account");
     return NextResponse.json({ success: prismaQuery }, { status: 200 });
-  } catch {
+  } catch (err) {
     return NextResponse.json(
       {
-        error: "An error occurred while updating the image!",
+        error: err,
       },
       { status: 500 }
     );
