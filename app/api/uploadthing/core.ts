@@ -41,12 +41,12 @@ export const ourFileRouter = {
         },
         update: {
           bgImage: file.url,
-          bgImageKey: file.customId,
+          bgImageKey: file.key,
         },
         create: {
           userId: metadata.userId,
           bgImage: file.url,
-          bgImageKey: file.customId,
+          bgImageKey: file.key,
         },
       });
       return { uploadedBy: metadata.userId };
@@ -71,7 +71,7 @@ export const ourFileRouter = {
         },
         data: {
           image: file.url,
-          imageKey: file.customId,
+          imageKey: file.key,
         },
       });
       return { uploadedBy: metadata.userId };
