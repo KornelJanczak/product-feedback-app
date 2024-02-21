@@ -10,12 +10,12 @@ export async function POST(request: NextRequest) {
     console.log(formData, "sended data");
 
     const imageRaw = formData.get("image");
-    const imageTypeRaw = formData.get("imageType") as "profile" | "avatar";
+    const imageTypeRaw = formData.get("imageType");
 
     const image: File | null = imageRaw instanceof File ? imageRaw : null;
-    const imageType: "profile" | "avatar" = imageTypeRaw;
+    const imageType = imageTypeRaw as "avatar" | "profile";
 
-    if (!image || !imageType) {
+    if (!image || !imageTypeRaw) {
       return NextResponse.json({ error: "Invalid data type" }, { status: 400 });
     }
 
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
 
-    const img = (await createImage(image, imageType, currentUser.id)) as string;
+    const img = await createImage(image, imageType, currentUser.id);
 
     console.log(img, "path of image");
 
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     if (imageType === "avatar") {
       prismaQuery = await prisma.user.update({
         where: {
-          id: currentUser!.id,
+          id: currentUser.id,
         },
         data: {
           image: img,
@@ -58,13 +58,13 @@ export async function POST(request: NextRequest) {
     } else {
       prismaQuery = await prisma.profile.upsert({
         where: {
-          userId: currentUser?.id,
+          userId: currentUser.id,
         },
         update: {
           bgImage: img,
         },
         create: {
-          userId: currentUser?.id,
+          userId: currentUser.id,
           bgImage: img,
         },
       });

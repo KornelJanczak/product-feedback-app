@@ -5,25 +5,18 @@ export default async function createImage(
   image: File,
   imageType: string,
   userId: string
-): Promise<string | { error: string }> {
+) {
   try {
     if ((imageType !== "avatar" && imageType !== "profile") || !userId)
       throw new Error("Image type is valid");
-
-    // const file = dataURLtoFile(image, userId);
 
     const originalFileExtension = image.name.split(".").pop();
     const fileName: string = `${userId}-${imageType}.${originalFileExtension}`;
     const bufferedImage = await image.arrayBuffer();
 
-    console.log("Buffered Image");
-
-    // await s3Client.send(new PutObjectCommand(({
-    //   Bucket: process.env.BUCKET_NAME,
-    //   Key: fileName,
-    //   Body: Buffer.from(bufferedImage),
-    //   ContentType: file.type,
-    // }));
+    console.log(originalFileExtension, "File ex");
+    console.log(fileName, "file Name");
+    console.log(bufferedImage, "Buffered Image");
 
     const send = await s3Client.send(
       new PutObjectCommand({
