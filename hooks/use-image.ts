@@ -25,7 +25,7 @@ export const useImage = (imageType: "avatar" | "profile") => {
         duration,
       });
 
-    fileReader.onload = async () => {
+    fileReader.onload = () => {
       uploadImage(file as any, imageType);
     };
 

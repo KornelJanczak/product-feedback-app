@@ -1,10 +1,7 @@
 import { toast } from "sonner";
 import axios from "axios";
 
-export async function uploadImage(
-  image: string,
-  imageType: "avatar" | "profile"
-) {
+export function uploadImage(image: string, imageType: "avatar" | "profile") {
   if (image) {
     const uploadPromise = new Promise((resolve, reject) => {
       // const data = { image, imageType };
@@ -14,7 +11,6 @@ export async function uploadImage(
       formData.set("imageType", imageType);
 
       console.log(formData);
-      
 
       axios
         .post<{ success: any; error: string }>("/api/update-image", formData)

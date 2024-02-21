@@ -8,8 +8,6 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
 
-    // console.log(image, imageType);
-
     const image = formData.get("image") as File;
     const imageType = formData.get("imageType") as "profile" | "avatar";
 
