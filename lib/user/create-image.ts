@@ -23,8 +23,9 @@ export default async function createImage(
     for await (const chunk of image.stream()) {
       chunks.push(chunk);
     }
-    console.log(chunks);
-    
+    console.log(chunks, "CHUNKS");
+
+    console.log(process.env.BUCKET_NAME, "BUCKET ENV");
 
     const send = await s3Client.send(
       new PutObjectCommand({
