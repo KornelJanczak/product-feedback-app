@@ -8,13 +8,15 @@ export default async function createImage(
 ): Promise<string | { error: string }> {
   try {
     if ((imageType !== "avatar" && imageType !== "profile") || !userId)
-      return { error: "Invalid imageType" };
+      throw new Error("Image type is valid");
 
     // const file = dataURLtoFile(image, userId);
 
     const originalFileExtension = image.name.split(".").pop();
     const fileName: string = `${userId}-${imageType}.${originalFileExtension}`;
     const bufferedImage = await image.arrayBuffer();
+
+    console.log("Buffered Image");
 
     // await s3Client.send(new PutObjectCommand(({
     //   Bucket: process.env.BUCKET_NAME,
@@ -23,7 +25,7 @@ export default async function createImage(
     //   ContentType: file.type,
     // }));
 
-    await s3Client.send(
+    const send = await s3Client.send(
       new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
         Key: fileName,
@@ -33,23 +35,25 @@ export default async function createImage(
       })
     );
 
+    console.log(send, "S3 Client send");
+
     return fileName;
-  } catch {
-    return { error: "Something went wrong!" };
+  } catch (err) {
+    throw new Error(err as string);
   }
 }
 
 // Helper function which convret base64 string to file
-function dataURLtoFile(dataurl: any, filename: string) {
-  var arr = dataurl.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
+// function dataURLtoFile(dataurl: any, filename: string) {
+//   var arr = dataurl.split(","),
+//     mime = arr[0].match(/:(.*?);/)[1],
+//     bstr = atob(arr[1]),
+//     n = bstr.length,
+//     u8arr = new Uint8Array(n);
 
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
+//   while (n--) {
+//     u8arr[n] = bstr.charCodeAt(n);
+//   }
 
-  return new File([u8arr], filename, { type: mime });
-}
+//   return new File([u8arr], filename, { type: mime });
+// }

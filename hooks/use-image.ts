@@ -26,10 +26,10 @@ export const useImage = (imageType: "avatar" | "profile") => {
       });
 
     fileReader.onload = () => {
-      uploadImage(file as any, imageType);
+      uploadImage(file, imageType);
     };
 
-    fileReader.readAsDataURL(file!);
+    fileReader.readAsDataURL(file);
   };
 
   return { handleImageChange, handlePickClick, imageInput };

@@ -7,14 +7,20 @@ import createImage from "@/lib/user/create-image";
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
+    console.log(formData, "sended data");
 
-    const image = formData.get("image") as File;
-    const imageType = formData.get("imageType") as "profile" | "avatar";
+    const imageRaw = formData.get("image");
+    const imageTypeRaw = formData.get("imageType") as "profile" | "avatar";
 
-    console.log(image);
-    
+    const image: File | null = imageRaw instanceof File ? imageRaw : null;
+    const imageType: "profile" | "avatar" = imageTypeRaw;
+
+    if (!image || !imageType) {
+      return NextResponse.json({ error: "Invalid data type" }, { status: 400 });
+    }
 
     const currentUser = await getCurrentUser();
+    console.log(currentUser, "user");
 
     if (!currentUser)
       return NextResponse.json(
@@ -25,6 +31,8 @@ export async function POST(request: NextRequest) {
       );
 
     const img = (await createImage(image, imageType, currentUser.id)) as string;
+
+    console.log(img, "path of image");
 
     if (!img)
       return NextResponse.json(
@@ -45,6 +53,8 @@ export async function POST(request: NextRequest) {
           image: img,
         },
       });
+
+      console.log("Avatar query", prismaQuery);
     } else {
       prismaQuery = await prisma.profile.upsert({
         where: {
@@ -58,6 +68,7 @@ export async function POST(request: NextRequest) {
           bgImage: img,
         },
       });
+      console.log("Profile query", prismaQuery);
     }
 
     if (!prismaQuery)
@@ -67,6 +78,8 @@ export async function POST(request: NextRequest) {
         },
         { status: 404 }
       );
+
+    console.log(prismaQuery, "Query befor end of execute");
 
     revalidatePath("/account");
     return NextResponse.json({ success: prismaQuery }, { status: 200 });
