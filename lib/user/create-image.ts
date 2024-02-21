@@ -18,12 +18,20 @@ export default async function createImage(
     console.log(fileName, "file Name");
     console.log(bufferedImage, "Buffered Image");
 
+    const chunks = [];
+    //@ts-ignore
+    for await (const chunk of image.stream()) {
+      chunks.push(chunk);
+    }
+    console.log(chunks);
+    
+
     const send = await s3Client.send(
       new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
         Key: fileName,
         ACL: "public-read",
-        Body: Buffer.from(bufferedImage),
+        Body: Buffer.concat(chunks),
         ContentType: image.type,
       })
     );
