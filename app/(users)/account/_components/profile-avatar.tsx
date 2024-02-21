@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ImageButton from "./use-image-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";

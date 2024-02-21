@@ -2,6 +2,9 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { createUploadthing, UTFiles, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import prisma from "@/lib/db";
+import { UTApi } from "uploadthing/server";
+
+const utapi = new UTApi();
 
 const f = createUploadthing();
 
@@ -16,7 +19,20 @@ export const ourFileRouter = {
 
       const fileOverrides = addCustomId(files, user.id, "profile");
 
-      return { userId: user.id, [UTFiles]: fileOverrides };
+      const profileImage = await prisma.profile.findUnique({
+        where: {
+          userId: user.id,
+        },
+      });
+
+      let profileImageExist;
+      if (profileImage?.bgImage !== null) {
+        profileImageExist = true;
+      } else {
+        profileImageExist = false;
+      }
+
+      return { userId: user.id, [UTFiles]: fileOverrides, profileImageExist };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       await prisma.profile.upsert({

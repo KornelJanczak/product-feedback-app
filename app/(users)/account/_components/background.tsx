@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import ImageButton from "./use-image-button";
 import getBase64 from "@/lib/getLocalBase64";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
@@ -11,7 +10,7 @@ export default async function ProfileBackground({ image }: { image?: string }) {
   if (!image)
     return (
       <div className="relative w-full bg-dark h-56 sm:h-72 lg:h-80 md:rounded-lg">
-        <ImageButton type="profile" />
+        <ImageUploaderButton type="profile" />
       </div>
     );
 
