@@ -7,11 +7,10 @@ import { useState } from "react";
 export default function DeleteImageButton({
   className,
   type,
-  imageName,
 }: {
   className?: string;
   type: "avatar" | "profile";
-  imageName: string;
+
 }) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -31,7 +30,7 @@ export default function DeleteImageButton({
       >
         <XMarkIcon />
       </button>
-      <DeleteImageAlert type={type} open={open} onClick={onClick} imageName={imageName} />
+      <DeleteImageAlert type={type} open={open} onClick={onClick} />
     </>
   );
 }

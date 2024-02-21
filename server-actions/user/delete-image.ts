@@ -4,17 +4,18 @@ import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { revalidatePath } from "next/cache";
-import s3Client from "@/lib/clients/s3-client";
-import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { UTApi } from "uploadthing/server";
+
+const utapi = new UTApi();
 
 const deleteImageSchema = z.object({
-  imageName: z.string().min(1),
+
   imageType: z.union([z.literal("avatar"), z.literal("profile")]),
 });
 
 export const deleteImage = action(
   deleteImageSchema,
-  async ({ imageName, imageType }) => {
+  async ({  imageType }) => {
     try {
       const currentUser = await getCurrentUser();
 
@@ -29,8 +30,11 @@ export const deleteImage = action(
           },
           data: {
             image: null,
+            imageKey: null,
           },
         });
+
+        if (prismaQuery.imageKey) await utapi.deleteFiles(prismaQuery.imageKey);
       } else {
         prismaQuery = await prisma.profile.update({
           where: {
@@ -38,21 +42,13 @@ export const deleteImage = action(
           },
           data: {
             bgImage: null,
+            bgImageKey: null,
           },
         });
+
+        if (prismaQuery.bgImageKey)
+          await utapi.deleteFiles(prismaQuery.bgImageKey);
       }
-
-      // await s3.deleteObject({
-      //   Bucket: process.env.BUCKET_NAME,
-      //   Key: imageName,
-      // });
-
-      await s3Client.send(
-        new DeleteObjectCommand({
-          Bucket: process.env.BUCKET_NAME,
-          Key: imageName,
-        })
-      );
 
       if (!prismaQuery) return { error: "Deleting the photo failed!" };
 

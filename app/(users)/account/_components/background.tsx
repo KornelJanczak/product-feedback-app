@@ -3,12 +3,10 @@ import Image from "next/image";
 import ImageButton from "./use-image-button";
 import getBase64 from "@/lib/getLocalBase64";
 import DeleteImageButton from "./delete-image-button";
-
+import ImageUploaderButton from "./image-uploader-button";
 
 export default async function ProfileBackground({ image }: { image?: string }) {
-  const bgImage = `${process.env.AWS_URL}${image}?${new Date().getTime()}`;
-
-  const img = await getBase64(bgImage);
+  const bgImage = `${image}?${new Date().getTime()}`;
 
   if (!image)
     return (
@@ -18,6 +16,7 @@ export default async function ProfileBackground({ image }: { image?: string }) {
     );
 
   if (image) {
+    const img = await getBase64(bgImage);
     return (
       <div className="relative w-full h-56 sm:h-72 lg:h-80 md:rounded-lg">
         <Image
@@ -33,9 +32,8 @@ export default async function ProfileBackground({ image }: { image?: string }) {
         <DeleteImageButton
           className="rounded right-4 bottom-14"
           type="profile"
-          imageName={image}
         />
-        <ImageButton type="profile" />
+        <ImageUploaderButton type="profile" />
       </div>
     );
   }

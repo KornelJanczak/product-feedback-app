@@ -1,33 +1,78 @@
 import getCurrentUser from "@/lib/user/get-current-user";
-import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { createUploadthing, UTFiles, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
+import prisma from "@/lib/db";
 
 const f = createUploadthing();
 
-// FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
-  imageUploader: f({ image: { maxFileSize: "4MB" } })
-    // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
-      console.log("aads");
-      // This code runs on your server before upload
+  profile: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+    .middleware(async ({ files }) => {
+      console.log(files, "PLIKI");
+
       const user = await getCurrentUser();
 
-      // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError("Unauthorized");
 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id };
+      const fileOverrides = addCustomId(files, user.id, "profile");
+
+      return { userId: user.id, [UTFiles]: fileOverrides };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      console.log("Upload complete for userId:", metadata.userId);
+      await prisma.profile.upsert({
+        where: {
+          userId: metadata.userId,
+        },
+        update: {
+          bgImage: file.url,
+          bgImageKey: file.customId,
+        },
+        create: {
+          userId: metadata.userId,
+          bgImage: file.url,
+          bgImageKey: file.customId,
+        },
+      });
+      return { uploadedBy: metadata.userId };
+    }),
 
-      console.log("file url", file.url);
+  avatar: f({
+    image: { maxFileSize: "4MB", maxFileCount: 1 },
+  })
+    .middleware(async ({ files }) => {
+      const user = await getCurrentUser();
 
+      if (!user) throw new UploadThingError("Unauthorized");
+
+      const fileOverrides = addCustomId(files, user.id, "profile");
+
+      return { userId: user.id, [UTFiles]: fileOverrides };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      await prisma.user.update({
+        where: {
+          id: metadata.userId,
+        },
+        data: {
+          image: file.url,
+          imageKey: file.customId,
+        },
+      });
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
+
+function addCustomId(
+  files: { name: string; size: number }[],
+  userId: string,
+  actionType: string
+) {
+  const fileOverrides = files.map((file) => {
+    const originalFileExtension = file.name.split(".").pop();
+    const fileName: string = `${userId}-${actionType}.${originalFileExtension}`;
+    return { ...file, customId: fileName };
+  });
+  return fileOverrides;
+}

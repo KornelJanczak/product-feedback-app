@@ -17,8 +17,7 @@ import getUserFriends from "@/lib/user/get-user-friends";
 import { Skeleton } from "@/components/ui/skeleton";
 import FriendCard from "./_components/friend-card";
 import FriendHeader from "./_components/friend-header";
-import MultiUploader from "./_components/uploader";
-import ImageUpload from "./_components/chuj";
+import MultiUploader from "./_components/image-uploader-button";
 
 async function getUserProfile(currentUser: User) {
   const user = await prisma.user.findUnique({
@@ -136,9 +135,7 @@ export default async function AccountPage({
           accountSettings={accountSettings as settings}
           profileSettings={profileSettings as settings}
         />
-        <MultiUploader />
-        <ImageUpload />
-
+        <MultiUploader type="profile" />
         <div className="p-5 mt-5  bg-basicWhite md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
           <FriendHeader />
           <FriendsContainer>

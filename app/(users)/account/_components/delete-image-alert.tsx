@@ -18,11 +18,9 @@ export function DeleteImageAlert({
   open,
   onClick,
   type,
-  imageName,
 }: {
   open: boolean;
   type: "avatar" | "profile";
-  imageName: string;
   onClick: () => void;
 }) {
   const toastId = "loadingToast";
@@ -63,7 +61,7 @@ export function DeleteImageAlert({
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => execute({ imageName, imageType: type })}
+            onClick={() => execute({ imageType: type })}
             className="bg-red text-darkWhite"
           >
             Continue

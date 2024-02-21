@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ImageButton from "./use-image-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import DeleteImageButton from "./delete-image-button";
+import ImageUploaderButton from "./image-uploader-button";
 
 export default function UserAvatar({
   username,
@@ -17,7 +18,7 @@ export default function UserAvatar({
   const firstAndLastNameExist = firstName && lastName;
 
   const avatar = image
-    ? `${process.env.AWS_URL}${image}?${new Date().getTime()}`
+    ? `${image}?${new Date().getTime()}`
     : `https://github.com/shadcn.png?${new Date().getTime()}`;
 
   return (
@@ -35,11 +36,10 @@ export default function UserAvatar({
         {image && (
           <DeleteImageButton
             className="rounded-full right-0 ml-2 bottom-11"
-            imageName={image as string}
             type="avatar"
           />
         )}
-        <ImageButton type="avatar" />
+        <ImageUploaderButton type="avatar"/>
       </div>
       <div className="flex flex-col">
         <h2 className="text-4xl font-medium pt-2 text-dark">

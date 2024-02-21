@@ -21,6 +21,7 @@ model User{
   email String
   password String?
   image String?
+  imageKey String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
 
@@ -40,6 +41,7 @@ model Profile {
   user User @relation(fields: [userId], references: [id])
 
   bgImage String?
+  bgImageKey String?
   description String?
   company String?
   location String?
