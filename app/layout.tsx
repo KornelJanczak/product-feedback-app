@@ -5,6 +5,10 @@ import "./globals.css";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import AuthProvider from "@/providers/session-provider";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+
+import { ourFileRouter } from "./api/uploadthing/core";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -32,6 +36,7 @@ export default async function RootLayout({
       >
         <AuthProvider session={session}>
           <Toaster position="top-center" />
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           {children}
         </AuthProvider>
       </body>
