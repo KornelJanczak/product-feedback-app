@@ -1,7 +1,9 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
+import { useMemo } from "react";
 
 export default function UserAvatar({
   username,
@@ -14,11 +16,16 @@ export default function UserAvatar({
   firstName?: string | undefined;
   lastName?: string | undefined;
 }) {
-  const firstAndLastNameExist = firstName && lastName;
+  // const [avatarImage, setAvatarTmage] = useState<string | null>(null);
 
-  const avatar = image
-    ? `${image}?${new Date().getTime()}`
-    : `https://github.com/shadcn.png?${new Date().getTime()}`;
+  //   : `https://github.com/shadcn.png?${new Date().getTime()}`;
+
+  const firstAndLastNameExist = firstName && lastName;
+  const avatar = useMemo(() => {
+    return image
+      ? `${image}?${new Date().getTime()}`
+      : `https://github.com/shadcn.png?${new Date().getTime()}`;
+  }, [image]);
 
   return (
     <div
@@ -32,13 +39,13 @@ export default function UserAvatar({
             <Skeleton className="h-full w-full bg-[#0000002c]" />
           </AvatarFallback>
         </Avatar>
-        {image && (
+        {avatar && (
           <DeleteImageButton
             className="rounded-full right-0 ml-2 bottom-11"
             type="avatar"
           />
         )}
-        <ImageUploaderButton type="avatar"/>
+        <ImageUploaderButton type="avatar" />
       </div>
       <div className="flex flex-col">
         <h2 className="text-4xl font-medium pt-2 text-dark">

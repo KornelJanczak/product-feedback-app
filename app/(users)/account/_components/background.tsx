@@ -5,16 +5,14 @@ import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
 
 export default async function ProfileBackground({ image }: { image?: string }) {
-  const bgImage = `${image}?${new Date().getTime()}`;
-
   if (!image)
     return (
       <div className="relative w-full bg-dark h-56 sm:h-72 lg:h-80 md:rounded-lg">
         <ImageUploaderButton type="profile" />
       </div>
     );
-
-  if (image) {
+  else if (image) {
+    const bgImage = `${image}?${new Date().getTime()}`;
     const img = await getBase64(bgImage);
     return (
       <div className="relative w-full h-56 sm:h-72 lg:h-80 md:rounded-lg">

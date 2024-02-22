@@ -1,8 +1,9 @@
 import getCurrentUser from "@/lib/user/get-current-user";
-import { createUploadthing, UTFiles, type FileRouter } from "uploadthing/next";
+import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import prisma from "@/lib/db";
 import { UTApi } from "uploadthing/server";
+import { revalidatePath } from "next/cache";
 
 const utapi = new UTApi();
 
@@ -10,31 +11,21 @@ const f = createUploadthing();
 
 export const ourFileRouter = {
   profile: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
-    .middleware(async ({ files }) => {
-      console.log(files, "PLIKI");
-
+    .middleware(async () => {
       const user = await getCurrentUser();
 
       if (!user) throw new UploadThingError("Unauthorized");
-
-      // const fileOverrides = addCustomId(files, user.id, "profile");
 
       const profileImage = await prisma.profile.findUnique({
         where: {
           userId: user.id,
         },
       });
-
-      let profileImageExist;
-      if (profileImage?.bgImage !== null) {
-        profileImageExist = true;
-      } else {
-        profileImageExist = false;
-      }
-
-      return { userId: user.id,  profileImageExist };
+      return { userId: user.id, bgImageKey: profileImage?.bgImageKey };
     })
     .onUploadComplete(async ({ metadata, file }) => {
+      if (metadata.bgImageKey) await utapi.deleteFiles(metadata.bgImageKey);
+
       await prisma.profile.upsert({
         where: {
           userId: metadata.userId,
@@ -49,22 +40,29 @@ export const ourFileRouter = {
           bgImageKey: file.key,
         },
       });
+      revalidatePath("/account");
       return { uploadedBy: metadata.userId };
     }),
 
   avatar: f({
     image: { maxFileSize: "4MB", maxFileCount: 1 },
   })
-    .middleware(async ({ files }) => {
+    .middleware(async () => {
       const user = await getCurrentUser();
 
       if (!user) throw new UploadThingError("Unauthorized");
 
-      // const fileOverrides = addCustomId(files, user.id, "profile");
+      const currentUser = await prisma.user.findUnique({
+        where: {
+          id: user.id,
+        },
+      });
 
-      return { userId: user.id, };
+      return { userId: user.id, imageKey: currentUser?.imageKey };
     })
     .onUploadComplete(async ({ metadata, file }) => {
+      if (metadata.imageKey) await utapi.deleteFiles(metadata.imageKey);
+
       await prisma.user.update({
         where: {
           id: metadata.userId,
@@ -74,21 +72,9 @@ export const ourFileRouter = {
           imageKey: file.key,
         },
       });
+      revalidatePath("/account");
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
-
-// function addCustomId(
-//   files: { name: string; size: number }[],
-//   userId: string,
-//   actionType: string
-// ) {
-//   const fileOverrides = files.map((file) => {
-//     const originalFileExtension = file.name.split(".").pop();
-//     const fileName: string = `${userId}-${actionType}.${originalFileExtension}`;
-//     return { ...file, customId: fileName };
-//   });
-//   return fileOverrides;
-// }
