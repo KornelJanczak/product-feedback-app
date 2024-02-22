@@ -10,11 +10,13 @@ export default function UserAvatar({
   firstName,
   lastName,
   image,
+  viewType,
 }: {
   username: string;
-  image?: string;
-  firstName?: string | undefined;
-  lastName?: string | undefined;
+  image?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  viewType: "accountView" | "profileView";
 }) {
   // const [avatarImage, setAvatarTmage] = useState<string | null>(null);
 
@@ -39,13 +41,13 @@ export default function UserAvatar({
             <Skeleton className="h-full w-full bg-[#0000002c]" />
           </AvatarFallback>
         </Avatar>
-        {avatar && (
+        {image && viewType == "accountView" && (
           <DeleteImageButton
             className="rounded-full right-0 ml-2 bottom-11"
             type="avatar"
           />
         )}
-        <ImageUploaderButton type="avatar" />
+        {viewType === "accountView" && <ImageUploaderButton type="avatar" />}
       </div>
       <div className="flex flex-col">
         <h2 className="text-4xl font-medium pt-2 text-dark">

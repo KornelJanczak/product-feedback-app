@@ -3,12 +3,19 @@ import Image from "next/image";
 import getBase64 from "@/lib/getLocalBase64";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default async function ProfileBackground({ image }: { image?: string }) {
+export default async function ProfileBackground({
+  image,
+  viewType,
+}: {
+  image?: string | null;
+  viewType: "accountView" | "profileView";
+}) {
   if (!image)
     return (
       <div className="relative w-full bg-dark h-56 sm:h-72 lg:h-80 md:rounded-lg">
-        <ImageUploaderButton type="profile" />
+        {viewType === "accountView" && <ImageUploaderButton type="profile" />}
       </div>
     );
   else if (image) {
@@ -26,12 +33,23 @@ export default async function ProfileBackground({ image }: { image?: string }) {
           priority
           fill
         />
-        <DeleteImageButton
-          className="rounded right-4 bottom-14"
-          type="profile"
-        />
-        <ImageUploaderButton type="profile" />
+        {viewType === "accountView" && (
+          <DeleteImageButton
+            className="rounded right-4 bottom-14"
+            type="profile"
+          />
+        )}
+        {viewType === "accountView" && <ImageUploaderButton type="profile" />}
       </div>
     );
   }
+}
+
+export function ProfileBackgroundSkeleton() {
+  return (
+    <Skeleton
+      className="w-full h-56 rounded-none bg-[#0000002c]
+ sm:h-72 lg:h-80 md:rounded-lg"
+    />
+  );
 }

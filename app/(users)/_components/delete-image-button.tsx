@@ -10,7 +10,6 @@ export default function DeleteImageButton({
 }: {
   className?: string;
   type: "avatar" | "profile";
-
 }) {
   const [open, setOpen] = useState<boolean>(false);
 

@@ -1,8 +1,10 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import UserAvatar from "./_components/profile-avatar";
+import UserAvatar from "../_components/profile-avatar";
 import prisma from "@/lib/db";
-import ProfileBackground from "./_components/background";
+import ProfileBackground, {
+  ProfileBackgroundSkeleton,
+} from "../_components/background";
 import { Settings } from "./_components/settings-accordion";
 import UserIcon from "@/public/icons/user";
 import EmailIcon from "@/public/icons/email";
@@ -14,10 +16,8 @@ import LinkIcon from "@/public/icons/link";
 import FriendsContainer from "./_components/friends-container";
 import { Suspense } from "react";
 import getUserFriends from "@/lib/user/get-user-friends";
-import { Skeleton } from "@/components/ui/skeleton";
 import FriendCard from "./_components/friend-card";
 import FriendHeader from "./_components/friend-header";
-
 
 async function getUserProfile(currentUser: User) {
   const user = await prisma.user.findUnique({
@@ -45,7 +45,7 @@ export default async function AccountPage({
   if (!currentUser) redirect("/login");
 
   const { profile, userName, lastName, firstName, image, email } =
-    (await getUserProfile(currentUser as User)) as UserProfile;
+    (await getUserProfile(currentUser as User)) as IUserAccountView
 
   const accountSettings = [
     {
@@ -106,6 +106,7 @@ export default async function AccountPage({
       name: "gitHub",
     },
   ];
+
   const [searchValue] = Object.values(searchParams);
   const userFriends = (await getUserFriends(currentUser, searchValue)).slice(
     0,
@@ -114,28 +115,25 @@ export default async function AccountPage({
 
   return (
     <div className="relative">
-      <Suspense
-        fallback={
-          <Skeleton
-            className="w-full h-56 rounded-none bg-[#0000002c]
-           sm:h-72 lg:h-80 md:rounded-lg"
-          />
-        }
-      >
-        <ProfileBackground image={profile?.bgImage as string} />
+      <Suspense fallback={<ProfileBackgroundSkeleton />}>
+        <ProfileBackground
+          image={profile?.bgImage}
+          viewType="accountView"
+        />
       </Suspense>
       <UserAvatar
         username={userName}
-        image={image as string}
+        image={image}
         lastName={lastName}
         firstName={firstName}
+        viewType="accountView"
       />
       <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10">
         <Settings
           accountSettings={accountSettings as settings}
           profileSettings={profileSettings as settings}
         />
-  
+
         <div className="p-5 mt-5  bg-basicWhite md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
           <FriendHeader />
           <FriendsContainer>

@@ -18,13 +18,12 @@ interface User {
 type UserProfile = {
   id: string;
   userName: string;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   email: string;
-  password: string;
   image: null | string;
   createDate: Date;
-  updateDate: Date;
+  // updateDate: Date;
   profile: {
     userId: string;
     bgImage: null | string;
@@ -33,8 +32,14 @@ type UserProfile = {
     location: null | string;
     preferRole: null | string;
     gitHub: null | string;
-  };
+  } | null;
 };
+
+interface IUserAccountView extends UserProfile {
+  password: string;
+}
+
+interface IUserProfileView extends UserProfile {}
 
 type settingsAccount = "userName" | "firstName" | "lastName" | "email";
 
@@ -49,5 +54,5 @@ type settings = {
   type: string;
   data: string | null;
   icon: React.ReactNode;
-  name: settingsAccount & settingsProfile ;
+  name: settingsAccount & settingsProfile;
 }[];
