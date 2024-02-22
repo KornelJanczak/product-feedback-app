@@ -16,14 +16,11 @@ interface User {
 }
 
 type UserProfile = {
-  id: string;
   userName: string;
-  firstName: string | null;
   lastName: string | null;
+  firstName: string | null;
+  image: string | null;
   email: string;
-  image: null | string;
-  createDate: Date;
-  // updateDate: Date;
   profile: {
     userId: string;
     bgImage: null | string;
@@ -35,11 +32,15 @@ type UserProfile = {
   } | null;
 };
 
-interface IUserAccountView extends UserProfile {
-  password: string;
-}
+interface IUserAccountView extends UserProfile {}
 
-interface IUserProfileView extends UserProfile {}
+interface IUserProfileView extends UserProfile {
+  id: string;
+  friendRequestExist?: boolean;
+  existingInvitation?: boolean;
+  userFriend?: boolean;
+  createDate: Date;
+}
 
 type settingsAccount = "userName" | "firstName" | "lastName" | "email";
 

@@ -7,34 +7,59 @@ import _ from "lodash";
 import { redirect } from "next/navigation";
 import ProfileBackground from "../_components/background";
 import UserAvatar from "../_components/profile-avatar";
+import ActionButton from "../_components/action-button";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
-  if (!profileUserId || !currentUserId) return null;
+  try {
+    if (!profileUserId || !currentUserId) return null;
 
-  const userWithProfile = await prisma.user.findUnique({
-    where: {
-      id: profileUserId,
-    },
-    include: {
-      profile: true,
-    },
-  });
+    const userWithProfile = await prisma.user.findFirst({
+      where: {
+        id: profileUserId,
+      },
+      include: {
+        profile: true,
+        friends: true,
+        friendRequest: true,
+        friendRequestOf: true,
+      },
+    });
 
-  console.log(userWithProfile);
-  if (!userWithProfile) return null;
+    if (!userWithProfile) return null;
 
-  const userProfile: IUserProfileView = {
-    id: userWithProfile.id,
-    email: userWithProfile.email,
-    userName: userWithProfile.userName,
-    firstName: userWithProfile.firstName,
-    lastName: userWithProfile.lastName,
-    createDate: userWithProfile.createDate,
-    image: userWithProfile.image,
-    profile: userWithProfile.profile,
-  };
+    const sendedFriendRequest = userWithProfile.friendRequest.reduce(
+      (exist, request) => exist || request.friendRequestOfId === currentUserId,
+      false
+    );
 
-  return userProfile;
+    const recivedFriendRequest = userWithProfile.friendRequestOf.reduce(
+      (exist, request) => exist || request.friendRequestId === currentUserId,
+      false
+    );
+
+    const isFriend = userWithProfile.friends.reduce(
+      (exist, request) => exist || request.friendOfId === currentUserId,
+      false
+    );
+
+    const userProfile: IUserProfileView = {
+      id: userWithProfile.id,
+      email: userWithProfile.email,
+      userName: userWithProfile.userName,
+      firstName: userWithProfile.firstName,
+      lastName: userWithProfile.lastName,
+      createDate: userWithProfile.createDate,
+      image: userWithProfile.image,
+      profile: userWithProfile.profile,
+      friendRequestExist: sendedFriendRequest,
+      existingInvitation: recivedFriendRequest,
+      userFriend: isFriend,
+    };
+
+    return userProfile;
+  } catch {
+    return null;
+  }
 }
 
 export default async function ProfilePage({
@@ -78,13 +103,21 @@ export default async function ProfilePage({
           image={userProfile.profile?.bgImage}
           viewType="profileView"
         />
-        <UserAvatar
-          username={userProfile.userName}
-          image={userProfile.image}
-          lastName={userProfile.lastName}
-          firstName={userProfile.firstName}
-          viewType="profileView"
-        />
+        <div>
+          <UserAvatar
+            username={userProfile.userName}
+            image={userProfile.image}
+            lastName={userProfile.lastName}
+            firstName={userProfile.firstName}
+            viewType="profileView"
+          />
+          <ActionButton
+            userId={searchParams.id}
+            friendRequestExist={userProfile.friendRequestExist}
+            existingInvitation={userProfile.existingInvitation}
+            userFriend={userProfile.userFriend}
+          />
+        </div>
       </div>
     );
 }

@@ -14,6 +14,7 @@ export default function Container({ users }: { users: Friend[] }) {
             userFriend,
             lastName,
             firstName,
+            image
           }) => (
             <Card
               key={id}
@@ -24,6 +25,7 @@ export default function Container({ users }: { users: Friend[] }) {
               friendRequestExist={friendRequestExist}
               existingInvitation={existingInvitation}
               userFriend={userFriend}
+              image={image}
             />
           )
         )}

@@ -20,19 +20,34 @@ import FriendCard from "./_components/friend-card";
 import FriendHeader from "./_components/friend-header";
 
 async function getUserProfile(currentUser: User) {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: currentUser.id,
-    },
-    include: {
-      profile: true,
-      friends: true,
-    },
-  });
+  try {
+    if (!currentUser || !currentUser.id) return null;
 
-  if (!user) return {};
+    const user = await prisma.user.findUnique({
+      where: {
+        id: currentUser.id,
+      },
+      include: {
+        profile: true,
+        friends: true,
+      },
+    });
 
-  return user;
+    if (!user) return null;
+
+    const sanitizedUser: IUserAccountView = {
+      userName: user.userName,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      image: user.image,
+      email: user.email,
+      profile: user.profile,
+    };
+
+    return sanitizedUser;
+  } catch {
+    return null;
+  }
 }
 
 export default async function AccountPage({
@@ -44,8 +59,13 @@ export default async function AccountPage({
 
   if (!currentUser) redirect("/login");
 
-  const { profile, userName, lastName, firstName, image, email } =
-    (await getUserProfile(currentUser as User)) as IUserAccountView
+  const userProfile: IUserAccountView | null = await getUserProfile(
+    currentUser
+  );
+
+  if (!userProfile) throw new Error("User profile load error!");
+
+  const { profile, userName, lastName, firstName, image, email } = userProfile;
 
   const accountSettings = [
     {
@@ -116,10 +136,7 @@ export default async function AccountPage({
   return (
     <div className="relative">
       <Suspense fallback={<ProfileBackgroundSkeleton />}>
-        <ProfileBackground
-          image={profile?.bgImage}
-          viewType="accountView"
-        />
+        <ProfileBackground image={profile?.bgImage} viewType="accountView" />
       </Suspense>
       <UserAvatar
         username={userName}
