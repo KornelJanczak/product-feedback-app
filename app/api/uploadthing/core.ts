@@ -17,7 +17,7 @@ export const ourFileRouter = {
 
       if (!user) throw new UploadThingError("Unauthorized");
 
-      const fileOverrides = addCustomId(files, user.id, "profile");
+      // const fileOverrides = addCustomId(files, user.id, "profile");
 
       const profileImage = await prisma.profile.findUnique({
         where: {
@@ -32,7 +32,7 @@ export const ourFileRouter = {
         profileImageExist = false;
       }
 
-      return { userId: user.id, [UTFiles]: fileOverrides, profileImageExist };
+      return { userId: user.id,  profileImageExist };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       await prisma.profile.upsert({
@@ -60,9 +60,9 @@ export const ourFileRouter = {
 
       if (!user) throw new UploadThingError("Unauthorized");
 
-      const fileOverrides = addCustomId(files, user.id, "profile");
+      // const fileOverrides = addCustomId(files, user.id, "profile");
 
-      return { userId: user.id, [UTFiles]: fileOverrides };
+      return { userId: user.id, };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       await prisma.user.update({
@@ -80,15 +80,15 @@ export const ourFileRouter = {
 
 export type OurFileRouter = typeof ourFileRouter;
 
-function addCustomId(
-  files: { name: string; size: number }[],
-  userId: string,
-  actionType: string
-) {
-  const fileOverrides = files.map((file) => {
-    const originalFileExtension = file.name.split(".").pop();
-    const fileName: string = `${userId}-${actionType}.${originalFileExtension}`;
-    return { ...file, customId: fileName };
-  });
-  return fileOverrides;
-}
+// function addCustomId(
+//   files: { name: string; size: number }[],
+//   userId: string,
+//   actionType: string
+// ) {
+//   const fileOverrides = files.map((file) => {
+//     const originalFileExtension = file.name.split(".").pop();
+//     const fileName: string = `${userId}-${actionType}.${originalFileExtension}`;
+//     return { ...file, customId: fileName };
+//   });
+//   return fileOverrides;
+// }
