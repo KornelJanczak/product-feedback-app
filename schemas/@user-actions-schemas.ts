@@ -24,3 +24,7 @@ export const updateProfileSchema = z.object({
   location: z.string().min(1),
   gitHub: z.string().min(1),
 });
+
+export const deleteImageSchema = z.object({
+  imageType: z.union([z.literal("avatar"), z.literal("profile")]),
+});

@@ -9,8 +9,6 @@ export const updateProfile = action(
   updateProfileSchema,
   async ({ preferRole, description, company, location, gitHub }) => {
     try {
-      console.log("das");
-
       const currentUser = await getCurrentUser();
 
       if (!currentUser) return { error: "Unauthorizated!" };

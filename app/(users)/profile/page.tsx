@@ -6,7 +6,7 @@ import Link from "next/link";
 import _ from "lodash";
 import { redirect } from "next/navigation";
 import ProfileBackground from "../_components/background";
-import UserAvatar from "../_components/profile-avatar";
+import UserAvatar from "../_components/user-avatar";
 import ActionButton from "../_components/action-button";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
@@ -27,19 +27,16 @@ async function getUserProfile(profileUserId: string, currentUserId: string) {
 
     if (!userWithProfile) return null;
 
-    const sendedFriendRequest = userWithProfile.friendRequest.reduce(
-      (exist, request) => exist || request.friendRequestOfId === currentUserId,
-      false
+    const sendedFriendRequest = userWithProfile.friendRequest.some(
+      (request) => request.friendRequestOfId === currentUserId
     );
 
-    const recivedFriendRequest = userWithProfile.friendRequestOf.reduce(
-      (exist, request) => exist || request.friendRequestId === currentUserId,
-      false
+    const recivedFriendRequest = userWithProfile.friendRequestOf.some(
+      (request) => request.friendRequestId === currentUserId
     );
 
-    const isFriend = userWithProfile.friends.reduce(
-      (exist, request) => exist || request.friendOfId === currentUserId,
-      false
+    const isFriend = userWithProfile.friends.some(
+      (request) => request.friendOfId === currentUserId
     );
 
     const userProfile: IUserProfileView = {
@@ -69,7 +66,7 @@ export default async function ProfilePage({
 }) {
   const currentUser = await getCurrentUser();
 
-  if (!currentUser) redirect("/login");
+  if (!currentUser) return redirect("/login");
 
   const userProfile: IUserProfileView | null = await getUserProfile(
     searchParams.id,
@@ -96,28 +93,41 @@ export default async function ProfilePage({
       </div>
     );
 
-  if (!_.isEmpty(userProfile) && searchParams.id)
+  if (!_.isEmpty(userProfile) && searchParams.id) {
+    const {
+      id,
+      userName,
+      image,
+      lastName,
+      firstName,
+      friendRequestExist,
+      existingInvitation,
+      userFriend,
+      profile,
+    } = userProfile;
+
     return (
       <div className="relative">
-        <ProfileBackground
-          image={userProfile.profile?.bgImage}
-          viewType="profileView"
-        />
-        <div>
+        <ProfileBackground image={profile?.bgImage} viewType="profileView" />
+        <div className="">
           <UserAvatar
-            username={userProfile.userName}
-            image={userProfile.image}
-            lastName={userProfile.lastName}
-            firstName={userProfile.firstName}
+            username={userName}
+            image={image}
+            lastName={lastName}
+            firstName={firstName}
             viewType="profileView"
-          />
-          <ActionButton
-            userId={searchParams.id}
-            friendRequestExist={userProfile.friendRequestExist}
-            existingInvitation={userProfile.existingInvitation}
-            userFriend={userProfile.userFriend}
-          />
+          >
+            <ActionButton
+              userId={id}
+              friendRequestExist={friendRequestExist}
+              existingInvitation={existingInvitation}
+              userFriend={userFriend}
+              className="w-2/5 mt-2 sm:w-2/7"
+              userName={userName}
+            />
+          </UserAvatar>
         </div>
       </div>
     );
+  }
 }

@@ -3,7 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
-import { useMemo } from "react";
+import { Children, ReactNode, useMemo } from "react";
+import ActionButton from "./action-button";
 
 export default function UserAvatar({
   username,
@@ -11,17 +12,15 @@ export default function UserAvatar({
   lastName,
   image,
   viewType,
+  children,
 }: {
   username: string;
   image?: string | null;
   firstName?: string | null;
   lastName?: string | null;
+  children?: ReactNode;
   viewType: "accountView" | "profileView";
 }) {
-  // const [avatarImage, setAvatarTmage] = useState<string | null>(null);
-
-  //   : `https://github.com/shadcn.png?${new Date().getTime()}`;
-
   const firstAndLastNameExist = firstName && lastName;
   const avatar = useMemo(() => {
     return image
@@ -54,6 +53,7 @@ export default function UserAvatar({
           {firstAndLastNameExist ? firstName + " " + lastName : username}
         </h2>
       </div>
+      {children}
     </div>
   );
 }

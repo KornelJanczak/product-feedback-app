@@ -1,7 +1,7 @@
 "use client";
 import XMarkIcon from "@/public/icons/x-mark";
 import { cn } from "@/lib/utils";
-import { DeleteImageAlert } from "./delete-image-alert";
+import { DeleteImageDialog } from "./delete-image-dialog";
 import { useState } from "react";
 
 export default function DeleteImageButton({
@@ -29,7 +29,7 @@ export default function DeleteImageButton({
       >
         <XMarkIcon />
       </button>
-      <DeleteImageAlert type={type} open={open} onClick={onClick} />
+      <DeleteImageDialog type={type} open={open} onClick={onClick} />
     </>
   );
 }

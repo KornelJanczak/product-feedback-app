@@ -4,4 +4,5 @@ export const revalidateFriends = () => {
   revalidatePath("/friends/sended-invitations");
   revalidatePath("/friends/your-friends");
   revalidatePath("/friends/recived-invitations");
+  revalidatePath("/profile");
 };

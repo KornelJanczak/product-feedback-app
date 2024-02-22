@@ -9,51 +9,49 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { deleteImage } from "@/server-actions/user/delete-image";
 import { useAction } from "next-safe-action/hooks";
+import { deleteUserFriend } from "@/server-actions/user/delete-user-friend";
 import { toast } from "sonner";
 import { useEffect } from "react";
 
-export function DeleteImageAlert({
+export default function DeleteFriendDialog({
+  userName,
   open,
   onClick,
-  type,
+  userId,
 }: {
+  userName: string;
   open: boolean;
-  type: "avatar" | "profile";
+  userId: string;
   onClick: () => void;
 }) {
   const toastId = "loadingToast";
-
-  const { execute, status } = useAction(deleteImage, {
-    onSuccess(data) {
-      toast.dismiss(toastId);
-      if (data.error) {
-        toast.error(data.error, { duration: 3000 });
-      } else {
-        toast.success(`We deleted your ${type} image!`, { duration: 3000 });
-      }
-    },
-    onError() {
-      toast.error("Image deleting failed!");
-    },
-  });
-
-  useEffect(() => {
-    if (status === "executing") {
-      toast.loading("Loading...", { id: toastId });
-    }
-  }, [status]);
-
+  const { status: deleteFriendStatus, execute: deleteFriendExecute } =
+    useAction(deleteUserFriend, {
+      onSuccess(data) {
+        toast.dismiss(toastId);
+        if (data.error) {
+          // toast.error(data.error, { duration: 3000 });
+        } else {
+          toast.success(`We deleted your ${userName} from your friends!`, {
+            duration: 3000,
+          });
+        }
+      },
+      onError() {
+        toast.error("Friend deleting failed!");
+      },
+    });
   return (
     <AlertDialog open={open} onOpenChange={onClick}>
-      <AlertDialogContent className="max-w-80 sm:max-w-md rounded">
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-secondDark">
             Are you absolutely sure?
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-grey">
-            This action cannot be undone. This will delete your {type} image
+          <AlertDialogDescription>
+            This action cannot be undone. This will delete @{userName} from your
+            friends.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -61,8 +59,8 @@ export function DeleteImageAlert({
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => execute({ imageType: type })}
             className="bg-red text-darkWhite"
+            onClick={() => deleteFriendExecute({ userId })}
           >
             Continue
           </AlertDialogAction>

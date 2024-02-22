@@ -1,6 +1,6 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import UserAvatar from "../_components/profile-avatar";
+import UserAvatar from "../_components/user-avatar";
 import prisma from "@/lib/db";
 import ProfileBackground, {
   ProfileBackgroundSkeleton,
