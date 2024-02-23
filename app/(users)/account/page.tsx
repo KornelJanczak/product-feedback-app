@@ -11,8 +11,8 @@ import { Suspense } from "react";
 import getUserFriends from "@/lib/user/get-user-friends";
 import FriendCard from "./_components/friend-card";
 import FriendHeader from "./_components/friend-header";
-import setAccountSettings from "../_components/setAccountSettings";
-import setProfileSettings from "../_components/setProfileSettings";
+import setAccountInformation from "../_components/set-account-information";
+import setProfileInformation from "../_components/set-profile-information";
 
 async function getUserProfile(currentUser: User) {
   try {
@@ -77,8 +77,9 @@ export default async function AccountPage({
     gitHub: profile?.gitHub,
   };
 
-  const accountSettings = setAccountSettings(accountValue);
-  const profileSettings = setProfileSettings(profileValue);
+  const accountSettings = setAccountInformation(accountValue);
+  const profileSettings: ProfileInformation[] =
+    setProfileInformation(profileValue);
 
   const [searchValue] = Object.values(searchParams);
   const userFriends = (await getUserFriends(currentUser, searchValue)).slice(
@@ -100,8 +101,8 @@ export default async function AccountPage({
       />
       <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10">
         <Settings
-          accountSettings={accountSettings as settings}
-          profileSettings={profileSettings as settings}
+          accountSettings={accountSettings}
+          profileSettings={profileSettings}
         />
 
         <div className="p-5 mt-5  bg-basicWhite md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">

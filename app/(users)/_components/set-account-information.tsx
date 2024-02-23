@@ -1,20 +1,20 @@
 import UserIcon from "@/public/icons/user";
 import EmailIcon from "@/public/icons/email";
 
-interface IAccountSettings {
+interface informationData {
   userName: string;
   firstName?: string | null;
   lastName?: string | null;
   email: string;
 }
 
-export default function setAccountSettings({
+export default function setAccountInformation({
   userName,
   firstName,
   lastName,
   email,
-}: IAccountSettings) {
-  const accountSettings = [
+}: informationData): AccountInformation[] {
+  const accountInformation: AccountInformation[] = [
     {
       type: "User name",
       data: userName,
@@ -41,5 +41,5 @@ export default function setAccountSettings({
     },
   ];
 
-  return accountSettings;
+  return accountInformation;
 }

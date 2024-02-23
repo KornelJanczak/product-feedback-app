@@ -15,7 +15,7 @@ interface User {
   id: string;
 }
 
-type UserProfile = {
+interface UserProfile {
   userName: string;
   lastName: string | null;
   firstName: string | null;
@@ -30,7 +30,7 @@ type UserProfile = {
     preferRole: null | string;
     gitHub: null | string;
   } | null;
-};
+}
 
 interface IUserAccountView extends UserProfile {}
 
@@ -51,9 +51,18 @@ type settingsProfile =
   | "location"
   | "gitHub";
 
-type settings = {
+interface settings {
   type: string;
-  data: string | null;
+  data?: string | null;
   icon: React.ReactNode;
-  name: settingsAccount & settingsProfile;
-}[];
+  // name: settingsAccount | settingsProfile;
+}
+
+interface AccountInformation extends settings {
+  name: settingsAccount;
+}
+
+
+interface ProfileInformation extends settings {
+  name: settingsProfile;
+}

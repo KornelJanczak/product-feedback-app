@@ -9,6 +9,7 @@ import ProfileBackground from "../_components/background";
 import UserAvatar from "../_components/user-avatar";
 import ActionButton from "../_components/action-button";
 import Information from "./_components/information";
+import setProfileInformation from "../_components/set-profile-information";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
   try {
@@ -74,8 +75,6 @@ export default async function ProfilePage({
     currentUser.id
   );
 
-  console.log(userProfile);
-
   if (!searchParams.id || _.isEmpty(userProfile))
     return (
       <div className="container relative h-screen w-full">
@@ -108,6 +107,16 @@ export default async function ProfilePage({
       createDate,
     } = userProfile;
 
+    const profileValue = {
+      preferRole: profile?.preferRole,
+      description: profile?.description,
+      location: profile?.location,
+      company: profile?.company,
+      gitHub: profile?.gitHub,
+    };
+
+    const profileInformation: ProfileInformation[] = setProfileInformation(profileValue);
+
     return (
       <div className="relative">
         <ProfileBackground image={profile?.bgImage} viewType="profileView" />
@@ -129,7 +138,11 @@ export default async function ProfilePage({
               userName={userName}
             />
           </UserAvatar>
-          <Information userName={userName} createDate={createDate} />
+          <Information
+            userName={userName}
+            createDate={createDate}
+            profileInformation={profileInformation && profileInformation}
+          />
         </div>
       </div>
     );

@@ -4,7 +4,7 @@ import LocationIcon from "@/public/icons/location";
 import CompanyIcon from "@/public/icons/company";
 import LinkIcon from "@/public/icons/link";
 
-interface IProfile {
+interface informationData {
   description?: null | string;
   company?: null | string;
   location?: null | string;
@@ -12,14 +12,14 @@ interface IProfile {
   gitHub?: null | string;
 }
 
-export default function setProfileSettings({
+export default function setProfileInformation({
   preferRole,
   description,
   location,
   company,
   gitHub,
-}: IProfile) {
-  const profileSettings = [
+}: informationData): ProfileInformation[] {
+  const profileInformation: ProfileInformation[] = [
     {
       type: "Prefer Role",
       data: preferRole,
@@ -52,5 +52,5 @@ export default function setProfileSettings({
     },
   ];
 
-  return profileSettings;
+  return profileInformation;
 }

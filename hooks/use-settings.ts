@@ -9,7 +9,9 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const createDefaultValues = (array: settings) => {
+const createDefaultValues = (
+  array: ProfileInformation[] | AccountInformation[]
+) => {
   return array.reduce((result: any, item) => {
     result[item.name] = item.data;
     return result;
@@ -19,7 +21,7 @@ const createDefaultValues = (array: settings) => {
 export const useUserSettings = (
   action: any,
   schema: any,
-  settingsObj: settings,
+  settingsObj: AccountInformation[] | ProfileInformation[],
   type: "profile" | "account"
 ) => {
   const toastId = "loadingToast";

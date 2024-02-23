@@ -9,7 +9,7 @@ export default function SettingsContent({
   dialog,
   onClick,
 }: {
-  dataArr: settings;
+  dataArr: AccountInformation[] | ProfileInformation[];
   onClick: () => void;
   dialog: ReactNode;
 }) {

@@ -18,8 +18,8 @@ export function Settings({
   accountSettings,
   profileSettings,
 }: {
-  accountSettings: settings;
-  profileSettings: settings;
+  accountSettings: AccountInformation[];
+  profileSettings: ProfileInformation[];
 }) {
   const {
     processForm: accountProcess,

@@ -4,6 +4,7 @@ export default function Information({
 }: {
   userName: string;
   createDate: Date;
+  profileInformation: ProfileInformation[];
 }) {
   const dateOptions: Intl.DateTimeFormatOptions = {
     year: "numeric",

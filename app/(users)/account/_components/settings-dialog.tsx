@@ -36,7 +36,7 @@ export function SettingsDialog({
   dialogTitle,
   dialogDescription,
 }: {
-  data: settings;
+  data: AccountInformation[] | ProfileInformation[];
   open: boolean;
   form: CombinedFormReturn;
   processForm: CombinedFormSumbit;
@@ -61,7 +61,7 @@ export function SettingsDialog({
                   <FormField
                     control={form.control}
                     key={i}
-                    name={item.name}
+                    name={item.name as settingsAccount & settingsProfile}
                     render={({ field }) => (
                       <FormItem className="pt-2 md:pt-3">
                         <FormLabel className="md:text-base">
@@ -72,7 +72,7 @@ export function SettingsDialog({
                             {...field}
                             type={item.name !== "email" ? "text" : "email"}
                             placeholder={item.type}
-                            defaultValue={item.data as string}
+                            defaultValue={item.data ? item.data : ""}
                             className="md:text-base"
                           />
                         </FormControl>
