@@ -6,18 +6,13 @@ import ProfileBackground, {
   ProfileBackgroundSkeleton,
 } from "../_components/background";
 import { Settings } from "./_components/settings-accordion";
-import UserIcon from "@/public/icons/user";
-import EmailIcon from "@/public/icons/email";
-import PreferRoleIcon from "@/public/icons/prefer-role";
-import DescriptionIcon from "@/public/icons/description";
-import LocationIcon from "@/public/icons/location";
-import CompanyIcon from "@/public/icons/company";
-import LinkIcon from "@/public/icons/link";
 import FriendsContainer from "./_components/friends-container";
 import { Suspense } from "react";
 import getUserFriends from "@/lib/user/get-user-friends";
 import FriendCard from "./_components/friend-card";
 import FriendHeader from "./_components/friend-header";
+import setAccountSettings from "../_components/setAccountSettings";
+import setProfileSettings from "../_components/setProfileSettings";
 
 async function getUserProfile(currentUser: User) {
   try {
@@ -67,65 +62,23 @@ export default async function AccountPage({
 
   const { profile, userName, lastName, firstName, image, email } = userProfile;
 
-  const accountSettings = [
-    {
-      type: "User name",
-      data: userName,
-      icon: <UserIcon />,
-      name: "userName",
-    },
-    {
-      type: "First name",
-      data: firstName,
-      icon: <UserIcon />,
-      name: "firstName",
-    },
-    {
-      type: "Last name",
-      data: lastName,
-      icon: <UserIcon />,
-      name: "lastName",
-    },
-    {
-      type: "Email",
-      data: email,
-      icon: <EmailIcon />,
-      name: "email",
-    },
-  ];
+  const accountValue = {
+    userName,
+    lastName,
+    firstName,
+    email,
+  };
 
-  const profileSettings = [
-    {
-      type: "Prefer Role",
-      data: profile?.preferRole,
-      icon: <PreferRoleIcon />,
-      name: "preferRole",
-    },
-    {
-      type: "Bio",
-      data: profile?.description,
-      icon: <DescriptionIcon />,
-      name: "description",
-    },
-    {
-      type: "Location",
-      data: profile?.location,
-      icon: <LocationIcon />,
-      name: "location",
-    },
-    {
-      type: "Company",
-      data: profile?.company,
-      icon: <CompanyIcon />,
-      name: "company",
-    },
-    {
-      type: "GitHub",
-      data: profile?.gitHub,
-      icon: <LinkIcon />,
-      name: "gitHub",
-    },
-  ];
+  const profileValue = {
+    preferRole: profile?.preferRole,
+    description: profile?.description,
+    location: profile?.location,
+    company: profile?.company,
+    gitHub: profile?.gitHub,
+  };
+
+  const accountSettings = setAccountSettings(accountValue);
+  const profileSettings = setProfileSettings(profileValue);
 
   const [searchValue] = Object.values(searchParams);
   const userFriends = (await getUserFriends(currentUser, searchValue)).slice(

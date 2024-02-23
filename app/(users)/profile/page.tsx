@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import ProfileBackground from "../_components/background";
 import UserAvatar from "../_components/user-avatar";
 import ActionButton from "../_components/action-button";
+import Information from "./_components/information";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
   try {
@@ -104,6 +105,7 @@ export default async function ProfilePage({
       existingInvitation,
       userFriend,
       profile,
+      createDate,
     } = userProfile;
 
     return (
@@ -123,10 +125,11 @@ export default async function ProfilePage({
               existingInvitation={existingInvitation}
               userFriend={userFriend}
               className="w-2/5 mt-2 sm:w-2/7"
-              existingInbBtnClassName="flex-row justify-center"
+              existingInvitationBtnClassName="flex-row justify-center"
               userName={userName}
             />
           </UserAvatar>
+          <Information userName={userName} createDate={createDate} />
         </div>
       </div>
     );

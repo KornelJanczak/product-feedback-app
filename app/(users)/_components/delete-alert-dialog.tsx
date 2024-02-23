@@ -56,7 +56,7 @@ export default function DeleteAlertDialog({
     });
 
   // Delete image action handler
-  const { execute: deleteImageExecute, status: deleteImageStatus } = useAction(
+  const { status: deleteImageStatus, execute: deleteImageExecute } = useAction(
     deleteImage,
     {
       onSuccess(data) {

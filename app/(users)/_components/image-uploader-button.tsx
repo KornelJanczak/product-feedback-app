@@ -4,7 +4,7 @@ import { generateClientDropzoneAccept } from "uploadthing/client";
 import { useCallback } from "react";
 import PictureIcon from "@/public/icons/picture";
 import CameraIcon from "@/public/icons/camera";
-import { useUploadThing } from "@/utils/uploadthing";
+import { useUploadThing } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 

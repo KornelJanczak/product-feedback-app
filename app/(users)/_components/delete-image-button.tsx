@@ -1,7 +1,6 @@
 "use client";
 import XMarkIcon from "@/public/icons/x-mark";
 import { cn } from "@/lib/utils";
-import { DeleteImageDialog } from "./delete-image-dialog";
 import { useState } from "react";
 import DeleteAlertDialog from "./delete-alert-dialog";
 

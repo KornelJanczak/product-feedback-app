@@ -3,8 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
-import { Children, ReactNode, useMemo } from "react";
-import ActionButton from "./action-button";
+import { ReactNode, useMemo } from "react";
 
 export default function UserAvatar({
   username,

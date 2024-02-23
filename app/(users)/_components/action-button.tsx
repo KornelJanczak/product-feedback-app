@@ -18,13 +18,13 @@ export default function ActionButton({
   userFriend,
   className,
   userName,
-  existingInbBtnClassName,
+  existingInvitationBtnClassName,
 }: {
   userId: string;
   friendRequestExist?: boolean;
   existingInvitation?: boolean;
   userFriend?: boolean;
-  existingInbBtnClassName?: string;
+  existingInvitationBtnClassName?: string;
   className?: string;
   userName: string;
 }) {
@@ -90,7 +90,7 @@ export default function ActionButton({
       <div
         className={cn(
           "flex flex-col items-center w-full gap-1 pt-1 sm:pt-2",
-          existingInbBtnClassName
+          existingInvitationBtnClassName
         )}
       >
         <Button
