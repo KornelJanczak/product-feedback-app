@@ -123,6 +123,7 @@ export default async function ProfilePage({
               existingInvitation={existingInvitation}
               userFriend={userFriend}
               className="w-2/5 mt-2 sm:w-2/7"
+              existingInbBtnClassName="flex-row justify-center"
               userName={userName}
             />
           </UserAvatar>

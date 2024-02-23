@@ -8,10 +8,8 @@ import { rejectOrDeleteFriendRequest } from "@/server-actions/user/reject-or-del
 import { acceptFriendRequest } from "@/server-actions/user/accept-friend-request";
 import ClipLoader from "react-spinners/ClipLoader";
 import { cn } from "@/lib/utils";
-import { deleteUserFriend } from "@/server-actions/user/delete-user-friend";
 import { useState } from "react";
-import { DeleteImageDialog } from "./delete-image-dialog";
-import DeleteFriendDialog from "./delete-friend-dialog";
+import DeleteAlertDialog from "./delete-alert-dialog";
 
 export default function ActionButton({
   userId,
@@ -20,11 +18,13 @@ export default function ActionButton({
   userFriend,
   className,
   userName,
+  existingInbBtnClassName,
 }: {
   userId: string;
   friendRequestExist?: boolean;
   existingInvitation?: boolean;
   userFriend?: boolean;
+  existingInbBtnClassName?: string;
   className?: string;
   userName: string;
 }) {
@@ -48,6 +48,10 @@ export default function ActionButton({
 
   // Delete user from friends
   const [openDeleteDialog, setDeleteDialog] = useState<boolean>(false);
+
+  const openAlertDialogHandler = () => {
+    setDeleteDialog((open) => !open);
+  };
 
   if (friendRequestExist)
     return (
@@ -83,7 +87,12 @@ export default function ActionButton({
 
   if (existingInvitation)
     return (
-      <div className="flex flex-col items-center w-full gap-1 pt-1 sm:pt-2">
+      <div
+        className={cn(
+          "flex flex-col items-center w-full gap-1 pt-1 sm:pt-2",
+          existingInbBtnClassName
+        )}
+      >
         <Button
           className={cnBtnClass}
           onClick={() => acceptRequestExecute({ userId })}
@@ -116,16 +125,18 @@ export default function ActionButton({
       <>
         <Button
           className={cn(btnClass, "bg-red hover:bg-red", className)}
-          onClick={() => setDeleteDialog((open) => !open)}
+          onClick={openAlertDialogHandler}
         >
           <DeleteUserIcon />
           Delete friend
         </Button>
-        <DeleteFriendDialog
-          userName={userName}
-          userId={userId}
-          onClick={() => setDeleteDialog((open) => !open)}
+
+        <DeleteAlertDialog
           open={openDeleteDialog}
+          onClick={openAlertDialogHandler}
+          alertType="deleteFriend"
+          userId={userId}
+          userName={userName}
         />
       </>
     );
