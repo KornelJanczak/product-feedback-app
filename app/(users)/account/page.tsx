@@ -82,10 +82,8 @@ export default async function AccountPage({
     setProfileInformation(profileValue);
 
   const [searchValue] = Object.values(searchParams);
-  const userFriends = (await getUserFriends(currentUser, searchValue)).slice(
-    0,
-    9
-  );
+  const userFriends = await getUserFriends(currentUser, searchValue);
+  const slicedFriends = userFriends.slice(0, 9);
 
   return (
     <div className="relative">
@@ -106,18 +104,20 @@ export default async function AccountPage({
         />
 
         <div className="p-5 mt-5  bg-basicWhite md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
-          <FriendHeader />
+          <FriendHeader numberOfFriends={userFriends.length} />
           <FriendsContainer>
-            {userFriends.map(({ id, userName, firstName, lastName, image }) => (
-              <FriendCard
-                key={id}
-                id={id}
-                userName={userName}
-                firstName={firstName}
-                lastName={lastName}
-                image={image}
-              />
-            ))}
+            {slicedFriends.map(
+              ({ id, userName, firstName, lastName, image }) => (
+                <FriendCard
+                  key={id}
+                  id={id}
+                  userName={userName}
+                  firstName={firstName}
+                  lastName={lastName}
+                  image={image}
+                />
+              )
+            )}
           </FriendsContainer>
         </div>
       </div>

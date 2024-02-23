@@ -36,6 +36,7 @@ export default function Card({
         </h3>
         <span className="text-grey sm:text-center ">@{userName}</span>
         <ActionButton
+          userName={userName}
           userId={id}
           friendRequestExist={friendRequestExist}
           existingInvitation={existingInvitation}

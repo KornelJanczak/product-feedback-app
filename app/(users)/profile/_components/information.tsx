@@ -1,6 +1,7 @@
 export default function Information({
   userName,
   createDate,
+  profileInformation,
 }: {
   userName: string;
   createDate: Date;
@@ -21,6 +22,22 @@ export default function Information({
           <strong className="text-pink"> @{userName} </strong>has been with us
           since {formatedDate}!
         </span>
+        {profileInformation.map(({ data, icon, type }, i) => (
+          <div key={i} className="flex items-center justify-between pl-2">
+            <span className="text-grey text-base flex gap-x-1.5 ">
+              {icon}
+              <strong className="text-secondDark">{type}: </strong>
+              {type === "GitHub" && (
+                <a href={data as string}>
+                  {data ? data : "no information available."}
+                </a>
+              )}
+              {type !== "GitHub" && (
+                <p>{data ? data : "no information available."}</p>
+              )}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
