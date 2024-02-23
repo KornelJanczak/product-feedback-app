@@ -8,8 +8,9 @@ import { redirect } from "next/navigation";
 import ProfileBackground from "../_components/background";
 import UserAvatar from "../_components/user-avatar";
 import ActionButton from "../_components/action-button";
-import Information from "./_components/information";
+import AdditionalInformation from "./_components/additional-information";
 import setProfileInformation from "../_components/set-profile-information";
+import MainInformation from "./_components/main-information";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
   try {
@@ -97,6 +98,7 @@ export default async function ProfilePage({
     const {
       id,
       userName,
+      email,
       image,
       lastName,
       firstName,
@@ -115,7 +117,10 @@ export default async function ProfilePage({
       gitHub: profile?.gitHub,
     };
 
-    const profileInformation: ProfileInformation[] = setProfileInformation(profileValue);
+    const profileInformation: ProfileInformation[] =
+      setProfileInformation(profileValue);
+
+    const [preferRole, bio, location, company, gitHub] = profileInformation;
 
     return (
       <div className="relative">
@@ -137,11 +142,18 @@ export default async function ProfilePage({
               existingInvitationBtnClassName="flex-row justify-center"
               userName={userName}
             />
+            <MainInformation
+              bio={bio.data}
+              location={location}
+              gitHub={gitHub.data}
+              email={email}
+            />
           </UserAvatar>
-          <Information
+          <AdditionalInformation
             userName={userName}
             createDate={createDate}
-            profileInformation={profileInformation && profileInformation}
+            preferRole={preferRole}
+            company={company}
           />
         </div>
       </div>

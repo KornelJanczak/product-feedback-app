@@ -55,13 +55,11 @@ interface settings {
   type: string;
   data?: string | null;
   icon: React.ReactNode;
-
 }
 
 interface AccountInformation extends settings {
   name: settingsAccount;
 }
-
 
 interface ProfileInformation extends settings {
   name: settingsProfile;
