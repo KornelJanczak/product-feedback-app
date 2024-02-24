@@ -55,6 +55,8 @@ export default function ActionButton({
     setDeleteDialog((open) => !open);
   };
 
+  if (currentUserId === userId) return null;
+
   if (friendRequestExist)
     return (
       <Button
@@ -71,12 +73,7 @@ export default function ActionButton({
       </Button>
     );
 
-  if (
-    !friendRequestExist &&
-    !existingInvitation &&
-    !userFriend &&
-    !currentUserId
-  )
+  if (!friendRequestExist && !existingInvitation && !userFriend)
     return (
       <Button
         className={cnBtnClass}
@@ -147,6 +144,4 @@ export default function ActionButton({
         />
       </>
     );
-
-  if (currentUserId) return null;
 }

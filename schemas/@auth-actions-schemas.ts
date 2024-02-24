@@ -1,7 +1,10 @@
 import * as z from "zod";
 
-const validation = {
-  email: z.string().email({ message: "Email must contain @ symbol." }),
+export const validation = {
+  email: z
+    .string()
+    .email({ message: "Email must contain @ symbol." })
+    .min(2, { message: "Email must contain at least 3 characters" }),
   password: z
     .string()
     .min(5, { message: "Password must contain at lesat 5 symbol" })
@@ -20,10 +23,14 @@ const validation = {
 export const registerFormSchema = z
   .object({
     username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+      message: "User name must be at least 2 characters.",
     }),
-    firstName: z.string().min(2),
-    lastName: z.string().min(2),
+    firstName: z.string().min(2, {
+      message: "First name must be at least 2 characters.",
+    }),
+    lastName: z.string().min(2, {
+      message: "Last name must be at least 2 characters.",
+    }),
     ...validation,
     repeatPassword: z.string(),
   })

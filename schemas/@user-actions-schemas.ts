@@ -11,18 +11,27 @@ export const rejOrDelActionSchema = z.object({
 });
 
 export const updateUserSchema = z.object({
-  userName: z.string().min(3),
-  firstName: z.string().min(3),
-  lastName: z.string().min(3),
-  email: z.string().email().min(3),
+  userName: z
+    .string()
+    .min(3, { message: "User name must contain at least 3 characters" }),
+  firstName: z
+    .string()
+    .min(2, { message: "First name must contain at least 3 characters" }),
+  lastName: z
+    .string()
+    .min(2, { message: "Last name must contain at least 3 characters" }),
+  email: z
+    .string()
+    .email({ message: "Email must contain @ symbol." })
+    .min(2, { message: "Email must contain at least 3 characters" }),
 });
 
 export const updateProfileSchema = z.object({
-  preferRole: z.string().min(3),
-  description: z.string().min(1),
-  company: z.string().min(1),
-  location: z.string().min(1),
-  gitHub: z.string().min(1),
+  preferRole: z.string(),
+  description: z.string(),
+  company: z.string(),
+  location: z.string(),
+  gitHub: z.string(),
 });
 
 export const deleteImageSchema = z.object({

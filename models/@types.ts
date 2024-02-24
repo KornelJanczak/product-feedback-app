@@ -33,7 +33,9 @@ interface UserProfile {
   } | null;
 }
 
-interface IUserAccountView extends UserProfile {}
+interface IUserAccountView extends UserProfile {
+  createDate: Date;
+}
 
 interface IUserProfileView extends UserProfile {
   friendRequestExist?: boolean;

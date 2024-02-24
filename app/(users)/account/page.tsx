@@ -38,6 +38,7 @@ async function getUserProfile(currentUser: User) {
       lastName: user.lastName,
       image: user.image,
       email: user.email,
+      createDate: user.createDate,
       profile: user.profile,
     };
 
@@ -62,8 +63,16 @@ export default async function AccountPage({
 
   if (!userProfile) throw new Error("User profile load error!");
 
-  const { profile, userName, lastName, firstName, image, email, id } =
-    userProfile;
+  const {
+    profile,
+    userName,
+    lastName,
+    firstName,
+    image,
+    email,
+    id,
+    createDate,
+  } = userProfile;
 
   const accountValue = {
     userName,
@@ -90,6 +99,14 @@ export default async function AccountPage({
 
   const userHasFriends = userFriends.length > 0;
 
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  const formatedDate = createDate.toLocaleDateString("en-US", dateOptions);
+
   return (
     <div className="relative">
       <Suspense fallback={<ProfileBackgroundSkeleton />}>
@@ -102,7 +119,11 @@ export default async function AccountPage({
         firstName={firstName}
         userId={id}
         viewType="accountView"
-      />
+      >
+        <span className="text-secondDark font-semibold text-lg pt-3  text-center">
+          You are with us since {formatedDate}!
+        </span>
+      </UserAvatar>
       <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10">
         <Settings
           accountSettings={accountSettings}

@@ -10,7 +10,7 @@ export default function FriendHeader({
   return (
     <div className="flex items-center justify-between pb-6 pt-4">
       <h2 className="text-2xl font-semibold text-dark">
-        {!friendsExist && `Your friends: ${numberOfFriends}`}
+        Your friends: {numberOfFriends}
       </h2>
       {friendsExist && (
         <Link

@@ -15,18 +15,16 @@ export default function FriendCard({
   lastName: string | null;
   image: string | null;
 }) {
-  const userImage = image
-    ? `${process.env.AWS_URL}${image}?${new Date().getTime()}`
-    : `https://github.com/shadcn.png?${new Date().getTime()}`;
-
   const showName =
     firstName && lastName ? `${firstName} ${lastName}` : `${userName}`;
+
+  console.log(image);
 
   return (
     <Link href={`/profile?id=${id}`} className="w-full h-ful">
       <div>
         <Avatar className="rounded-lg w-full h-full">
-          <AvatarImage src={userImage as string} />
+          <AvatarImage src={image ? image : "https://github.com/shadcn.png"} />
           <AvatarFallback>
             <Skeleton className="h-full w-full bg-[#0000002c]" />
           </AvatarFallback>

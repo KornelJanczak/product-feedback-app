@@ -138,7 +138,7 @@ export default async function ProfilePage({
         >
           <ActionButton
             userId={id}
-            currentUserId={id}
+            currentUserId={currentUser.id}
             friendRequestExist={friendRequestExist}
             existingInvitation={existingInvitation}
             userFriend={userFriend}
