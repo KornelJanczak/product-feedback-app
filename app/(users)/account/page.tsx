@@ -31,6 +31,7 @@ async function getUserProfile(currentUser: User) {
     if (!user) return null;
 
     const sanitizedUser: IUserAccountView = {
+      id: user.id,
       userName: user.userName,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -60,7 +61,8 @@ export default async function AccountPage({
 
   if (!userProfile) throw new Error("User profile load error!");
 
-  const { profile, userName, lastName, firstName, image, email } = userProfile;
+  const { profile, userName, lastName, firstName, image, email, id } =
+    userProfile;
 
   const accountValue = {
     userName,
@@ -95,6 +97,7 @@ export default async function AccountPage({
         image={image}
         lastName={lastName}
         firstName={firstName}
+        userId={id}
         viewType="accountView"
       />
       <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10">
@@ -103,7 +106,7 @@ export default async function AccountPage({
           profileSettings={profileSettings}
         />
 
-        <div className="p-5 mt-5  bg-basicWhite md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
+        <div className="p-5 mt-5 md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
           <FriendHeader numberOfFriends={userFriends.length} />
           <FriendsContainer>
             {slicedFriends.map(

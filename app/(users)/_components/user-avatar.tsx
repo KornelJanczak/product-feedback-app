@@ -1,9 +1,10 @@
-"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
-import { ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
+import LinkIcon from "@/public/icons/link";
+import Link from "next/link";
 
 export default function UserAvatar({
   username,
@@ -12,20 +13,23 @@ export default function UserAvatar({
   image,
   viewType,
   children,
+  userId,
 }: {
   username: string;
   image?: string | null;
   firstName?: string | null;
   lastName?: string | null;
   children?: ReactNode;
+  userId?: string;
   viewType: "accountView" | "profileView";
 }) {
   const firstAndLastNameExist = firstName && lastName;
-  const avatar = useMemo(() => {
-    return image
-      ? `${image}?${new Date().getTime()}`
-      : `https://github.com/shadcn.png?${new Date().getTime()}`;
-  }, [image]);
+
+  const avatar = image
+    ? `${image}?${new Date().getTime()}`
+    : `https://github.com/shadcn.png?${new Date().getTime()}`;
+
+  const accountView = viewType === "accountView";
 
   return (
     <div
@@ -39,17 +43,24 @@ export default function UserAvatar({
             <Skeleton className="h-full w-full bg-[#0000002c]" />
           </AvatarFallback>
         </Avatar>
-        {image && viewType == "accountView" && (
+        {image && accountView && (
           <DeleteImageButton
             className="rounded-full right-0 ml-2 bottom-11"
             type="avatar"
           />
         )}
-        {viewType === "accountView" && <ImageUploaderButton type="avatar" />}
+        {accountView && <ImageUploaderButton type="avatar" />}
       </div>
-      <div className="flex flex-col">
-        <h2 className="text-4xl font-medium pt-2 text-dark">
-          {firstAndLastNameExist ? firstName + " " + lastName : username}
+      <div className="flex justify-center items-center">
+        <h2 className="flex justify-center items-center gap-2 text-4xl font-medium pt-2 text-dark pr-4">
+          {accountView && <LinkIcon stroke="#AD1EFA" width={28} height={28} />}
+          {accountView && (
+            <Link href={`/profile?id=${userId}`}>
+              {firstAndLastNameExist ? firstName + " " + lastName : username}
+            </Link>
+          )}
+          {!accountView &&
+            `${firstAndLastNameExist ? firstName + " " + lastName : username}`}
         </h2>
       </div>
       {children}

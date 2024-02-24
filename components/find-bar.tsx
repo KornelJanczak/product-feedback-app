@@ -47,14 +47,14 @@ export default function FindBar({
         placeholder="Username"
         ref={inputRef}
         className={cn(
-          "w-2/5 border-transparent focus:border-transparent focus:ring-0",
+          "w-4/12 border-transparent focus:border-transparent focus:ring-0",
           inputClassName
         )}
       ></Input>
       <Button
         type="submit"
         className={cn(
-          "flex gap-1 w-1/5 bg-pink hover:opacity-60 hover:bg-pink hover:transition duration-300 mt-0  lg:mt-0",
+          "flex gap-1 w-4/12 bg-pink hover:opacity-60 hover:bg-pink hover:transition duration-300 mt-0  lg:mt-0",
           buttonClassName
         )}
       >

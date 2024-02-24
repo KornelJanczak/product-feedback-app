@@ -5,12 +5,15 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import Link from "next/link";
 import _ from "lodash";
 import { redirect } from "next/navigation";
-import ProfileBackground from "../_components/background";
+import ProfileBackground, {
+  ProfileBackgroundSkeleton,
+} from "../_components/background";
 import UserAvatar from "../_components/user-avatar";
 import ActionButton from "../_components/action-button";
 import AdditionalInformation from "./_components/additional-information";
 import setProfileInformation from "../_components/set-profile-information";
 import MainInformation from "./_components/main-information";
+import { Suspense } from "react";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
   try {
@@ -124,38 +127,36 @@ export default async function ProfilePage({
 
     return (
       <div className="relative">
-        <ProfileBackground image={profile?.bgImage} viewType="profileView" />
-        <div className="">
-          <UserAvatar
-            username={userName}
-            image={image}
-            lastName={lastName}
-            firstName={firstName}
-            viewType="profileView"
-          >
-            <ActionButton
-              userId={id}
-              friendRequestExist={friendRequestExist}
-              existingInvitation={existingInvitation}
-              userFriend={userFriend}
-              className="w-2/5 mt-2 sm:w-2/7"
-              existingInvitationBtnClassName="flex-row justify-center"
-              userName={userName}
-            />
-            <MainInformation
-              bio={bio.data}
-              location={location}
-              gitHub={gitHub.data}
-              email={email}
-            />
-          </UserAvatar>
-          <AdditionalInformation
+        <Suspense fallback={<ProfileBackgroundSkeleton />}>
+          <ProfileBackground image={profile?.bgImage} viewType="profileView" />
+        </Suspense>
+        <UserAvatar
+          username={userName}
+          image={image}
+          lastName={lastName}
+          firstName={firstName}
+          viewType="profileView"
+        >
+          <ActionButton
+            userId={id}
+            friendRequestExist={friendRequestExist}
+            existingInvitation={existingInvitation}
+            userFriend={userFriend}
+            className="mt-2 max-w-44"
+            existingInvitationBtnClassName="flex-row justify-center max-w-96"
+            userName={userName}
+          />
+          <MainInformation
+            bio={bio.data}
+            location={location}
+            gitHub={gitHub.data}
+            email={email}
             userName={userName}
             createDate={createDate}
             preferRole={preferRole}
             company={company}
           />
-        </div>
+        </UserAvatar>
       </div>
     );
   }

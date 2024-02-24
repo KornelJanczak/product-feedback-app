@@ -44,7 +44,7 @@ export function Settings({
     <Accordion
       type="single"
       collapsible
-      className="w-full p-5 mt-40 md:mt-28 lg:order-2 lg:p-4 xl:w-7/12 xl:mt-14 xl:p-2"
+      className="w-full p-5 mt-40 md:mt-28 lg:order-1 lg:p-4 xl:w-7/12 xl:mt-14 xl:p-2"
     >
       <AccordionItem value="item-1 ">
         <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">

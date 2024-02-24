@@ -16,6 +16,7 @@ interface User {
 }
 
 interface UserProfile {
+  id: string;
   userName: string;
   lastName: string | null;
   firstName: string | null;
@@ -35,7 +36,6 @@ interface UserProfile {
 interface IUserAccountView extends UserProfile {}
 
 interface IUserProfileView extends UserProfile {
-  id: string;
   friendRequestExist?: boolean;
   existingInvitation?: boolean;
   userFriend?: boolean;
