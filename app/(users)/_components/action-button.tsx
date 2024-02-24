@@ -13,6 +13,7 @@ import DeleteAlertDialog from "./delete-alert-dialog";
 
 export default function ActionButton({
   userId,
+  currentUserId,
   friendRequestExist,
   existingInvitation,
   userFriend,
@@ -21,6 +22,7 @@ export default function ActionButton({
   existingInvitationBtnClassName,
 }: {
   userId: string;
+  currentUserId?: string;
   friendRequestExist?: boolean;
   existingInvitation?: boolean;
   userFriend?: boolean;
@@ -69,7 +71,12 @@ export default function ActionButton({
       </Button>
     );
 
-  if (!friendRequestExist && !existingInvitation && !userFriend)
+  if (
+    !friendRequestExist &&
+    !existingInvitation &&
+    !userFriend &&
+    !currentUserId
+  )
     return (
       <Button
         className={cnBtnClass}
@@ -140,4 +147,6 @@ export default function ActionButton({
         />
       </>
     );
+
+  if (currentUserId) return null;
 }

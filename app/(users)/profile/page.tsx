@@ -10,7 +10,6 @@ import ProfileBackground, {
 } from "../_components/background";
 import UserAvatar from "../_components/user-avatar";
 import ActionButton from "../_components/action-button";
-import AdditionalInformation from "./_components/additional-information";
 import setProfileInformation from "../_components/set-profile-information";
 import MainInformation from "./_components/main-information";
 import { Suspense } from "react";
@@ -139,6 +138,7 @@ export default async function ProfilePage({
         >
           <ActionButton
             userId={id}
+            currentUserId={id}
             friendRequestExist={friendRequestExist}
             existingInvitation={existingInvitation}
             userFriend={userFriend}

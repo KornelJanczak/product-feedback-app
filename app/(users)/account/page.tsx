@@ -13,6 +13,7 @@ import FriendCard from "./_components/friend-card";
 import FriendHeader from "./_components/friend-header";
 import setAccountInformation from "../_components/set-account-information";
 import setProfileInformation from "../_components/set-profile-information";
+import NoFriendResult from "./_components/no-friend-result";
 
 async function getUserProfile(currentUser: User) {
   try {
@@ -87,6 +88,8 @@ export default async function AccountPage({
   const userFriends = await getUserFriends(currentUser, searchValue);
   const slicedFriends = userFriends.slice(0, 9);
 
+  const userHasFriends = userFriends.length > 0;
+
   return (
     <div className="relative">
       <Suspense fallback={<ProfileBackgroundSkeleton />}>
@@ -105,23 +108,29 @@ export default async function AccountPage({
           accountSettings={accountSettings}
           profileSettings={profileSettings}
         />
-
-        <div className="p-5 mt-5 md:rounded lg:order-1 lg:p-4 xl:w-5/12 xl:p-2">
+        <div
+          className={`p-5 mt-5 md:rounded lg:order-1 lg:p-4 ${
+            userFriends ? "xl:w-7/12" : "xl:w-5/12"
+          }  xl:p-2`}
+        >
           <FriendHeader numberOfFriends={userFriends.length} />
-          <FriendsContainer>
-            {slicedFriends.map(
-              ({ id, userName, firstName, lastName, image }) => (
-                <FriendCard
-                  key={id}
-                  id={id}
-                  userName={userName}
-                  firstName={firstName}
-                  lastName={lastName}
-                  image={image}
-                />
-              )
-            )}
-          </FriendsContainer>
+          {userHasFriends && (
+            <FriendsContainer>
+              {slicedFriends.map(
+                ({ id, userName, firstName, lastName, image }) => (
+                  <FriendCard
+                    key={id}
+                    id={id}
+                    userName={userName}
+                    firstName={firstName}
+                    lastName={lastName}
+                    image={image}
+                  />
+                )
+              )}
+            </FriendsContainer>
+          )}
+          {!userHasFriends && <NoFriendResult />}
         </div>
       </div>
     </div>

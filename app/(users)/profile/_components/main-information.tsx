@@ -51,6 +51,11 @@ export default function MainInformation({
           </div>
         ))}
       </div>
+      {bio && (
+        <p className="flex flex-row text-dark text-xl justify-center items-center pt-1.5">
+          {bio}
+        </p>
+      )}
       <div className="flex justify-center items-center pt-3.5 gap-x-1">
         <Link
           href={"mailto:" + email}
@@ -67,11 +72,6 @@ export default function MainInformation({
           </Link>
         )}
       </div>
-      {bio && (
-        <p className="flex flex-row text-dark text-xl justify-center items-center pt-1.5">
-          {bio}
-        </p>
-      )}
       <span className="text-secondDark font-semibold text-lg py-7 px-5 text-center">
         <strong className="text-pink"> @{userName} </strong>has been with us
         since {formatedDate}!
