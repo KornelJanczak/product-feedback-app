@@ -18,6 +18,7 @@ import {
   createFeedbackSectionInputs,
   createFeedbackSectionSubmitHandler,
 } from "@/models/@product-actions-types";
+import { FormCombobox } from "./form-combobox";
 
 const formValues = [
   {
@@ -32,7 +33,7 @@ const formValues = [
   },
 ];
 
-export default function AddForm() {
+export default function AddForm({ friends }: { friends: IFriend[] }) {
   const form = useForm<createFeedbackSectionInputs>({
     resolver: zodResolver(createFeedbackSectionSchema),
     defaultValues: {
@@ -81,7 +82,7 @@ export default function AddForm() {
                 Find your friends
               </FormDescription>
               <FormControl>
-                <Input {...field} />
+                <FormCombobox formField={field} form={form} friends={friends} />
               </FormControl>
               <FormMessage />
             </FormItem>

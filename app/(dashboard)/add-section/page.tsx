@@ -3,15 +3,25 @@ import BackButton from "./_components/back-button";
 import AddForm from "./_components/form";
 import { redirect } from "next/navigation";
 import FormHeader from "./_components/form-header";
+import getUserFriends from "@/lib/user/get-user-friends";
 
-export default async function AddSectionPage() {
+export default async function AddSectionPage({
+  searchParams,
+}: {
+  searchParams: { userName?: string };
+}) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) return redirect("/login");
 
   const { name, firstName, image, lastName } = currentUser;
 
-  
+  const friends: IFriend[] = await getUserFriends(
+    currentUser,
+    searchParams?.userName
+  );
+
+  console.log(friends);
 
   return (
     <>
@@ -23,7 +33,7 @@ export default async function AddSectionPage() {
           userImage={image}
           lastName={lastName}
         />
-        <AddForm />
+        <AddForm friends={friends} />
       </div>
     </>
   );

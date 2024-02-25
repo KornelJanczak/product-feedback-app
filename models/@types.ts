@@ -1,4 +1,4 @@
-interface Friend {
+interface IFriendOfButton {
   id: string;
   userName: string;
   lastName?: string;
@@ -13,6 +13,16 @@ interface User {
   email: string;
   name: string;
   id: string;
+}
+
+interface IFriend {
+  id: string;
+  userName: string;
+  image: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+  userFriend: boolean;
 }
 
 interface UserProfile {
