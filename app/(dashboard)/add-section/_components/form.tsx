@@ -19,6 +19,7 @@ import {
   createFeedbackSectionSubmitHandler,
 } from "@/models/@product-actions-types";
 import { FormCombobox } from "./form-combobox";
+import useSelectFriend from "@/hooks/use-selected-friends";
 
 const formValues = [
   {
@@ -34,6 +35,8 @@ const formValues = [
 ];
 
 export default function AddForm({ friends }: { friends: IFriend[] }) {
+  const selectedFriends = useSelectFriend((state) => state.selectedFriends);
+
   const form = useForm<createFeedbackSectionInputs>({
     resolver: zodResolver(createFeedbackSectionSchema),
     defaultValues: {
@@ -45,6 +48,7 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
   // 2. Define a submit handler.
   const onProcess: createFeedbackSectionSubmitHandler = (values) => {
     // Do something with the form values.
+    console.log(selectedFriends);
 
     console.log(values);
   };

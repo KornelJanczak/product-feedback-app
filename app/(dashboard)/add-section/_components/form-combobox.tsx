@@ -20,29 +20,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { createFeedbackSectionReturn } from "@/models/@product-actions-types";
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import UserAvatar from "@/components/user-avatar";
+import useSelectFriend from "@/hooks/use-selected-friends";
 
 interface IFormComboBox {
   form: createFeedbackSectionReturn;
@@ -58,7 +37,8 @@ interface IFormComboBox {
 
 export function FormCombobox({ formField, form, friends }: IFormComboBox) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const addFriend = useSelectFriend((state) => state.addFriend);
+  const selectedFriends = useSelectFriend((state) => state.selectedFriends);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -67,7 +47,7 @@ export function FormCombobox({ formField, form, friends }: IFormComboBox) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[300px] justify-between"
         >
           {/* {formField.value
             ? frameworks.find((friend) => friend.value === value)?.label
@@ -76,29 +56,32 @@ export function FormCombobox({ formField, form, friends }: IFormComboBox) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[300px] p-0">
         <Command>
           <CommandInput placeholder="Search friend..." />
           <ScrollArea className="h-20">
             <CommandEmpty>No friend found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((friend) => (
+              {friends.map(({ id, userName, image, firstName, lastName }) => (
                 <CommandItem
-                  key={friend.value}
-                  value={friend.value}
-                  className=""
+                  key={id}
+                  value={userName}
+                  className="flex flex-row  items-center gap-1.5"
                   onSelect={(currentValue) => {
                     form.setValue("membersIds", [currentValue]);
+                    console.log("CHUJ");
+
+                    addFriend({ id, userName, image, firstName, lastName });
+                    console.log(selectedFriends);
+
                     setOpen(false);
                   }}
                 >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === friend.value ? "opacity-100" : "opacity-0"
-                    )}
+                  <UserAvatar
+                    userImage={image ? image : undefined}
+                    className="w-5 h-5"
                   />
-                  {friend.label}
+                  {userName}
                 </CommandItem>
               ))}
             </CommandGroup>

@@ -57,7 +57,11 @@ export default async function FriendsPage({
 
   if (!currentUser) redirect("/login");
 
-  const users = await getUsers(currentUser, searchValue, param as string);
+  const users: IFriendOfButton[] = await getUsers(
+    currentUser,
+    searchValue,
+    param as string
+  );
 
   return (
     <>
@@ -65,7 +69,7 @@ export default async function FriendsPage({
         <SelectFilter />
       </FindBar>
       <Suspense fallback={<SkeletonCard length={users.length} />}>
-        <Container users={users as Friend[]} />
+        <Container users={users} />
       </Suspense>
     </>
   );

@@ -15,7 +15,7 @@ export default function Card({
   userFriend,
   id,
   image,
-}: Friend) {
+}: IFriendOfButton) {
   const router = useRouter();
   const select = useSelect((state) => state);
   return (

@@ -2,9 +2,9 @@ import { create } from "zustand";
 
 type selectedFriends = {
   id: string;
-  image?: string;
-  firstName: string;
-  lastName: string;
+  image?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
   userName: string;
 };
 
@@ -14,7 +14,7 @@ interface IuseSelectedFriends {
   deleteFriend: (id: string) => void;
 }
 
-const useSelectedFriends = create<IuseSelectedFriends>((set) => ({
+const useSelectFriend = create<IuseSelectedFriends>((set) => ({
   selectedFriends: [],
   addFriend: (friend) =>
     set((state) => {
@@ -30,4 +30,4 @@ const useSelectedFriends = create<IuseSelectedFriends>((set) => ({
     }),
 }));
 
-export default useSelectedFriends;
+export default useSelectFriend;
