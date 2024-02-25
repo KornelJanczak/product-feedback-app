@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
 export default function Layout({
@@ -11,10 +10,10 @@ export default function Layout({
   return (
     <main className="lg:col-start-2 lg:col-end-5 lg:w-full">
       <section
-        className={cn(
-          "flex flex-col container pt-4 md:container  lg:w-full lg:px-0 ",
+        className={
+          "flex flex-col container pt-4 md:container  lg:w-full lg:px-0 " +
           className
-        )}
+        }
       >
         {children}
       </section>
