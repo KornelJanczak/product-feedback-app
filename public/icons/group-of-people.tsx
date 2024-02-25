@@ -1,14 +1,22 @@
-export default function PreferRoleIcon() {
+export default function GroupOfPeopleIcon({
+  width,
+  height,
+  stroke,
+}: {
+  width?: number;
+  stroke?: string;
+  height?: number;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="#3A4374"
+      stroke={stroke ? stroke : "#3A4374"}
       className="w-6 h-6"
-      width={20}
-      height={20}
+      width={width ? width : 20}
+      height={height ? height : 20}
     >
       <path
         strokeLinecap="round"

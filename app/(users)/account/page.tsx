@@ -124,7 +124,7 @@ export default async function AccountPage({
           You are with us since {formatedDate}!
         </span>
       </UserAvatar>
-      <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10">
+      <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10 xl:pt-4">
         <Settings
           accountSettings={accountSettings}
           profileSettings={profileSettings}

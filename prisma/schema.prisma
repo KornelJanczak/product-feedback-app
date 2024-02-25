@@ -24,9 +24,9 @@ model User{
   imageKey String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
-
   profile Profile? 
   feedbackSections UserToFeedbackSection[]
+  adminSections    AdminToFeedbackSection[]
   friendOf Friend[] @relation("friendOf")
   friends  Friend[] @relation("friends")
   friendRequestOf FriendRequest[] @relation("friendRequestOf")
@@ -34,9 +34,31 @@ model User{
 
 }
 
+model FeedbackSection{
+  id String @id @default(cuid())
+  title String?
+  members UserToFeedbackSection[]
+  admins   AdminToFeedbackSection[]
+}
+
+model UserToFeedbackSection {
+  user   User    @relation(fields: [userId], references: [id])
+  userId          String
+  feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+  feedbackSectionId String
+  @@id([userId, feedbackSectionId])
+}
+
+model AdminToFeedbackSection {
+  user            User    @relation(fields: [userId], references: [id])
+  userId          String
+  feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+  feedbackSectionId String
+  @@id([userId, feedbackSectionId])
+}
+
 
 model Profile {
-
   userId String @unique
   user User @relation(fields: [userId], references: [id])
 
@@ -66,33 +88,33 @@ model FriendRequest{
 }
 
 
-model FeedbackSection {
-  id        String   @id @default(cuid())
-  authorId  String
-  description String
-  type String
-  feedbacks   Feedback[]
-  users       UserToFeedbackSection[]
-}
+// model FeedbackSection {
+//   id        String   @id @default(cuid())
+//   authorId  String
+//   description String
+//   type String
+//   feedbacks   Feedback[]
+//   users       UserToFeedbackSection[]
+// }
 
 
-model Feedback {
-  id String  @id @default(cuid())
-  name String
-  // feedbackSections FeedbackToFeedbackSection[]
-  feedbackSectionId  String
-  feedbackSection    FeedbackSection  @relation(fields: [feedbackSectionId], references: [id])
-}
+// model Feedback {
+//   id String  @id @default(cuid())
+//   name String
+//   // feedbackSections FeedbackToFeedbackSection[]
+//   feedbackSectionId  String
+//   feedbackSection    FeedbackSection  @relation(fields: [feedbackSectionId], references: [id])
+// }
 
 
-model UserToFeedbackSection {
-  userId   String
-  feedbackSectionId String
-  user  User @relation(fields: [userId], references: [id])
-  feedbackSection  FeedbackSection  @relation(fields: [feedbackSectionId], references: [id])
-  role String
-  @@id([userId, feedbackSectionId])
-}
+// model UserToFeedbackSection {
+//   userId   String
+//   feedbackSectionId String
+//   user  User @relation(fields: [userId], references: [id])
+//   feedbackSection  FeedbackSection  @relation(fields: [feedbackSectionId], references: [id])
+//   role String
+//   @@id([userId, feedbackSectionId])
+// }
 
 
 
@@ -119,33 +141,3 @@ model UserToFeedbackSection {
 
 
 
-// model User{
-//   id String @id @default(cuid())
-//   userName String
-//   firstName String? 
-//   lastName String?
-//   email String
-//   password String?
-//   image String?
-//   createDate DateTime @default(now())
-//   updateDate DateTime @updatedAt
-//   profile Profile? @relation(fields: [profileId], references: [id])
-//   profileId String? @unique
-//   feedbackSections UserToFeedbackSection[]
-//   friendOf Friend[] @relation("friendOf")
-//   friends  Friend[] @relation("friends")
-//   friendRequestOf FriendRequest[] @relation("friendRequestOf")
-//   friendRequest FriendRequest[] @relation("friendRequest")
-// }
-
-
-// model Profile {
-//   id String  @id @default(cuid())
-//   user User?
-//   bgImage String?
-//   description String?
-//   company String?
-//   location String?
-//   preferRole String?
-//   gitHub String?
-// }

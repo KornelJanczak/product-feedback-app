@@ -51,8 +51,8 @@ export default function UserAvatar({
         )}
         {accountView && <ImageUploaderButton type="avatar" />}
       </div>
-      <div className="flex justify-center items-center">
-        <h2 className="flex justify-center items-center gap-2 text-4xl font-medium pt-2 text-dark pr-4">
+      <div className="flex justify-center items-center px-5">
+        <h2 className="flex justify-center items-center text-center gap-2 text-3xl sm:text-4xl font-medium pt-2 text-dark">
           {accountView && <LinkIcon stroke="#AD1EFA" width={28} height={28} />}
           {accountView && (
             <Link href={`/profile?id=${userId}`}>

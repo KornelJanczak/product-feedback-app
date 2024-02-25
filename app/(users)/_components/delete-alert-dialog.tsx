@@ -93,15 +93,21 @@ export default function DeleteAlertDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onClick}>
-      <AlertDialogContent className={cn(className)}>
+      <AlertDialogContent
+        className={cn(className, "max-w-80 sm:max-w-md md:max-w-lg rounded")}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle className="text-secondDark">
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription className="text-grey">
-            {alertType === "deleteFriend" &&
-              `This action cannot be undone. This will delete @${userName} from your
-            friends.`}
+            {alertType === "deleteFriend" && (
+              <span>
+                This action cannot be undone. This will delete
+                <strong className="text-pink"> @{userName} </strong>
+                from your friends.
+              </span>
+            )}
             {alertType === "deleteImage" &&
               `This action cannot be undone. This will delete your ${imageType} image`}
           </AlertDialogDescription>

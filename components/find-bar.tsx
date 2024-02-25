@@ -12,10 +12,12 @@ export default function FindBar({
   className,
   inputClassName,
   buttonClassName,
+  inputPlaceHolder,
 }: {
   className?: string;
   inputClassName?: string;
   buttonClassName?: string;
+  inputPlaceHolder?: string;
   children?: ReactNode;
   params?: string;
 }) {
@@ -26,7 +28,7 @@ export default function FindBar({
   return (
     <form
       className={cn(
-        "flex w-full items-center gap-2 py-4 px-5 bg-dark md:rounded-lg md:container",
+        "flex w-full items-center gap-2 py-3 px-3 bg-dark md:rounded-lg md:container",
         className
       )}
       onSubmit={(e) => {
@@ -44,7 +46,7 @@ export default function FindBar({
       {children}
       <Input
         type="text"
-        placeholder="Username"
+        placeholder={inputPlaceHolder ? inputPlaceHolder : "Username"}
         ref={inputRef}
         className={cn(
           "w-4/12 border-transparent focus:border-transparent focus:ring-0",

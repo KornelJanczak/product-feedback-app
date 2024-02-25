@@ -3,6 +3,7 @@ import IconLeft from "@/public/icons/icon-left";
 import { useRouter } from "next/navigation";
 import SettingsIcon from "@/public/icons/settings";
 import { signOut } from "next-auth/react";
+import GroupOfPeopleIcon from "@/public/icons/group-of-people";
 
 export default function AccountPanel({
   onClick,
@@ -26,29 +27,30 @@ export default function AccountPanel({
         }
       >
         <Button
-          className="bg-pink hover:opacity-70 hover:bg-pink hover:transition duration-300 flex gap-x-1 w-34 md:w-36 "
+          className="bg-pink p-1.5 text-xs hover:opacity-70 hover:bg-pink hover:transition duration-300 flex gap-x-1 w-34 md:w-36 "
           onClick={() => router.push("/account")}
         >
-          User Settings <SettingsIcon />
+          Account Settings <SettingsIcon />
         </Button>
         <Button
-          className="bg-red hover:opacity-70 hover:bg-red hover:transition duration-300 flex gap-x-1 w-34 md:w-36 "
-          onClick={() => signOut()}
+          className={
+            "bg-pink hover:opacity-70 text-xs hover:bg-pink hover:transition duration-300 gap-x-1 mg-mx-auto md:w-36 " +
+            friendBtnClass
+          }
+          onClick={() => {
+            onClick!;
+            router.push("/friends/sugesstions");
+          }}
         >
-          Sign Out <IconLeft />
+          Find Friends!
+          <GroupOfPeopleIcon stroke="#ffffff" />
         </Button>
       </div>
       <Button
-        className={
-          "bg-dark hover:opacity-70 hover:bg-dark hover:transition duration-300 mg-mx-auto w-34 md:w-36 " +
-          friendBtnClass
-        }
-        onClick={() => {
-          onClick!;
-          router.push("/friends/sugesstions");
-        }}
+        className="bg-red hover:opacity-70 text-xs hover:bg-red hover:transition duration-300 flex gap-x-1 w-34 md:w-36 "
+        onClick={() => signOut()}
       >
-        Find Friends!
+        Sign Out <IconLeft />
       </Button>
     </div>
   );

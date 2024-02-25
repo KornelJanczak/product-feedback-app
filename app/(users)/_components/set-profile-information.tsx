@@ -1,4 +1,4 @@
-import PreferRoleIcon from "@/public/icons/prefer-role";
+import GroupOfPeopleIcon from "@/public/icons/group-of-people";
 import DescriptionIcon from "@/public/icons/description";
 import LocationIcon from "@/public/icons/location";
 import CompanyIcon from "@/public/icons/company";
@@ -23,7 +23,7 @@ export default function setProfileInformation({
     {
       type: "Prefer Role",
       data: preferRole,
-      icon: <PreferRoleIcon />,
+      icon: <GroupOfPeopleIcon />,
       name: "preferRole",
     },
     {

@@ -52,7 +52,6 @@ export default function Nav() {
         <AccountPanel
           className="gap-1"
           classNameBox="md:flex flex-col gap-2"
-          friendBtnClass="mt-1"
         />
       </div>
     </header>
