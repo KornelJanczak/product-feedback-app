@@ -19,6 +19,19 @@ import {
   createFeedbackSectionSubmitHandler,
 } from "@/models/@product-actions-types";
 
+const formValues = [
+  {
+    name: "title",
+    title: "Section Title",
+    description: "Add a short, descriptive headline.",
+  },
+  {
+    name: "membersIds",
+    title: "Invite your friends!",
+    description: "Add a short, descriptive headline",
+  },
+];
+
 export default function AddForm() {
   const form = useForm<createFeedbackSectionInputs>({
     resolver: zodResolver(createFeedbackSectionSchema),
@@ -38,23 +51,59 @@ export default function AddForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onProcess)} className="space-y-8 pt-5">
-        {/* <FormField
+        <FormField
           control={form.control}
-          name="username"
+          name={"title"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
+              <FormLabel className="text-secondDark text-sm">
+                Section Title
+              </FormLabel>
+              <FormDescription className="text-grey mt-0 pt-0">
+                Add a short, descriptive headline.
               </FormDescription>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        /> */}
-        <Button type="submit">Submit</Button>
+        />
+        <FormField
+          control={form.control}
+          name={"membersIds"}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-secondDark text-sm">
+                Invite your friends!
+              </FormLabel>
+              <FormDescription className="text-grey mt-0 pt-0">
+                Find your friends
+              </FormDescription>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex flex-col gap-3.5">
+          <Button
+            type="submit"
+            className="w-full bg-pink hover:bg-pink hover:opacity-70 
+            transition-all Hover:duration-300"
+          >
+            Add Section
+          </Button>
+          <Button
+            type="submit"
+            className="w-full bg-secondDark hover:bg-secondDark 
+            hover:opacity-70 transition-all hover:duration-300"
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </Form>
   );
