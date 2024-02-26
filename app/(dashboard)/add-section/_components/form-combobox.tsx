@@ -55,7 +55,11 @@ export function FormCombobox({ form, friends }: IFormComboBox) {
         <Command>
           <CommandInput placeholder="Search friend..." className="text-grey" />
           <ScrollArea className="max-h-28">
-            {friendsExist && <CommandEmpty>No friend found.</CommandEmpty>}
+            {friendsExist && (
+              <CommandEmpty className="text-sm sm:text-base font-semibold text-dark text-center px-2.5 py-7">
+                No friend found.
+              </CommandEmpty>
+            )}
             <CommandGroup>
               {friendsExist &&
                 filteredFriends.map(
@@ -66,8 +70,6 @@ export function FormCombobox({ form, friends }: IFormComboBox) {
                       className="flex flex-row  items-center gap-1.5 cursor-pointer"
                       onSelect={() => {
                         addFriend({ id, userName, image, firstName, lastName });
-                        // form.setValue("membersIds", selectedFriends);
-                        console.log(selectedFriends);
                       }}
                     >
                       <UserAvatar

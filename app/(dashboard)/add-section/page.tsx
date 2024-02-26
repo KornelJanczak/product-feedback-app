@@ -21,12 +21,10 @@ export default async function AddSectionPage({
     searchParams?.userName
   );
 
-  console.log(image);
-
   return (
     <>
       <BackButton />
-      <div className="px-2">
+      <div className="px-2 sm:pt-3 sm:px-6">
         <FormHeader
           userName={name}
           firstName={firstName}

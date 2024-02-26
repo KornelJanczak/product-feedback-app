@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function BackButton() {
   return (
-    <div className="mr-auto">
+    <div className="mr-auto sm:pt-4">
       <Link
         href="/"
         className="flex flex-row text-grey font-semibold 

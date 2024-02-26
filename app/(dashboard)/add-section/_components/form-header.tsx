@@ -1,6 +1,4 @@
 import PlusGradientIcon from "@/public/icons/plus-gradient";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import UserAvatar from "@/components/user-avatar";
 
 export default function FormHeader({
@@ -14,8 +12,6 @@ export default function FormHeader({
   lastName?: string;
   userName: string;
 }) {
-  const avatarImage = userImage ? userImage : "https://github.com/shadcn.png";
-
   const showName =
     firstName && lastName ? `${firstName} ${lastName}` : `${userName}`;
 

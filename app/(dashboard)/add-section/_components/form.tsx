@@ -20,6 +20,8 @@ import { FormCombobox } from "./form-combobox";
 import useSelectFriend from "@/hooks/use-selected-friends";
 import FriendsContainer from "./friends-container";
 import FormButtons from "./form-buttons";
+import { useAction } from "next-safe-action/hooks";
+import { createFeedbackSection } from "@/server-actions/product/create-feedback-section";
 
 export default function AddForm({ friends }: { friends: IFriend[] }) {
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
@@ -32,17 +34,19 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
     },
   });
 
-  // 2. Define a submit handler.
-  const onProcess: createFeedbackSectionSubmitHandler = (values) => {
-    // Do something with the form values.
-    console.log(selectedFriends, "selected friends");
+  const { execute, status } = useAction(createFeedbackSection);
 
-    console.log(values);
+  // 2. Define a submit handler.
+  const onProcess: createFeedbackSectionSubmitHandler = ({ title }) => {
+    // Do something with the form values.
+    const friendsIds = selectedFriends.map((friend) => friend.id);
+
+    execute({ title, membersIds: friendsIds });
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onProcess)} className="space-y-8 py-5">
+      <form onSubmit={form.handleSubmit(onProcess)} className="space-y-8 py-5 md:pt-12">
         <FormField
           control={form.control}
           name={"title"}
