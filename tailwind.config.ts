@@ -1,5 +1,11 @@
 import { withUt } from "uploadthing/tw";
 
+// Font System
+// h2 (Create, User Name in account): text-xl sm:text-2xl md:text-3xl
+// h3(Section tag): text-lg sm:text-xl md:text-2xl
+// basic text: text-sm sm:text-base
+
+// h4 (form labels): text-sm sm:text-base sm:text-lg
 export default withUt({
   darkMode: ["class"],
   content: [

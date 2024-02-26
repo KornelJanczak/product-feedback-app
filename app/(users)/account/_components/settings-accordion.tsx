@@ -49,10 +49,10 @@ export function Settings({
       <AccordionItem value="item-1 ">
         <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
           <SettingsGradientIcon />
-          <span className="mr-auto pl-2">Account Settings</span>
+          <h3 className="mr-auto pl-2 text-lg">Account Settings</h3>
         </AccordionTrigger>
         <SettingsContent
-          dataArr={accountSettings}
+          settings={accountSettings}
           onClick={() => accountSetOpen((open) => !open)}
           dialog={
             <SettingsDialog
@@ -70,10 +70,10 @@ export function Settings({
       <AccordionItem value="item-2">
         <AccordionTrigger className="text-secondDark text-xl font-semibold no-underline hover:no-underline">
           <SettingsGradientIcon />
-          <span className="mr-auto pl-2">Profile Settings</span>
+          <h3 className="mr-auto pl-2 text-lg">Profile Settings</h3>
         </AccordionTrigger>
         <SettingsContent
-          dataArr={profileSettings}
+          settings={profileSettings}
           onClick={() => profileSetOpen((open) => !open)}
           dialog={
             <SettingsDialog

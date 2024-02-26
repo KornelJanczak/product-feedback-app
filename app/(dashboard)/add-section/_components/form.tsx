@@ -48,7 +48,7 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
   // 2. Define a submit handler.
   const onProcess: createFeedbackSectionSubmitHandler = (values) => {
     // Do something with the form values.
-    console.log(selectedFriends);
+    console.log(selectedFriends, "selected friends");
 
     console.log(values);
   };
@@ -61,10 +61,10 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
           name={"title"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-secondDark text-sm">
+              <FormLabel className="text-secondDark text-sm sm:text-base">
                 Section Title
               </FormLabel>
-              <FormDescription className="text-grey mt-0 pt-0">
+              <FormDescription className="text-grey mt-0 pt-0 text-sm sm:text-base">
                 Add a short, descriptive headline.
               </FormDescription>
               <FormControl>
@@ -74,29 +74,23 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name={"membersIds"}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-secondDark text-sm">
-                Invite your friends!
-              </FormLabel>
-              <FormDescription className="text-grey mt-0 pt-0">
-                Find your friends
-              </FormDescription>
-              <FormControl>
-                <FormCombobox formField={field} form={form} friends={friends} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
+        <FormItem>
+          <FormLabel className="text-secondDark text-sm sm:text-base">
+            Invite your friends!
+          </FormLabel>
+          <FormDescription className="text-grey mt-0 pt-0 text-sm sm:text-base">
+            Find your friends
+          </FormDescription>
+          <FormControl>
+            <FormCombobox form={form} friends={friends} />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
         <div className="flex flex-col gap-3.5">
           <Button
             type="submit"
             className="w-full bg-pink hover:bg-pink hover:opacity-70 
+            text-sm sm:text-base
             transition-all Hover:duration-300"
           >
             Add Section
@@ -104,6 +98,7 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
           <Button
             type="submit"
             className="w-full bg-secondDark hover:bg-secondDark 
+            text-sm sm:text-base
             hover:opacity-70 transition-all hover:duration-300"
           >
             Cancel

@@ -33,7 +33,7 @@ export default function MainInformation({
 
   return (
     <div className="flex flex-col">
-      <p className="flex flex-row text-grey text-lg justify-center items-center pt-1.5">
+      <p className="flex flex-row text-grey text-base justify-center items-center pt-1.5">
         {location?.icon}
         {location.data && location.data}
         {!location?.data && "No location"}
@@ -52,7 +52,7 @@ export default function MainInformation({
         ))}
       </div>
       {bio && (
-        <p className="flex flex-row text-dark text-xl justify-center items-center pt-1.5">
+        <p className="flex flex-row text-dark text-base justify-center items-center pt-1.5">
           {bio}
         </p>
       )}

@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import ProfileBackground, {
   ProfileBackgroundSkeleton,
 } from "../_components/background";
-import UserAvatar from "../_components/user-avatar";
+import ProfileAvatar from "../_components/profile-avatar";
 import ActionButton from "../_components/action-button";
 import setProfileInformation from "../_components/set-profile-information";
 import MainInformation from "./_components/main-information";
@@ -129,7 +129,7 @@ export default async function ProfilePage({
         <Suspense fallback={<ProfileBackgroundSkeleton />}>
           <ProfileBackground image={profile?.bgImage} viewType="profileView" />
         </Suspense>
-        <UserAvatar
+        <ProfileAvatar
           username={userName}
           image={image}
           lastName={lastName}
@@ -156,7 +156,7 @@ export default async function ProfilePage({
             preferRole={preferRole}
             company={company}
           />
-        </UserAvatar>
+        </ProfileAvatar>
       </div>
     );
   }

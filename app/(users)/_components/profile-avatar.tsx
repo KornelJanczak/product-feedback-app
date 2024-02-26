@@ -1,12 +1,11 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import DeleteImageButton from "./delete-image-button";
 import ImageUploaderButton from "./image-uploader-button";
 import { ReactNode } from "react";
 import LinkIcon from "@/public/icons/link";
 import Link from "next/link";
+import UserAvatar from "@/components/user-avatar";
 
-export default function UserAvatar({
+export default function ProfileAvatar({
   username,
   firstName,
   lastName,
@@ -25,10 +24,6 @@ export default function UserAvatar({
 }) {
   const firstAndLastNameExist = firstName && lastName;
 
-  const avatar = image
-    ? `${image}?${new Date().getTime()}`
-    : `https://github.com/shadcn.png?${new Date().getTime()}`;
-
   const accountView = viewType === "accountView";
 
   return (
@@ -37,12 +32,7 @@ export default function UserAvatar({
     items-center justify-center sm:top-40 lg:top-48"
     >
       <div className="relative">
-        <Avatar className="w-44 h-44">
-          <AvatarImage src={avatar} />
-          <AvatarFallback>
-            <Skeleton className="h-full w-full bg-[#0000002c]" />
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar className="w-44 h-44 " />
         {image && accountView && (
           <DeleteImageButton
             className="rounded-full right-0 ml-2 bottom-11"
@@ -52,7 +42,7 @@ export default function UserAvatar({
         {accountView && <ImageUploaderButton type="avatar" />}
       </div>
       <div className="flex justify-center items-center px-5">
-        <h2 className="flex justify-center items-center text-center gap-2 text-3xl sm:text-4xl font-medium pt-2 text-dark">
+        <h2 className="flex justify-center items-center text-center gap-2 text-2xl sm:text-3xl font-medium pt-2 text-dark">
           {accountView && <LinkIcon stroke="#AD1EFA" width={28} height={28} />}
           {accountView && (
             <Link href={`/profile?id=${userId}`}>

@@ -1,9 +1,7 @@
 "use client";
-
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import { ControllerRenderProps } from "react-hook-form";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -26,19 +24,30 @@ import useSelectFriend from "@/hooks/use-selected-friends";
 interface IFormComboBox {
   form: createFeedbackSectionReturn;
   friends: IFriend[];
-  formField: ControllerRenderProps<
-    {
-      title: string;
-      membersIds: string[];
-    },
-    "membersIds"
-  >;
+  // formField: ControllerRenderProps<
+  //   {
+  //     title: string;
+  //     membersIds: string[];
+  //   },
+  //   "membersIds"
+  // >;
 }
 
-export function FormCombobox({ formField, form, friends }: IFormComboBox) {
+export function FormCombobox({ form, friends }: IFormComboBox) {
   const [open, setOpen] = React.useState(false);
   const addFriend = useSelectFriend((state) => state.addFriend);
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
+
+  console.log(selectedFriends);
+
+  const filteredFriends = [...selectedFriends, ...friends];
+  const filterExistingFriends = filteredFriends.filter((item, index, self) => {
+    return index == self.findIndex((friend) => friend.id !== item.id);
+  });
+
+  console.log(filterExistingFriends, "EXISTIONG");
+
+  // const connectFriends =
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -68,10 +77,10 @@ export function FormCombobox({ formField, form, friends }: IFormComboBox) {
                   value={userName}
                   className="flex flex-row  items-center gap-1.5"
                   onSelect={(currentValue) => {
-                    form.setValue("membersIds", [currentValue]);
                     console.log("CHUJ");
 
                     addFriend({ id, userName, image, firstName, lastName });
+                    form.setValue("membersIds", selectedFriends);
                     console.log(selectedFriends);
 
                     setOpen(false);

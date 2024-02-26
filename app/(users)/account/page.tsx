@@ -1,6 +1,6 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import UserAvatar from "../_components/user-avatar";
+import ProfileAvatar from "../_components/profile-avatar";
 import prisma from "@/lib/db";
 import ProfileBackground, {
   ProfileBackgroundSkeleton,
@@ -112,7 +112,7 @@ export default async function AccountPage({
       <Suspense fallback={<ProfileBackgroundSkeleton />}>
         <ProfileBackground image={profile?.bgImage} viewType="accountView" />
       </Suspense>
-      <UserAvatar
+      <ProfileAvatar
         username={userName}
         image={image}
         lastName={lastName}
@@ -120,10 +120,10 @@ export default async function AccountPage({
         userId={id}
         viewType="accountView"
       >
-        <span className="text-secondDark font-semibold text-lg pt-3  text-center">
+        <span className="text-secondDark font-semibold text-base pt-4  text-center">
           You are with us since {formatedDate}!
         </span>
-      </UserAvatar>
+      </ProfileAvatar>
       <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10 xl:pt-4">
         <Settings
           accountSettings={accountSettings}

@@ -22,7 +22,7 @@ export default function FormHeader({
   return (
     <div className="pt-6">
       <PlusGradientIcon />
-      <h2 className="text-2xl text-secondDark font-bold pt-6">
+      <h2 className="text-lg sm:text-xl md:text-2xl text-secondDark font-bold pt-6">
         Create New Section
       </h2>
       <div className="flex flex-row gap-1.5 pt-2">
