@@ -1,14 +1,20 @@
-export default function XMarkIcon() {
+export default function XMarkIcon({
+  width,
+  height,
+  stroke,
+}: {
+  width?: number;
+  height?: number;
+  stroke?: string;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="#fff"
-      width={22}
-      height={22}
-      className="w-6 h-6"
+      stroke={stroke ? stroke : "#fff"}
+      width={width ? width : 22}
+      height={height ? height : 22}
     >
       <path
         strokeLinecap="round"

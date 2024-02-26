@@ -21,7 +21,7 @@ export default async function AddSectionPage({
     searchParams?.userName
   );
 
-  console.log(friends);
+  console.log(image);
 
   return (
     <>
@@ -30,7 +30,7 @@ export default async function AddSectionPage({
         <FormHeader
           userName={name}
           firstName={firstName}
-          userImage={image}
+          userImage={image ? image : undefined}
           lastName={lastName}
         />
         <AddForm friends={friends} />

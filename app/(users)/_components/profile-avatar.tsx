@@ -32,7 +32,7 @@ export default function ProfileAvatar({
     items-center justify-center sm:top-40 lg:top-48"
     >
       <div className="relative">
-        <UserAvatar className="w-44 h-44 " />
+        <UserAvatar className="w-44 h-44 " userImage={image} />
         {image && accountView && (
           <DeleteImageButton
             className="rounded-full right-0 ml-2 bottom-11"

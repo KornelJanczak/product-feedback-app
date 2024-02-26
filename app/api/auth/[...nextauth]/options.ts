@@ -25,8 +25,6 @@ export const authOptions: NextAuthOptions = {
       name: "credentials",
       credentials: {},
       async authorize(credentials) {
-        console.log(credentials);
-
         try {
           const { email, password } = credentials as {
             email: string;
@@ -104,9 +102,10 @@ export const authOptions: NextAuthOptions = {
         lastName: dbUser.lastName,
         email: dbUser.email,
         name: dbUser.userName,
+        image: dbUser.image,
       };
     },
-
+    //@ts-ignore
     async session({ token, session }) {
       if (token) {
         return {
@@ -117,6 +116,7 @@ export const authOptions: NextAuthOptions = {
             firstName: token.firstName,
             lastName: token.lastName,
             id: token.id,
+            image: token.image ? token.image : undefined,
           },
         };
       }

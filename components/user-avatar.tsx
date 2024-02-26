@@ -6,7 +6,7 @@ export default function UserAvatar({
   userImage,
   className,
 }: {
-  userImage?: string;
+  userImage?: string | null;
   className?: string;
 }) {
   const avatarImage = userImage ? userImage : "https://github.com/shadcn.png";

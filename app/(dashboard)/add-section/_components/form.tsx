@@ -1,8 +1,6 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -20,19 +18,8 @@ import {
 } from "@/models/@product-actions-types";
 import { FormCombobox } from "./form-combobox";
 import useSelectFriend from "@/hooks/use-selected-friends";
-
-const formValues = [
-  {
-    name: "title",
-    title: "Section Title",
-    description: "Add a short, descriptive headline.",
-  },
-  {
-    name: "membersIds",
-    title: "Invite your friends!",
-    description: "Add a short, descriptive headline",
-  },
-];
+import FriendsContainer from "./friends-container";
+import FormButtons from "./form-buttons";
 
 export default function AddForm({ friends }: { friends: IFriend[] }) {
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
@@ -55,7 +42,7 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onProcess)} className="space-y-8 pt-5">
+      <form onSubmit={form.handleSubmit(onProcess)} className="space-y-8 py-5">
         <FormField
           control={form.control}
           name={"title"}
@@ -82,28 +69,14 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
             Find your friends
           </FormDescription>
           <FormControl>
-            <FormCombobox form={form} friends={friends} />
+            <>
+              <FriendsContainer />
+              <FormCombobox form={form} friends={friends} />
+            </>
           </FormControl>
           <FormMessage />
         </FormItem>
-        <div className="flex flex-col gap-3.5">
-          <Button
-            type="submit"
-            className="w-full bg-pink hover:bg-pink hover:opacity-70 
-            text-sm sm:text-base
-            transition-all Hover:duration-300"
-          >
-            Add Section
-          </Button>
-          <Button
-            type="submit"
-            className="w-full bg-secondDark hover:bg-secondDark 
-            text-sm sm:text-base
-            hover:opacity-70 transition-all hover:duration-300"
-          >
-            Cancel
-          </Button>
-        </div>
+        <FormButtons />
       </form>
     </Form>
   );

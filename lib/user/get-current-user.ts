@@ -8,7 +8,7 @@ type User = {
     firstName?: string;
     name: string;
     id: string;
-    image: string;
+    image?: string | null;
   };
 };
 
@@ -20,6 +20,9 @@ export async function getSession() {
 export default async function getCurrentUser() {
   try {
     const data: User | null = await getSession();
+
+    console.log(data);
+    
 
     if (!data) return null;
 

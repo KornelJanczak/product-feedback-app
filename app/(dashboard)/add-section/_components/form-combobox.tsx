@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import { ChevronsUpDown } from "lucide-react";
-import { ControllerRenderProps } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -16,7 +15,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { createFeedbackSectionReturn } from "@/models/@product-actions-types";
 import UserAvatar from "@/components/user-avatar";
 import useSelectFriend from "@/hooks/use-selected-friends";
@@ -24,13 +22,6 @@ import useSelectFriend from "@/hooks/use-selected-friends";
 interface IFormComboBox {
   form: createFeedbackSectionReturn;
   friends: IFriend[];
-  // formField: ControllerRenderProps<
-  //   {
-  //     title: string;
-  //     membersIds: string[];
-  //   },
-  //   "membersIds"
-  // >;
 }
 
 export function FormCombobox({ form, friends }: IFormComboBox) {
@@ -40,14 +31,12 @@ export function FormCombobox({ form, friends }: IFormComboBox) {
 
   console.log(selectedFriends);
 
-  const filteredFriends = [...selectedFriends, ...friends];
-  const filterExistingFriends = filteredFriends.filter((item, index, self) => {
-    return index == self.findIndex((friend) => friend.id !== item.id);
-  });
+  const filteredFriends = friends.filter(
+    (friend) =>
+      !selectedFriends.some((selectedFriend) => selectedFriend.id === friend.id)
+  );
 
-  console.log(filterExistingFriends, "EXISTIONG");
-
-  // const connectFriends =
+  const friendsExist = filteredFriends.length > 0;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -56,43 +45,48 @@ export function FormCombobox({ form, friends }: IFormComboBox) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[300px] justify-between"
+          className="w-full justify-between text-secondDark"
         >
-          {/* {formField.value
-            ? frameworks.find((friend) => friend.value === value)?.label
-            : "Select friend..."} */}
-          Select friend
+          Find friend
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
+      <PopoverContent className="mr-auto p-0">
         <Command>
-          <CommandInput placeholder="Search friend..." />
-          <ScrollArea className="h-20">
-            <CommandEmpty>No friend found.</CommandEmpty>
+          <CommandInput placeholder="Search friend..." className="text-grey" />
+          <ScrollArea className="max-h-28">
+            {friendsExist && <CommandEmpty>No friend found.</CommandEmpty>}
             <CommandGroup>
-              {friends.map(({ id, userName, image, firstName, lastName }) => (
-                <CommandItem
-                  key={id}
-                  value={userName}
-                  className="flex flex-row  items-center gap-1.5"
-                  onSelect={(currentValue) => {
-                    console.log("CHUJ");
-
-                    addFriend({ id, userName, image, firstName, lastName });
-                    form.setValue("membersIds", selectedFriends);
-                    console.log(selectedFriends);
-
-                    setOpen(false);
-                  }}
-                >
-                  <UserAvatar
-                    userImage={image ? image : undefined}
-                    className="w-5 h-5"
-                  />
-                  {userName}
-                </CommandItem>
-              ))}
+              {friendsExist &&
+                filteredFriends.map(
+                  ({ id, userName, image, firstName, lastName }) => (
+                    <CommandItem
+                      key={id}
+                      value={userName}
+                      className="flex flex-row  items-center gap-1.5 cursor-pointer"
+                      onSelect={() => {
+                        addFriend({ id, userName, image, firstName, lastName });
+                        // form.setValue("membersIds", selectedFriends);
+                        console.log(selectedFriends);
+                      }}
+                    >
+                      <UserAvatar
+                        userImage={image ? image : undefined}
+                        className="w-8 h-8"
+                      />
+                      <span className="text-sm sm:text-base font-semibold text-dark">
+                        {userName}
+                      </span>
+                    </CommandItem>
+                  )
+                )}
+              {!friendsExist && (
+                <div className="flex items-center justify-center px-2.5 py-7">
+                  <span className="text-sm sm:text-base font-semibold text-dark text-center">
+                    You dont have more friends.
+                  </span>
+                </div>
+              )}
             </CommandGroup>
           </ScrollArea>
         </Command>
