@@ -51,7 +51,7 @@ export function FormCombobox({ form, friends }: IFormComboBox) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="mr-auto p-0">
+      <PopoverContent className="p-0 w-[450px]">
         <Command>
           <CommandInput placeholder="Search friend..." className="text-grey" />
           <ScrollArea className="max-h-28">
@@ -60,7 +60,7 @@ export function FormCombobox({ form, friends }: IFormComboBox) {
                 No friend found.
               </CommandEmpty>
             )}
-            <CommandGroup>
+            <CommandGroup className="w-full">
               {friendsExist &&
                 filteredFriends.map(
                   ({ id, userName, image, firstName, lastName }) => (

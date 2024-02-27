@@ -22,6 +22,7 @@ import FriendsContainer from "./friends-container";
 import FormButtons from "./form-buttons";
 import { useAction } from "next-safe-action/hooks";
 import { createFeedbackSection } from "@/server-actions/product/create-feedback-section";
+import { toast } from "sonner";
 
 export default function AddForm({ friends }: { friends: IFriend[] }) {
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
@@ -34,19 +35,28 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
     },
   });
 
-  const { execute, status } = useAction(createFeedbackSection);
+  const { execute, status } = useAction(createFeedbackSection, {
+    onSuccess() {
+      toast.success("We created your new section!");
+    },
+    onError(data) {
+      toast.error("Creating section failed!");
+    },
+  });
 
-  // 2. Define a submit handler.
   const onProcess: createFeedbackSectionSubmitHandler = ({ title }) => {
-    // Do something with the form values.
     const friendsIds = selectedFriends.map((friend) => friend.id);
+    console.log(friendsIds);
 
     execute({ title, membersIds: friendsIds });
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onProcess)} className="space-y-8 py-5 md:pt-12">
+      <form
+        onSubmit={form.handleSubmit(onProcess)}
+        className="space-y-8 py-5 md:pt-12"
+      >
         <FormField
           control={form.control}
           name={"title"}
