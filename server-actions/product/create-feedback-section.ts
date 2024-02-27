@@ -1,17 +1,14 @@
 "use server";
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
-import getCurrentUser from "@/lib/user/get-current-user";
 import { createFeedbackSectionSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";
 
 export const createFeedbackSection = action(
   createFeedbackSectionSchema,
-  async ({ title, membersIds }) => {
+  async ({ title, membersIds, currentUserId }) => {
     try {
-      const currentUser = await getCurrentUser();
-
-      if (!currentUser) throw new Error("Unauthorized");
+      if (!currentUserId) throw new Error("Unauthorized");
 
       const users: { userId: string }[] = membersIds.map((id) => {
         return {
@@ -25,7 +22,7 @@ export const createFeedbackSection = action(
           members: {
             create: users,
           },
-          admins: { create: [{ userId: currentUser.id }] },
+          admins: { create: [{ userId: currentUserId }] },
         },
       });
 

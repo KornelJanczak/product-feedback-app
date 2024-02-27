@@ -23,8 +23,16 @@ import FormButtons from "./form-buttons";
 import { useAction } from "next-safe-action/hooks";
 import { createFeedbackSection } from "@/server-actions/product/create-feedback-section";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
-export default function AddForm({ friends }: { friends: IFriend[] }) {
+export default function AddForm({
+  friends,
+  currentUserId,
+}: {
+  currentUserId: string;
+  friends: IFriend[];
+}) {
+  const toastId = "process";
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
 
   const form = useForm<createFeedbackSectionInputs>({
@@ -37,18 +45,24 @@ export default function AddForm({ friends }: { friends: IFriend[] }) {
 
   const { execute, status } = useAction(createFeedbackSection, {
     onSuccess() {
+      toast.dismiss(toastId);
       toast.success("We created your new section!");
     },
-    onError(data) {
+    onError() {
+      toast.dismiss(toastId);
       toast.error("Creating section failed!");
     },
   });
 
+  useEffect(() => {
+    if (status === "executing") {
+      toast.loading("Creating section...", { id: toastId });
+    }
+  }, [status]);
+
   const onProcess: createFeedbackSectionSubmitHandler = ({ title }) => {
     const friendsIds = selectedFriends.map((friend) => friend.id);
-    console.log(friendsIds);
-
-    execute({ title, membersIds: friendsIds });
+    execute({ title, membersIds: friendsIds, currentUserId });
   };
 
   return (

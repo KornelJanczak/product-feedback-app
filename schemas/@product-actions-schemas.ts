@@ -4,9 +4,6 @@ export const createFeedbackSectionSchema = z.object({
   title: z
     .string()
     .min(2, { message: "Title must contain at least 2 character's" }),
+  currentUserId: z.string().min(2),
   membersIds: z.array(z.string()),
-  // .refine(
-  //   (object) => Object.keys(object).length <= 1,
-  //   "Creating feedback section failed!"
-  // ),
 });

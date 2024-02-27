@@ -31,7 +31,7 @@ export default async function AddSectionPage({
           userImage={image ? image : undefined}
           lastName={lastName}
         />
-        <AddForm friends={friends} />
+        <AddForm friends={friends} currentUserId={currentUser.id} />
       </div>
     </>
   );
