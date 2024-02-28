@@ -9,6 +9,14 @@ async function getFeedbackSections(currentUserId: string) {
   try {
     if (!currentUserId) return null;
 
+    const select = {
+      id: true,
+      userName: true,
+      lastName: true,
+      firstName: true,
+      image: true,
+    };
+
     const userFeedbackSections = await prisma.feedbackSection.findMany({
       where: {
         OR: [
@@ -30,31 +38,23 @@ async function getFeedbackSections(currentUserId: string) {
       },
       include: {
         members: {
-          include: {
-            user: true,
+          select: {
+            user: {
+              select,
+            },
           },
         },
         admins: {
-          include: {
-            user: true,
+          select: {
+            user: {
+              select,
+            },
           },
         },
       },
     });
 
     if (!userFeedbackSections) return null;
-    console.log("______________________________________");
-
-    console.log(userFeedbackSections, "SEKCJA FEEDBACKU");
-
-    console.log("______________________________________");
-
-    const changed = userFeedbackSections.map((section) => {
-      return {
-        id: section.id,
-        title: section.title,
-      };
-    });
 
     return userFeedbackSections;
   } catch {
