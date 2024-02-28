@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 export default function FilterBar() {
   const router = useRouter();
   return (
-    <FindBar inputPlaceHolder="Section name">
+    <FindBar inputPlaceHolder="Section name" params="/">
       <Button
         className=""
+        type="button"
         onClick={() => {
           router.push("/add-section");
         }}

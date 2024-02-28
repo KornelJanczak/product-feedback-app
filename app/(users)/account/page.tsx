@@ -135,6 +135,7 @@ export default async function AccountPage({
           }  xl:p-2`}
         >
           <FriendHeader numberOfFriends={userFriends.length} />
+
           {userHasFriends && (
             <FriendsContainer>
               {slicedFriends.map(

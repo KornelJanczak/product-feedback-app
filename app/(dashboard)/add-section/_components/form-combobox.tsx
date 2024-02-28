@@ -29,8 +29,6 @@ export function FormCombobox({ form, friends }: IFormComboBox) {
   const addFriend = useSelectFriend((state) => state.addFriend);
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
 
-  console.log(selectedFriends);
-
   const filteredFriends = friends.filter(
     (friend) =>
       !selectedFriends.some((selectedFriend) => selectedFriend.id === friend.id)

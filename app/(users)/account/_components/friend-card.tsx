@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import UserAvatar from "@/components/user-avatar";
 import Link from "next/link";
 
 export default function FriendCard({
@@ -23,12 +24,7 @@ export default function FriendCard({
   return (
     <Link href={`/profile?id=${id}`} className="w-full h-ful">
       <div>
-        <Avatar className="rounded-lg w-full h-full">
-          <AvatarImage src={image ? image : "https://github.com/shadcn.png"} />
-          <AvatarFallback>
-            <Skeleton className="h-full w-full bg-[#0000002c]" />
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar className="rounded-lg w-full h-full" />
         <h3 className="text-sm text-secondDark font-bold w-full">{showName}</h3>
       </div>
     </Link>

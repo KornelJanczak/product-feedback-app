@@ -23,7 +23,6 @@ import FormButtons from "./form-buttons";
 import { useAction } from "next-safe-action/hooks";
 import { createFeedbackSection } from "@/server-actions/product/create-feedback-section";
 import { toast } from "sonner";
-import { useEffect } from "react";
 
 export default function AddForm({
   friends,
@@ -39,11 +38,12 @@ export default function AddForm({
     resolver: zodResolver(createFeedbackSectionSchema),
     defaultValues: {
       title: "",
+      currentUserId,
       membersIds: [],
     },
   });
 
-  const { execute, status } = useAction(createFeedbackSection, {
+  const { execute } = useAction(createFeedbackSection, {
     onSuccess() {
       toast.dismiss(toastId);
       toast.success("We created your new section!");
@@ -52,16 +52,15 @@ export default function AddForm({
       toast.dismiss(toastId);
       toast.error("Creating section failed!");
     },
+    onExecute() {
+      toast.loading("Creating section...", { id: toastId });
+    },
   });
 
-  useEffect(() => {
-    if (status === "executing") {
-      toast.loading("Creating section...", { id: toastId });
-    }
-  }, [status]);
-
   const onProcess: createFeedbackSectionSubmitHandler = ({ title }) => {
+    console.log("submited");
     const friendsIds = selectedFriends.map((friend) => friend.id);
+
     execute({ title, membersIds: friendsIds, currentUserId });
   };
 
