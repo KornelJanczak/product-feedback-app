@@ -80,7 +80,7 @@ export default withUt({
           foreground: "hsl(var(--card-foreground))",
         },
         pink: "#AD1EFA",
-        blue: "rgb(55, 63, 104)",
+        blue: "#4661E6",
         lighterBlue: "#62BCFA",
         dark: "rgb(55, 63, 104)",
         secondDark: "#3A4374",

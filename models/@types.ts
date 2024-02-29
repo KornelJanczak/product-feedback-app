@@ -76,3 +76,9 @@ interface AccountInformation extends settings {
 interface ProfileInformation extends settings {
   name: settingsProfile;
 }
+
+interface IIcon {
+  stroke?: string;
+  width?: number;
+  height?: number;
+}

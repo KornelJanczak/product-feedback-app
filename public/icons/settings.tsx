@@ -1,14 +1,14 @@
-export default function SettingsIcon() {
+export default function SettingsIcon({ width, stroke, height }: IIcon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="#ffffff"
+      stroke={stroke ? stroke : "#ffffff"}
       className="w-6 h-6"
-      width={20}
-      height={20}
+      width={width ? width : 20}
+      height={height ? height : 20}
     >
       <path
         strokeLinecap="round"
