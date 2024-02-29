@@ -1,9 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/user-avatar";
-import IconLeft from "@/public/icons/icon-left";
-import SettingsIcon from "@/public/icons/settings";
 import SuggestionIcon from "@/public/icons/suggestion";
+import CardSettings from "./card-settings";
+import LeaveAlertDialog from "./leave-alert-dialog";
 
 type sectionUser = {
   user: {
@@ -47,13 +47,15 @@ export default function Card({ id, title, members, admins }: ICard) {
           <SuggestionIcon fill="#3A4374" />
         </div>
         <div className="flex flex-row gap-1">
-          <Button className="bg-red text-basicWhite px-2 pt-1 pb-1 h-auto text-sm sm:text-base">
+          <CardSettings />
+          {/* <Button
+            className="bg-red text-basicWhite px-2 pt-1 pb-1 h-auto 
+            text-sm sm:text-base gap-0.5"
+          >
             Leave
-            <IconLeft />
-          </Button>
-          <Button className="bg-dark px-2 pt-1 pb-1 h-auto">
-            <SettingsIcon stroke="#ffffff" />
-          </Button>
+    
+          </Button> */}
+          <LeaveAlertDialog />
         </div>
       </div>
     </div>
