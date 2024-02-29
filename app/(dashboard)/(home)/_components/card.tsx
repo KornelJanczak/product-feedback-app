@@ -48,14 +48,10 @@ export default function Card({ id, title, members, admins }: ICard) {
         </div>
         <div className="flex flex-row gap-1">
           <CardSettings />
-          {/* <Button
-            className="bg-red text-basicWhite px-2 pt-1 pb-1 h-auto 
-            text-sm sm:text-base gap-0.5"
-          >
-            Leave
-    
-          </Button> */}
-          <LeaveAlertDialog />
+          {/* <LeaveAlertDialog /> */}
+          <Button className="px-2 pt-1 pb-1 h-auto text-sm sm:text-base bg-blue">
+            Show section
+          </Button>
         </div>
       </div>
     </div>

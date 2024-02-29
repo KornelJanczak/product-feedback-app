@@ -12,7 +12,7 @@ export default function MainLayout({
   return (
     <div className="lg:flex lg:gap-x-4 lg:container lg:py-14">
       <Nav />
-      <main className="bg-basicWhite lg:col-start-2 lg:col-end-5 lg:w-full">
+      <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
         <section
           className={cn("px-0 md:container lg:w-full lg:px-0 ", className)}
         >
@@ -22,5 +22,3 @@ export default function MainLayout({
     </div>
   );
 }
-
-// lg:grid lg:grid-cols-4 lg:container lg:py-20

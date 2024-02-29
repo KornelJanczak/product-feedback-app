@@ -15,20 +15,20 @@ export default function LeaveAlertDialog() {
   return (
     <AlertDialog>
       <AlertDialogTrigger
-        className="flex rounded-lg bg-red text-basicWhite px-2 pt-1 pb-1 h-auto 
-            text-sm sm:text-base gap-0.5"
+        className="flex rounded-lg  text-red 
+           gap-0.5"
       >
         Leave
         <IconLeft />
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="max-w-80 sm:max-w-md md:max-w-lg rounded">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-secondDark">
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            You won&apos;t be able to rejoin the section unless someone adds
-            you back.
+            You won&apos;t be able to rejoin the section unless someone adds you
+            back.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
