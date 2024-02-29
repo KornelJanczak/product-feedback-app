@@ -11,7 +11,7 @@ export const updateProfile = action(
     try {
       const currentUser = await getCurrentUser();
 
-      if (!currentUser) return { error: "Unauthorizated!" };
+      if (!currentUser) throw new Error("Unauthorizated!");
 
       const profile = await prisma.profile.upsert({
         where: {
@@ -34,12 +34,12 @@ export const updateProfile = action(
         },
       });
 
-      if (!profile) return { error: `Editing profile failed!` };
+      if (!profile) throw new Error(`Editing profile failed!`);
 
       revalidatePath("/account");
       return { success: profile };
     } catch {
-      return { error: `Editing profile failed!` };
+      throw new Error(`Editing profile failed!`);
     }
   }
 );

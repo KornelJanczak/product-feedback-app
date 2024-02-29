@@ -49,7 +49,11 @@ export default function Card({
         </h2>
         <div className="flex">
           {showedMembers.map(({ user }) => (
-            <UserAvatar key={1} userImage={user.image} className="h-8 w-8" />
+            <UserAvatar
+              key={user.id}
+              userImage={user.image}
+              className="h-8 w-8"
+            />
           ))}
           {membersAmout > 3 && (
             <div

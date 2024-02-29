@@ -23,6 +23,7 @@ import FormButtons from "./form-buttons";
 import { useAction } from "next-safe-action/hooks";
 import { createFeedbackSection } from "@/server-actions/product/create-feedback-section";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function AddForm({
   friends,
@@ -32,6 +33,7 @@ export default function AddForm({
   friends: IFriend[];
 }) {
   const toastId = "process";
+  const router = useRouter();
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
 
   const form = useForm<createFeedbackSectionInputs>({
@@ -47,6 +49,7 @@ export default function AddForm({
     onSuccess() {
       toast.dismiss(toastId);
       toast.success("We created your new section!");
+      router.push("/");
     },
     onError() {
       toast.dismiss(toastId);

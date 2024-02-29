@@ -9,11 +9,9 @@ export const updateUser = action(
   updateUserSchema,
   async ({ userName, lastName, firstName, email }) => {
     try {
-      console.log("das");
-
       const currentUser = await getCurrentUser();
 
-      if (!currentUser) return { error: "Unauthorizated!" };
+      if (!currentUser) throw new Error("Unauthorizated!");
 
       const existingUserName = await prisma.user.findFirst({
         where: {
@@ -24,7 +22,7 @@ export const updateUser = action(
         },
       });
 
-      if (existingUserName) return { error: "Username is already taken!" };
+      if (existingUserName) throw new Error("Username is already taken!");
 
       const existingEmail = await prisma.user.findFirst({
         where: {
@@ -35,7 +33,7 @@ export const updateUser = action(
         },
       });
 
-      if (existingEmail) return { error: "Email is already taken!" };
+      if (existingEmail) throw new Error("Email is already taken!");
 
       const user = await prisma.user.update({
         where: {
@@ -49,12 +47,12 @@ export const updateUser = action(
         },
       });
 
-      if (!user) return { error: `Editing user account failed!` };
+      if (!user) throw new Error(`Editing user account failed!`);
 
       revalidatePath("/account");
       return { success: user };
     } catch {
-      return { error: `Editing user account failed!` };
+      throw new Error(`Editing user account failed!`);
     }
   }
 );
