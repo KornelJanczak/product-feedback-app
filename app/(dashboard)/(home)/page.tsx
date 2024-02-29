@@ -4,6 +4,7 @@ import Container from "./_components/container";
 import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
 import Card from "./_components/card";
+import { Suspense } from "react";
 
 async function getFeedbackSections(currentUserId: string) {
   try {
@@ -15,7 +16,7 @@ async function getFeedbackSections(currentUserId: string) {
       lastName: true,
       firstName: true,
       image: true,
-      profile: true,
+      // profile: true,
     };
 
     const userFeedbackSections = await prisma.feedbackSection.findMany({
@@ -75,18 +76,21 @@ export default async function Home() {
   return (
     <>
       <FilterBar />
-      <Container>
-        {feedbackSections &&
-          feedbackSections.map(({ id, title, members, admins }) => (
-            <Card
-              key={id}
-              id={id}
-              title={title as string}
-              members={members}
-              admins={admins}
-            />
-          ))}
-      </Container>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Container>
+          {feedbackSections &&
+            feedbackSections.map(({ id, title, members, admins }) => (
+              <Card
+                key={id}
+                sectionId={id}
+                currentUserId={currentUser.id}
+                title={title as string}
+                members={members}
+                admins={admins}
+              />
+            ))}
+        </Container>
+      </Suspense>
     </>
   );
 }

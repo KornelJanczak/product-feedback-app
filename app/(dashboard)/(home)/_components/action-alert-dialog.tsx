@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +12,22 @@ import {
 } from "@/components/ui/alert-dialog";
 import IconLeft from "@/public/icons/icon-left";
 
-export default function LeaveAlertDialog() {
+export default function ActionAlertDialog({
+  dialogType,
+}: {
+  dialogType: "leave" | "delete";
+}) {
+  const deleteType = dialogType === "delete";
+  const leaveType = dialogType === "leave";
+
+  const onClickHandler = () => {
+    if (deleteType) {
+    }
+
+    if (leaveType) {
+    }
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger
@@ -27,8 +43,9 @@ export default function LeaveAlertDialog() {
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            You won&apos;t be able to rejoin the section unless someone adds you
-            back.
+            {leaveType &&
+              "You won't be able to rejoin the section unless someone adds you back."}
+            {deleteType && "The removal of the section cannot be undone."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -41,6 +58,7 @@ export default function LeaveAlertDialog() {
           <AlertDialogAction
             className="bg-red hover:bg-red hover:opacity-70 
             text-darkWhite transition-all duration-300"
+            onClick={onClickHandler}
           >
             Continue
           </AlertDialogAction>

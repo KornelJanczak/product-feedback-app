@@ -25,6 +25,16 @@ interface IFriend {
   userFriend: boolean;
 }
 
+type Profile = {
+  userId: string;
+  bgImage: null | string;
+  description: null | string;
+  company: null | string;
+  location: null | string;
+  preferRole: null | string;
+  gitHub: null | string;
+} | null;
+
 interface UserProfile {
   id: string;
   userName: string;
@@ -32,15 +42,7 @@ interface UserProfile {
   firstName: string | null;
   image: string | null;
   email: string;
-  profile: {
-    userId: string;
-    bgImage: null | string;
-    description: null | string;
-    company: null | string;
-    location: null | string;
-    preferRole: null | string;
-    gitHub: null | string;
-  } | null;
+  profile: Profile;
 }
 
 interface IUserAccountView extends UserProfile {

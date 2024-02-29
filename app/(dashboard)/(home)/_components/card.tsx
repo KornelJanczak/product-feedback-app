@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/user-avatar";
 import SuggestionIcon from "@/public/icons/suggestion";
 import CardSettings from "./card-settings";
+import { useRouter } from "next/navigation";
 
 type sectionUser = {
   user: {
@@ -11,41 +12,37 @@ type sectionUser = {
     lastName?: string | null;
     firstName?: string | null;
     image?: string | null;
+    // profile: Profile;
   };
 }[];
 
 interface ICard {
-  id: string;
+  sectionId: string;
+  currentUserId: string;
   title: string;
   members: sectionUser;
   admins: sectionUser;
 }
 
-export default function Card({ id, title, members, admins }: ICard) {
-  console.log(members);
+export default function Card({
+  currentUserId,
+  sectionId,
+  title,
+  members,
+  admins,
+}: ICard) {
+  const router = useRouter();
+  const currentUserIsAdmin = admins.some(
+    ({ user }) => user.id === currentUserId
+  );
 
-
-  
-
-  const chuj = [
-    {
-      user: {
-        id: "casd",
-        userName: "dasd",
-        lastName: "asdsd",
-        firstName: "dsad",
-        image: null,
-      },
-    },
-  ];
-
-  const sectionMembers: sectionUser = [...members, ...admins, ...chuj];
+  const sectionMembers: sectionUser = [...members, ...admins];
   const membersAmout = sectionMembers.length;
 
   const showedMembers = sectionMembers.slice(0, 3);
 
   return (
-    <div className="flex w-full bg-basicWhite rounded-lg px-5 py-4">
+    <div className="flex w-full bg-basicWhite rounded-xl px-5 py-4">
       <div className="flex flex-col justify-between w-full gap-2">
         <h2 className="text-dark text-lg sm:text-xl md:text-2xl font-semibold">
           {title}
@@ -73,10 +70,13 @@ export default function Card({ id, title, members, admins }: ICard) {
           <SuggestionIcon fill="#3A4374" />
         </div>
         <div className="flex flex-row gap-1">
-          <CardSettings />
+          <CardSettings currentUserIsAdmin={currentUserIsAdmin} />
           <Button
             className="px-2 pt-1 pb-1 h-auto text-sm sm:text-base bg-blue hover:bg-blue
             hover:opacity-60 transition-all duration-300"
+            onClick={() => {
+              router.push(`/section/${sectionId}`);
+            }}
           >
             Show section
           </Button>
