@@ -22,11 +22,30 @@ async function getUserProfile(profileUserId: string, currentUserId: string) {
       where: {
         id: profileUserId,
       },
-      include: {
+      select: {
+        id: true,
+        userName: true,
+        firstName: true,
+        lastName: true,
+        createDate: true,
+        image: true,
+        email: true,
         profile: true,
-        friends: true,
-        friendRequest: true,
-        friendRequestOf: true,
+        friends: {
+          select: {
+            friendOfId: true,
+          },
+        },
+        friendRequest: {
+          select: {
+            friendRequestOfId: true,
+          },
+        },
+        friendRequestOf: {
+          select: {
+            friendRequestId: true,
+          },
+        },
       },
     });
 

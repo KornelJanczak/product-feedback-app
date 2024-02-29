@@ -15,6 +15,7 @@ async function getFeedbackSections(currentUserId: string) {
       lastName: true,
       firstName: true,
       image: true,
+      profile: true,
     };
 
     const userFeedbackSections = await prisma.feedbackSection.findMany({

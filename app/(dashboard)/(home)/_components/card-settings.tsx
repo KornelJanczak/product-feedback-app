@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/popover";
 import LeaveAlertDialog from "./leave-alert-dialog";
 import SettingsIcon from "@/public/icons/settings";
+import TrashIcon from "@/public/icons/trash";
 
 export default function CardSettings({}) {
   return (
@@ -16,8 +17,11 @@ export default function CardSettings({}) {
         <ul className="flex flex-col gap-1.5 text-dark font-semi text-sm sm:text-base">
           <li>Show members</li>
           <li>Show admins</li>
-          <li className="text-red">Delete</li>
           <LeaveAlertDialog />
+          <li className="text-red flex gap-0.5 ">
+            Delete
+            <TrashIcon width={19} height={19} />
+          </li>
         </ul>
       </PopoverContent>
     </Popover>

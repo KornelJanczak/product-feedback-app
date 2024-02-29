@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/user-avatar";
 import SuggestionIcon from "@/public/icons/suggestion";
 import CardSettings from "./card-settings";
-import LeaveAlertDialog from "./leave-alert-dialog";
 
 type sectionUser = {
   user: {
@@ -25,7 +24,25 @@ interface ICard {
 export default function Card({ id, title, members, admins }: ICard) {
   console.log(members);
 
-  const sectionMembers: sectionUser = [...members, ...admins];
+
+  
+
+  const chuj = [
+    {
+      user: {
+        id: "casd",
+        userName: "dasd",
+        lastName: "asdsd",
+        firstName: "dsad",
+        image: null,
+      },
+    },
+  ];
+
+  const sectionMembers: sectionUser = [...members, ...admins, ...chuj];
+  const membersAmout = sectionMembers.length;
+
+  const showedMembers = sectionMembers.slice(0, 3);
 
   return (
     <div className="flex w-full bg-basicWhite rounded-lg px-5 py-4">
@@ -34,9 +51,18 @@ export default function Card({ id, title, members, admins }: ICard) {
           {title}
         </h2>
         <div className="flex">
-          {sectionMembers.map(({ user }) => (
+          {showedMembers.map(({ user }) => (
             <UserAvatar key={1} userImage={user.image} className="h-8 w-8" />
           ))}
+          {membersAmout > 3 && (
+            <div
+              className="text-sm flex justify-center items-center 
+             text-center font-semibold
+             h-8 w-8 rounded-full bg-[#CDD2EE] text-dark"
+            >
+              +{membersAmout - 3}
+            </div>
+          )}
         </div>
       </div>
       <div className="flex flex-col ml-auto items-center justify-center gap-6">
@@ -48,8 +74,10 @@ export default function Card({ id, title, members, admins }: ICard) {
         </div>
         <div className="flex flex-row gap-1">
           <CardSettings />
-          {/* <LeaveAlertDialog /> */}
-          <Button className="px-2 pt-1 pb-1 h-auto text-sm sm:text-base bg-blue">
+          <Button
+            className="px-2 pt-1 pb-1 h-auto text-sm sm:text-base bg-blue hover:bg-blue
+            hover:opacity-60 transition-all duration-300"
+          >
             Show section
           </Button>
         </div>
