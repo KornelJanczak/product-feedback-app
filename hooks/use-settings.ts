@@ -6,7 +6,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const createDefaultValues = (
@@ -27,25 +27,19 @@ export const useUserSettings = (
   const toastId = "loadingToast";
   const [open, setOpen] = useState<boolean>(false);
 
-  const { execute, status } = useAction(action, {
-    onSuccess(data: { error: string }) {
+  const { execute } = useAction(action, {
+    onSuccess() {
       toast.dismiss(toastId);
-      if (data.error) {
-        toast.error(data.error, { duration: 3000 });
-      } else {
-        toast.success(`Your ${type} updated!`, { duration: 3000 });
-      }
+      toast.success(`Your ${type} updated!`);
     },
     onError() {
+      toast.dismiss(toastId);
       toast.error("Something went wrong!");
     },
-  });
-
-  useEffect(() => {
-    if (status === "executing") {
+    onExecute() {
       toast.loading("Loading...", { id: toastId });
-    }
-  }, [status]);
+    },
+  });
 
   const defaultValues = createDefaultValues(settingsObj);
 
@@ -55,7 +49,6 @@ export const useUserSettings = (
   });
 
   const processForm: CombinedFormSumbit = async (data) => {
-    console.log(data);
     execute(data);
   };
 

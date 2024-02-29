@@ -61,9 +61,7 @@ export default function AddForm({
   });
 
   const onProcess: createFeedbackSectionSubmitHandler = ({ title }) => {
-    console.log("submited");
     const friendsIds = selectedFriends.map((friend) => friend.id);
-
     execute({ title, membersIds: friendsIds, currentUserId });
   };
 
