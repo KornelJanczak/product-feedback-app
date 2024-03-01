@@ -4,7 +4,6 @@ import Container from "./_components/container";
 import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
 import Card from "./_components/card";
-import { Suspense } from "react";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -26,7 +25,9 @@ async function getFeedbackSections(
       where: {
         OR: [
           {
-            title: sectionTitle || undefined,
+            title: {
+              contains: sectionTitle ? sectionTitle : undefined,
+            },
             members: {
               some: {
                 userId: currentUserId,
@@ -34,7 +35,7 @@ async function getFeedbackSections(
             },
           },
           {
-            title: sectionTitle || undefined,
+            title: { contains: sectionTitle ? sectionTitle : undefined },
             admins: {
               some: {
                 userId: currentUserId,
@@ -72,13 +73,13 @@ async function getFeedbackSections(
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: { sectionTitle: "string" };
+  searchParams: { sectionTitle: string; sortBy: string };
 }) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) return redirect("/login");
 
-  const { sectionTitle } = searchParams;
+  const { sectionTitle, sortBy } = searchParams;
   const { id: currentUserId } = currentUser;
 
   const feedbackSections = await getFeedbackSections(

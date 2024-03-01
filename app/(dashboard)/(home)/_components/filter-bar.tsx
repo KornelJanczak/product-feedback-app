@@ -29,7 +29,7 @@ export default function FilterBar({ className }: { className?: string }) {
       routerValue = inputValue;
     }
 
-    router.push(`/?sectionTitle=${routerValue}`);
+    router.push(`?sectionTitle=${routerValue}`);
   };
 
   return (

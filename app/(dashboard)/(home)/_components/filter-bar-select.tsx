@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import {
   Select,
@@ -7,10 +8,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function FilterBarSelect() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const onSelectHandler = (selectValue: string) => {
+    router.push(`?sortBy=${selectValue}`);
+  };
+
   return (
-    <Select>
+    <Select onValueChange={onSelectHandler}>
       <SelectTrigger
         className="w-[180px] 
       bg-dark border-dark text-darkWhite
@@ -22,7 +30,7 @@ export function FilterBarSelect() {
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent className="bg-darkWhite focus-visible:ring-0 border-0 focus:ring-0">
-        <SelectGroup className="bg-darkWhite text-grey focus-visible:ring-0  ">
+        <SelectGroup className="bg-darkWhite text-grey focus-visible:ring-0 ">
           <SelectItem value="Most Suggestions" className="hover:text-pink">
             Most Suggestions
           </SelectItem>
