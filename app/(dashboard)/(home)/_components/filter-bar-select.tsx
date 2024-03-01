@@ -1,15 +1,12 @@
 import * as React from "react";
-
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@radix-ui/react-select";
 
 export function FilterBarSelect() {
   return (
@@ -17,9 +14,9 @@ export function FilterBarSelect() {
       <SelectTrigger
         className="w-[180px] 
       bg-dark border-dark text-darkWhite
-      px-2
-      focus:ring-0 focus:ring-ring focus:ring-offset-0
-      gap-0
+        px-2
+        focus:ring-0 focus:ring-ring focus:ring-offset-0
+        gap-0
         "
       >
         <SelectValue placeholder="Sort by" />

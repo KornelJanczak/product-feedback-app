@@ -6,29 +6,57 @@ import { cn } from "@/lib/utils";
 import { FilterBarSelect } from "./filter-bar-select";
 import SearchIcon from "@/public/icons/search";
 import { Input } from "@/components/ui/input";
+import FilterBarDrawer from "./filter-bar-drawer";
+import { FormEvent, useRef } from "react";
 
 export default function FilterBar({ className }: { className?: string }) {
   const router = useRouter();
+  const mobileInput = useRef<HTMLInputElement>(null);
+  const input = useRef<HTMLInputElement>(null);
+
+  const onSubmitHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const mobileInputValue = mobileInput.current?.value;
+    const inputValue = input.current?.value;
+    let routerValue;
+
+    console.log(inputValue);
+    if (mobileInputValue?.trim() !== undefined) {
+      console.log("mobile", mobileInputValue);
+
+      routerValue = mobileInputValue;
+    } else {
+      routerValue = inputValue;
+    }
+
+    router.push(`/?sectionTitle=${routerValue}`);
+  };
+
   return (
     <form
       className={cn(
-        "flex w-full items-center gap-2 py-3 px-5 bg-dark md:rounded-lg ",
+        "flex w-full items-center gap-2 py-3 px-3 sm:px-4 md:px-5 bg-dark md:rounded-lg ",
         className
       )}
+      onSubmit={onSubmitHandler}
+      id="mainForm"
     >
       <Button
         type="submit"
         className={
-          "flex gap-1 bg-blue hover:opacity-60 hover:bg-blue hover:transition duration-300 mt-0 lg:mt-0"
+          "hidden sm:flex gap-1 bg-blue hover:opacity-60 hover:bg-blue hover:transition duration-300 mt-0 lg:mt-0"
         }
       >
-        <span className="hidden sm:block">Search</span>
+        Search
         <SearchIcon />
       </Button>
+      <FilterBarDrawer mobileInputRef={mobileInput} className="sm:hidden" />
+
       <Input
-        className="hidden sm:block sm:w-8/12 lg:w-6/12 xl:w-4/12 bg-transparent border-0 border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0
+        className="hidden sm:block sm:w-7/12 lg:w-6/12 xl:w-4/12 bg-transparent border-0 border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0
          border-darkWhite bg-darkWhite w-auto text-dark placeholder:text-dark"
         placeholder="Search section"
+        ref={input}
       />
       <FilterBarSelect />
       <Button

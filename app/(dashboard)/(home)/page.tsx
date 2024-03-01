@@ -6,7 +6,10 @@ import prisma from "@/lib/db";
 import Card from "./_components/card";
 import { Suspense } from "react";
 
-async function getFeedbackSections(currentUserId: string) {
+async function getFeedbackSections(
+  currentUserId: string,
+  sectionTitle: string
+) {
   try {
     if (!currentUserId) return null;
 
@@ -23,6 +26,7 @@ async function getFeedbackSections(currentUserId: string) {
       where: {
         OR: [
           {
+            title: sectionTitle || undefined,
             members: {
               some: {
                 userId: currentUserId,
@@ -30,6 +34,7 @@ async function getFeedbackSections(currentUserId: string) {
             },
           },
           {
+            title: sectionTitle || undefined,
             admins: {
               some: {
                 userId: currentUserId,
@@ -64,33 +69,39 @@ async function getFeedbackSections(currentUserId: string) {
   }
 }
 
-export default async function Home() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: { sectionTitle: "string" };
+}) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) return redirect("/login");
 
-  const feedbackSections = await getFeedbackSections(currentUser.id);
+  const { sectionTitle } = searchParams;
+  const { id: currentUserId } = currentUser;
 
-  console.log(feedbackSections);
+  const feedbackSections = await getFeedbackSections(
+    currentUserId,
+    sectionTitle
+  );
 
   return (
     <>
       <FilterBar />
-      <Suspense fallback={<p>Loading...</p>}>
-        <Container>
-          {feedbackSections &&
-            feedbackSections.map(({ id, title, members, admins }) => (
-              <Card
-                key={id}
-                sectionId={id}
-                currentUserId={currentUser.id}
-                title={title as string}
-                members={members}
-                admins={admins}
-              />
-            ))}
-        </Container>
-      </Suspense>
+      <Container>
+        {feedbackSections &&
+          feedbackSections.map(({ id, title, members, admins }) => (
+            <Card
+              key={id}
+              sectionId={id}
+              currentUserId={currentUserId}
+              title={title as string}
+              members={members}
+              admins={admins}
+            />
+          ))}
+      </Container>
     </>
   );
 }

@@ -55,6 +55,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.4.1",
+    "vaul": "^0.9.0",
     "ws": "^8.16.0",
     "zod": "^3.22.4",
     "zustand": "^4.5.1"

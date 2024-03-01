@@ -21,9 +21,6 @@ export default async function getCurrentUser() {
   try {
     const data: User | null = await getSession();
 
-    console.log(data);
-    
-
     if (!data) return null;
 
     return {
