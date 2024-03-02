@@ -2,6 +2,7 @@
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import { deleteFeedbackSectionSchema } from "@/schemas/@product-actions-schemas";
+import { revalidatePath } from "next/cache";
 
 export const deleteFeedbackSection = action(
   deleteFeedbackSectionSchema,
@@ -22,8 +23,11 @@ export const deleteFeedbackSection = action(
 
       if (!deletedSection) throw new Error("Deleting section failed!");
 
+      revalidatePath("/");
       return { success: deletedSection };
-    } catch {
+    } catch (err) {
+      console.log(err);
+
       throw new Error("Deleting section failed!");
     }
   }

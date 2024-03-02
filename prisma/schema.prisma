@@ -44,7 +44,7 @@ model FeedbackSection{
 model UserToFeedbackSection {
   user   User    @relation(fields: [userId], references: [id])
   userId          String
-  feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+  feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id], onDelete: Cascade)
   feedbackSectionId String
   @@id([userId, feedbackSectionId])
 }
@@ -52,7 +52,7 @@ model UserToFeedbackSection {
 model AdminToFeedbackSection {
   user            User    @relation(fields: [userId], references: [id])
   userId          String
-  feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+  feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id], onDelete: Cascade)
   feedbackSectionId String
   @@id([userId, feedbackSectionId])
 }
