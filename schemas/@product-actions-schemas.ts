@@ -7,3 +7,8 @@ export const createFeedbackSectionSchema = z.object({
   currentUserId: z.string().min(2),
   membersIds: z.array(z.string()),
 });
+
+export const deleteFeedbackSectionSchema = z.object({
+  userId: z.string(),
+  sectionId: z.string(),
+});

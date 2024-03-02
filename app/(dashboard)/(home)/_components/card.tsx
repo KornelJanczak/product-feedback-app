@@ -74,7 +74,11 @@ export default function Card({
           <SuggestionIcon fill="#3A4374" />
         </div>
         <div className="flex flex-row gap-1">
-          <CardSettings currentUserIsAdmin={currentUserIsAdmin} />
+          <CardSettings
+            sectionId={sectionId}
+            currentUserId={currentUserId}
+            currentUserIsAdmin={currentUserIsAdmin}
+          />
           <Button
             className="px-2 pt-1 pb-1 h-auto text-sm sm:text-base bg-blue hover:bg-blue
             hover:opacity-60 transition-all duration-300"

@@ -10,12 +10,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import IconLeft from "@/public/icons/icon-left";
+import { LogOutIcon, Trash2Icon } from "lucide-react";
 
 export default function ActionAlertDialog({
   dialogType,
 }: {
   dialogType: "leave" | "delete";
+  currentUserId: string;
+  sectionId: string;
 }) {
   const deleteType = dialogType === "delete";
   const leaveType = dialogType === "leave";
@@ -32,10 +34,28 @@ export default function ActionAlertDialog({
     <AlertDialog>
       <AlertDialogTrigger
         className="flex rounded-lg  text-red 
-           gap-0.5"
+        gap-0.5"
       >
-        Leave
-        <IconLeft />
+        {leaveType && (
+          <div
+            className="flex items-center rounded-lg  text-grey
+            hover:text-pink transition-all duration-300
+             gap-1"
+          >
+            <LogOutIcon width={16} height={16} />
+            Leave
+          </div>
+        )}
+        {deleteType && (
+          <div
+            className="flex items-center rounded-lg  text-grey
+            hover:text-pink transition-all duration-300
+            gap-1"
+          >
+            <Trash2Icon width={16} height={16} />
+            Delete
+          </div>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-80 sm:max-w-md md:max-w-lg rounded">
         <AlertDialogHeader>
@@ -50,8 +70,9 @@ export default function ActionAlertDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            className="text-secondDark hover:text-secondDark
-           hover:opacity-90  transition-all duration-300"
+            className="text-darkWhite bg-secondDark hover:bg-secondDark
+            hover:text-white
+           hover:opacity-75  transition-all duration-300"
           >
             Cancel
           </AlertDialogCancel>
