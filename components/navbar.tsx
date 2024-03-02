@@ -49,7 +49,7 @@ export default function Nav() {
       </div>
       <div className="hidden md:flex w-full">CHUJ</div>
       <div className="hidden md:flex items-center justify-center">
-        <SidebarRoutes className="gap-1" classNameBox="md:flex flex-col gap-2" />
+        <SidebarRoutes className="gap-1" classNameBox="md:flex gap-2" />
       </div>
     </header>
   );

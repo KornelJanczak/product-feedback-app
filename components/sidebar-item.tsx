@@ -26,17 +26,17 @@ export default function SidebarItem({ icon: Icon, label, href }: ISidebarItem) {
       onClick={onClickHandler}
       type="button"
       className={cn(
-        "ml-auto flex items-center gap-x-2 text-grey text-base font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-darkWhite",
+        " flex items-center gap-x-2 text-grey text-base font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-darkWhite",
         isActive && "text-pink bg-darkWhite hover:text-pink"
       )}
     >
-      <div className="ml-auto flex items-center gap-x-2 py-2">
+      <div className="flex items-center gap-x-2 py-2">
         {label}
         <Icon size={22} className={cn("text-grey", isActive && "text-pink")} />
       </div>
       <div
         className={cn(
-          "ml-auto opacity-0 h-full transition-all",
+          " opacity-0 h-full transition-all",
           isActive && "opacity-100"
         )}
       />
