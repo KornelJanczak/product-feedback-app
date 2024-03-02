@@ -20,7 +20,6 @@ export default function FilterBar({ className }: { className?: string }) {
     const inputValue = input.current?.value;
     let routerValue;
 
-    console.log(inputValue);
     if (mobileInputValue?.trim() !== undefined) {
       console.log("mobile", mobileInputValue);
 

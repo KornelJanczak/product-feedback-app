@@ -31,16 +31,16 @@ export function FilterBarSelect() {
       </SelectTrigger>
       <SelectContent className="bg-darkWhite focus-visible:ring-0 border-0 focus:ring-0">
         <SelectGroup className="bg-darkWhite text-grey focus-visible:ring-0 ">
-          <SelectItem value="Most Suggestions" className="hover:text-pink">
+          <SelectItem value="most-suggestions" className="hover:text-pink">
             Most Suggestions
           </SelectItem>
-          <SelectItem value="Least Suggestions" className="hover:text-pink">
+          <SelectItem value="least-suggestions" className="hover:text-pink">
             Least Suggestions
           </SelectItem>
-          <SelectItem value="Most members" className="hover:text-pink">
+          <SelectItem value="most-members" className="hover:text-pink">
             Most members
           </SelectItem>
-          <SelectItem value="Least members" className="hover:text-pink">
+          <SelectItem value="least-members" className="hover:text-pink">
             Least members
           </SelectItem>
         </SelectGroup>

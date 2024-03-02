@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Nav from "@/components/nav";
+import Nav from "@/components/navbar";
 import { cn } from "@/lib/utils";
 
 export default function MainLayout({

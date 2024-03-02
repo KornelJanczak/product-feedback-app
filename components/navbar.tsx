@@ -1,8 +1,8 @@
 "use client";
 import ResponsiveImage from "@/components/responsive-image";
-import MobileSheet from "./mobile-nav";
+import MobileSidebar from "./mobile-sidebar";
 import { usePathname } from "next/navigation";
-import AccountPanel from "./account-panel";
+import SidebarRoutes from "./sidebar-routes";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -44,15 +44,12 @@ export default function Nav() {
           <span className="hidden md:block text-md text-basicWhite md:mb-auto">
             {siteName} Board
           </span>
-          <MobileSheet />
+          <MobileSidebar />
         </div>
       </div>
       <div className="hidden md:flex w-full">CHUJ</div>
       <div className="hidden md:flex items-center justify-center">
-        <AccountPanel
-          className="gap-1"
-          classNameBox="md:flex flex-col gap-2"
-        />
+        <SidebarRoutes className="gap-1" classNameBox="md:flex flex-col gap-2" />
       </div>
     </header>
   );
