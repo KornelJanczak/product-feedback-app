@@ -17,8 +17,13 @@ export function FilterBarSelect() {
     router.push(`?sortBy=${selectValue}`);
   };
 
+  const defaultValue = searchParams.get("sortBy");
+
   return (
-    <Select onValueChange={onSelectHandler}>
+    <Select
+      onValueChange={onSelectHandler}
+      value={defaultValue ? defaultValue : "/"}
+    >
       <SelectTrigger
         className="w-[180px] 
       bg-dark border-dark text-darkWhite
@@ -31,6 +36,9 @@ export function FilterBarSelect() {
       </SelectTrigger>
       <SelectContent className="bg-darkWhite focus-visible:ring-0 border-0 focus:ring-0">
         <SelectGroup className="bg-darkWhite text-grey focus-visible:ring-0 ">
+          <SelectItem value="/" className="hover:text-pink hidden">
+            Sort by
+          </SelectItem>
           <SelectItem value="most-suggestions" className="hover:text-pink">
             Most Suggestions
           </SelectItem>
