@@ -2,6 +2,8 @@
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import { leaveFromSectionSchema } from "@/schemas/@product-actions-schemas";
+import { revalidatePath } from "next/cache";
+import { updateUser } from "../user/update-user";
 
 export const leaveFromFeedbackSection = action(
   leaveFromSectionSchema,
@@ -55,7 +57,7 @@ export const leaveFromFeedbackSection = action(
       }
 
       if (isAdmin) {
-        const sectionHasAdmins = feedbackSection.admins.length >= 1;
+        const sectionHasAdmins = feedbackSection.admins.length > 1;
 
         const deletedAdmin = await prisma.adminToFeedbackSection.delete({
           where: {
@@ -69,11 +71,13 @@ export const leaveFromFeedbackSection = action(
             Math.random() * feedbackSection.members.length
           );
 
-          const { userId: randomMemberId } =
+          console.log(randomIndex);
+
+          const randomMember: { userId: string } | undefined =
             feedbackSection.members[randomIndex];
 
           // If the admin is the last user of section delete section
-          if (!randomMemberId) {
+          if (!randomMember) {
             const deletedSection = await prisma.feedbackSection.delete({
               where: {
                 id: sectionId,
@@ -84,22 +88,22 @@ export const leaveFromFeedbackSection = action(
           }
 
           // At otherwise, add admins privilege to random member
+
+          const randomMemberValues = {
+            userId: randomMember.userId,
+            feedbackSectionId: sectionId,
+          };
+
           const deleteUserAsMember = await prisma.userToFeedbackSection.delete({
             where: {
-              userId_feedbackSectionId: {
-                userId: randomMemberId,
-                feedbackSectionId: sectionId,
-              },
+              userId_feedbackSectionId: randomMemberValues,
             },
           });
 
           if (!deleteUserAsMember) throw new Error("Finding new admin failed!");
 
           const createUserAsAdmin = await prisma.adminToFeedbackSection.create({
-            data: {
-              feedbackSectionId: sectionId,
-              userId: randomMemberId,
-            },
+            data: randomMemberValues,
           });
 
           return { success: createUserAsAdmin };
@@ -107,8 +111,12 @@ export const leaveFromFeedbackSection = action(
           return { success: deletedAdmin };
         }
       }
-    } catch {
+    } catch (err) {
+      console.log(err);
+
       throw new Error("Something went wrong!");
+    } finally {
+      revalidatePath("/");
     }
   }
 );

@@ -43,7 +43,7 @@ export default function FilterBar({ className }: { className?: string }) {
       <Button
         type="submit"
         className={
-          "hidden sm:flex gap-1 bg-blue hover:opacity-60 hover:bg-blue hover:transition duration-300 mt-0 lg:mt-0"
+          "hidden sm:flex gap-1 bg-blue hover:opacity-60 hover:bg-blue transition duration-300 mt-0 lg:mt-0"
         }
       >
         Search
@@ -52,14 +52,14 @@ export default function FilterBar({ className }: { className?: string }) {
       <FilterBarDrawer mobileInputRef={mobileInput} className="sm:hidden" />
 
       <Input
-        className="hidden sm:block sm:w-7/12 lg:w-6/12 xl:w-4/12 bg-transparent border-0 border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0
+        className="hidden sm:block sm:w-7/12 lg:w-6/12 xl:w-4/12 bg-transparent border-0 focus-visible:ring-offset-0 focus-visible:ring-0
          border-darkWhite bg-darkWhite w-auto text-dark placeholder:text-dark"
         placeholder="Search section"
         ref={input}
       />
       <FilterBarSelect />
       <Button
-        className="bg-pink hover:opacity-60 hover:bg-pink hover:transition duration-300 ml-auto"
+        className="bg-pink hover:bg-pink hover:opacity-70 transition duration-300 ml-auto"
         type="button"
         onClick={() => {
           router.push("/add-section");

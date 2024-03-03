@@ -88,14 +88,23 @@ export default async function HomePage({
     sectionTitle
   );
 
+  switch (sortBy) {
+    case "least-members":
+      sortSections(feedbackSections, "least");
+      break;
+
+    case "most-members":
+      sortSections(feedbackSections, "most");
+  }
+
   const isExist = feedbackSections!.length > 0;
 
   return (
     <>
       <FilterBar />
-      <Container>
-        {isExist &&
-          feedbackSections?.map(({ id, title, members, admins }) => (
+      {isExist && (
+        <Container>
+          {feedbackSections?.map(({ id, title, members, admins }) => (
             <Card
               key={id}
               sectionId={id}
@@ -105,13 +114,26 @@ export default async function HomePage({
               admins={admins}
             />
           ))}
-        {!isExist && (
-          <NoResult
-            title="There is no section yet."
-            description="Have big commercial project? Create your own section and work with your team together!"
-          />
-        )}
-      </Container>
+        </Container>
+      )}
+      {!isExist && (
+        <NoResult
+          title="There is no section yet."
+          description="Have big commercial project? Create your own section and work with your team together!"
+        />
+      )}
     </>
   );
+}
+
+function sortSections(feedbackSections: any, sortType: "least" | "most") {
+  feedbackSections?.sort((a: any, b: any) => {
+    const first = [...a.members, ...a.admins];
+    const second = [b.members, ...a.admins];
+
+    if (sortType == "least") return first.length - second.length;
+    if (sortType == "most") return second.length - first.length;
+  });
+
+  return feedbackSections;
 }
