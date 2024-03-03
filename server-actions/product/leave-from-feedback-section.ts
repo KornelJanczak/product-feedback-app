@@ -43,27 +43,70 @@ export const leaveFromFeedbackSection = action(
         feedbackSectionId: sectionId,
       };
 
-      let prismaQuery;
-
+      //if user is a member delete he from members
       if (isMember) {
-        prismaQuery = await prisma.userToFeedbackSection.delete({
+        const deletedMember = await prisma.userToFeedbackSection.delete({
           where: {
             userId_feedbackSectionId: deletedValues,
           },
         });
+
+        return { success: deletedMember };
       }
 
       if (isAdmin) {
-        prismaQuery = await prisma.adminToFeedbackSection.delete({
+        const sectionHasAdmins = feedbackSection.admins.length >= 1;
+
+        const deletedAdmin = await prisma.adminToFeedbackSection.delete({
           where: {
             userId_feedbackSectionId: deletedValues,
           },
         });
+
+        // Check if user is a last admin
+        if (!sectionHasAdmins) {
+          const randomIndex = Math.floor(
+            Math.random() * feedbackSection.members.length
+          );
+
+          const { userId: randomMemberId } =
+            feedbackSection.members[randomIndex];
+
+          // If the admin is the last user of section delete section
+          if (!randomMemberId) {
+            const deletedSection = await prisma.feedbackSection.delete({
+              where: {
+                id: sectionId,
+              },
+            });
+
+            return { success: deletedSection };
+          }
+
+          // At otherwise, add admins privilege to random member
+          const deleteUserAsMember = await prisma.userToFeedbackSection.delete({
+            where: {
+              userId_feedbackSectionId: {
+                userId: randomMemberId,
+                feedbackSectionId: sectionId,
+              },
+            },
+          });
+
+          if (!deleteUserAsMember) throw new Error("Finding new admin failed!");
+
+          const createUserAsAdmin = await prisma.adminToFeedbackSection.create({
+            data: {
+              feedbackSectionId: sectionId,
+              userId: randomMemberId,
+            },
+          });
+
+          return { success: createUserAsAdmin };
+        } else {
+          return { success: deletedAdmin };
+        }
       }
-
-      if (!prismaQuery) throw new Error("Something went wrong!");
-
-      return { success: prismaQuery };
     } catch {
       throw new Error("Something went wrong!");
     }
