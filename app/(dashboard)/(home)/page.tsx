@@ -4,6 +4,7 @@ import Container from "./_components/container";
 import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
 import Card from "./_components/card";
+import NoResult from "@/components/no-result";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -87,12 +88,14 @@ export default async function HomePage({
     sectionTitle
   );
 
+  const isExist = feedbackSections!.length > 0;
+
   return (
     <>
       <FilterBar />
       <Container>
-        {feedbackSections &&
-          feedbackSections.map(({ id, title, members, admins }) => (
+        {isExist &&
+          feedbackSections?.map(({ id, title, members, admins }) => (
             <Card
               key={id}
               sectionId={id}
@@ -102,6 +105,12 @@ export default async function HomePage({
               admins={admins}
             />
           ))}
+        {!isExist && (
+          <NoResult
+            title="There is no section yet."
+            description="Have big commercial project? Create your own section and work with your team together!"
+          />
+        )}
       </Container>
     </>
   );

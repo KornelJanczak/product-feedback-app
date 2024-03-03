@@ -11,6 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { deleteFeedbackSection } from "@/server-actions/product/delete-feedback-section";
+import { leaveFromFeedbackSection } from "@/server-actions/product/leave-from-feedback-section";
 import { LogOutIcon, Trash2Icon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
@@ -42,13 +43,29 @@ export default function ActionAlertDialog({
     },
   });
 
-  const onClickHandler = () => {
-    if (deleteType) {
-      deleteExecute({ userId: currentUserId, sectionId });
-    }
+  const { execute: leaveExecute } = useAction(leaveFromFeedbackSection, {
+    onExecute() {
+      toast.loading("Leaving...", { id: toastId });
+    },
+    onSuccess() {
+      toast.dismiss(toastId);
+      toast.success("You have left this section!");
+    },
+    onError() {
+      toast.dismiss(toastId);
+      toast.error("Leaving section failed!");
+    },
+  });
 
-    if (leaveType) {
-    }
+  const onClickHandler = () => {
+    const executeData = {
+      userId: currentUserId,
+      sectionId,
+    };
+
+    if (deleteType) deleteExecute(executeData);
+
+    if (leaveType) leaveExecute(executeData);
   };
 
   return (

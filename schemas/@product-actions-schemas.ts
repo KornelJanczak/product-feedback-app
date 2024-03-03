@@ -8,7 +8,15 @@ export const createFeedbackSectionSchema = z.object({
   membersIds: z.array(z.string()),
 });
 
-export const deleteFeedbackSectionSchema = z.object({
+const basicProductSchema = {
   userId: z.string(),
   sectionId: z.string(),
+};
+
+export const deleteFeedbackSectionSchema = z.object({
+  ...basicProductSchema,
+});
+
+export const leaveFromSectionSchema = z.object({
+  ...basicProductSchema,
 });
