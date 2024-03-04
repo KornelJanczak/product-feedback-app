@@ -10,9 +10,17 @@ interface IFriendOfButton {
 }
 
 interface User {
+  id: string;
   email: string;
   name: string;
+}
+interface ICurrentUser {
   id: string;
+  email: string;
+  lastName?: string;
+  firstName?: string;
+  name: string;
+  image?: string | null;
 }
 
 interface IFriend {

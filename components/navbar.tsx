@@ -1,30 +1,24 @@
 "use client";
 import ResponsiveImage from "@/components/responsive-image";
 import MobileSidebar from "./mobile-sidebar";
-import { usePathname } from "next/navigation";
 import SidebarRoutes from "./sidebar-routes";
 import UserAvatar from "./user-avatar";
 
-export default function Nav() {
-  const pathname = usePathname();
-
-  const siteName =
-    pathname.slice(1).charAt(0).toUpperCase() + pathname.slice(2);
-
+export default function Nav({ currentUser }: { currentUser?: ICurrentUser }) {
   return (
     <header
-      className="text md:container md:py-5 md:flex md:w-full
-      lg:max-w-64 lg:flex lg:flex-col lg:m-0 lg:px-0 lg:py-0"
+      className="text md:container md:py-5 md:flex md:w-full md:gap-4
+      lg:max-w-64 lg:flex lg:flex-col lg:m-0 lg:px-0 lg:py-0 lg:gap-4"
     >
-      <div className="md:relative md:w-full md:order-2">
+      <div className="md:relative md:w-full lg:w-full lg:h-20">
         <ResponsiveImage
           images={{
             desktop: "/assets/suggestions/desktop/background-header.png",
             mobile: "/assets/suggestions/mobile/background-header.png",
             tablet: "/assets/suggestions/tablet/background-header.png",
           }}
-          pictureClassName="w-full w-full md:h-16 md:w-full md:rounded-lg"
-          imgClassName="w-full h-16 md:h-44 md:w-full md:rounded-lg"
+          pictureClassName="w-full md:h-16 md:w-full md:rounded-lg lg:h-36"
+          imgClassName="w-full h-16 md:h-44 md:w-full md:rounded-lg lg:h-36"
           altText="Gradient image"
           width={340}
           height={72}
@@ -39,22 +33,23 @@ export default function Nav() {
           md:flex-col
           "
         >
-          <h2 className="text-lg font-bold text-basicWhite md:text-xl">
+          <h2 className="text-lg font-bold text-basicWhite md:text-xl lg:text-center">
             Feedback Product
           </h2>
-          <span className="hidden md:block text-md text-basicWhite md:mb-auto">
-            {siteName} Board
-          </span>
           <MobileSidebar />
         </div>
       </div>
-      {/* <div className="hidden md:flex w-full">CHUJ</div> */}
       <div
-        className="hidden md:flex md:flex-col md:items-end 
-        md:justify-center md:bg-darkWhite md:h-full md:rounded-lg md:p-4"
+        className="
+        hidden md:flex md:flex-col md:items-end 
+        md:justify-center md:bg-darkWhite 
+        md:border md:border-[#CDD2EE]
+        md:h-44 md:rounded-lg md:p-3 md:w-2/5 lg:gap-2
+        lg:items-center lg:h-32 lg:w-full
+        "
       >
-        <UserAvatar className="h-14 w-14" />
-        <SidebarRoutes className="gap-1" />
+        <UserAvatar className="h-16 w-16 lg:m-auto" />
+        <SidebarRoutes />
       </div>
     </header>
   );

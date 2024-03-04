@@ -1,13 +1,5 @@
-import { Button } from "@/components/ui/button";
-
-import { signOut } from "next-auth/react";
-import GroupOfPeopleIcon from "@/public/icons/group-of-people";
-import { Badge, badgeVariants } from "@/components/ui/badge";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { Layout, UsersRound, Settings, LogOut } from "lucide-react";
+import { Layout, UsersRound } from "lucide-react";
 import SidebarItem from "./sidebar-item";
-import UserAvatar from "./user-avatar";
 
 const routes = [
   {
@@ -20,39 +12,17 @@ const routes = [
     label: "Friends",
     href: "/friends/sugesstions",
   },
-  // {
-  //   icon: Settings,
-  //   label: "Manage account",
-  //   href: "/account",
-  // },
-  // {
-  //   icon: LogOut,
-  //   label: "Log out",
-  //   href: "/logout",
-  // },
 ];
 
-export default function SidebarRoutes({
-  className,
-  classNameBox,
-  friendBtnClass,
-}: {
-  className?: string;
-  classNameBox?: string;
-  friendBtnClass?: string;
-}) {
+export default function SidebarRoutes() {
   return (
-    // <div className={cn(`flex flex-row flex-wrap gap-2 pt-2`, className)}>
     <div
-      className={cn(
-        "flex flex-row flex-wrap gap-x-2 md:justify-end",
-        classNameBox
-      )}
+      className="flex justify-center flex-row ml-auto md:flex-col gap-x-2
+      md:justify-end md:pt-1 lg:justify-start lg:flex-row lg:items-center lg:ml-0 lg:pt-0"
     >
       {routes.map(({ href, icon, label }) => (
         <SidebarItem key={href} href={href} icon={icon} label={label} />
       ))}
     </div>
-    // </div>
   );
 }
