@@ -7,6 +7,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Layout, UsersRound, Settings, LogOut } from "lucide-react";
 import SidebarItem from "./sidebar-item";
+import UserAvatar from "./user-avatar";
 
 const routes = [
   {
@@ -19,11 +20,11 @@ const routes = [
     label: "Friends",
     href: "/friends/sugesstions",
   },
-  {
-    icon: Settings,
-    label: "Manage account",
-    href: "/account",
-  },
+  // {
+  //   icon: Settings,
+  //   label: "Manage account",
+  //   href: "/account",
+  // },
   // {
   //   icon: LogOut,
   //   label: "Log out",
@@ -41,12 +42,17 @@ export default function SidebarRoutes({
   friendBtnClass?: string;
 }) {
   return (
-    <div className={cn(`flex flex-row flex-wrap gap-2 pt-2`, className)}>
-      <div className={cn("flex flex-row flex-wrap gap-x-2", classNameBox)}>
-        {routes.map(({ href, icon, label }) => (
-          <SidebarItem key={href} href={href} icon={icon} label={label} />
-        ))}
-      </div>
+    // <div className={cn(`flex flex-row flex-wrap gap-2 pt-2`, className)}>
+    <div
+      className={cn(
+        "flex flex-row flex-wrap gap-x-2 md:justify-end",
+        classNameBox
+      )}
+    >
+      {routes.map(({ href, icon, label }) => (
+        <SidebarItem key={href} href={href} icon={icon} label={label} />
+      ))}
     </div>
+    // </div>
   );
 }

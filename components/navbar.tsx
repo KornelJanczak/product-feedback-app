@@ -3,6 +3,7 @@ import ResponsiveImage from "@/components/responsive-image";
 import MobileSidebar from "./mobile-sidebar";
 import { usePathname } from "next/navigation";
 import SidebarRoutes from "./sidebar-routes";
+import UserAvatar from "./user-avatar";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -15,7 +16,7 @@ export default function Nav() {
       className="text md:container md:py-5 md:flex md:w-full
       lg:max-w-64 lg:flex lg:flex-col lg:m-0 lg:px-0 lg:py-0"
     >
-      <div className="md:relative md:w-full">
+      <div className="md:relative md:w-full md:order-2">
         <ResponsiveImage
           images={{
             desktop: "/assets/suggestions/desktop/background-header.png",
@@ -47,9 +48,13 @@ export default function Nav() {
           <MobileSidebar />
         </div>
       </div>
-      <div className="hidden md:flex w-full">CHUJ</div>
-      <div className="hidden md:flex items-center justify-center">
-        <SidebarRoutes className="gap-1" classNameBox="md:flex gap-2" />
+      {/* <div className="hidden md:flex w-full">CHUJ</div> */}
+      <div
+        className="hidden md:flex md:flex-col md:items-end 
+        md:justify-center md:bg-darkWhite md:h-full md:rounded-lg md:p-4"
+      >
+        <UserAvatar className="h-14 w-14" />
+        <SidebarRoutes className="gap-1" />
       </div>
     </header>
   );

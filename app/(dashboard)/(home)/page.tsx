@@ -6,6 +6,7 @@ import prisma from "@/lib/db";
 import Card from "./_components/card";
 import NoResult from "@/components/no-result";
 
+
 async function getFeedbackSections(
   currentUserId: string,
   sectionTitle: string
@@ -95,6 +96,7 @@ export default async function HomePage({
 
     case "most-members":
       sortSections(feedbackSections, "most");
+      break;
   }
 
   const isExist = feedbackSections!.length > 0;

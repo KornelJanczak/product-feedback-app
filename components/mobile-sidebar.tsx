@@ -1,15 +1,7 @@
 "use client";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import IconHamburger from "@/public/icons/icon-hamburger";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SidebarRoutes from "./sidebar-routes";
-import getCurrentUser from "@/lib/user/get-current-user";
 import { useSession } from "next-auth/react";
 import UserAvatar from "./user-avatar";
 
@@ -21,7 +13,6 @@ export default function MobileSidebar() {
       <SheetTrigger className="md:hidden">
         <IconHamburger />
       </SheetTrigger>
-
       <SheetContent side={"right"}>
         <UserAvatar
           userImage={session?.user?.image}
