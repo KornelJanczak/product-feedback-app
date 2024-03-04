@@ -3,8 +3,14 @@ import ResponsiveImage from "@/components/responsive-image";
 import MobileSidebar from "./mobile-sidebar";
 import SidebarRoutes from "./sidebar-routes";
 import UserAvatar from "./user-avatar";
+import UserCard from "./user-card";
+import { useSession } from "next-auth/react";
 
-export default function Nav({ currentUser }: { currentUser?: ICurrentUser }) {
+export default function Nav() {
+  const session = useSession();
+
+  const currentUser: ICurrentUser = session.data?.user as ICurrentUser;
+
   return (
     <header
       className="text md:container md:py-5 md:flex md:w-full md:gap-4
@@ -48,7 +54,12 @@ export default function Nav({ currentUser }: { currentUser?: ICurrentUser }) {
         lg:items-center lg:h-32 lg:w-full
         "
       >
-        <UserAvatar className="h-16 w-16 lg:m-auto" />
+        <UserCard currentUser={currentUser}>
+          <UserAvatar
+            className="h-16 w-16 lg:m-auto"
+            userImage={currentUser.image}
+          />
+        </UserCard>
         <SidebarRoutes />
       </div>
     </header>
