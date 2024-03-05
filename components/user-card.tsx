@@ -6,7 +6,9 @@ import {
 import { ReactNode } from "react";
 import UserAvatar from "./user-avatar";
 import { Settings, LogOutIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+
+import SidebarItem from "./sidebar-item";
+import { signOut } from "next-auth/react";
 
 export default function UserCard({
   children,
@@ -17,32 +19,41 @@ export default function UserCard({
 }) {
   console.log(currentUser);
 
-  const router = useRouter();
+
+  const onClickHandler = () => {
+    signOut();
+  };
 
   return (
     <Popover>
       <PopoverTrigger>{children}</PopoverTrigger>
-      <PopoverContent className="right-20">
-        <div className="flex flex-row items-center gap-2">
-          <UserAvatar userImage={currentUser?.image} className="h-14 w-14" />
-          <div className="flex flex-col">
-            <span className="text-sm sm:text-base text-secondDark font-bold">
-              {currentUser?.name}
-            </span>
-            <span className="text-sm text-grey ">{currentUser?.email}</span>
-          </div>
-          <button
-            type="button"
-            className="flex items-center gap-x-2 text-grey text-base 
-            font-[500] md:pl-6 transition-all hover:text-slate-600 
-            hover:bg-darkWhite md:ml-auto lg:pl-0"
-          >
-            <div className="flex items-center gap-x-1.5 py-2">
-              Manage Account
-              <Settings size={22} className="text-grey" />
+      <PopoverContent align="end">
+        <div className="flex flex-col">
+          <div className="flex flex-row items-center gap-2">
+            <UserAvatar userImage={currentUser?.image} className="h-14 w-14" />
+            <div className="flex flex-col">
+              <span className="text-sm sm:text-base text-secondDark font-bold">
+                {currentUser?.name}
+              </span>
+              <span className="text-sm text-grey ">{currentUser?.email}</span>
             </div>
-            <div className=" opacity-0 h-full transition-all" />
-          </button>
+          </div>
+          <div className="flex flex-col pl-6 pt-2 gap-0.5">
+            <SidebarItem
+              size={18}
+              href="/account"
+              icon={Settings}
+              label="Manage account"
+              className="md:mr-auto md:ml-0 md:pl-0 md:pb-0 md:text-sm"
+              labelClassName="order-2"
+            />
+            <button
+              className="text-sm flex items-center gap-x-2 text-grey  font-[500] transition-all hover:text-slate-600 "
+              onClick={onClickHandler}
+            >
+              <LogOutIcon size={18} /> Log out
+            </button>
+          </div>
         </div>
       </PopoverContent>
     </Popover>
