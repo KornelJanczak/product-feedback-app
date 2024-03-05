@@ -57,7 +57,7 @@ export default function Nav() {
         <UserCard currentUser={currentUser}>
           <UserAvatar
             className="h-16 w-16 lg:m-auto"
-            userImage={currentUser.image}
+            userImage={currentUser?.image}
           />
         </UserCard>
         <SidebarRoutes />
