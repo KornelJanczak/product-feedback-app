@@ -7,8 +7,18 @@ interface ISidebarItem {
   icon: LucideIcon;
   label: string;
   href: string;
+  size?: number;
+  className?: string;
+  labelClassName?: string;
 }
-export default function SidebarItem({ icon: Icon, label, href }: ISidebarItem) {
+export default function SidebarItem({
+  icon: Icon,
+  label,
+  href,
+  className,
+  size,
+  labelClassName,
+}: ISidebarItem) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -26,13 +36,17 @@ export default function SidebarItem({ icon: Icon, label, href }: ISidebarItem) {
       onClick={onClickHandler}
       type="button"
       className={cn(
-        "flex items-center gap-x-2 text-grey text-base font-[500] md:pl-6 transition-all hover:text-slate-600 hover:bg-darkWhite md:ml-auto lg:pl-0",
-        isActive && "text-pink bg-darkWhite hover:text-pink"
+        "flex items-center gap-x-2 text-grey text-base font-[500] md:pl-6 transition-all hover:text-slate-600  md:ml-auto lg:pl-0",
+        isActive && "text-pink hover:text-pink",
+        className
       )}
     >
       <div className="flex items-center gap-x-1.5 py-2">
-        {label}
-        <Icon size={22} className={cn("text-grey", isActive && "text-pink")} />
+        <span className={labelClassName}>{label}</span>
+        <Icon
+          size={size ? size : 22}
+          className={cn("text-grey", isActive && "text-pink")}
+        />
       </div>
       <div
         className={cn(
