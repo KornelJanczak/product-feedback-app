@@ -5,7 +5,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
 import Card from "./_components/card";
 import NoResult from "@/components/no-result";
-
+import { FeedbackSection } from "@prisma/client";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -47,6 +47,11 @@ async function getFeedbackSections(
         ],
       },
       include: {
+        suggestions: {
+          select: {
+            count: true,
+          },
+        },
         members: {
           select: {
             user: {
@@ -91,50 +96,79 @@ export default async function HomePage({
 
   switch (sortBy) {
     case "least-members":
-      sortSections(feedbackSections, "least");
+      sortSections(feedbackSections, "least", "members");
       break;
 
     case "most-members":
-      sortSections(feedbackSections, "most");
+      sortSections(feedbackSections, "most", "members");
+      break;
+
+    case "most-suggestions":
+      sortSections(feedbackSections, "most", "suggestions");
+      break;
+
+    case "least-suggestions":
+      sortSections(feedbackSections, "least", "suggestions");
       break;
   }
 
   const isExist = feedbackSections!.length > 0;
 
-  return (
-    <>
-      <FilterBar />
-      {isExist && (
+  if (isExist)
+    return (
+      <>
+        <FilterBar />
         <Container>
-          {feedbackSections?.map(({ id, title, members, admins }) => (
-            <Card
-              key={id}
-              sectionId={id}
-              currentUserId={currentUserId}
-              title={title as string}
-              members={members}
-              admins={admins}
-            />
-          ))}
+          {feedbackSections?.map(
+            ({ id, title, members, admins, suggestions }) => (
+              <Card
+                key={id}
+                sectionId={id}
+                suggestionsNumber={suggestions.length}
+                currentUserId={currentUserId}
+                title={title as string}
+                members={members}
+                admins={admins}
+              />
+            )
+          )}
         </Container>
-      )}
-      {!isExist && (
+      </>
+    );
+
+  if (!isExist)
+    return (
+      <>
+        <FilterBar />
         <NoResult
           title="There is no section yet."
           description="Have big commercial project? Create your own section and work with your team together!"
         />
-      )}
-    </>
-  );
+      </>
+    );
 }
 
-function sortSections(feedbackSections: any, sortType: "least" | "most") {
-  feedbackSections?.sort((a: any, b: any) => {
-    const first = [...a.members, ...a.admins];
-    const second = [b.members, ...a.admins];
+function sortSections(
+  feedbackSections: any,
+  sortType: "least" | "most",
+  sortBy: "suggestions" | "members"
+) {
+  feedbackSections.sort((a: any, b: any) => {
+    if (sortBy === "members") {
+      const first = [...a.members, ...a.admins];
+      const second = [b.members, ...a.admins];
 
-    if (sortType == "least") return first.length - second.length;
-    if (sortType == "most") return second.length - first.length;
+      if (sortType == "least") return first.length - second.length;
+      if (sortType == "most") return second.length - first.length;
+    }
+
+    if (sortBy === "suggestions") {
+      const first = a.suggestions.length;
+      const second = b.suggestions.length;
+
+      if (sortType == "least") return first.length - second.length;
+      if (sortType == "most") return second.length - first.length;
+    }
   });
 
   return feedbackSections;

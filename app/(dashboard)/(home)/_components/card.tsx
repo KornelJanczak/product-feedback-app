@@ -19,6 +19,7 @@ type sectionUser = {
 interface ICard {
   sectionId: string;
   currentUserId: string;
+  suggestionsNumber: number;
   title: string;
   members: sectionUser;
   admins: sectionUser;
@@ -27,6 +28,7 @@ interface ICard {
 export default function Card({
   currentUserId,
   sectionId,
+  suggestionsNumber,
   title,
   members,
   admins,
@@ -69,7 +71,7 @@ export default function Card({
       <div className="flex flex-col ml-auto items-center justify-center gap-6">
         <div className="flex items-center ml-auto">
           <span className="text-dark text-sm sm:text-base font-semibold">
-            3
+            {suggestionsNumber}
           </span>
           <SuggestionIcon fill="#3A4374" />
         </div>

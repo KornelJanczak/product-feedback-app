@@ -1,14 +1,16 @@
+"use client";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ReactNode } from "react";
-import UserAvatar from "./user-avatar";
+import UserAvatar from "../user-avatar";
 import { Settings, LogOutIcon } from "lucide-react";
 
 import SidebarItem from "./sidebar-item";
 import { signOut } from "next-auth/react";
+import { useMediaQuery } from "usehooks-ts";
 
 export default function UserCard({
   children,
@@ -17,17 +19,16 @@ export default function UserCard({
   children: ReactNode;
   currentUser?: ICurrentUser;
 }) {
-  console.log(currentUser);
-
-
   const onClickHandler = () => {
     signOut();
   };
 
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
   return (
     <Popover>
       <PopoverTrigger>{children}</PopoverTrigger>
-      <PopoverContent align="end">
+      <PopoverContent align={isDesktop ? "center" : "end"}>
         <div className="flex flex-col">
           <div className="flex flex-row items-center gap-2">
             <UserAvatar userImage={currentUser?.image} className="h-14 w-14" />
