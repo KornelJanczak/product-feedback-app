@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
+import Nav from "@/components/nav/navbar";
 
 async function getFeedbackSection(currentUserId: string, sectionId: string) {
   try {
@@ -59,5 +60,14 @@ export default async function SectionPage({
 
   const feedbackSection = await getFeedbackSection(currentUser.id, sectionId);
 
-  
+  return (
+    <>
+      <Nav />
+      <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
+        <section className="px-0 md:container lg:w-full lg:px-0 ">
+          
+        </section>
+      </main>
+    </>
+  );
 }
