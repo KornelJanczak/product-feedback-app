@@ -10,7 +10,7 @@ const utapi = new UTApi();
 const f = createUploadthing();
 
 export const ourFileRouter = {
-  profile: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+  profileBackground: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
     .middleware(async () => {
       const user = await getCurrentUser();
 
@@ -44,7 +44,7 @@ export const ourFileRouter = {
       return { uploadedBy: metadata.userId };
     }),
 
-  avatar: f({
+  profileAvatar: f({
     image: { maxFileSize: "4MB", maxFileCount: 1 },
   })
     .middleware(async () => {
@@ -75,7 +75,7 @@ export const ourFileRouter = {
       revalidatePath("/account");
       return { uploadedBy: metadata.userId };
     }),
-  feedbackSectionBgImage: f({
+  feedbackSectionBackgroundImage: f({
     image: { maxFileSize: "4MB", maxFileCount: 1 },
   })
     .middleware(async ({ req }) => {

@@ -1,8 +1,8 @@
 "use client";
-import XMarkIcon from "@/public/icons/x-mark";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import DeleteAlertDialog from "./delete-alert-dialog";
+import { X } from "lucide-react";
 
 export default function DeleteImageButton({
   className,
@@ -27,7 +27,7 @@ export default function DeleteImageButton({
         type="button"
         onClick={onClick}
       >
-        <XMarkIcon />
+        <X height={22} width={22} color="#fff" />
       </button>
       <DeleteAlertDialog
         alertType="deleteImage"

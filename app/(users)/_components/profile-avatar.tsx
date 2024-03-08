@@ -1,5 +1,5 @@
 import DeleteImageButton from "./delete-image-button";
-import ImageUploaderButton from "./image-uploader-button";
+import ImageUploaderButton from "../../../components/image-uploader-button";
 import { ReactNode } from "react";
 import LinkIcon from "@/public/icons/link";
 import Link from "next/link";
@@ -39,7 +39,7 @@ export default function ProfileAvatar({
             type="avatar"
           />
         )}
-        {accountView && <ImageUploaderButton type="avatar" />}
+        {/* {accountView && <ImageUploaderButton type="avatar" />} */}
       </div>
       <div className="flex justify-center items-center px-5">
         <h2 className="flex justify-center items-center text-center gap-2 text-2xl sm:text-3xl font-medium pt-2 text-dark">

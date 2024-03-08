@@ -2,9 +2,10 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import ProfileAvatar from "../_components/profile-avatar";
 import prisma from "@/lib/db";
-import ProfileBackground, {
-  ProfileBackgroundSkeleton,
-} from "../_components/background";
+// import ImageBackground, {
+//   BackgroundSkeleton,
+// } from "../../../components/image-background";
+// import { BackgroundSkeleton } from "@/components/image-background";
 import { Settings } from "./_components/settings-accordion";
 import FriendsContainer from "./_components/friends-container";
 import { Suspense } from "react";
@@ -14,6 +15,9 @@ import FriendHeader from "./_components/friend-header";
 import setAccountInformation from "../_components/set-account-information";
 import setProfileInformation from "../_components/set-profile-information";
 import NoFriendResult from "./_components/no-friend-result";
+import Background from "./_components/background";
+import getBase64 from "@/lib/getLocalBase64";
+import { ImageBackgroundSkeleton } from "@/components/image-background-skeleton";
 
 async function getUserProfile(currentUser: User) {
   try {
@@ -109,8 +113,8 @@ export default async function AccountPage({
 
   return (
     <div className="relative">
-      <Suspense fallback={<ProfileBackgroundSkeleton />}>
-        <ProfileBackground image={profile?.bgImage} viewType="accountView" />
+      <Suspense fallback={<ImageBackgroundSkeleton />}>
+        <Background image={profile?.bgImage} />
       </Suspense>
       <ProfileAvatar
         username={userName}

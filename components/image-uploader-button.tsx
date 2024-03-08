@@ -1,37 +1,50 @@
 "use client";
 import { useDropzone } from "@uploadthing/react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
-import { useCallback } from "react";
-import PictureIcon from "@/public/icons/picture";
-import CameraIcon from "@/public/icons/camera";
+import { ReactNode, useCallback } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
+interface IImageUploaderButton {
+  actionType:
+    | "profileBackground"
+    | "profileAvatar"
+    | "feedbackSectionBackgroundImage";
+  className?: string;
+  children: ReactNode;
+  successToast: string;
+  errorToast: string;
+}
 export default function ImageUploaderButton({
-  type,
-}: {
-  type: "profile" | "avatar";
-}) {
+  actionType,
+  className,
+  children,
+  successToast,
+  errorToast,
+}: IImageUploaderButton) {
   const toastID = "uploadToast";
 
-  const { startUpload, permittedFileInfo } = useUploadThing(type, {
+  const { startUpload, permittedFileInfo } = useUploadThing(actionType, {
     onClientUploadComplete: () => {
       toast.dismiss(toastID);
-      toast.success(`We uploaded your ${type} image!`);
+      toast.success(successToast);
     },
     onUploadError: () => {
       toast.dismiss(toastID);
-      toast.error(`Uploading your ${type} image failed!`);
+      toast.error(errorToast);
     },
     onUploadBegin: () => {
       toast.loading("Uploading...", { id: toastID });
     },
   });
+
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      console.log(acceptedFiles);
-
+      // const newFile = {
+      //   ...acceptedFiles,
+      //   a: "",
+      // };
       startUpload(acceptedFiles);
     },
     [startUpload]
@@ -46,10 +59,10 @@ export default function ImageUploaderButton({
     accept: fileTypes ? generateClientDropzoneAccept(fileTypes) : undefined,
   });
 
-  const absoluteSpace =
-    type === "profile"
-      ? "rounded right-4 bottom-4"
-      : "rounded-full right-3 bottom-2";
+  // const absoluteSpace =
+  //   type === "profile"
+  //     ? "rounded right-4 bottom-4"
+  //     : "rounded-full right-3 bottom-2";
 
   return (
     <div {...getRootProps()}>
@@ -57,11 +70,10 @@ export default function ImageUploaderButton({
       <button
         className={cn(
           `absolute z-10 bg-pink p-1.5 hover:cursor-pointer`,
-          absoluteSpace
+          className
         )}
       >
-        {type === "profile" && <PictureIcon />}
-        {type === "avatar" && <CameraIcon />}
+        {children}
       </button>
     </div>
   );

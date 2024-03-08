@@ -7,7 +7,7 @@ import _ from "lodash";
 import { redirect } from "next/navigation";
 import ProfileBackground, {
   ProfileBackgroundSkeleton,
-} from "../_components/background";
+} from "../../../components/image-background";
 import ProfileAvatar from "../_components/profile-avatar";
 import ActionButton from "../_components/action-button";
 import setProfileInformation from "../_components/set-profile-information";
