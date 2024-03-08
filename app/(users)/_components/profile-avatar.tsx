@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import LinkIcon from "@/public/icons/link";
 import Link from "next/link";
 import UserAvatar from "@/components/user-avatar";
+import { Camera } from "lucide-react";
 
 export default function ProfileAvatar({
   username,
@@ -39,7 +40,16 @@ export default function ProfileAvatar({
             type="avatar"
           />
         )}
-        {/* {accountView && <ImageUploaderButton type="avatar" />} */}
+        {accountView && (
+          <ImageUploaderButton
+            actionType="profileAvatar"
+            successToast="We uploaded your avatar image!"
+            errorToast="Uploading your avatar image failed!"
+            className="rounded-full right-3 bottom-2"
+          >
+            <Camera width={22} height={22} color="#fff" />
+          </ImageUploaderButton>
+        )}
       </div>
       <div className="flex justify-center items-center px-5">
         <h2 className="flex justify-center items-center text-center gap-2 text-2xl sm:text-3xl font-medium pt-2 text-dark">

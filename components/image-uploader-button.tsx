@@ -59,11 +59,6 @@ export default function ImageUploaderButton({
     accept: fileTypes ? generateClientDropzoneAccept(fileTypes) : undefined,
   });
 
-  // const absoluteSpace =
-  //   type === "profile"
-  //     ? "rounded right-4 bottom-4"
-  //     : "rounded-full right-3 bottom-2";
-
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} className="hidden" multiple={false} />

@@ -9,7 +9,7 @@ export const deleteUserFriend = action(userActionSchema, async ({ userId }) => {
   try {
     const currenUser = await getCurrentUser();
 
-    if (!currenUser) return { error: "Unauthorizated!" };
+    if (!currenUser) throw new Error("Unauthorizated!");
 
     const deletedUserFriend = await prisma.friend.delete({
       where: {
@@ -30,7 +30,7 @@ export const deleteUserFriend = action(userActionSchema, async ({ userId }) => {
     });
 
     if (!deletedUserFriend || !delatedRelation)
-      return { error: "User deletion failed!" };
+      throw new Error("Deleting user failed!");
 
     revalidateFriends();
     return { success: { deletedUserFriend, delatedRelation } };

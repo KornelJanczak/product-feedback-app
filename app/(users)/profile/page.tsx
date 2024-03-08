@@ -5,14 +5,13 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import Link from "next/link";
 import _ from "lodash";
 import { redirect } from "next/navigation";
-import ProfileBackground, {
-  ProfileBackgroundSkeleton,
-} from "../../../components/image-background";
 import ProfileAvatar from "../_components/profile-avatar";
 import ActionButton from "../_components/action-button";
 import setProfileInformation from "../_components/set-profile-information";
 import MainInformation from "./_components/main-information";
 import { Suspense } from "react";
+import Background from "./_components/background";
+import { ImageBackgroundSkeleton } from "@/components/image-background-skeleton";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
   try {
@@ -145,8 +144,8 @@ export default async function ProfilePage({
 
     return (
       <div className="relative">
-        <Suspense fallback={<ProfileBackgroundSkeleton />}>
-          <ProfileBackground image={profile?.bgImage} viewType="profileView" />
+        <Suspense fallback={<ImageBackgroundSkeleton />}>
+          <Background image={profile?.bgImage} />
         </Suspense>
         <ProfileAvatar
           username={userName}

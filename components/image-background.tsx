@@ -4,8 +4,8 @@ import Image from "next/image";
 interface IImageBackground {
   image?: string | null;
   image64?: string | null;
-  buttonsWithImage: ReactNode;
-  buttonsWithoutImage: ReactNode;
+  buttonsWithImage?: ReactNode;
+  buttonsWithoutImage?: ReactNode;
 }
 
 export default function ImageBackground({

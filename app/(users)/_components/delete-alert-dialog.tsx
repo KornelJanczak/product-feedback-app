@@ -38,48 +38,36 @@ export default function DeleteAlertDialog({
   const toastId = "loadingToast";
 
   // Delete friend aciton handler
-  const { status: deleteFriendStatus, execute: deleteFriendExecute } =
-    useAction(deleteUserFriend, {
-      onSuccess(data) {
-        toast.dismiss(toastId);
-        if (data.error) {
-          toast.error("Delete user failed!", { duration: 3000 });
-        } else {
-          toast.success(`We deleted your ${userName} from your friends!`, {
-            duration: 3000,
-          });
-        }
-      },
-      onError() {
-        toast.error("Friend deleting failed!");
-      },
-    });
+  const { execute: deleteFriendExecute } = useAction(deleteUserFriend, {
+    onSuccess() {
+      toast.dismiss(toastId);
+      toast.success(`We deleted your ${userName} from your friends!`);
+    },
+    onError() {
+      toast.dismiss(toastId);
+      toast.error("Friend deleting failed!");
+    },
+    onExecute() {
+      toast.loading("Deleting...", { id: toastId });
+    },
+  });
 
   // Delete image action handler
-  const { status: deleteImageStatus, execute: deleteImageExecute } = useAction(
-    deleteImage,
-    {
-      onSuccess(data) {
-        toast.dismiss(toastId);
-        if (data.error) {
-          toast.error(data.error, { duration: 3000 });
-        } else {
-          toast.success(`We deleted your ${imageType} image!`, {
-            duration: 3000,
-          });
-        }
-      },
-      onError() {
-        toast.error("Image deleting failed!");
-      },
-    }
-  );
-
-  //Loading toast execute
-  useEffect(() => {
-    if (deleteImageStatus === "executing" || deleteFriendStatus === "executing")
-      toast.loading("Loading...", { id: toastId });
-  }, [deleteFriendStatus, deleteImageStatus]);
+  const { execute: deleteImageExecute } = useAction(deleteImage, {
+    onSuccess() {
+      toast.dismiss(toastId);
+      toast.success(`We deleted your ${imageType} image!`, {
+        duration: 3000,
+      });
+    },
+    onError() {
+      toast.dismiss(toastId);
+      toast.error("Image deleting failed!");
+    },
+    onExecute() {
+      toast.loading("Deleting...", { id: toastId });
+    },
+  });
 
   //Action handler
   const deleteHandler = () => {
