@@ -37,6 +37,8 @@ model User{
 model FeedbackSection{
   id String @id @default(cuid())
   title String?
+  bgImage String?
+  bgImageKey String?
   members UserToFeedbackSection[]
   admins   AdminToFeedbackSection[]
   suggestions SuggestionsToFeedbackSection[]

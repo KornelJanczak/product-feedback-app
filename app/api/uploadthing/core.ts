@@ -75,6 +75,17 @@ export const ourFileRouter = {
       revalidatePath("/account");
       return { uploadedBy: metadata.userId };
     }),
+  feedbackSectionBgImage: f({
+    image: { maxFileSize: "4MB", maxFileCount: 1 },
+  })
+    .middleware(async ({ req }) => {
+      const user = await getCurrentUser();
+
+      if (!user) throw new UploadThingError("Unauthorized");
+
+      return {};
+    })
+    .onUploadComplete(async ({ metadata, file }) => {}),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
