@@ -11,7 +11,7 @@ export default async function getUserFriends(
           friendOfId: currentUser.id,
         },
       },
-      userName: userName || undefined,
+      userName: { contains: userName ? userName : undefined },
     },
   });
 

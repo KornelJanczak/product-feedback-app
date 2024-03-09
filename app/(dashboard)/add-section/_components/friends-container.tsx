@@ -1,7 +1,7 @@
 "use client";
 import UserAvatar from "@/components/user-avatar";
 import useSelectFriend from "@/hooks/use-selected-friends";
-import XMarkIcon from "@/public/icons/x-mark";
+import { X } from "lucide-react";
 
 export default function FriendsContainer() {
   const selectedFriends = useSelectFriend((state) => state.selectedFriends);
@@ -21,7 +21,7 @@ export default function FriendsContainer() {
               deleteFriend(id);
             }}
           >
-            <XMarkIcon height={22} width={22} stroke="#AD1EFA" />
+            <X height={22} width={22} color="#AD1EFA" />
           </button>
         </div>
       ))}

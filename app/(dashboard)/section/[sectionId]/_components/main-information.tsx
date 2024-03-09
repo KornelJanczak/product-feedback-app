@@ -16,7 +16,7 @@ interface IHeader {
   admins: { user: IUser | null }[];
 }
 
-export default function Header({ title, members, admins }: IHeader) {
+export default function MainInformation({ title, members, admins }: IHeader) {
   const sectionUsers = [...members, ...admins];
 
   return (
@@ -28,7 +28,7 @@ export default function Header({ title, members, admins }: IHeader) {
         <div className="flex gap-x-1">
           <UsersIcon width={20} height={20} color="#3A4374" />
           <h3 className="text-grey text-base sm:text-lg md:text-xl">
-            Members: 0
+            Members: {sectionUsers.length}
           </h3>
         </div>
         <div className="flex flex-row pt-2">

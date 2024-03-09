@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import Nav from "@/components/nav/navbar";
 import Background from "./_components/background";
 import NoResult from "@/components/no-result";
-import Header from "./_components/header";
+import MainInformation from "./_components/main-information";
+import AddUsers from "./_components/add-users";
 
 async function getFeedbackSection(currentUserId: string, sectionId: string) {
   try {
@@ -109,11 +110,14 @@ export default async function FeedbackSectionPage({
               sectionTitle={feedbackSection.title}
               currentUserIsAdmin={currentUserIsAdmin}
             />
-            <Header
+            <MainInformation
               title={feedbackSection.title}
               admins={feedbackSection.admins}
               members={feedbackSection.members}
             />
+            <div className="px-5 py-5">
+              <AddUsers currentUser={currentUser}/>
+            </div>
           </section>
         </main>
       </>
