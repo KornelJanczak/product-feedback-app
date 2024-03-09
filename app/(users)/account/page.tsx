@@ -2,22 +2,13 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import ProfileAvatar from "../_components/profile-avatar";
 import prisma from "@/lib/db";
-// import ImageBackground, {
-//   BackgroundSkeleton,
-// } from "../../../components/image-background";
-// import { BackgroundSkeleton } from "@/components/image-background";
 import { Settings } from "./_components/settings-accordion";
-import FriendsContainer from "./_components/friends-container";
 import { Suspense } from "react";
-import getUserFriends from "@/lib/user/get-user-friends";
-import FriendCard from "./_components/friend-card";
-import FriendHeader from "./_components/friend-header";
 import setAccountInformation from "../_components/set-account-information";
 import setProfileInformation from "../_components/set-profile-information";
-import NoFriendResult from "./_components/no-friend-result";
 import Background from "./_components/background";
-import getBase64 from "@/lib/getLocalBase64";
 import { ImageBackgroundSkeleton } from "@/components/image-background-skeleton";
+import Friends from "./_components/friends";
 
 async function getUserProfile(currentUser: User) {
   try {
@@ -52,11 +43,7 @@ async function getUserProfile(currentUser: User) {
   }
 }
 
-export default async function AccountPage({
-  searchParams,
-}: {
-  searchParams: string;
-}) {
+export default async function AccountPage() {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) redirect("/login");
@@ -97,12 +84,6 @@ export default async function AccountPage({
   const profileSettings: ProfileInformation[] =
     setProfileInformation(profileValue);
 
-  const [searchValue] = Object.values(searchParams);
-  const userFriends = await getUserFriends(currentUser, searchValue);
-  const slicedFriends = userFriends.slice(0, 9);
-
-  const userHasFriends = userFriends.length > 0;
-
   const dateOptions: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -133,31 +114,8 @@ export default async function AccountPage({
           accountSettings={accountSettings}
           profileSettings={profileSettings}
         />
-        <div
-          className={`p-5 mt-5 md:rounded lg:order-1 lg:p-4 ${
-            userFriends ? "xl:w-7/12" : "xl:w-5/12"
-          }  xl:p-2`}
-        >
-          <FriendHeader numberOfFriends={userFriends.length} />
 
-          {userHasFriends && (
-            <FriendsContainer>
-              {slicedFriends.map(
-                ({ id, userName, firstName, lastName, image }) => (
-                  <FriendCard
-                    key={id}
-                    id={id}
-                    userName={userName}
-                    firstName={firstName}
-                    lastName={lastName}
-                    image={image}
-                  />
-                )
-              )}
-            </FriendsContainer>
-          )}
-          {!userHasFriends && <NoFriendResult />}
-        </div>
+        <Friends currentUser={currentUser} />
       </div>
     </div>
   );

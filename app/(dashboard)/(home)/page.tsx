@@ -5,7 +5,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
 import Card from "./_components/card";
 import NoResult from "@/components/no-result";
-import { FeedbackSection } from "@prisma/client";
+import { Suspense } from "react";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -118,6 +118,7 @@ export default async function HomePage({
     return (
       <>
         <FilterBar />
+
         <Container>
           {feedbackSections?.map(
             ({ id, title, members, admins, suggestions }) => (

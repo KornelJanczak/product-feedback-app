@@ -41,13 +41,14 @@ export default function ImageUploaderButton({
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      // const newFile = {
-      //   ...acceptedFiles,
-      //   a: "",
-      // };
-      startUpload(acceptedFiles);
+      if (actionType === "feedbackSectionBackgroundImage") {
+        startUpload(acceptedFiles, { sectionId: "" });
+      } else if (actionType === "profileAvatar") {
+        //@ts-ignore
+        startUpload(acceptedFiles);
+      }
     },
-    [startUpload]
+    [startUpload, actionType]
   );
 
   const fileTypes = permittedFileInfo?.config

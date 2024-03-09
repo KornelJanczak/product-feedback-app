@@ -4,12 +4,14 @@ import { UploadThingError } from "uploadthing/server";
 import prisma from "@/lib/db";
 import { UTApi } from "uploadthing/server";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 const utapi = new UTApi();
 
 const f = createUploadthing();
 
 export const ourFileRouter = {
+  // Uploading profile background image
   profileBackground: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
     .middleware(async () => {
       const user = await getCurrentUser();
@@ -44,6 +46,7 @@ export const ourFileRouter = {
       return { uploadedBy: metadata.userId };
     }),
 
+  // Uploading profile avatar image
   profileAvatar: f({
     image: { maxFileSize: "4MB", maxFileCount: 1 },
   })
@@ -75,17 +78,47 @@ export const ourFileRouter = {
       revalidatePath("/account");
       return { uploadedBy: metadata.userId };
     }),
+
+  // Uploading feedback section image
   feedbackSectionBackgroundImage: f({
     image: { maxFileSize: "4MB", maxFileCount: 1 },
   })
-    .middleware(async ({ req }) => {
+    .input(z.object({ sectionId: z.string() }))
+    .middleware(async ({ input }) => {
       const user = await getCurrentUser();
 
-      if (!user) throw new UploadThingError("Unauthorized");
+      if (!user || !input.sectionId) throw new UploadThingError("Unauthorized");
 
-      return {};
+      const feedbackSection = await prisma.feedbackSection.findUnique({
+        where: {
+          id: input.sectionId,
+        },
+      });
+
+      if (!feedbackSection)
+        throw new UploadThingError("There is no feedback section!");
+
+      return {
+        userId: user.id,
+        sectionId: feedbackSection.id,
+        imageKey: feedbackSection.bgImageKey,
+      };
     })
-    .onUploadComplete(async ({ metadata, file }) => {}),
+    .onUploadComplete(async ({ metadata, file }) => {
+      if (metadata.imageKey) await utapi.deleteFiles(metadata.imageKey);
+
+      const updatedSection = await prisma.feedbackSection.update({
+        where: {
+          id: metadata.sectionId,
+        },
+        data: {
+          bgImage: file.url,
+          bgImageKey: file.key,
+        },
+      });
+
+      return { uploadedBy: metadata.userId, updatedSection: updatedSection.id };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

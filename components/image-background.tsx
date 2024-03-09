@@ -1,9 +1,11 @@
 import React, { ReactNode } from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface IImageBackground {
   image?: string | null;
   image64?: string | null;
+  className?: string;
   buttonsWithImage?: ReactNode;
   buttonsWithoutImage?: ReactNode;
 }
@@ -13,16 +15,27 @@ export default function ImageBackground({
   image64,
   buttonsWithImage,
   buttonsWithoutImage,
+  className,
 }: IImageBackground) {
   if (!image)
     return (
-      <div className="relative w-full bg-dark h-56 sm:h-72 lg:h-80 md:rounded-lg">
+      <div
+        className={cn(
+          "relative w-full bg-dark h-56 sm:h-72 lg:h-80 md:rounded-lg",
+          className
+        )}
+      >
         {buttonsWithoutImage}
       </div>
     );
   else if (image) {
     return (
-      <div className="relative w-full h-56 sm:h-72 lg:h-80 md:rounded-lg">
+      <div
+        className={cn(
+          "relative w-full h-56 sm:h-72 lg:h-80 md:rounded-lg",
+          className
+        )}
+      >
         <Image
           alt="user-background-image"
           src={image}

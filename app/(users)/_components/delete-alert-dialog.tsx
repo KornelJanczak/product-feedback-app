@@ -13,7 +13,6 @@ import { useAction } from "next-safe-action/hooks";
 import { deleteUserFriend } from "@/server-actions/user/delete-user-friend";
 import { deleteImage } from "@/server-actions/user/delete-image";
 import { toast } from "sonner";
-import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface IDeleteAlertDialog {

@@ -1,7 +1,11 @@
 import Card from "./card";
 import Wrapper from "./wrapper";
 import NoResult from "@/components/no-result";
-export default function Container({ users }: { users: IFriendOfButton[] }) {
+export default async function Container({
+  users,
+}: {
+  users: IFriendOfButton[];
+}) {
   if (users.length > 0)
     return (
       <Wrapper>
@@ -14,7 +18,7 @@ export default function Container({ users }: { users: IFriendOfButton[] }) {
             userFriend,
             lastName,
             firstName,
-            image
+            image,
           }) => (
             <Card
               key={id}
