@@ -15,6 +15,7 @@ interface IImageUploaderButton {
   children: ReactNode;
   successToast: string;
   errorToast: string;
+  inputValue?: string;
 }
 export default function ImageUploaderButton({
   actionType,
@@ -22,6 +23,7 @@ export default function ImageUploaderButton({
   children,
   successToast,
   errorToast,
+  inputValue,
 }: IImageUploaderButton) {
   const toastID = "uploadToast";
 
@@ -41,14 +43,18 @@ export default function ImageUploaderButton({
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      if (actionType === "feedbackSectionBackgroundImage") {
-        startUpload(acceptedFiles, { sectionId: "" });
+      
+      console.log(inputValue);
+      
+      if (actionType === "feedbackSectionBackgroundImage" && inputValue) {
+        console.log("chuj");
+        startUpload(acceptedFiles, { sectionId: inputValue });
       } else if (actionType === "profileAvatar") {
         //@ts-ignore
         startUpload(acceptedFiles);
       }
     },
-    [startUpload, actionType]
+    [startUpload, actionType, inputValue]
   );
 
   const fileTypes = permittedFileInfo?.config

@@ -71,7 +71,7 @@ async function getFeedbackSection(currentUserId: string, sectionId: string) {
   }
 }
 
-export default async function SectionPage({
+export default async function FeedbackSectionPage({
   params,
 }: {
   params: { sectionId: string };
@@ -84,21 +84,31 @@ export default async function SectionPage({
 
   const feedbackSection = await getFeedbackSection(currentUser.id, sectionId);
 
-  if (!feedbackSection)
+  if (!feedbackSection) {
     return (
       <NoResult
         title="We can't find this section!"
         description="If you wan't manage your product with friends, create your own section!"
       />
     );
+  }
 
-  if (feedbackSection)
+  if (feedbackSection) {
+    const currentUserIsAdmin = feedbackSection.admins.some(
+      ({ user }) => user.id === currentUser.id
+    );
+
     return (
       <>
         <Nav />
         <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
           <section className="px-0 md:container lg:w-full lg:px-0 ">
-            <Background image={feedbackSection?.bgImage} />
+            <Background
+              image={feedbackSection?.bgImage}
+              sectionId={sectionId}
+              sectionTitle={feedbackSection.title}
+              currentUserIsAdmin={currentUserIsAdmin}
+            />
             <Header
               title={feedbackSection.title}
               admins={feedbackSection.admins}
@@ -108,4 +118,5 @@ export default async function SectionPage({
         </main>
       </>
     );
+  }
 }

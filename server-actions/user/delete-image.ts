@@ -28,7 +28,9 @@ export const deleteImage = action(deleteImageSchema, async ({ imageType }) => {
       });
 
       if (prismaQuery.imageKey) await utapi.deleteFiles(prismaQuery.imageKey);
-    } else {
+    }
+
+    if (imageType === "profile") {
       prismaQuery = await prisma.profile.update({
         where: {
           userId: currentUser.id,
@@ -42,6 +44,8 @@ export const deleteImage = action(deleteImageSchema, async ({ imageType }) => {
       if (prismaQuery.bgImageKey)
         await utapi.deleteFiles(prismaQuery.bgImageKey);
     }
+
+
 
     if (!prismaQuery) return { error: "Deleting the photo failed!" };
 

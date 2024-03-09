@@ -20,3 +20,7 @@ export const deleteFeedbackSectionSchema = z.object({
 export const leaveFromSectionSchema = z.object({
   ...basicProductSchema,
 });
+
+export const deleteFeedbackSectionBgImgSchema = z.object({
+  sectionId: z.string(),
+});
