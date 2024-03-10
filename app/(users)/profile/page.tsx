@@ -11,7 +11,7 @@ import setProfileInformation from "../_components/set-profile-information";
 import MainInformation from "./_components/main-information";
 import { Suspense } from "react";
 import Background from "./_components/background";
-import { ImageBackgroundSkeleton } from "@/components/image-background-skeleton";
+import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
 
 async function getUserProfile(profileUserId: string, currentUserId: string) {
   try {

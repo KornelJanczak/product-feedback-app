@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { createFeedbackSectionReturn } from "@/models/@product-actions-types";
-import UserAvatar from "@/components/user-avatar";
+import UserAvatar from "@/components/user/user-avatar";
 import useSelectFriend from "@/hooks/use-selected-friends";
 
 interface IFormComboBox {

@@ -25,8 +25,8 @@ export default function AddUsersDrawer({ children }: { children: ReactNode }) {
       </DrawerTrigger>
       <DrawerContent className="h-5/6 bg-darkWhite">
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          {/* <DrawerTitle>Are you absolutely sure?</DrawerTitle> */}
+          {children}
         </DrawerHeader>
         <DrawerFooter>
           <Button>Submit</Button>

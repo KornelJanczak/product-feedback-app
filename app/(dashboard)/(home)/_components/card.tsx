@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import UserAvatar from "@/components/user-avatar";
+import UserAvatar from "@/components/user/user-avatar";
 import SuggestionIcon from "@/public/icons/suggestion";
 import CardSettings from "./card-settings";
 import { useRouter } from "next/navigation";

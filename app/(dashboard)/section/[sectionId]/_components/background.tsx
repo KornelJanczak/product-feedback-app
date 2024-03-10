@@ -1,5 +1,5 @@
-import ImageBackground from "@/components/image-background";
-import ImageUploaderButton from "@/components/image-uploader-button";
+import ImageBackground from "@/components/image-uploading/image-background";
+import ImageUploaderButton from "@/components/image-uploading/image-uploader-button";
 import getBase64 from "@/lib/getLocalBase64";
 import { ImagePlus } from "lucide-react";
 import DeleteBackgroundImageAlert from "./delete-background-image-alert";

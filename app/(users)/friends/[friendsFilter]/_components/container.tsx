@@ -1,6 +1,7 @@
-import Card from "./card";
+import UserCard from "@/components/user/user-card";
 import Wrapper from "./wrapper";
 import NoResult from "@/components/no-result";
+import ActionButton from "@/app/(users)/_components/action-button";
 export default async function Container({
   users,
 }: {
@@ -20,16 +21,22 @@ export default async function Container({
             firstName,
             image,
           }) => (
-            <Card
+            <UserCard
               key={id}
-              userName={userName}
               id={id}
+              userName={userName}
               lastName={lastName}
               firstName={firstName}
-              friendRequestExist={friendRequestExist}
-              existingInvitation={existingInvitation}
-              userFriend={userFriend}
               image={image}
+              actionButton={
+                <ActionButton
+                  userName={userName}
+                  userId={id}
+                  friendRequestExist={friendRequestExist}
+                  existingInvitation={existingInvitation}
+                  userFriend={userFriend}
+                />
+              }
             />
           )
         )}

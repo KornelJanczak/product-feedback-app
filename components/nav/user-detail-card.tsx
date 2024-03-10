@@ -5,14 +5,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ReactNode } from "react";
-import UserAvatar from "../user-avatar";
+import UserAvatar from "../user/user-avatar";
 import { Settings, LogOutIcon } from "lucide-react";
 
 import SidebarItem from "./sidebar-item";
 import { signOut } from "next-auth/react";
 import { useMediaQuery } from "usehooks-ts";
 
-export default function UserCard({
+export default function UserDetailCard({
   children,
   currentUser,
 }: {

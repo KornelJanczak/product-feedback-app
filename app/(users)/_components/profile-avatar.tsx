@@ -1,9 +1,9 @@
 import DeleteImageButton from "./delete-image-button";
-import ImageUploaderButton from "../../../components/image-uploader-button";
+import ImageUploaderButton from "../../../components/image-uploading/image-uploader-button";
 import { ReactNode } from "react";
 import LinkIcon from "@/public/icons/link";
 import Link from "next/link";
-import UserAvatar from "@/components/user-avatar";
+import UserAvatar from "@/components/user/user-avatar";
 import { Camera } from "lucide-react";
 
 export default function ProfileAvatar({

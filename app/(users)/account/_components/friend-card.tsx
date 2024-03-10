@@ -1,4 +1,4 @@
-import UserAvatar from "@/components/user-avatar";
+import UserAvatar from "@/components/user/user-avatar";
 import Link from "next/link";
 
 export default function FriendCard({

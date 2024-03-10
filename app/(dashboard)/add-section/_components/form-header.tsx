@@ -1,5 +1,5 @@
 import PlusGradientIcon from "@/public/icons/plus-gradient";
-import UserAvatar from "@/components/user-avatar";
+import UserAvatar from "@/components/user/user-avatar";
 
 export default function FormHeader({
   userImage,

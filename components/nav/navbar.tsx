@@ -1,9 +1,8 @@
 "use client";
-import ResponsiveImage from "@/components/responsive-image";
 import MobileSidebar from "./mobile-sidebar";
 import SidebarRoutes from "./sidebar-routes";
-import UserAvatar from "../user-avatar";
-import UserCard from "./user-card";
+import UserAvatar from "../user/user-avatar";
+import UserDetailCard from "./user-detail-card";
 import { useSession } from "next-auth/react";
 import NavBarBackground from "./navbar-background";
 
@@ -30,12 +29,12 @@ export default function Nav() {
         lg:items-center lg:h-32 lg:w-full
         "
       >
-        <UserCard currentUser={currentUser}>
+        <UserDetailCard currentUser={currentUser}>
           <UserAvatar
             className="h-16 w-16 lg:m-auto"
             userImage={currentUser?.image}
           />
-        </UserCard>
+        </UserDetailCard>
         <SidebarRoutes />
       </div>
     </header>

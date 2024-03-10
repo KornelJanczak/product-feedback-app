@@ -1,4 +1,4 @@
-import ImageBackground from "@/components/image-background";
+import ImageBackground from "@/components/image-uploading/image-background";
 import getBase64 from "@/lib/getLocalBase64";
 
 export default async function Background({ image }: { image?: string | null }) {

@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import IconHamburger from "@/public/icons/icon-hamburger";
 import SidebarRoutes from "./sidebar-routes";
 import { useSession } from "next-auth/react";
-import UserAvatar from "../user-avatar";
+import UserAvatar from "../user/user-avatar";
 import { Settings, LogOut } from "lucide-react";
 import SidebarItem from "./sidebar-item";
 

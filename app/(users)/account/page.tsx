@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import setAccountInformation from "../_components/set-account-information";
 import setProfileInformation from "../_components/set-profile-information";
 import Background from "./_components/background";
-import { ImageBackgroundSkeleton } from "@/components/image-background-skeleton";
+import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
 import Friends from "./_components/friends";
 
 async function getUserProfile(currentUser: User) {

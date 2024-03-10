@@ -1,5 +1,5 @@
 "use client";
-import UserAvatar from "@/components/user-avatar";
+import UserAvatar from "@/components/user/user-avatar";
 import useSelectFriend from "@/hooks/use-selected-friends";
 import { X } from "lucide-react";
 
