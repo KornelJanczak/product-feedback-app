@@ -27,6 +27,7 @@ export default async function Container({
               userName={userName}
               lastName={lastName}
               firstName={firstName}
+              contentBoxClassName="sm:items-center"
               image={image}
               actionButton={
                 <ActionButton

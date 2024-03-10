@@ -6,11 +6,7 @@ import AdminActionButton from "./admin-action-button";
 import { useState } from "react";
 import SearchInput from "@/components/search-input";
 
-export default function AddUsersContainer({
-  friends,
-}: {
-  friends: IFriend[];
-}) {
+export default function AddUsersContainer({ friends }: { friends: IFriend[] }) {
   const [searchValue, setSearchValue] = useState<string>("");
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +30,8 @@ export default function AddUsersContainer({
             lastName={lastName}
             firstName={firstName}
             image={image}
-            avatarClassName="h-20 w-20"
+            className="sm:flex-row"
+            avatarClassName="h-20 w-20 sm:h-24 sm:w-24"
             actionButton={<AdminActionButton />}
           />
         ))}

@@ -13,7 +13,7 @@ export default function SearchInput({
   inputRef,
 }: ISearchInput) {
   return (
-    <div className={cn("px-4 pb-5", className)}>
+    <div className={cn("px-4 pb-5 sm:pb-0", className)}>
       <div className="flex items-center gap-1 w-full border-[#cdd2ee] border-2 rounded-lg px-2 py-1.5">
         <Search width={22} height={22} color="#cdd2ee" />
         <input

@@ -10,7 +10,9 @@ interface IUserCard {
   firstName?: string | null;
   lastName?: string | null;
   userName: string;
+  className?: string;
   avatarClassName?: string;
+  contentBoxClassName?: string;
 }
 
 export default function UserCard({
@@ -21,11 +23,15 @@ export default function UserCard({
   userName,
   avatarClassName,
   id,
+  className,
+  contentBoxClassName,
 }: IUserCard) {
   return (
     <li
-      className="flex  flex-row items-center justify-between w-full bg-basicWhite p-4 
-    gap-x-4 sm:flex-col sm:gap-x-2 sm:p-4"
+      className={cn(
+        "flex flex-row items-center justify-between w-full bg-basicWhite p-4 gap-x-4 sm:flex-col sm:gap-x-2 sm:p-4",
+        className
+      )}
     >
       <Link href={`/profile?id=${id}`}>
         <UserAvatar
@@ -36,13 +42,16 @@ export default function UserCard({
           )}
         />
       </Link>
-      <div className="flex flex-col w-full justify-center sm:items-center">
-        <h3 className="text-dark font-medium text-lg sm:text-xl md:text-2xl mr-auto sm:text-center sm:mr-0">
+      <div
+        className={cn(
+          "flex flex-col w-full justify-center",
+          contentBoxClassName
+        )}
+      >
+        <h3 className="text-dark font-medium text-lg sm:text-xl">
           {firstName} {lastName}
         </h3>
-        <span className="text-grey text-sm sm:text-base md:text-center">
-          @{userName}
-        </span>
+        <span className="text-grey text-sm sm:text-base">@{userName}</span>
         {actionButton}
       </div>
     </li>

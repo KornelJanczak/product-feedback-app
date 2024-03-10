@@ -1,4 +1,3 @@
-"use client";
 import {
   Drawer,
   DrawerClose,
@@ -22,7 +21,7 @@ export default function AddUsersDrawer({ children }: { children: ReactNode }) {
       </DrawerTrigger>
       <DrawerContent className="h-5/6 bg-darkWhite">
         {children}
-        <Separator />
+
         <DrawerClose className="pb-4 pt-5 px-4">
           <Button className="w-full bg-dark text-darkWhite" variant="outline">
             Cancel
