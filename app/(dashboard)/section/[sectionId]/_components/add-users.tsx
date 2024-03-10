@@ -3,16 +3,30 @@ import AddUsersDrawer from "./add-users-drawer";
 import AddUsersContainer from "./add-users-container";
 import AddUsersDialog from "./add-users-dialog";
 
-export default async function AddUsers({ currentUser }: { currentUser: User }) {
+interface IAddUsers {
+  currentUser: User;
+  sectionUsers: { user: IFeedbackSectionUser | null }[];
+}
+
+export default async function AddUsers({
+  currentUser,
+  sectionUsers,
+}: IAddUsers) {
   const friends = await getUserFriends(currentUser);
+
+  const sectionUsersIds = sectionUsers.map(({ user }) => user?.id);
+
+  const friendsWithoutSectionUsers = friends.filter(
+    (friend) => !sectionUsersIds.includes(friend.id)
+  );
 
   return (
     <>
       <AddUsersDrawer>
-        <AddUsersContainer friends={friends} />
+        <AddUsersContainer friends={friendsWithoutSectionUsers} />
       </AddUsersDrawer>
       <AddUsersDialog>
-        <AddUsersContainer friends={friends} />
+        <AddUsersContainer friends={friendsWithoutSectionUsers} />
       </AddUsersDialog>
     </>
   );

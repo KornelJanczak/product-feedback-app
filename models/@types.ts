@@ -93,3 +93,12 @@ interface IIcon {
   width?: number;
   height?: number;
 }
+
+interface IFeedbackSectionUser {
+  image?: string | null;
+  id: string;
+  userName: string;
+  lastName?: string | null;
+  firstName?: string | null;
+  email?: string | null;
+}

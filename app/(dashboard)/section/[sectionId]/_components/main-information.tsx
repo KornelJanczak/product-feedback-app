@@ -1,24 +1,12 @@
 import UserAvatar from "@/components/user/user-avatar";
 import { UsersIcon } from "lucide-react";
 
-interface IUser {
-  image?: string | null;
-  id: string;
-  userName: string;
-  lastName?: string | null;
-  firstName?: string | null;
-  email?: string | null;
-}
-
 interface IHeader {
   title?: string | null;
-  members: { user: IUser | null }[];
-  admins: { user: IUser | null }[];
+  sectionUsers: { user: IFeedbackSectionUser | null }[];
 }
 
-export default function MainInformation({ title, members, admins }: IHeader) {
-  const sectionUsers = [...members, ...admins];
-
+export default function MainInformation({ title, sectionUsers }: IHeader) {
   return (
     <div>
       <h1 className="text-bold text-secondDark text-2xl sm:text-3xl md:text-4xl px-5 py-2">

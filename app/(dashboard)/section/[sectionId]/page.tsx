@@ -99,6 +99,11 @@ export default async function FeedbackSectionPage({
       ({ user }) => user.id === currentUser.id
     );
 
+    const sectionUsers = [
+      ...feedbackSection.members,
+      ...feedbackSection.admins,
+    ];
+
     return (
       <>
         <Nav />
@@ -112,11 +117,10 @@ export default async function FeedbackSectionPage({
             />
             <MainInformation
               title={feedbackSection.title}
-              admins={feedbackSection.admins}
-              members={feedbackSection.members}
+              sectionUsers={sectionUsers}
             />
             <div className="px-5 py-5">
-              <AddUsers currentUser={currentUser} />
+              <AddUsers currentUser={currentUser} sectionUsers={sectionUsers} />
             </div>
           </section>
         </main>
