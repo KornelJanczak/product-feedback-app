@@ -1,6 +1,7 @@
 import Link from "next/link";
 import UserAvatar from "./user-avatar";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface IUserCard {
   actionButton: ReactNode;
@@ -9,6 +10,7 @@ interface IUserCard {
   firstName?: string | null;
   lastName?: string | null;
   userName: string;
+  avatarClassName?: string;
 }
 
 export default function UserCard({
@@ -17,6 +19,7 @@ export default function UserCard({
   firstName,
   lastName,
   userName,
+  avatarClassName,
   id,
 }: IUserCard) {
   return (
@@ -27,14 +30,19 @@ export default function UserCard({
       <Link href={`/profile?id=${id}`}>
         <UserAvatar
           userImage={image}
-          className="w-28 h-28 z-0 hover:opacity-70 hover:transition-all duration-300"
+          className={cn(
+            "w-28 h-28 z-0 hover:opacity-70 hover:transition-all duration-300",
+            avatarClassName
+          )}
         />
       </Link>
       <div className="flex flex-col w-full justify-center sm:items-center">
-        <h3 className="text-dark font-medium text-xl mr-auto sm:text-center sm:mr-0">
+        <h3 className="text-dark font-medium text-lg sm:text-xl md:text-2xl mr-auto sm:text-center sm:mr-0">
           {firstName} {lastName}
         </h3>
-        <span className="text-grey sm:text-center ">@{userName}</span>
+        <span className="text-grey text-sm sm:text-base mr-auto">
+          @{userName}
+        </span>
         {actionButton}
       </div>
     </li>

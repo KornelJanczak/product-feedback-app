@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { UserPlus2Icon } from "lucide-react";
 import { ReactNode } from "react";
+import { Separator } from "@/components/ui/separator";
 
 export default function AddUsersDrawer({ children }: { children: ReactNode }) {
   return (
@@ -24,16 +25,21 @@ export default function AddUsersDrawer({ children }: { children: ReactNode }) {
         <UserPlus2Icon width={18} height={18} color="#fff" />
       </DrawerTrigger>
       <DrawerContent className="h-5/6 bg-darkWhite">
-        <DrawerHeader>
-          {/* <DrawerTitle>Are you absolutely sure?</DrawerTitle> */}
-          {children}
-        </DrawerHeader>
-        <DrawerFooter>
+        {/* <DrawerTitle>Are you absolutely sure?</DrawerTitle> */}
+        {children}
+
+        {/* <DrawerFooter>
           <Button>Submit</Button>
           <DrawerClose>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
-        </DrawerFooter>
+        </DrawerFooter> */}
+        <Separator />
+        <DrawerClose className="py-4 px-4">
+          <Button className="w-full bg-dark text-darkWhite" variant="outline">
+            Cancel
+          </Button>
+        </DrawerClose>
       </DrawerContent>
     </Drawer>
   );

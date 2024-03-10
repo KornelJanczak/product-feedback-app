@@ -14,6 +14,7 @@ interface User {
   email: string;
   name: string;
 }
+
 interface ICurrentUser {
   id: string;
   email: string;
