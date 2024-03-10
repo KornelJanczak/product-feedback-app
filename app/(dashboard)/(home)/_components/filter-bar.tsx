@@ -48,7 +48,6 @@ export default function FilterBar({ className }: { className?: string }) {
         <SearchIcon />
       </Button>
       <FilterBarDrawer mobileInputRef={mobileInput} className="sm:hidden" />
-
       <Input
         className="hidden sm:block sm:w-7/12 lg:w-6/12 xl:w-4/12 bg-transparent border-0 focus-visible:ring-offset-0 focus-visible:ring-0
          border-darkWhite bg-darkWhite w-auto text-dark placeholder:text-dark"

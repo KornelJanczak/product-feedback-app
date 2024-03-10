@@ -116,7 +116,7 @@ export default async function FeedbackSectionPage({
               members={feedbackSection.members}
             />
             <div className="px-5 py-5">
-              <AddUsers currentUser={currentUser}/>
+              <AddUsers currentUser={currentUser} />
             </div>
           </section>
         </main>

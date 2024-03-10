@@ -31,7 +31,7 @@ export default function UserCard({
         <UserAvatar
           userImage={image}
           className={cn(
-            "w-28 h-28 z-0 hover:opacity-70 hover:transition-all duration-300",
+            "w-24 h-24 z-0 hover:opacity-70 hover:transition-all duration-300",
             avatarClassName
           )}
         />
@@ -40,7 +40,7 @@ export default function UserCard({
         <h3 className="text-dark font-medium text-lg sm:text-xl md:text-2xl mr-auto sm:text-center sm:mr-0">
           {firstName} {lastName}
         </h3>
-        <span className="text-grey text-sm sm:text-base mr-auto">
+        <span className="text-grey text-sm sm:text-base md:text-center">
           @{userName}
         </span>
         {actionButton}

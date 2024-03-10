@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
 import SearchIcon from "@/public/icons/search";
-import { Input } from "@/components/ui/input";
 import { RefObject } from "react";
+import SearchInput from "@/components/search-input";
 
 export default function FilterBarDrawer({
   className,
@@ -31,12 +31,7 @@ export default function FilterBarDrawer({
       </DrawerTrigger>
       <DrawerContent className="h-5/6 bg-darkWhite ">
         <DrawerHeader>
-          <Input
-            className="rounded-xl text-base py-5 px-3 bg-transparent border-[#CDD2EE] border-2
-         bg-darkWhite w-auto text-dark placeholder:text-dark"
-            placeholder="Search section"
-            ref={mobileInputRef}
-          />
+          <SearchInput inputRef={mobileInputRef} className="px-0 pb-0" />
         </DrawerHeader>
         <DrawerFooter>
           <DrawerClose
