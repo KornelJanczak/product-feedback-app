@@ -3,9 +3,8 @@ import FilterBar from "./_components/filter-bar";
 import Container from "./_components/container";
 import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
-import Card from "./_components/card";
 import NoResult from "@/components/no-result";
-import { Suspense } from "react";
+import SectionCard from "./_components/section-card";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -116,36 +115,29 @@ export default async function HomePage({
 
   if (isExist)
     return (
-      <>
-        <FilterBar />
-
-        <Container>
-          {feedbackSections?.map(
-            ({ id, title, members, admins, suggestions }) => (
-              <Card
-                key={id}
-                sectionId={id}
-                suggestionsNumber={suggestions.length}
-                currentUserId={currentUserId}
-                title={title as string}
-                members={members}
-                admins={admins}
-              />
-            )
-          )}
-        </Container>
-      </>
+      <Container>
+        {feedbackSections?.map(
+          ({ id, title, members, admins, suggestions }) => (
+            <SectionCard
+              key={id}
+              sectionId={id}
+              suggestionsNumber={suggestions.length}
+              currentUserId={currentUserId}
+              title={title as string}
+              members={members}
+              admins={admins}
+            />
+          )
+        )}
+      </Container>
     );
 
   if (!isExist)
     return (
-      <>
-        <FilterBar />
-        <NoResult
-          title="There is no section yet."
-          description="Have big commercial project? Create your own section and work with your team together!"
-        />
-      </>
+      <NoResult
+        title="There is no section yet."
+        description="Have big commercial project? Create your own section and work with your team together!"
+      />
     );
 }
 

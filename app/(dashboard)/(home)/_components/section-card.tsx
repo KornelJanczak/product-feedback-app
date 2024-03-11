@@ -2,8 +2,9 @@
 import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/user/user-avatar";
 import SuggestionIcon from "@/public/icons/suggestion";
-import CardSettings from "./card-settings";
+import CardSettings from "../../_components/card-settings";
 import { useRouter } from "next/navigation";
+import { Users2, ActivityIcon } from "lucide-react";
 
 type sectionUser = {
   user: {
@@ -25,7 +26,7 @@ interface ICard {
   admins: sectionUser;
 }
 
-export default function Card({
+export default function SectionCard({
   currentUserId,
   sectionId,
   suggestionsNumber,
@@ -33,6 +34,15 @@ export default function Card({
   members,
   admins,
 }: ICard) {
+  const settings = [
+    { icon: Users2, href: `/section/${sectionId}/users`, label: "Users" },
+    {
+      icon: ActivityIcon,
+      href: `/section/${sectionId}/activity`,
+      label: "Activity",
+    },
+  ];
+
   const router = useRouter();
   const currentUserIsAdmin = admins.some(
     ({ user }) => user.id === currentUserId
@@ -80,6 +90,7 @@ export default function Card({
             sectionId={sectionId}
             currentUserId={currentUserId}
             currentUserIsAdmin={currentUserIsAdmin}
+            settings={settings}
           />
           <Button
             className="px-2 pt-1 pb-1 h-auto text-sm sm:text-base bg-blue hover:bg-blue

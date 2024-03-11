@@ -33,6 +33,7 @@ export default function AddUsersContainer({ friends }: { friends: IFriend[] }) {
       <NoResult
         title="All of your friends are here in this section!"
         description="If you'd like to add someone new, you can find new friends by clicking below!"
+        className="py-4 h-full"
         button={
           <Button
             onClick={pushToFindFriends}

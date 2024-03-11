@@ -1,11 +1,14 @@
+import { ReactNode, Suspense } from "react";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import Nav from "@/components/nav/navbar";
-import Background from "./_components/background";
+import Background from "./background";
 import NoResult from "@/components/no-result";
-import MainInformation from "./_components/main-information";
-import AddUsers from "./_components/add-users";
+import MainInformation from "./main-information";
+import ActionPanel from "./action-panel";
+import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
+import SectionRoutes from "./section-routes";
 
 async function getFeedbackSection(currentUserId: string, sectionId: string) {
   try {
@@ -15,7 +18,6 @@ async function getFeedbackSection(currentUserId: string, sectionId: string) {
       where: {
         id: sectionId,
       },
-
       select: {
         activity: true,
         title: true,
@@ -48,7 +50,6 @@ async function getFeedbackSection(currentUserId: string, sectionId: string) {
             },
           },
         },
-        suggestions: true,
       },
     });
 
@@ -72,9 +73,11 @@ async function getFeedbackSection(currentUserId: string, sectionId: string) {
   }
 }
 
-export default async function FeedbackSectionPage({
+export default async function SectionLayout({
+  children,
   params,
 }: {
+  children: ReactNode;
   params: { sectionId: string };
 }) {
   const currentUser = await getCurrentUser();
@@ -109,20 +112,30 @@ export default async function FeedbackSectionPage({
         <Nav />
         <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
           <section className="px-0 md:container lg:w-full lg:px-0 ">
-            <Background
-              image={feedbackSection?.bgImage}
-              sectionId={sectionId}
-              sectionTitle={feedbackSection.title}
-              currentUserIsAdmin={currentUserIsAdmin}
-            />
+            <Suspense fallback={<ImageBackgroundSkeleton className="h-44" />}>
+              <Background
+                image={feedbackSection?.bgImage}
+                sectionId={sectionId}
+                sectionTitle={feedbackSection.title}
+                currentUserIsAdmin={currentUserIsAdmin}
+              />
+            </Suspense>
+
             <MainInformation
               title={feedbackSection.title}
               sectionUsers={sectionUsers}
             />
-            <div className="px-5 py-5">
-              <AddUsers currentUser={currentUser} sectionUsers={sectionUsers} />
-            </div>
+
+            <ActionPanel
+              currentUser={currentUser}
+              sectionUsers={sectionUsers}
+              sectionId={sectionId}
+              currentUserIsAdmin={currentUserIsAdmin}
+            />
+
+            <SectionRoutes sectionId={sectionId} />
           </section>
+          {children}
         </main>
       </>
     );
