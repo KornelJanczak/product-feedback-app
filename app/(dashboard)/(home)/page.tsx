@@ -5,6 +5,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
 import NoResult from "@/components/no-result";
 import SectionCard from "./_components/section-card";
+import { Suspense } from "react";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -112,6 +113,8 @@ export default async function HomePage({
   }
 
   const isExist = feedbackSections!.length > 0;
+
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   if (isExist)
     return (

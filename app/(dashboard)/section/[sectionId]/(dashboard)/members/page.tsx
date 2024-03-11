@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import Container from "./_components/container";
-import NoResult from "@/components/no-result";
+
 
 async function getSectionMembers(sectionId: string) {
   try {
@@ -63,6 +63,7 @@ export default async function MembersPage({
   if (!currentUser) return redirect("/login");
 
   const sectionMembers = await getSectionMembers(sectionId);
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return (
     <div className="px-5 py-2">

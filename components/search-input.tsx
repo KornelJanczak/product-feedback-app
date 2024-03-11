@@ -7,7 +7,7 @@ interface ISearchInput {
   inputRef?: React.RefObject<HTMLInputElement>;
 }
 
-export default function SearchInput({
+export default async function SearchInput({
   className,
   searchHandler,
   inputRef,
