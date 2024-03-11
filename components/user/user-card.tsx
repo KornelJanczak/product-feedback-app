@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface IUserCard {
-  actionButton: ReactNode;
+  actionButton?: ReactNode;
   image?: string | null;
   id: string;
   firstName?: string | null;

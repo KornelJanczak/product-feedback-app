@@ -15,16 +15,21 @@ import { leaveFromFeedbackSection } from "@/server-actions/product/leave-from-fe
 import { LogOutIcon, Trash2Icon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+
+interface IActionAlertDialog {
+  dialogType: "leave" | "delete";
+  currentUserId: string;
+  sectionId: string;
+  className?: string;
+}
 
 export default function ActionAlertDialog({
   dialogType,
   currentUserId,
   sectionId,
-}: {
-  dialogType: "leave" | "delete";
-  currentUserId: string;
-  sectionId: string;
-}) {
+  className,
+}: IActionAlertDialog) {
   const toastId = "loadingToast";
   const deleteType = dialogType === "delete";
   const leaveType = dialogType === "leave";
@@ -70,15 +75,13 @@ export default function ActionAlertDialog({
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger
-        className="flex rounded-lg  text-red 
-        gap-0.5"
-      >
+      <AlertDialogTrigger>
         {leaveType && (
           <div
-            className="flex items-center rounded-lg  text-grey
-            hover:text-pink transition-all duration-300
-             gap-1"
+            className={cn(
+              "flex items-center rounded-lg text-grey hover:text-pink transition-all duration-300 gap-1",
+              className
+            )}
           >
             <LogOutIcon width={16} height={16} />
             Leave
@@ -86,9 +89,10 @@ export default function ActionAlertDialog({
         )}
         {deleteType && (
           <div
-            className="flex items-center rounded-lg  text-grey
-            hover:text-pink transition-all duration-300
-            gap-1"
+            className={cn(
+              "flex items-center rounded-lg text-grey hover:text-pink transition-all duration-300 gap-1",
+              className
+            )}
           >
             <Trash2Icon width={16} height={16} />
             Delete
