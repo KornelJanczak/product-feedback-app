@@ -1,37 +1,38 @@
-"use client";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import RouteItem from "./route-item";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function SectionRoutes({ sectionId }: { sectionId: string }) {
-  const path = usePathname();
+const routes = [
+  { title: "Suggestions", href: "" },
+  { title: "Members", href: "members" },
+];
 
-  const isMembers = path.endsWith("members");
-
+export default async function SectionRoutes({
+  sectionId,
+}: {
+  sectionId: string;
+}) {
   return (
     <div className="flex flex-col px-5 pt-2">
       <Separator />
       <div className="flex gap-3 py-3">
-        <Link
-          href={`/section/${sectionId}`}
-          className={cn(
-            "text-grey font-semibold text-lg transition-all duration-300 hover:text-slate-600 ",
-            !isMembers && "text-pink hover:text-pink"
-          )}
-        >
-          Suggestions
-        </Link>
-        <Link
-          href={`/section/${sectionId}/members`}
-          className={cn(
-            "text-grey font-semibold text-lg transition-all duration-300 hover:text-slate-600",
-            isMembers && "text-pink hover:text-pink"
-          )}
-        >
-          Members
-        </Link>
+        {routes.map(({ title, href }) => (
+          <RouteItem
+            key={href}
+            href={href}
+            sectionId={sectionId}
+            title={title}
+          />
+        ))}
       </div>
     </div>
   );
 }
+
+export const SectionRoutesSkeleton = () => {
+  return (
+    <div className="flex flex-col px-5 py-2">
+      <Skeleton className="w-full bg-skeletonTheme py-3" />
+    </div>
+  );
+};

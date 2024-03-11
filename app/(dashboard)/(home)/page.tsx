@@ -114,8 +114,6 @@ export default async function HomePage({
 
   const isExist = feedbackSections!.length > 0;
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-
   if (isExist)
     return (
       <Container>

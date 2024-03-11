@@ -7,7 +7,7 @@ import NoResult from "@/components/no-result";
 import MainInformation, { MainInformationSkeleton } from "./main-information";
 import ActionPanel, { ActionPanelSkeleton } from "./action-panel";
 import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
-import SectionRoutes from "./section-routes";
+import SectionRoutes, { SectionRoutesSkeleton } from "./section-routes";
 
 async function getFeedbackSection(currentUserId: string, sectionId: string) {
   try {
@@ -137,7 +137,9 @@ export default async function SectionLayout({
             />
           </Suspense>
 
-          <SectionRoutes sectionId={sectionId} />
+          <Suspense fallback={<SectionRoutesSkeleton />}>
+            <SectionRoutes sectionId={sectionId} />
+          </Suspense>
         </section>
         <section className="md:container">{children}</section>
       </main>

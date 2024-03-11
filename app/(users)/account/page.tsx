@@ -1,11 +1,11 @@
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import ProfileAvatar from "../_components/profile-avatar";
+import ProfileAvatar, {
+  ProfileAvatarSkeleton,
+} from "../_components/profile-avatar";
 import prisma from "@/lib/db";
-import { Settings } from "./_components/settings-accordion";
+import Settings from "./_components/settings";
 import { Suspense } from "react";
-import setAccountInformation from "../_components/set-account-information";
-import setProfileInformation from "../_components/set-profile-information";
 import Background from "./_components/background";
 import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
 import Friends from "./_components/friends";
@@ -80,10 +80,6 @@ export default async function AccountPage() {
     gitHub: profile?.gitHub,
   };
 
-  const accountSettings = setAccountInformation(accountValue);
-  const profileSettings: ProfileInformation[] =
-    setProfileInformation(profileValue);
-
   const dateOptions: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -92,29 +88,31 @@ export default async function AccountPage() {
 
   const formatedDate = createDate.toLocaleDateString("en-US", dateOptions);
 
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+
   return (
     <div className="relative">
       <Suspense fallback={<ImageBackgroundSkeleton />}>
         <Background image={profile?.bgImage} />
       </Suspense>
-      <ProfileAvatar
-        username={userName}
-        image={image}
-        lastName={lastName}
-        firstName={firstName}
-        userId={id}
-        viewType="accountView"
-      >
-        <span className="text-secondDark font-semibold text-base pt-4  text-center">
-          You are with us since {formatedDate}!
-        </span>
-      </ProfileAvatar>
+      <Suspense fallback={<ProfileAvatarSkeleton />}>
+        <ProfileAvatar
+          username={userName}
+          image={image}
+          lastName={lastName}
+          firstName={firstName}
+          userId={id}
+          viewType="accountView"
+        >
+          <span className="text-secondDark font-semibold text-base pt-4  text-center">
+            You are with us since {formatedDate}!
+          </span>
+        </ProfileAvatar>
+      </Suspense>
       <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10 xl:pt-4">
-        <Settings
-          accountSettings={accountSettings}
-          profileSettings={profileSettings}
-        />
-
+        <Suspense fallback={<p>Loading...</p>}>
+          <Settings profileValue={profileValue} accountValue={accountValue} />
+        </Suspense>
         <Friends currentUser={currentUser} />
       </div>
     </div>

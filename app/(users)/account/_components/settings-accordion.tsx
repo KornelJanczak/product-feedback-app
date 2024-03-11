@@ -14,7 +14,7 @@ import { updateProfile } from "@/server-actions/user/update-profile";
 import { updateProfileSchema } from "@/schemas/@user-actions-schemas";
 import { useUserSettings } from "@/hooks/use-settings";
 
-export function Settings({
+export function SettingsAcordion({
   accountSettings,
   profileSettings,
 }: {

@@ -5,8 +5,9 @@ import LinkIcon from "@/public/icons/link";
 import Link from "next/link";
 import UserAvatar from "@/components/user/user-avatar";
 import { Camera } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function ProfileAvatar({
+export default async function ProfileAvatar({
   username,
   firstName,
   lastName,
@@ -33,7 +34,7 @@ export default function ProfileAvatar({
     items-center justify-center sm:top-40 lg:top-48"
     >
       <div className="relative">
-        <UserAvatar className="w-44 h-44 " userImage={image} />
+        <UserAvatar className="w-40 h-40" userImage={image} />
         {image && accountView && (
           <DeleteImageButton
             className="rounded-full right-0 ml-2 bottom-11"
@@ -52,7 +53,7 @@ export default function ProfileAvatar({
         )}
       </div>
       <div className="flex justify-center items-center px-5">
-        <h2 className="flex justify-center items-center text-center gap-2 text-2xl sm:text-3xl font-medium pt-2 text-dark">
+        <h2 className="flex justify-center items-center text-center gap-2 text-2xl sm:text-3xl  font-medium pt-2 text-dark">
           {accountView && <LinkIcon stroke="#AD1EFA" width={28} height={28} />}
           {accountView && (
             <Link href={`/profile?id=${userId}`}>
@@ -67,3 +68,16 @@ export default function ProfileAvatar({
     </div>
   );
 }
+
+export const ProfileAvatarSkeleton = () => {
+  return (
+    <div className="absolute top-28 w-full flex flex-col items-center justify-center sm:top-40 lg:top-48">
+      <div className="relative">
+        <Skeleton className="w-40 h-40 rounded-full" />
+      </div>
+      <div className="flex justify-center items-center px-5">
+        <Skeleton className="w-20 h-4" />
+      </div>
+    </div>
+  );
+};
