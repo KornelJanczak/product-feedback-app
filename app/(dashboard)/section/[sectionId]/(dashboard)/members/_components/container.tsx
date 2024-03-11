@@ -1,7 +1,6 @@
-import ActionAlertDialog from "@/app/(dashboard)/_components/action-alert-dialog";
+import ActionAlertDialog from "@/app/(dashboard)/_components/leave-or-delete-alert-dialog";
 import { Separator } from "@/components/ui/separator";
 import UserCard from "@/components/user/user-card";
-import AdminActionPopover from "./admin-action-popover";
 import UsersCards from "./users-cards";
 
 interface IContainer {

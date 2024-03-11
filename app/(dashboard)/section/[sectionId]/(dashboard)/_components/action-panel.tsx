@@ -1,7 +1,7 @@
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import AddUsers from "./add-users";
-import CardSettings from "@/app/(dashboard)/_components/card-settings";
+import SectionSettingsCard from "@/app/(dashboard)/_components/section-settings-card";
 import { ActivityIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -37,7 +37,7 @@ export default async function ActionPanel({
         Add feedback
       </Link>
       <AddUsers currentUser={currentUser} sectionUsers={sectionUsers} />
-      <CardSettings
+      <SectionSettingsCard
         currentUserId={currentUser.id}
         currentUserIsAdmin={currentUserIsAdmin}
         sectionId={sectionId}

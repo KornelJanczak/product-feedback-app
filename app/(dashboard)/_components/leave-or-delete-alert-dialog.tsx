@@ -16,6 +16,7 @@ import { LogOutIcon, Trash2Icon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import ActionAlertDialog from "@/components/action-alert-dialog";
 
 interface IActionAlertDialog {
   dialogType: "leave" | "delete";
@@ -24,7 +25,7 @@ interface IActionAlertDialog {
   className?: string;
 }
 
-export default function ActionAlertDialog({
+export default function LeaveOrDeleteAlertDialog({
   dialogType,
   currentUserId,
   sectionId,
@@ -74,59 +75,25 @@ export default function ActionAlertDialog({
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        {leaveType && (
-          <div
-            className={cn(
-              "flex items-center rounded-lg text-grey hover:text-pink transition-all duration-300 gap-1",
-              className
-            )}
-          >
-            <LogOutIcon width={16} height={16} />
-            Leave
-          </div>
-        )}
-        {deleteType && (
-          <div
-            className={cn(
-              "flex items-center rounded-lg text-grey hover:text-pink transition-all duration-300 gap-1",
-              className
-            )}
-          >
-            <Trash2Icon width={16} height={16} />
-            Delete
-          </div>
-        )}
-      </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-80 sm:max-w-md md:max-w-lg rounded">
-        <AlertDialogHeader>
-          <AlertDialogTitle className="text-secondDark">
-            Are you absolutely sure?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            {leaveType &&
-              "You won't be able to rejoin the section unless someone adds you back."}
-            {deleteType && "The removal of the section cannot be undone."}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel
-            className="text-darkWhite bg-secondDark hover:bg-secondDark
-            hover:text-white
-           hover:opacity-75  transition-all duration-300"
-          >
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
-            className="bg-red hover:bg-red hover:opacity-70 
-            text-darkWhite transition-all duration-300"
-            onClick={onClickHandler}
-          >
-            Continue
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <ActionAlertDialog
+      description={
+        leaveType
+          ? "You won't be able to rejoin the section unless someone adds you back."
+          : "The removal of the section cannot be undone."
+      }
+      triggerClassName={cn(
+        "flex items-center rounded-lg text-grey hover:text-pink transition-all duration-300 gap-1",
+        className
+      )}
+      triggerChildren={
+        <>
+          {leaveType && <LogOutIcon width={16} height={16} />}
+          {deleteType && <Trash2Icon width={16} height={16} />}
+          {leaveType && "Leave"}
+          {deleteType && "Delete"}
+        </>
+      }
+      onContinueHandler={onClickHandler}
+    />
   );
 }

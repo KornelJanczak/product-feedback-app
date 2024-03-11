@@ -1,6 +1,6 @@
 import UserCard from "@/components/user/user-card";
 import AdminActionPopover from "./admin-action-popover";
-import ActionAlertDialog from "@/app/(dashboard)/_components/action-alert-dialog";
+import LeaveOrDeleteAlertDialog from "@/app/(dashboard)/_components/leave-or-delete-alert-dialog";
 
 interface IUsersCards {
   sectionUsers: { user: IFeedbackSectionUser }[];
@@ -45,9 +45,11 @@ export default function UsersCards({
               )
             }
           >
-            {currentUserIsAdmin && !isCurrentUser && <AdminActionPopover />}
+            {currentUserIsAdmin && !isCurrentUser && (
+              <AdminActionPopover userName={user.userName} />
+            )}
             {isCurrentUser && (
-              <ActionAlertDialog
+              <LeaveOrDeleteAlertDialog
                 dialogType="leave"
                 sectionId={sectionId}
                 currentUserId={currentUserId}

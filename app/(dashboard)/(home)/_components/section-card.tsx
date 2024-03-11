@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/user/user-avatar";
 import SuggestionIcon from "@/public/icons/suggestion";
-import CardSettings from "../../_components/card-settings";
+import SectionSettingsCard from "../../_components/section-settings-card";
 import { useRouter } from "next/navigation";
 import { Users2, ActivityIcon } from "lucide-react";
 
@@ -86,7 +86,7 @@ export default function SectionCard({
           <SuggestionIcon fill="#3A4374" />
         </div>
         <div className="flex flex-row gap-1">
-          <CardSettings
+          <SectionSettingsCard
             sectionId={sectionId}
             currentUserId={currentUserId}
             currentUserIsAdmin={currentUserIsAdmin}

@@ -2,7 +2,6 @@ import { ReactNode, Suspense } from "react";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import Nav from "@/components/nav/navbar";
 import Background from "./background";
 import NoResult from "@/components/no-result";
 import MainInformation, { MainInformationSkeleton } from "./main-information";

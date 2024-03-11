@@ -3,7 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import ActionAlertDialog from "./action-alert-dialog";
+import LeaveOrDeleteAlertDialog from "./leave-or-delete-alert-dialog";
 import SettingsIcon from "@/public/icons/settings";
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
@@ -22,7 +22,7 @@ interface ICardSettings {
   }[];
 }
 
-export default function CardSettings({
+export default function SectionSettingsCard({
   currentUserIsAdmin,
   sectionId,
   currentUserId,
@@ -50,13 +50,13 @@ export default function CardSettings({
               {label}
             </Link>
           ))}
-          <ActionAlertDialog
+          <LeaveOrDeleteAlertDialog
             dialogType="leave"
             currentUserId={currentUserId}
             sectionId={sectionId}
           />
           {currentUserIsAdmin && (
-            <ActionAlertDialog
+            <LeaveOrDeleteAlertDialog
               dialogType="delete"
               currentUserId={currentUserId}
               sectionId={sectionId}
