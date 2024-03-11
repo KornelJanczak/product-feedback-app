@@ -139,7 +139,7 @@ export default async function SectionLayout({
 
           <SectionRoutes sectionId={sectionId} />
         </section>
-        {children}
+        <section className="md:container">{children}</section>
       </main>
     );
   }
