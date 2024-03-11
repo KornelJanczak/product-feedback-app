@@ -139,9 +139,8 @@ export default async function SectionLayout({
                 currentUserIsAdmin={currentUserIsAdmin}
               />
             </Suspense>
-            <Suspense fallback={<p>loading...</p>}>
-              <SectionRoutes sectionId={sectionId} />
-            </Suspense>
+
+            <SectionRoutes sectionId={sectionId} />
           </section>
           {children}
         </main>

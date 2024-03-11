@@ -7,6 +7,7 @@ interface IUserCard {
   actionButton?: ReactNode;
   image?: string | null;
   id: string;
+  children?: ReactNode;
   firstName?: string | null;
   lastName?: string | null;
   userName: string;
@@ -24,6 +25,7 @@ export default function UserCard({
   avatarClassName,
   id,
   className,
+  children,
   contentBoxClassName,
 }: IUserCard) {
   return (
@@ -54,6 +56,7 @@ export default function UserCard({
         <span className="text-grey text-sm sm:text-base">@{userName}</span>
         {actionButton}
       </div>
+      {children}
     </li>
   );
 }
