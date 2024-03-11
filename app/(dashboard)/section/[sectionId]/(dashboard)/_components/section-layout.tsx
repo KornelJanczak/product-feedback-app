@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import Nav from "@/components/nav/navbar";
 import Background from "./background";
 import NoResult from "@/components/no-result";
-import MainInformation from "./main-information";
-import ActionPanel from "./action-panel";
+import MainInformation, { MainInformationSkeleton } from "./main-information";
+import ActionPanel, { ActionPanelSkeleton } from "./action-panel";
 import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
 import SectionRoutes from "./section-routes";
 
@@ -121,19 +121,27 @@ export default async function SectionLayout({
               />
             </Suspense>
 
-            <MainInformation
-              title={feedbackSection.title}
-              sectionUsers={sectionUsers}
-            />
-
-            <ActionPanel
-              currentUser={currentUser}
-              sectionUsers={sectionUsers}
-              sectionId={sectionId}
-              currentUserIsAdmin={currentUserIsAdmin}
-            />
-
-            <SectionRoutes sectionId={sectionId} />
+            <Suspense
+              fallback={
+                <MainInformationSkeleton membersNumber={sectionUsers.length} />
+              }
+            >
+              <MainInformation
+                title={feedbackSection.title}
+                sectionUsers={sectionUsers}
+              />
+            </Suspense>
+            <Suspense fallback={<ActionPanelSkeleton />}>
+              <ActionPanel
+                currentUser={currentUser}
+                sectionUsers={sectionUsers}
+                sectionId={sectionId}
+                currentUserIsAdmin={currentUserIsAdmin}
+              />
+            </Suspense>
+            <Suspense fallback={<p>loading...</p>}>
+              <SectionRoutes sectionId={sectionId} />
+            </Suspense>
           </section>
           {children}
         </main>

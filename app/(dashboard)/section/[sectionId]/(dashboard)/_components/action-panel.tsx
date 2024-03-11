@@ -3,6 +3,7 @@ import Link from "next/link";
 import AddUsers from "./add-users";
 import CardSettings from "@/app/(dashboard)/_components/card-settings";
 import { ActivityIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface IActionPanel {
   currentUser: User;
@@ -11,7 +12,7 @@ interface IActionPanel {
   sectionId: string;
 }
 
-export default function ActionPanel({
+export default async function ActionPanel({
   currentUser,
   sectionId,
   currentUserIsAdmin,
@@ -47,3 +48,13 @@ export default function ActionPanel({
     </div>
   );
 }
+
+export const ActionPanelSkeleton = () => {
+  return (
+    <div className="flex items-center justify-center px-5 py-5 gap-2">
+      <Skeleton className="bg-skeletonTheme px-3  h-8 rounded-md w-5/12" />
+      <Skeleton className="bg-skeletonTheme px-3  h-8 rounded-md w-5/12" />
+      <Skeleton className="bg-skeletonTheme px-3  h-8 rounded-md w-1/12" />
+    </div>
+  );
+};

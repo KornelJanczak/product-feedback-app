@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import UserAvatar from "@/components/user/user-avatar";
 import { UsersIcon } from "lucide-react";
 
@@ -6,7 +7,12 @@ interface IHeader {
   sectionUsers: { user: IFeedbackSectionUser | null }[];
 }
 
-export default function MainInformation({ title, sectionUsers }: IHeader) {
+export default async function MainInformation({
+  title,
+  sectionUsers,
+}: IHeader) {
+
+
   return (
     <div>
       <h1 className="text-bold text-secondDark text-2xl sm:text-3xl md:text-4xl px-5 py-2">
@@ -28,3 +34,30 @@ export default function MainInformation({ title, sectionUsers }: IHeader) {
     </div>
   );
 }
+
+export const MainInformationSkeleton = ({
+  membersNumber,
+}: {
+  membersNumber: number;
+}) => {
+  return (
+    <div className="px-5">
+      <div className="py-2">
+        <Skeleton className="w-52 h-8 rounded bg-skeletonTheme"></Skeleton>
+      </div>
+      <div className="flex flex-col pt-1">
+        <div className="flex gap-x-1">
+          <Skeleton className="h-6 w-32 rounded bg-skeletonTheme" />
+        </div>
+        <div className="flex flex-row pt-2">
+          {[...new Array(membersNumber)].map((_, i) => (
+            <Skeleton
+              key={i}
+              className="h-10 w-10 rounded-full bg-skeletonTheme"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
