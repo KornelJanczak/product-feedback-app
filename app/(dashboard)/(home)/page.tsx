@@ -6,6 +6,7 @@ import prisma from "@/lib/db";
 import NoResult from "@/components/no-result";
 import SectionCard from "./_components/section-card";
 import { Suspense } from "react";
+import { ContainerSkeleton } from "./_components/container";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -116,21 +117,23 @@ export default async function HomePage({
 
   if (isExist)
     return (
-      <Container>
-        {feedbackSections?.map(
-          ({ id, title, members, admins, suggestions }) => (
-            <SectionCard
-              key={id}
-              sectionId={id}
-              suggestionsNumber={suggestions.length}
-              currentUserId={currentUserId}
-              title={title as string}
-              members={members}
-              admins={admins}
-            />
-          )
-        )}
-      </Container>
+      <Suspense fallback={<ContainerSkeleton />}>
+        <Container>
+          {feedbackSections?.map(
+            ({ id, title, members, admins, suggestions }) => (
+              <SectionCard
+                key={id}
+                sectionId={id}
+                suggestionsNumber={suggestions.length}
+                currentUserId={currentUserId}
+                title={title as string}
+                members={members}
+                admins={admins}
+              />
+            )
+          )}
+        </Container>
+      </Suspense>
     );
 
   if (!isExist)
