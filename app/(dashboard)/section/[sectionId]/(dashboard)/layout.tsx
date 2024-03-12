@@ -15,7 +15,7 @@ export default async function Layout({
   return (
     <div className="lg:flex lg:gap-x-4 lg:container lg:py-14">
       <Nav />
-      <Suspense
+      {/* <Suspense
         fallback={
           <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
             <section className="px-0 md:container lg:w-full lg:px-0 ">
@@ -26,9 +26,9 @@ export default async function Layout({
             </section>
           </main>
         }
-      >
+      > */}
         <SectionLayout params={params}>{children}</SectionLayout>;
-      </Suspense>
+      {/* </Suspense> */}
     </div>
   );
 }
