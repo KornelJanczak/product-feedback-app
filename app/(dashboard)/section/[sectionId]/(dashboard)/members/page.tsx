@@ -64,20 +64,20 @@ export default async function MembersPage({
   if (!currentUser) return redirect("/login");
 
   const sectionMembers = await getSectionMembers(sectionId);
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return (
     <div className="px-5 py-2">
       {/* <SearchInput className="w-full px-0" /> */}
-      <SectionLayout params={params} />
-      <Suspense fallback={<ContainerSkeleton />}>
-        <Container
-          currentUser={currentUser}
-          admins={sectionMembers!.admins}
-          members={sectionMembers!.members}
-          sectionId={sectionId}
-        />
-      </Suspense>
+      {/* <SectionLayout params={params} /> */}
+      {/* <Suspense fallback={<ContainerSkeleton />}> */}
+      <Container
+        currentUser={currentUser}
+        admins={sectionMembers!.admins}
+        members={sectionMembers!.members}
+        sectionId={sectionId}
+      />
+      {/* </Suspense> */}
     </div>
   );
 }
