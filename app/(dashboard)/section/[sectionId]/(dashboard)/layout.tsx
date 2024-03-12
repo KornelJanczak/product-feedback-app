@@ -12,7 +12,8 @@ export default async function Layout({
   return (
     <div className="lg:flex lg:gap-x-4 lg:container lg:py-14">
       <Nav />
-      <SectionLayout params={params}>{children}</SectionLayout>;
+      {children}
+      {/* <SectionLayout params={params}>{children}</SectionLayout>; */}
     </div>
   );
 }
