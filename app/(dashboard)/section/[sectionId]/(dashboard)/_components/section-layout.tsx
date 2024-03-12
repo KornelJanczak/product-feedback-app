@@ -109,37 +109,37 @@ export default async function SectionLayout({
     return (
       <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
         <section className="px-0 md:container lg:w-full lg:px-0 ">
-          <Suspense fallback={<ImageBackgroundSkeleton className="h-44" />}>
-            <Background
-              image={feedbackSection?.bgImage}
-              sectionId={sectionId}
-              sectionTitle={feedbackSection.title}
-              currentUserIsAdmin={currentUserIsAdmin}
-            />
-          </Suspense>
+          {/* <Suspense fallback={<ImageBackgroundSkeleton className="h-44" />}> */}
+          <Background
+            image={feedbackSection?.bgImage}
+            sectionId={sectionId}
+            sectionTitle={feedbackSection.title}
+            currentUserIsAdmin={currentUserIsAdmin}
+          />
+          {/* </Suspense> */}
 
-          <Suspense
+          {/* <Suspense
             fallback={
               <MainInformationSkeleton membersNumber={sectionUsers.length} />
-            }
-          >
-            <MainInformation
-              title={feedbackSection.title}
-              sectionUsers={sectionUsers}
-            />
-          </Suspense>
-          <Suspense fallback={<ActionPanelSkeleton />}>
-            <ActionPanel
-              currentUser={currentUser}
-              sectionUsers={sectionUsers}
-              sectionId={sectionId}
-              currentUserIsAdmin={currentUserIsAdmin}
-            />
-          </Suspense>
+            } */}
+          {/* > */}
+          <MainInformation
+            title={feedbackSection.title}
+            sectionUsers={sectionUsers}
+          />
+          {/* </Suspense> */}
+          {/* <Suspense fallback={<ActionPanelSkeleton />}> */}
+          <ActionPanel
+            currentUser={currentUser}
+            sectionUsers={sectionUsers}
+            sectionId={sectionId}
+            currentUserIsAdmin={currentUserIsAdmin}
+          />
+          {/* </Suspense> */}
 
-          <Suspense fallback={<SectionRoutesSkeleton />}>
-            <SectionRoutes sectionId={sectionId} />
-          </Suspense>
+          {/* <Suspense fallback={<SectionRoutesSkeleton />}> */}
+          <SectionRoutes sectionId={sectionId} />
+          {/* </Suspense> */}
         </section>
         <section className="md:container">{children}</section>
       </main>
