@@ -9,5 +9,5 @@ export default async function SectionDashboard({
 
   // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  return <SectionLayout params={params} />;
+  return <div>Section</div>;
 }

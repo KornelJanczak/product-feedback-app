@@ -69,15 +69,13 @@ export default async function MembersPage({
   return (
     <div className="px-5 py-2">
       {/* <SearchInput className="w-full px-0" /> */}
-      <SectionLayout params={params} />
-      <Suspense fallback={<ContainerSkeleton />}>
+
       <Container
         currentUser={currentUser}
         admins={sectionMembers!.admins}
         members={sectionMembers!.members}
         sectionId={sectionId}
       />
-      </Suspense>
     </div>
   );
 }
