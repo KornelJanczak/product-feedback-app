@@ -68,7 +68,7 @@ export default async function MembersPage({
 
   return (
     <>
-      <SectionLayout params={params} />
+     
       <section className="md:container">
         <div className="px-5 py-2">
           {/* <SearchInput className="w-full px-0" /> */}
