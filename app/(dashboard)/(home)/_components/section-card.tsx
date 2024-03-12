@@ -35,7 +35,7 @@ export default function SectionCard({
   admins,
 }: ICard) {
   const settings = [
-    { icon: Users2, href: `/section/${sectionId}/users`, label: "Users" },
+    { icon: Users2, href: `/section/${sectionId}/members`, label: "Members" },
     {
       icon: ActivityIcon,
       href: `/section/${sectionId}/activity`,
@@ -106,5 +106,3 @@ export default function SectionCard({
     </div>
   );
 }
-
-
