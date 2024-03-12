@@ -31,10 +31,10 @@ export default async function ActionPanel({
       <Link
         href={"/"}
         className="flex items-center justify-center gap-0.5 bg-pink text-darkWhite px-3 py-1 rounded-md 
-      hover:bg-pink hover:opacity-70 hover:transition-all hover:duration-300 w-5/12"
+      hover:bg-pink hover:opacity-70 hover:transition-all hover:duration-300 w-6/12"
       >
         <PlusIcon width={18} height={18} color="#fff" />
-        Add feedback
+        New feedback
       </Link>
       <AddUsers currentUser={currentUser} sectionUsers={sectionUsers} />
       <SectionSettingsCard

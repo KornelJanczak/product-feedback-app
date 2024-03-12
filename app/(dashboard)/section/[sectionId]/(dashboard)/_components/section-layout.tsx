@@ -141,7 +141,6 @@ export default async function SectionLayout({
           <SectionRoutes sectionId={sectionId} />
           {/* </Suspense> */}
         </section>
-        <section className="md:container">{children}</section>
       </main>
     );
   }

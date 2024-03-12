@@ -5,7 +5,7 @@ import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-back
 import { MainInformationSkeleton } from "./_components/main-information";
 import { ActionPanelSkeleton } from "./_components/action-panel";
 import { SectionRoutesSkeleton } from "./_components/section-routes";
-export default async function Layout({
+export default function Layout({
   children,
   params,
 }: {
@@ -27,7 +27,7 @@ export default async function Layout({
           </main>
         }
       > */}
-        <SectionLayout params={params}>{children}</SectionLayout>;
+      {children}
       {/* </Suspense> */}
     </div>
   );
