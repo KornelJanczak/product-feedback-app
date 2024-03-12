@@ -2,8 +2,9 @@ import SearchInput from "@/components/search-input";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import Container from "./_components/container";
-
+import Container, { ContainerSkeleton } from "./_components/container";
+import { Suspense } from "react";
+import SectionLayout from "../_components/section-layout";
 
 async function getSectionMembers(sectionId: string) {
   try {
@@ -63,17 +64,20 @@ export default async function MembersPage({
   if (!currentUser) return redirect("/login");
 
   const sectionMembers = await getSectionMembers(sectionId);
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return (
     <div className="px-5 py-2">
-      <SearchInput className="w-full px-0" />
-      <Container
-        currentUser={currentUser}
-        admins={sectionMembers!.admins}
-        members={sectionMembers!.members}
-        sectionId={sectionId}
-      />
+      {/* <SearchInput className="w-full px-0" /> */}
+      <SectionLayout params={params} />
+      <Suspense fallback={<ContainerSkeleton />}>
+        <Container
+          currentUser={currentUser}
+          admins={sectionMembers!.admins}
+          members={sectionMembers!.members}
+          sectionId={sectionId}
+        />
+      </Suspense>
     </div>
   );
 }

@@ -76,7 +76,7 @@ export default async function SectionLayout({
   children,
   params,
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   params: { sectionId: string };
 }) {
   const currentUser = await getCurrentUser();
