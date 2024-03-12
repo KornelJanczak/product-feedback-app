@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import SectionLayout from "./_components/section-layout";
 import Nav from "@/components/nav/navbar";
 
-export default function Layout({
+export default async function Layout({
   children,
   params,
 }: {
