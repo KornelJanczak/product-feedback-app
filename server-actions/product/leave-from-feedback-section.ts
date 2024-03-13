@@ -71,8 +71,6 @@ export const leaveFromFeedbackSection = action(
             Math.random() * feedbackSection.members.length
           );
 
-          console.log(randomIndex);
-
           const randomMember: { userId: string } | undefined =
             feedbackSection.members[randomIndex];
 
@@ -112,8 +110,6 @@ export const leaveFromFeedbackSection = action(
         }
       }
     } catch (err) {
-      console.log(err);
-
       throw new Error("Something went wrong!");
     } finally {
       revalidatePath("/");

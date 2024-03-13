@@ -8,7 +8,7 @@ interface IUsersCards {
   currentUserId: string;
   sectionId: string;
   headline: string;
-  isAdmins?: boolean;
+  isAdmin?: boolean;
 }
 
 export default function UsersCards({
@@ -17,7 +17,7 @@ export default function UsersCards({
   currentUserId,
   sectionId,
   headline,
-  isAdmins,
+  isAdmin,
 }: IUsersCards) {
   return (
     <ul className="pb-4 pt-6">
@@ -38,7 +38,7 @@ export default function UsersCards({
             avatarClassName="w-14 h-14"
             className="flex flex-row bg-basicWhite px-2 py-2 rounded"
             actionButton={
-              isAdmins && (
+              isAdmin && (
                 <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
                   Admin
                 </span>
@@ -46,7 +46,13 @@ export default function UsersCards({
             }
           >
             {currentUserIsAdmin && !isCurrentUser && (
-              <AdminActionPopover userName={user.userName} />
+              <AdminActionPopover
+                userName={user.userName}
+                adminId={currentUserId}
+                memberId={user.id}
+                sectionId={sectionId}
+                isAdmin={isAdmin}
+              />
             )}
             {isCurrentUser && (
               <LeaveOrDeleteAlertDialog

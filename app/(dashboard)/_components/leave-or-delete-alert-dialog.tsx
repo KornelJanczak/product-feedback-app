@@ -1,15 +1,4 @@
 "use client";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { deleteFeedbackSection } from "@/server-actions/product/delete-feedback-section";
 import { leaveFromFeedbackSection } from "@/server-actions/product/leave-from-feedback-section";
 import { LogOutIcon, Trash2Icon } from "lucide-react";

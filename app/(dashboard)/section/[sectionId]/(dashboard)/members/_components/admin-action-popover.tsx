@@ -11,7 +11,21 @@ import { giveAdminRoleInFeedbackSection } from "@/server-actions/product/give-ad
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 
-export default function AdminActionPopover({ userName }: { userName: string }) {
+interface IAdminActionPopover {
+  userName: string;
+  sectionId: string;
+  memberId: string;
+  adminId: string;
+  isAdmin?: boolean;
+}
+
+export default function AdminActionPopover({
+  userName,
+  sectionId,
+  memberId,
+  adminId,
+  isAdmin,
+}: IAdminActionPopover) {
   const toastID = "admin-action-popover-toast";
 
   const { execute: kickUserExecute } = useAction(kickUserFromFeedbackSection, {
@@ -47,17 +61,17 @@ export default function AdminActionPopover({ userName }: { userName: string }) {
 
   const onKickHandler = () => {
     kickUserExecute({
-      sectionId: "sectionId",
-      adminId: "adminId",
-      kickedUserId: "kickedUserId",
+      sectionId,
+      adminId,
+      kickedUserId: memberId,
     });
   };
 
   const onGiveAdminHandler = () => {
     giveAdminExecute({
-      sectionId: "sectionId",
-      adminId: "adminId",
-      memberId: "userId",
+      sectionId,
+      adminId,
+      memberId,
     });
   };
 
@@ -91,26 +105,28 @@ export default function AdminActionPopover({ userName }: { userName: string }) {
             </span>
           }
         />
-        <ActionAlertDialog
-          onContinueHandler={onGiveAdminHandler}
-          triggerClassName="flex text-grey text-sm font-semi 
+        {!isAdmin && (
+          <ActionAlertDialog
+            onContinueHandler={onGiveAdminHandler}
+            triggerClassName="flex text-grey text-sm font-semi 
           gap-1 items-center justify-center
           hover:cursor-pointer hover:opacity-70 hover:transition-all 
           hover:duration-300"
-          triggerChildren={
-            <>
-              <ShieldCheck width={16} height={16} color="#647196" />
-              Give admin
-            </>
-          }
-          description={
-            <span>
-              This action will give admin role to
-              <strong className="text-pink"> @{userName} </strong>
-              in this section!
-            </span>
-          }
-        />
+            triggerChildren={
+              <>
+                <ShieldCheck width={16} height={16} color="#647196" />
+                Give admin
+              </>
+            }
+            description={
+              <span>
+                This action will give admin role to
+                <strong className="text-pink"> @{userName} </strong>
+                in this section!
+              </span>
+            }
+          />
+        )}
       </PopoverContent>
     </Popover>
   );

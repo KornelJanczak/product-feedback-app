@@ -13,6 +13,7 @@ export const giveAdminRoleInFeedbackSection = action(
 
       const currentUser = await getCurrentUser();
 
+      console.log(currentUser?.id, adminId);
       if (!currentUser || currentUser.id !== adminId)
         throw new Error("Unauthorized");
 
@@ -52,25 +53,19 @@ export const giveAdminRoleInFeedbackSection = action(
 
       if (!currentUserIsAdmin) throw new Error("You are not an admin");
 
-      await prisma.feedbackSection.update({
-        where: { id: sectionId },
+      await prisma.userToFeedbackSection.delete({
+        where: {
+          userId_feedbackSectionId: {
+            userId: memberId,
+            feedbackSectionId: sectionId,
+          },
+        },
+      });
+
+      await prisma.adminToFeedbackSection.create({
         data: {
-          members: {
-            disconnect: {
-              userId_feedbackSectionId: {
-                userId: memberId,
-                feedbackSectionId: sectionId,
-              },
-            },
-          },
-          admins: {
-            connect: {
-              userId_feedbackSectionId: {
-                userId: memberId,
-                feedbackSectionId: sectionId,
-              },
-            },
-          },
+          userId: memberId,
+          feedbackSectionId: sectionId,
         },
       });
 

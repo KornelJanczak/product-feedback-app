@@ -3,6 +3,7 @@ import { action } from "@/lib/clients/safe-action-client";
 import { kickUserFromFeedbackSectionSchema } from "@/schemas/@product-actions-schemas";
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import getCurrentUser from "@/lib/user/get-current-user";
 
 export const kickUserFromFeedbackSection = action(
   kickUserFromFeedbackSectionSchema,
@@ -10,6 +11,11 @@ export const kickUserFromFeedbackSection = action(
     try {
       if (!sectionId || !adminId || !kickedUserId)
         throw new Error("Invalid data.");
+
+      const currentUser = await getCurrentUser();
+
+      if (!currentUser || currentUser.id !== adminId)
+        throw new Error("You are not an admin.");
 
       const feedbackSection = await prisma.feedbackSection.findUnique({
         where: {
@@ -33,40 +39,46 @@ export const kickUserFromFeedbackSection = action(
         throw new Error("Section not found.");
       }
 
-      const isAdmin = feedbackSection.members.some(
-        (member) => member.userId === adminId
+      const isAdmin = feedbackSection.admins.some(
+        (member) => member.userId === currentUser.id
       );
 
       if (!isAdmin) {
         throw new Error("You are not an admin.");
       }
 
-      const isKickedUser = feedbackSection.members.some(
+      const kickedUserIsMember = feedbackSection.members.some(
         (member) => member.userId === kickedUserId
       );
 
-      if (!isKickedUser) {
-        throw new Error("User not found in Feedback Section.");
-      }
-
-      const kickedUser = await prisma.feedbackSection.update({
-        where: {
-          id: sectionId,
-        },
-        data: {
-          members: {
-            disconnect: {
-              userId_feedbackSectionId: {
-                userId: kickedUserId,
-                feedbackSectionId: sectionId,
-              },
+      if (kickedUserIsMember) {
+        await prisma.userToFeedbackSection.delete({
+          where: {
+            userId_feedbackSectionId: {
+              feedbackSectionId: sectionId,
+              userId: kickedUserId,
             },
           },
-        },
-      });
+        });
+      }
+
+      const kickedUserIsAdmin = feedbackSection.admins.some(
+        (admin) => admin.userId === kickedUserId
+      );
+
+      if (kickedUserIsAdmin) {
+        await prisma.adminToFeedbackSection.delete({
+          where: {
+            userId_feedbackSectionId: {
+              feedbackSectionId: sectionId,
+              userId: kickedUserId,
+            },
+          },
+        });
+      }
 
       revalidatePath(`/section/${sectionId}/members`);
-      return { success: kickedUser };
+      return { success: true };
     } catch {
       throw new Error("Kick user from feedback section failed.");
     }

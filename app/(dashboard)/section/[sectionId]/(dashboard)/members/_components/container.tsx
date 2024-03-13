@@ -53,7 +53,7 @@ export default async function Container({
         currentUserId={currentUser.id}
         sectionId={sectionId}
         sectionUsers={admins}
-        isAdmins={true}
+        isAdmin={true}
         headline={`Admins: ${admins.length}`}
       />
       <UsersCards
