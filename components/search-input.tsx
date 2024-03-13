@@ -5,12 +5,14 @@ interface ISearchInput {
   className?: string;
   searchHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputRef?: React.RefObject<HTMLInputElement>;
+  value?: string;
 }
 
-export default async function SearchInput({
+export default function SearchInput({
   className,
   searchHandler,
   inputRef,
+  value,
 }: ISearchInput) {
   return (
     <div className={cn("px-4 pb-5 sm:pb-0", className)}>
@@ -22,6 +24,7 @@ export default async function SearchInput({
           onChange={searchHandler}
           ref={inputRef}
           placeholder="Search..."
+          value={value}
         />
       </div>
     </div>

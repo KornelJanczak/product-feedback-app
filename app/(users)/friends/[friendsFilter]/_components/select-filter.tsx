@@ -26,7 +26,7 @@ export default function SelectFilter() {
         <SelectValue placeholder="Suggestions" />
       </SelectTrigger>
       <SelectContent className="px-0 mt-2 text-grey z-50">
-        <SelectItem value="sugesstions" className="z-50">
+        <SelectItem value="suggestions" className="z-50">
           Friend Suggestions
         </SelectItem>
         <SelectItem

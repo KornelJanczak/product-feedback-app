@@ -1,6 +1,7 @@
 import UserCard from "@/components/user/user-card";
 import AdminActionPopover from "./admin-action-popover";
 import LeaveOrDeleteAlertDialog from "@/app/(dashboard)/_components/leave-or-delete-alert-dialog";
+import { cn } from "@/lib/utils";
 
 interface IUsersCards {
   sectionUsers: { user: IFeedbackSectionUser }[];
@@ -9,6 +10,7 @@ interface IUsersCards {
   sectionId: string;
   headline: string;
   isAdmin?: boolean;
+  isSearch?: boolean;
 }
 
 export default function UsersCards({
@@ -18,12 +20,17 @@ export default function UsersCards({
   sectionId,
   headline,
   isAdmin,
+  isSearch,
 }: IUsersCards) {
+  const isSectionUsers = sectionUsers.length > 0;
+
   return (
-    <ul className="pb-4 pt-6">
-      <h3 className="text-secondDark font-semibold pb-1 text-lg sm:text-xl md:text-2xl ">
-        {headline}
-      </h3>
+    <ul className={cn("pb-4 pt-6", isSearch && "pt-0")}>
+      {isSectionUsers && !isSearch && (
+        <h3 className="text-secondDark font-semibold pb-1 text-lg sm:text-xl md:text-2xl ">
+          {headline}
+        </h3>
+      )}
       {sectionUsers.map(({ user }) => {
         const isCurrentUser = user.id === currentUserId;
 

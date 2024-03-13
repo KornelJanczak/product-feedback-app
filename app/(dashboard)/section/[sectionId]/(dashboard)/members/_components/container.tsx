@@ -1,8 +1,10 @@
+"use client";
 import ActionAlertDialog from "@/app/(dashboard)/_components/leave-or-delete-alert-dialog";
 import { Separator } from "@/components/ui/separator";
 import UserCard from "@/components/user/user-card";
 import UsersCards from "./users-cards";
-import { Skeleton } from "@/components/ui/skeleton";
+import SearchInput from "@/components/search-input";
+import { useState } from "react";
 
 interface IContainer {
   currentUser: ICurrentUser;
@@ -11,87 +13,103 @@ interface IContainer {
   admins: { user: IFeedbackSectionUser }[];
 }
 
-export default async function Container({
+export default function Container({
   currentUser,
   members,
   admins,
   sectionId,
 }: IContainer) {
+  const [searchValue, setSearchValue] = useState("");
+
   const currentUserIsAdmin = admins.some(
     ({ user }) => user?.id === currentUser.id
   );
 
+  const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const filteredMembers = members.filter(({ user }) =>
+    user.userName.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  const filteredAdmins = admins.filter(({ user }) =>
+    user.userName.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  const isResult = filteredMembers.length > 0 || filteredAdmins.length > 0;
+
+  const isSearch = searchValue.length > 0;
+
   return (
-    <div className="rounded pt-2">
-      <Separator />
-      <UserCard
-        id={currentUser.id}
-        userName={currentUser.name}
-        image={currentUser.image}
-        firstName={currentUser.firstName}
-        lastName={currentUser.lastName}
-        avatarClassName="w-14 h-14"
-        className="flex flex-row bg-basicWhite px-2 py-4 rounded"
-        actionButton={
-          currentUserIsAdmin && (
-            <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
-              Admin
+    <>
+      <SearchInput
+        className="w-full px-0"
+        searchHandler={onSearchHandler}
+        value={searchValue}
+      />
+      <div className="rounded pt-2">
+        <Separator />
+        {!isSearch && (
+          <UserCard
+            id={currentUser.id}
+            userName={currentUser.name}
+            image={currentUser.image}
+            firstName={currentUser.firstName}
+            lastName={currentUser.lastName}
+            avatarClassName="w-14 h-14"
+            className="flex flex-row bg-basicWhite px-2 py-4 rounded"
+            actionButton={
+              currentUserIsAdmin && (
+                <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
+                  Admin
+                </span>
+              )
+            }
+          >
+            <ActionAlertDialog
+              dialogType="leave"
+              sectionId={sectionId}
+              currentUserId={currentUser.id}
+              className="text-sm ml-auto bg-red text-darkWhite py-1 px-2 rounded hover:bg-red hover:text-darkWhite hover:opacity-70 hover:transition-all hover:duration-300"
+            />
+          </UserCard>
+        )}
+        <Separator />
+        {isSearch && (
+          <h3 className="text-secondDark font-semibold  pt-6 pb-1 text-lg sm:text-xl md:text-2xl ">
+            Search results
+          </h3>
+        )}
+        {isResult && (
+          <UsersCards
+            currentUserIsAdmin={currentUserIsAdmin}
+            currentUserId={currentUser.id}
+            sectionId={sectionId}
+            sectionUsers={filteredAdmins}
+            isAdmin={true}
+            isSearch={isSearch}
+            headline={`Admins: ${admins.length}`}
+          />
+        )}
+        {isResult && (
+          <UsersCards
+            currentUserIsAdmin={currentUserIsAdmin}
+            currentUserId={currentUser.id}
+            sectionId={sectionId}
+            sectionUsers={filteredMembers}
+            isSearch={isSearch}
+            headline={`Members: ${members.length}`}
+          />
+        )}
+        {!isResult && (
+          <div className="flex justify-center items-center px-4 py-14">
+            <span className="text-grey font-semibold">
+              No results for <strong className="text-pink">&quot;{searchValue}&quot;</strong>
             </span>
-          )
-        }
-      >
-        <ActionAlertDialog
-          dialogType="leave"
-          sectionId={sectionId}
-          currentUserId={currentUser.id}
-          className="text-sm ml-auto bg-red text-darkWhite py-1 px-2 rounded hover:bg-red hover:text-darkWhite hover:opacity-70 hover:transition-all hover:duration-300"
-        />
-      </UserCard>
-      <Separator />
-      <UsersCards
-        currentUserIsAdmin={currentUserIsAdmin}
-        currentUserId={currentUser.id}
-        sectionId={sectionId}
-        sectionUsers={admins}
-        isAdmin={true}
-        headline={`Admins: ${admins.length}`}
-      />
-      <UsersCards
-        currentUserIsAdmin={currentUserIsAdmin}
-        currentUserId={currentUser.id}
-        sectionId={sectionId}
-        sectionUsers={members}
-        headline={`Members: ${members.length}`}
-      />
-    </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
-
-export const ContainerSkeleton = () => {
-  return (
-    <div className="px-5 py-2">
-      <div className="pb-5">
-        <Skeleton className="w-full h-10 bg-skeletonTheme" />
-      </div>
-      <div className="pt-2">
-        <Skeleton className="w-full h-24 bg-skeletonTheme" />
-      </div>
-      <ul className="pb-4 pt-6">
-        <Skeleton className="w-20 pb-1 h-8 bg-skeletonTheme" />
-        <div className="pt-2 flex flex-col gap-2">
-          <Skeleton className="w-full h-24 bg-skeletonTheme" />
-          <Skeleton className="w-full h-24 bg-skeletonTheme" />
-          <Skeleton className="w-full h-24 bg-skeletonTheme" />
-        </div>
-      </ul>
-      <ul className="pb-4 pt-6">
-        <Skeleton className="w-20 pb-1 h-8 bg-skeletonTheme" />
-        <div className="pt-2 flex flex-col gap-2">
-          <Skeleton className="w-full h-24 bg-skeletonTheme" />
-          <Skeleton className="w-full h-24 bg-skeletonTheme" />
-          <Skeleton className="w-full h-24 bg-skeletonTheme" />
-        </div>
-      </ul>
-    </div>
-  );
-};

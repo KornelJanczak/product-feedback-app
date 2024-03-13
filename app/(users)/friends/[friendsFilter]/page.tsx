@@ -15,7 +15,7 @@ async function getUsers(currentUser: User, userName: string, param: string) {
       [key: string]: (currentUser: User, userName: string) => any;
     } = {
       // Return all users from db with the exception of current user
-      sugesstions: async (currentUser, userName) =>
+      suggestions: async (currentUser, userName) =>
         await getSuggestionUsers(currentUser, userName),
 
       // Filter sended invitations

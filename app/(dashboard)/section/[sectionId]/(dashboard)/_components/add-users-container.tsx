@@ -15,6 +15,8 @@ export default function AddUsersContainer({ friends }: { friends: IFriend[] }) {
   const router = useRouter();
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+
     setSearchValue(e.target.value);
   };
 
@@ -28,30 +30,11 @@ export default function AddUsersContainer({ friends }: { friends: IFriend[] }) {
 
   const friendsExist = filteredFriends.length > 0;
 
-  if (!friendsExist)
-    return (
-      <NoResult
-        title="All of your friends are here in this section!"
-        description="If you'd like to add someone new, you can find new friends by clicking below!"
-        className="py-4 h-full"
-        button={
-          <Button
-            onClick={pushToFindFriends}
-            className="bg-pink text-darkWhite hover:bg-pink 
-            hover:opacity-70 hover:transition-all hover:duration-300 mt-4 gap-x-1"
-          >
-            Find new friends!
-            <Users2 width={20} height={20} color="#fff" />
-          </Button>
-        }
-      />
-    );
-
-  if (friendsExist)
-    return (
-      <>
-        <SearchInput searchHandler={searchHandler} />
-        <Separator />
+  return (
+    <>
+      <SearchInput searchHandler={searchHandler} value={searchValue} />
+      <Separator />
+      {friendsExist && (
         <ScrollArea className="h-full">
           {filteredFriends.map(
             ({ id, userName, lastName, firstName, image }) => (
@@ -71,6 +54,24 @@ export default function AddUsersContainer({ friends }: { friends: IFriend[] }) {
             )
           )}
         </ScrollArea>
-      </>
-    );
+      )}
+      {!friendsExist && (
+        <NoResult
+          title="All of your friends are here in this section!"
+          description="If you'd like to add someone new, you can find new friends by clicking below!"
+          className="py-4 h-full"
+          button={
+            <Button
+              onClick={pushToFindFriends}
+              className="bg-pink text-darkWhite hover:bg-pink 
+            hover:opacity-70 hover:transition-all hover:duration-300 mt-4 gap-x-1"
+            >
+              Find new friends!
+              <Users2 width={20} height={20} color="#fff" />
+            </Button>
+          }
+        />
+      )}
+    </>
+  );
 }
