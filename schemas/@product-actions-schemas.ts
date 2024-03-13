@@ -13,6 +13,12 @@ const basicProductSchema = {
   sectionId: z.string(),
 };
 
+const basicAdminActionSchema = {
+  kickedUserId: z.string(),
+  adminId: z.string(),
+  sectionId: z.string(),
+};
+
 export const deleteFeedbackSectionSchema = z.object({
   ...basicProductSchema,
 });
@@ -29,6 +35,12 @@ export const sectionUserSchema = z.object({ ...basicProductSchema });
 
 export const kickUserFromFeedbackSectionSchema = z.object({
   kickedUserId: z.string(),
+  adminId: z.string(),
+  sectionId: z.string(),
+});
+
+export const giveAdminRoleSchema = z.object({
+  memberId: z.string(),
   adminId: z.string(),
   sectionId: z.string(),
 });
