@@ -17,16 +17,15 @@ export default function RouteItem({
   console.log(pathname.endsWith("/"));
 
   const isMember = pathname.endsWith(`section/${sectionId}/${href}`);
-  const isSuggestions = pathname.endsWith(
-    sectionId.split(" ")[sectionId.length - 1]
-  );
+
+  const isSuggestions = pathname.endsWith(sectionId);
 
   return (
     <Link
       href={`/section/${sectionId}/${href}`}
       className={cn(
         "text-grey font-semibold text-lg transition-all duration-300 hover:text-slate-600",
-        isMember && href == "member" && "text-pink hover:text-pink",
+        isMember && href == "members" && "text-pink hover:text-pink",
         isSuggestions && href == "" && "text-pink hover:text-pink"
       )}
     >

@@ -77,7 +77,7 @@ export default function Container({
         )}
         <Separator />
         {isSearch && (
-          <h3 className="text-secondDark font-semibold  pt-6 pb-1 text-lg sm:text-xl md:text-2xl ">
+          <h3 className="text-secondDark font-semibold  pt-6 pb-2 text-lg sm:text-xl md:text-2xl ">
             Search results
           </h3>
         )}

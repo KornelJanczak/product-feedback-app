@@ -27,7 +27,7 @@ export default function UsersCards({
   return (
     <ul className={cn("pb-4 pt-6", isSearch && "pt-0")}>
       {isSectionUsers && !isSearch && (
-        <h3 className="text-secondDark font-semibold pb-1 text-lg sm:text-xl md:text-2xl ">
+        <h3 className="text-secondDark font-semibold pb-2 text-lg sm:text-xl md:text-2xl ">
           {headline}
         </h3>
       )}
