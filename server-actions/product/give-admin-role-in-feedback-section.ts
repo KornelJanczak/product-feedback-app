@@ -1,5 +1,5 @@
 "use server";
-
+import { revalidatePath } from "next/cache";
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
@@ -74,6 +74,7 @@ export const giveAdminRoleInFeedbackSection = action(
         },
       });
 
+      revalidatePath(`/section/${sectionId}/members`);
       return { success: true };
     } catch {
       throw new Error("Giving admin failed!");

@@ -2,6 +2,7 @@
 import { action } from "@/lib/clients/safe-action-client";
 import { kickUserFromFeedbackSectionSchema } from "@/schemas/@product-actions-schemas";
 import prisma from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export const kickUserFromFeedbackSection = action(
   kickUserFromFeedbackSectionSchema,
@@ -64,6 +65,7 @@ export const kickUserFromFeedbackSection = action(
         },
       });
 
+      revalidatePath(`/section/${sectionId}/members`);
       return { success: kickedUser };
     } catch {
       throw new Error("Kick user from feedback section failed.");
