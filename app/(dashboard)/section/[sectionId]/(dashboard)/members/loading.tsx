@@ -1,8 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
-import { MainInformationSkeleton } from "../_components/main-information";
-import { ActionPanelSkeleton } from "../_components/action-panel";
-import { SectionRoutesSkeleton } from "../_components/section-routes";
+
 
 export default function Loading() {
   return (

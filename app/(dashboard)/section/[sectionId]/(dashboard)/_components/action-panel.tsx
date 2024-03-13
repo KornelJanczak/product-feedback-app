@@ -42,7 +42,7 @@ export default async function ActionPanel({
         currentUserIsAdmin={currentUserIsAdmin}
         sectionId={sectionId}
         settings={settings}
-        className="w-1/12"
+        className="flex items-center justify-center w-1/12"
         align="end"
       />
     </div>

@@ -25,7 +25,10 @@ export const deleteFeedbackSectionBgImgSchema = z.object({
   sectionId: z.string(),
 });
 
-export const sectionUserSchema = z.object({
-  userId: z.string(),
+export const sectionUserSchema = z.object({ ...basicProductSchema });
+
+export const kickUserFromFeedbackSectionSchema = z.object({
+  kickedUserId: z.string(),
+  adminId: z.string(),
   sectionId: z.string(),
 });

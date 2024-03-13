@@ -1,10 +1,8 @@
-import SearchInput from "@/components/search-input";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import Container, { ContainerSkeleton } from "./_components/container";
-import { Suspense } from "react";
-import SectionLayout from "../_components/section-layout";
+import Container from "./_components/container";
+
 
 async function getSectionMembers(sectionId: string) {
   try {
