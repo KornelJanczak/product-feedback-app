@@ -4,6 +4,7 @@ import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { giveAdminRoleSchema } from "@/schemas/@product-actions-schemas";
+import createActivityForFeedbackSection from "@/lib/product/create-activity-for-feedback-section";
 
 export const giveAdminRoleInFeedbackSection = action(
   giveAdminRoleSchema,
@@ -13,7 +14,6 @@ export const giveAdminRoleInFeedbackSection = action(
 
       const currentUser = await getCurrentUser();
 
-      console.log(currentUser?.id, adminId);
       if (!currentUser || currentUser.id !== adminId)
         throw new Error("Unauthorized");
 
@@ -48,7 +48,7 @@ export const giveAdminRoleInFeedbackSection = action(
       if (memberIsAdmin) throw new Error("User is already an admin");
 
       const currentUserIsAdmin = feedbackSection.admins.some(
-        (admin) => admin.userId === adminId
+        (admin) => admin.userId === currentUser.id
       );
 
       if (!currentUserIsAdmin) throw new Error("You are not an admin");
@@ -68,6 +68,12 @@ export const giveAdminRoleInFeedbackSection = action(
           feedbackSectionId: sectionId,
         },
       });
+
+      await createActivityForFeedbackSection(
+        sectionId,
+        currentUser.id,
+        `Gave admin role to id=${memberId} `
+      );
 
       revalidatePath(`/section/${sectionId}/members`);
       return { success: true };

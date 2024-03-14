@@ -1,6 +1,7 @@
 "use server";
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
+import createActivityForFeedbackSection from "@/lib/product/create-activity-for-feedback-section";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { deleteFeedbackSectionBgImgSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";
@@ -32,6 +33,12 @@ export const deleteFeedbackSectionBgImage = action(
 
       if (!feedbackSection)
         throw new Error("Deleting feedback section image failed!");
+
+      await createActivityForFeedbackSection(
+        sectionId,
+        currentUser.id,
+        "Deleted feedback section image"
+      );
 
       revalidatePath("section:path");
       return { success: feedbackSection };

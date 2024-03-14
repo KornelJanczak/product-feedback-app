@@ -1,6 +1,7 @@
 "use server";
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
+import createActivityForFeedbackSection from "@/lib/product/create-activity-for-feedback-section";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { sectionUserSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";
@@ -36,6 +37,12 @@ export const addUsersToFeedbackSection = action(
 
       if (!addedUser)
         throw new Error("Adding user to feedback section failed!");
+
+      await createActivityForFeedbackSection(
+        sectionId,
+        currentUser.id,
+        "Added user to feedback section"
+      );
 
       revalidatePath(`/section/${sectionId}`);
       return { success: addedUser };

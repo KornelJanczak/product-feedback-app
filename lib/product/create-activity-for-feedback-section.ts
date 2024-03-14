@@ -14,6 +14,9 @@ export default async function createActivityForFeedbackSection(
       },
     });
 
+    if (!activity)
+      throw new Error("Creating activity for feedback section failed");
+
     return activity;
   } catch {
     throw new Error("Creating activity for feedback section failed");
