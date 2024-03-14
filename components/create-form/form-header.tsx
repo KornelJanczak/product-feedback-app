@@ -1,13 +1,15 @@
 import PlusGradientIcon from "@/public/icons/plus-gradient";
 import UserAvatar from "@/components/user/user-avatar";
+import { cn } from "@/lib/utils";
 
 interface IFormHeader {
-  userImage?: string;
+  userImage?: string | null;
   firstName?: string;
   lastName?: string;
+  className?: string;
   headerTitle: string;
   userName: string;
-  additonalContent: React.ReactNode;
+  additonalContent?: React.ReactNode;
 }
 
 export default function FormHeader({
@@ -17,12 +19,13 @@ export default function FormHeader({
   userName,
   headerTitle,
   additonalContent,
+  className,
 }: IFormHeader) {
   const showName =
     firstName && lastName ? `${firstName} ${lastName}` : `${userName}`;
 
   return (
-    <div className="pt-6">
+    <div className={cn("pt-6", className)}>
       <PlusGradientIcon />
       <h2 className="text-lg sm:text-xl md:text-2xl text-secondDark font-bold pt-6">
         {headerTitle}

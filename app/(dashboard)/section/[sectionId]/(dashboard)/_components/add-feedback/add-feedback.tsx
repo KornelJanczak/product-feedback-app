@@ -1,10 +1,15 @@
+import AddFeedbackContainer from "./add-feedback-container";
 import AddFeedbackDrawer from "./add-feedback-drawer";
 
-export default function AddFeedback() {
+export default function AddFeedback({
+  currentUser,
+}: {
+  currentUser: ICurrentUser;
+}) {
   return (
     <>
       <AddFeedbackDrawer>
-        <div></div>
+        <AddFeedbackContainer currentUser={currentUser} />
       </AddFeedbackDrawer>
     </>
   );

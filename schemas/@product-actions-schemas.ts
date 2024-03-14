@@ -38,3 +38,18 @@ export const giveAdminRoleSchema = z.object({
   adminId: z.string(),
   sectionId: z.string(),
 });
+
+export const addFeedbackSchema = z.object({
+  userId: z.string(),
+  sectionId: z.string(),
+  category: z.string(),
+  detail: z.string(),
+  status: z.union([
+    z.literal("inProgress"),
+    z.literal("Planned"),
+    z.literal("Live"),
+  ]),
+  title: z
+    .string()
+    .min(2, { message: "Title must contain at least 2 character's" }),
+});

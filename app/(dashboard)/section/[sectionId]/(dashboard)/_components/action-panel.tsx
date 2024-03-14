@@ -1,9 +1,8 @@
-import { PlusIcon } from "lucide-react";
-import Link from "next/link";
 import AddUsers from "./add-users/add-users";
 import SectionSettingsCard from "@/app/(dashboard)/_components/section-settings-card";
 import { ActivityIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import AddFeedback from "./add-feedback/add-feedback";
 
 interface IActionPanel {
   currentUser: User;
@@ -31,14 +30,7 @@ export default async function ActionPanel({
       className="flex items-center justify-center px-5 py-5 gap-2 
      sm:justify-start sm:items-end sm:py-0 sm:ml-auto"
     >
-      <Link
-        href={"/"}
-        className="flex items-center justify-center gap-0.5 bg-pink text-darkWhite px-3 py-1 rounded-md 
-      hover:bg-pink hover:opacity-70 hover:transition-all hover:duration-300 w-6/12 sm:w-auto"
-      >
-        <PlusIcon width={18} height={18} color="#fff" />
-        New feedback
-      </Link>
+      <AddFeedback currentUser={currentUser} />
       <AddUsers currentUser={currentUser} sectionUsers={sectionUsers} />
       <SectionSettingsCard
         currentUserId={currentUser.id}
