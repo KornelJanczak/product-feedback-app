@@ -117,7 +117,11 @@ export default async function HomePage({
 
   if (isExist)
     return (
-      <Suspense fallback={<ContainerSkeleton />}>
+      <Suspense
+        fallback={
+          <ContainerSkeleton skeletonCount={feedbackSections!.length} />
+        }
+      >
         <Container>
           {feedbackSections?.map(
             ({ id, title, members, admins, suggestions }) => (

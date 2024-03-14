@@ -2,7 +2,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import UserCard from "@/components/user/user-card";
-import AdminActionButton from "./admin-action-button";
+import AddUsersButton from "./add-users-button";
 import { useState } from "react";
 import SearchInput from "@/components/search-input";
 import NoResult from "@/components/no-result";
@@ -46,7 +46,7 @@ export default function AddUsersContainer({ friends }: { friends: IFriend[] }) {
                 className="sm:flex-row"
                 avatarClassName="h-20 w-20 sm:h-24 sm:w-24"
                 actionButton={
-                  <AdminActionButton userId={id} userName={userName} />
+                  <AddUsersButton userId={id} userName={userName} />
                 }
               />
             )

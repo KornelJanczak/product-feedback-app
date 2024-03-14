@@ -1,5 +1,5 @@
 import ImageBackground from "@/components/image-uploading/image-background";
-import getBase64 from "@/lib/getLocalBase64";
+import getBase64 from "@/lib/get-local-base64";
 
 export default async function Background({ image }: { image?: string | null }) {
   const image64 = image ? await getBase64(image) : null;

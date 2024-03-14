@@ -12,7 +12,7 @@ interface IAdminActionButton {
   userName: string;
 }
 
-export default function AdminActionButton({
+export default function AddUsersButton({
   userId,
   userName,
 }: IAdminActionButton) {

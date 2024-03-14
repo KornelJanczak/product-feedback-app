@@ -19,7 +19,7 @@ import {
 import { FormCombobox } from "./form-combobox";
 import useSelectFriend from "@/hooks/use-selected-friends";
 import FriendsContainer from "./friends-container";
-import FormButtons from "./form-buttons";
+import FormButtons from "@/components/create-form/form-buttons";
 import { useAction } from "next-safe-action/hooks";
 import { createFeedbackSection } from "@/server-actions/product/create-feedback-section";
 import { toast } from "sonner";
@@ -104,7 +104,12 @@ export default function AddForm({
           </FormControl>
           <FormMessage />
         </FormItem>
-        <FormButtons />
+        <FormButtons
+          actionButtonContent="Create Section"
+          onClick={() => {
+            router.push("/");
+          }}
+        />
       </form>
     </Form>
   );

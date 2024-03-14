@@ -124,7 +124,7 @@ model Profile {
   company String?
   location String?
   preferRole String?
-  gitHub String?
+  gitHub String? 
 }
 
 model Friend {

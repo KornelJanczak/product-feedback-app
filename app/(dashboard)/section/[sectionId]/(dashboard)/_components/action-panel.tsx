@@ -1,6 +1,6 @@
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
-import AddUsers from "./add-users";
+import AddUsers from "./add-users/add-users";
 import SectionSettingsCard from "@/app/(dashboard)/_components/section-settings-card";
 import { ActivityIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";

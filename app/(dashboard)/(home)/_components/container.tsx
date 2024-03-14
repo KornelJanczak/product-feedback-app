@@ -11,10 +11,14 @@ export default async function Container({
   );
 }
 
-export const ContainerSkeleton = () => {
+export const ContainerSkeleton = ({
+  skeletonCount,
+}: {
+  skeletonCount: number;
+}) => {
   return (
     <div className="flex flex-col p-4 gap-4 xl:grid xl:grid-cols-2">
-      {[...Array(6)].map((_, index) => (
+      {[...Array(skeletonCount)].map((_, index) => (
         <Skeleton key={index} className="bg-skeletonTheme h-28 w-full" />
       ))}
     </div>

@@ -1,7 +1,7 @@
 import ImageBackground from "@/components/image-uploading/image-background";
 import ImageUploaderButton from "@/components/image-uploading/image-uploader-button";
 import { ImagePlus } from "lucide-react";
-import getBase64 from "@/lib/getLocalBase64";
+import getBase64 from "@/lib/get-local-base64";
 import DeleteImageButton from "../../_components/delete-image-button";
 
 export default async function Background({ image }: { image?: string | null }) {
