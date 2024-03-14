@@ -10,7 +10,7 @@ const routes = [
   {
     icon: UsersRound,
     label: "Friends",
-    href: "/friends/sugesstions",
+    href: "/friends/suggestions",
   },
 ];
 
