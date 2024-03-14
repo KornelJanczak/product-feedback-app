@@ -7,6 +7,7 @@ interface IFormHeader {
   firstName?: string;
   lastName?: string;
   className?: string;
+  headerClassName?: string;
   headerTitle: string;
   userName: string;
   additonalContent?: React.ReactNode;
@@ -20,6 +21,7 @@ export default function FormHeader({
   headerTitle,
   additonalContent,
   className,
+  headerClassName,
 }: IFormHeader) {
   const showName =
     firstName && lastName ? `${firstName} ${lastName}` : `${userName}`;
@@ -27,7 +29,12 @@ export default function FormHeader({
   return (
     <div className={cn("pt-6", className)}>
       <PlusGradientIcon />
-      <h2 className="text-lg sm:text-xl md:text-2xl text-secondDark font-bold pt-6">
+      <h2
+        className={cn(
+          "text-lg sm:text-xl md:text-2xl text-secondDark font-bold pt-6",
+          headerClassName
+        )}
+      >
         {headerTitle}
       </h2>
       <div className="flex flex-row gap-1.5 pt-2">

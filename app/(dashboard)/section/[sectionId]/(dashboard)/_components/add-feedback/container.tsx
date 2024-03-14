@@ -1,8 +1,7 @@
 import FormHeader from "@/components/create-form/form-header";
 import AddFeedbackForm from "./add-feedback-form";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
-export default function AddFeedbackContainer({
+export default function Container({
   currentUser,
 }: {
   currentUser: ICurrentUser;
@@ -12,14 +11,14 @@ export default function AddFeedbackContainer({
       <FormHeader
         headerTitle="Create new Feedback"
         className="pt-0"
+        headerClassName="pt-3"
         userName={currentUser.name}
         lastName={currentUser.lastName}
         firstName={currentUser.firstName}
         userImage={currentUser.image}
       />
-      <ScrollArea>
-        <AddFeedbackForm />
-      </ScrollArea>
+
+      <AddFeedbackForm />
     </>
   );
 }

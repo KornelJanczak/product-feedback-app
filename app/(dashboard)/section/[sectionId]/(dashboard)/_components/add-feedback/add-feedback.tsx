@@ -1,5 +1,5 @@
-import AddFeedbackContainer from "./add-feedback-container";
-import AddFeedbackDrawer from "./add-feedback-drawer";
+import Container from "./container";
+import AddFeedbackDrawer from "./form-drawer";
 
 export default function AddFeedback({
   currentUser,
@@ -9,7 +9,7 @@ export default function AddFeedback({
   return (
     <>
       <AddFeedbackDrawer>
-        <AddFeedbackContainer currentUser={currentUser} />
+        <Container currentUser={currentUser} />
       </AddFeedbackDrawer>
     </>
   );

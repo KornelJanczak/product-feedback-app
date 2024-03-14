@@ -20,7 +20,7 @@ import {
   addFeedbackSubmitHandler,
 } from "@/models/@product-actions-types";
 import { addFeedbackSchema } from "@/schemas/@product-actions-schemas";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { FormSelect } from "./form-select";
 
 export default function AddFeedbackForm() {
   const form = useForm<addFeedbackInputs>({
@@ -39,7 +39,7 @@ export default function AddFeedbackForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onProcess)} className="space-y-8 pt-4">
+      <form onSubmit={form.handleSubmit(onProcess)} className="space-y-5 pt-4">
         <FormField
           control={form.control}
           name="title"
@@ -50,60 +50,44 @@ export default function AddFeedbackForm() {
                 Add a short, descriptive headline
               </FormDescription>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormMessage />
+              {/* <FormMessage /> */}
             </FormItem>
           )}
         />
+        <FormItem>
+          <FormLabel>Category</FormLabel>
+          <FormDescription>Choose a category for your feedback</FormDescription>
+          <FormControl>
+            <FormSelect />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
         <FormField
           control={form.control}
-          name="title"
+          name="detail"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Feedback Title</FormLabel>
+              <FormLabel>Feedback Detail</FormLabel>
               <FormDescription>
-                Add a short, descriptive headline
+                Include any specific comments on what should be improved, added,
+                etc.
               </FormDescription>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Feedback Title</FormLabel>
-              <FormDescription>
-                Add a short, descriptive headline
-              </FormDescription>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Feedback Title</FormLabel>
-              <FormDescription>
-                Add a short, descriptive headline
-              </FormDescription>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <Button
+          type="submit"
+          className="w-full bg-pink hover:bg-pink hover:opacity-70 
+          hover:transition-all hover:duration-300 "
+        >
+          Add Feedback
+        </Button>
       </form>
     </Form>
   );

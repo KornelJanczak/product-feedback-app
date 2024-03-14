@@ -8,11 +8,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { ReactNode } from "react";
 
-export default function AddFeedbackDrawer({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function FormDrawer({ children }: { children: ReactNode }) {
   return (
     <Drawer>
       <DrawerTrigger
@@ -24,8 +20,8 @@ export default function AddFeedbackDrawer({
       </DrawerTrigger>
       <DrawerContent className="h-full px-4 bg-darkWhite">
         {children}
-        <DrawerClose className="pb-4 pt-5">
-          <Button className="w-full bg-dark text-darkWhite" variant="outline">
+        <DrawerClose className="pt-2">
+          <Button className="w-full  bg-dark text-darkWhite" variant="outline">
             Cancel
           </Button>
         </DrawerClose>
