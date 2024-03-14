@@ -1,5 +1,4 @@
-import SectionLayout from "./_components/section-layout";
-import { ReactNode } from "react";
+
 export default async function SectionDashboard({
   params,
 }: {

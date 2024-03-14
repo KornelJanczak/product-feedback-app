@@ -44,7 +44,7 @@ export default function Container({
   return (
     <>
       <SearchInput
-        className="w-full px-0"
+        className="w-full px-0 pb-5 sm:pb-5"
         searchHandler={onSearchHandler}
         value={searchValue}
       />
@@ -58,7 +58,7 @@ export default function Container({
             firstName={currentUser.firstName}
             lastName={currentUser.lastName}
             avatarClassName="w-14 h-14"
-            className="flex flex-row bg-basicWhite px-2 py-4 rounded"
+            className="flex flex-row bg-basicWhite px-2 py-4 rounded sm:flex-row"
             actionButton={
               currentUserIsAdmin && (
                 <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
@@ -75,7 +75,6 @@ export default function Container({
             />
           </UserCard>
         )}
-        <Separator />
         {isSearch && (
           <h3 className="text-secondDark font-semibold  pt-6 pb-2 text-lg sm:text-xl md:text-2xl ">
             Search results
@@ -105,7 +104,8 @@ export default function Container({
         {!isResult && (
           <div className="flex justify-center items-center px-4 py-14">
             <span className="text-grey font-semibold">
-              No results for <strong className="text-pink">&quot;{searchValue}&quot;</strong>
+              No results for{" "}
+              <strong className="text-pink">&quot;{searchValue}&quot;</strong>
             </span>
           </div>
         )}
