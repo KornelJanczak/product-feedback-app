@@ -1,10 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-
 export default function Loading() {
   return (
-    <section className="md:container">
-      <div className="px-5 py-2">
+    <section className="md:container lg:max-w-2xl">
+      <div className="px-5 py-2 md:py-6">
         <div className="pb-5">
           <Skeleton className="w-full h-10 bg-skeletonTheme" />
         </div>
