@@ -41,7 +41,7 @@ model FeedbackSection{
   bgImageKey String?
   members UserToFeedbackSection[]
   admins   AdminToFeedbackSection[]
-  suggestions SuggestionsToFeedbackSection[]
+  suggestions FeedbackToFeedbackSection[]
   activity ActivityToFeedbackSection[]
 }
 
@@ -71,10 +71,11 @@ model AdminToFeedbackSection {
   @@id([userId, feedbackSectionId])
 }
 
-model SuggestionsToFeedbackSection{
+model FeedbackToFeedbackSection{
   id String @id @default(cuid())
   feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id], onDelete: Cascade)
   feedbackSectionId String
+  authorId String
  
   title String
   category String
@@ -90,7 +91,7 @@ model SuggestionsToFeedbackSection{
 
 model CommentsToSuggestion{
   id String @id @default(cuid())
-  suggestion SuggestionsToFeedbackSection @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+  suggestion FeedbackToFeedbackSection @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
   replies RepliesToComments[]
   suggestionId String
   authorId String 
