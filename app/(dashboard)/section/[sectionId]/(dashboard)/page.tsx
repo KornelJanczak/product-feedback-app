@@ -9,5 +9,5 @@ export default async function SectionDashboard({
 
   // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  return <div>Section</div>;
+  return <section className="md:container">Section</section>;
 }

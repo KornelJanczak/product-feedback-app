@@ -27,11 +27,14 @@ export default async function ActionPanel({
   ];
 
   return (
-    <div className="flex items-center justify-center px-5 py-5 gap-2 ">
+    <div
+      className="flex items-center justify-center px-5 py-5 gap-2 
+     sm:justify-start sm:items-end sm:py-0 sm:ml-auto"
+    >
       <Link
         href={"/"}
         className="flex items-center justify-center gap-0.5 bg-pink text-darkWhite px-3 py-1 rounded-md 
-      hover:bg-pink hover:opacity-70 hover:transition-all hover:duration-300 w-6/12"
+      hover:bg-pink hover:opacity-70 hover:transition-all hover:duration-300 w-6/12 sm:w-auto"
       >
         <PlusIcon width={18} height={18} color="#fff" />
         New feedback
@@ -42,7 +45,7 @@ export default async function ActionPanel({
         currentUserIsAdmin={currentUserIsAdmin}
         sectionId={sectionId}
         settings={settings}
-        className="flex items-center justify-center w-1/12"
+        className="flex items-center justify-center w-1/12 sm:w-auto"
         align="end"
       />
     </div>

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import SectionLayout from "./_components/section-layout";
-import Nav from "@/components/nav/navbar";
+import MainLayout from "@/components/main-layout";
 
 export default async function Layout({
   children,
@@ -10,10 +10,9 @@ export default async function Layout({
   params: { sectionId: string };
 }) {
   return (
-    <div className="lg:flex lg:gap-x-4 lg:container lg:py-14">
-      <Nav />
+    <MainLayout>
       <SectionLayout params={params} />
       {children}
-    </div>
+    </MainLayout>
   );
 }

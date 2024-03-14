@@ -14,8 +14,6 @@ export default function RouteItem({
 }) {
   const pathname = usePathname();
 
-  console.log(pathname.endsWith("/"));
-
   const isMember = pathname.endsWith(`section/${sectionId}/${href}`);
 
   const isSuggestions = pathname.endsWith(sectionId);

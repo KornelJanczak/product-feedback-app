@@ -116,24 +116,26 @@ export default async function SectionLayout({
             />
           </Suspense>
 
-          <Suspense
-            fallback={
-              <MainInformationSkeleton membersNumber={sectionUsers.length} />
-            }
-          >
-            <MainInformation
-              title={feedbackSection.title}
-              sectionUsers={sectionUsers}
-            />
-          </Suspense>
-          <Suspense fallback={<ActionPanelSkeleton />}>
-            <ActionPanel
-              currentUser={currentUser}
-              sectionUsers={sectionUsers}
-              sectionId={sectionId}
-              currentUserIsAdmin={currentUserIsAdmin}
-            />
-          </Suspense>
+          <div className="sm:flex sm:flex-row sm:w-full pb-4">
+            <Suspense
+              fallback={
+                <MainInformationSkeleton membersNumber={sectionUsers.length} />
+              }
+            >
+              <MainInformation
+                title={feedbackSection.title}
+                sectionUsers={sectionUsers}
+              />
+            </Suspense>
+            <Suspense fallback={<ActionPanelSkeleton />}>
+              <ActionPanel
+                currentUser={currentUser}
+                sectionUsers={sectionUsers}
+                sectionId={sectionId}
+                currentUserIsAdmin={currentUserIsAdmin}
+              />
+            </Suspense>
+          </div>
 
           <Suspense fallback={<SectionRoutesSkeleton />}>
             <SectionRoutes sectionId={sectionId} />
