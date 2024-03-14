@@ -115,7 +115,6 @@ export default async function SectionLayout({
               currentUserIsAdmin={currentUserIsAdmin}
             />
           </Suspense>
-
           <div className="sm:flex sm:flex-row sm:w-full pb-4">
             <Suspense
               fallback={
@@ -136,7 +135,6 @@ export default async function SectionLayout({
               />
             </Suspense>
           </div>
-
           <Suspense fallback={<SectionRoutesSkeleton />}>
             <SectionRoutes sectionId={sectionId} />
           </Suspense>
