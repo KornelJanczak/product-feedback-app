@@ -1,6 +1,6 @@
 # Fullstack Feedback Product app: Next.js 14, TS, Prisma, PostgreSQL, Tailwind, ShadcnUI ( In Progress)
 
-Key Features:
+Key Features 🔑:
 - Next Auth by credentials
 - Friend request send, cancel
 - Friend add, delete
@@ -32,7 +32,7 @@ Uploadthing |
 Use hooks | 
 Sonner | 
 
-<h2>What I've learned?</h2>
+<h2>What I've learned? 📗</h2>
 
 - Deepended my knowladge in Tailwind, Prisma, Server Actions
 - Use zod with server actions and react hook form
