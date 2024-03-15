@@ -47,9 +47,6 @@ export default function AddFeedbackForm({
     },
   });
 
-
-
-
   const onProcess: addFeedbackSubmitHandler = (values) => {
     console.log(values);
   };
@@ -58,7 +55,7 @@ export default function AddFeedbackForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="pt-4 flex flex-col h-full"
+        className="pt-4 flex flex-col sm:gap-8 h-full"
       >
         <Tabs defaultValue="information">
           <TabsList className="px-0 gap-x-3">
