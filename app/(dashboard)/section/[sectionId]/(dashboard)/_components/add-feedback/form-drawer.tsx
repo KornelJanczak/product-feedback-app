@@ -4,7 +4,6 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { ReactNode } from "react";
 
@@ -12,7 +11,7 @@ export default function FormDrawer({ children }: { children: ReactNode }) {
   return (
     <Drawer>
       <DrawerTrigger
-        className="flex items-center justify-center gap-0.5 bg-pink text-darkWhite px-3 py-1 rounded-md 
+        className="flex items-center justify-center gap-0.5 bg-pink text-darkWhite text-nowrap px-3 py-1 rounded-md 
         hover:bg-pink hover:opacity-70 hover:transition-all hover:duration-300 w-6/12 sm:w-auto"
       >
         <PlusIcon width={18} height={18} color="#fff" />
@@ -20,10 +19,11 @@ export default function FormDrawer({ children }: { children: ReactNode }) {
       </DrawerTrigger>
       <DrawerContent className="h-full px-4 bg-darkWhite">
         {children}
-        <DrawerClose className="pt-2">
-          <Button className="w-full  bg-dark text-darkWhite" variant="outline">
-            Cancel
-          </Button>
+        <DrawerClose
+          className="py-2 px-4 text-sm mt-2 w-full bg-dark text-darkWhite
+          hover:opacity-70 rounded-sm hover:transition-all hover:duration-300 mb-2  "
+        >
+          Cancel
         </DrawerClose>
       </DrawerContent>
     </Drawer>

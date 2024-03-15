@@ -12,7 +12,7 @@ export default function AddUsersDrawer({ children }: { children: ReactNode }) {
   return (
     <Drawer>
       <DrawerTrigger
-        className="flex items-center justify-center gap-1 bg-blue text-darkWhite px-3 py-1 rounded-md 
+        className="flex items-center justify-center gap-1 bg-blue text-darkWhite text-nowrap px-3 py-1 rounded-md 
       hover:opacity-70 hover:transition-all hover:duration-300 w-5/12 sm:hidden"
       >
         <UserPlus2Icon width={18} height={18} color="#fff" />

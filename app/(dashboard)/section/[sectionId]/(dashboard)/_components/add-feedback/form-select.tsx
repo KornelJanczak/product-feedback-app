@@ -9,21 +9,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ControllerRenderProps } from "react-hook-form";
 
-export function FormSelect() {
+export function FormSelect({
+  onChange,
+  selectValues,
+}: {
+  onChange: (value: string) => void;
+  selectValues: string[];
+}) {
   return (
-    <Select>
+    <Select onValueChange={onChange}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder="Feature" />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup>
-          <SelectLabel>All</SelectLabel>
-          <SelectItem value="UI">UI</SelectItem>
-          <SelectItem value="UX">UX</SelectItem>
-          <SelectItem value="Enhancement">Enhancement</SelectItem>
-          <SelectItem value="Bug">Bug</SelectItem>
-          <SelectItem value="Feature">Feature</SelectItem>
+        <SelectGroup className="text-grey ring-[pink]">
+          {/* <SelectLabel className="text-grey">All</SelectLabel> */}
+          {selectValues.map((value) => (
+            <SelectItem key={value} value={value}>
+              {value.toLowerCase()}
+            </SelectItem>
+          ))}
+          {/* <SelectItem value="all">All</SelectItem>
+          <SelectItem value="ui">UI</SelectItem>
+          <SelectItem value="ux">UX</SelectItem>
+          <SelectItem value="enhancement">Enhancement</SelectItem>
+          <SelectItem value="bug">Bug</SelectItem>
+          <SelectItem value="feature">Feature</SelectItem> */}
         </SelectGroup>
       </SelectContent>
     </Select>
