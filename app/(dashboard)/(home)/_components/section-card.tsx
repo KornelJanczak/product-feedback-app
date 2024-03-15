@@ -78,14 +78,14 @@ export default function SectionCard({
           )}
         </div>
       </div>
-      <div className="flex flex-col ml-auto items-center justify-center gap-6">
+      <div className="flex flex-col ml-auto items-center gap-6">
         <div className="flex items-center ml-auto">
           <span className="text-dark text-sm sm:text-base font-semibold">
             {suggestionsNumber}
           </span>
           <SuggestionIcon fill="#3A4374" />
         </div>
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-row gap-1 mt-auto ">
           <SectionSettingsCard
             sectionId={sectionId}
             currentUserId={currentUserId}
