@@ -1,6 +1,6 @@
 "use client";
-import { deleteFeedbackSection } from "@/server-actions/product/delete-feedback-section";
-import { leaveFromFeedbackSection } from "@/server-actions/product/leave-from-feedback-section";
+import { deleteFeedbackSection } from "@/server-actions/product/feedback-section/delete-feedback-section";
+import { leaveFromFeedbackSection } from "@/server-actions/product/feedback-section/leave-from-feedback-section";
 import { LogOutIcon, Trash2Icon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";

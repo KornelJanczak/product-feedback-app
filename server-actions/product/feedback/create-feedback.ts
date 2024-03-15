@@ -1,5 +1,4 @@
 "use server";
-
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import createActivityForFeedbackSection from "@/lib/product/create-activity-for-feedback-section";

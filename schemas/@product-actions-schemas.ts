@@ -13,6 +13,20 @@ const basicProductSchema = {
   sectionId: z.string(),
 };
 
+const basicFeedbackSchema = {
+  userId: z.string(),
+  category: z.string(),
+  detail: z.string(),
+  status: z.union([
+    z.literal("inProgress"),
+    z.literal("Planned"),
+    z.literal("Live"),
+  ]),
+  title: z
+    .string()
+    .min(2, { message: "Title must contain at least 2 character's" }),
+};
+
 export const deleteFeedbackSectionSchema = z.object({
   ...basicProductSchema,
 });
@@ -40,16 +54,12 @@ export const giveAdminRoleSchema = z.object({
 });
 
 export const addFeedbackSchema = z.object({
-  userId: z.string(),
+  ...basicFeedbackSchema,
   sectionId: z.string(),
-  category: z.string(),
-  detail: z.string(),
-  status: z.union([
-    z.literal("inProgress"),
-    z.literal("Planned"),
-    z.literal("Live"),
-  ]),
-  title: z
-    .string()
-    .min(2, { message: "Title must contain at least 2 character's" }),
+});
+
+export const updateFeedbackSchema = z.object({
+  ...basicFeedbackSchema,
+  feedbackId: z.string(),
+  sectionId: z.string(),
 });

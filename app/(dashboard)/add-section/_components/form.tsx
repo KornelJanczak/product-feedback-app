@@ -21,7 +21,7 @@ import useSelectFriend from "@/hooks/use-selected-friends";
 import FriendsContainer from "./friends-container";
 import FormButtons from "@/components/create-form/form-buttons";
 import { useAction } from "next-safe-action/hooks";
-import { createFeedbackSection } from "@/server-actions/product/create-feedback-section";
+import { createFeedbackSection } from "@/server-actions/product/feedback-section/create-feedback-section";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

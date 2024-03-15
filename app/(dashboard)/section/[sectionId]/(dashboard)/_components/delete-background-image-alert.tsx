@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteFeedbackSectionBgImage } from "@/server-actions/product/delete-feedback-section-bg-image";
+import { deleteFeedbackSectionBgImage } from "@/server-actions/product/feedback-section/delete-feedback-section-bg-image";
 
 import { X } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";

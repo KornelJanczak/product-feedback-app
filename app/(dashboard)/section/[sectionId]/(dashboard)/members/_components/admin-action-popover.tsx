@@ -6,8 +6,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Settings2, ShieldCheck, UserX2 } from "lucide-react";
-import { kickUserFromFeedbackSection } from "@/server-actions/product/kick-user-from-feedback-section";
-import { giveAdminRoleInFeedbackSection } from "@/server-actions/product/give-admin-role-in-feedback-section";
+import { kickUserFromFeedbackSection } from "@/server-actions/product/feedback-section/kick-user-from-feedback-section";
+import { giveAdminRoleInFeedbackSection } from "@/server-actions/product/feedback-section/give-admin-role-in-feedback-section";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { addUsersToFeedbackSection } from "@/server-actions/product/add-user-to-feedback-section";
+import { addUsersToFeedbackSection } from "@/server-actions/product/feedback-section/add-user-to-feedback-section";
 import { UserPlus2Icon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
