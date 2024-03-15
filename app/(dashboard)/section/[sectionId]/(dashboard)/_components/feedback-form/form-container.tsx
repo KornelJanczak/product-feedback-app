@@ -1,5 +1,5 @@
 import FormHeader from "@/components/create-form/form-header";
-import AddFeedbackForm from "./add-feedback-form";
+import FeedbackForm from "./form";
 
 const formInformationValues: IFeedbackFormValues[] = [
   {
@@ -32,7 +32,7 @@ const formTagsValues: IFeedbackFormTagsValues[] = [
   },
 ];
 
-export default function Container({
+export default function FormContainer({
   currentUser,
   currentUserIsAdmin,
 }: {
@@ -60,10 +60,11 @@ export default function Container({
         }
       />
 
-      <AddFeedbackForm
+      <FeedbackForm
         formInformationValues={formInformationValues}
         formTagsValues={formTagsValues}
         currentUserId={currentUser.id}
+        formType="create"
       />
     </>
   );

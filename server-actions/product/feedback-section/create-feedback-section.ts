@@ -8,17 +8,19 @@ import { revalidatePath } from "next/cache";
 export const createFeedbackSection = action(
   createFeedbackSectionSchema,
   async ({ title, membersIds, currentUserId }) => {
+    if (!currentUserId || !title || !membersIds)
+      throw new Error("Valid input required!");
+
+    const users: { userId: string }[] = membersIds.map((id) => {
+      return {
+        userId: id,
+      };
+    });
+
+    let feedbackSection;
+
     try {
-      if (!currentUserId || !title || !membersIds)
-        throw new Error("Valid input required!");
-
-      const users: { userId: string }[] = membersIds.map((id) => {
-        return {
-          userId: id,
-        };
-      });
-
-      const section = await prisma.feedbackSection.create({
+      feedbackSection = await prisma.feedbackSection.create({
         data: {
           title,
           members: {
@@ -28,18 +30,19 @@ export const createFeedbackSection = action(
         },
       });
 
-      if (!section) throw new Error("Creating feedback section failed!");
+      if (!feedbackSection)
+        throw new Error("Creating feedback feedbackSection failed!");
 
       await createActivityForFeedbackSection(
-        section.id,
+        feedbackSection.id,
         currentUserId,
-        "Created feedback section"
+        "Created feedback feedbackSection"
       );
-
-      revalidatePath("/");
-      return { success: section };
     } catch {
-      throw new Error("Creating feedback section failed!");
+      throw new Error("Error while creating feedback feedbackSection");
     }
+
+    revalidatePath("/");
+    return { success: feedbackSection };
   }
 );

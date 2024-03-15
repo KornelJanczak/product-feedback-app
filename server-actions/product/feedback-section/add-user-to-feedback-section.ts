@@ -9,26 +9,34 @@ import { revalidatePath } from "next/cache";
 export const addUsersToFeedbackSection = action(
   sectionUserSchema,
   async ({ userId, sectionId }) => {
+    if (!userId || !sectionId) throw new Error("Invalid input");
+
+    // Add user to feedback section
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser || userId !== currentUser.id)
+      throw new Error("Unauthorized!");
+
+    let existingUser;
+
     try {
-      if (!userId || !sectionId) throw new Error("Invalid input");
-
-      // Add user to feedback section
-      const currentUser = await getCurrentUser();
-
-      if (!currentUser) throw new Error("Unauthorized!");
-
-      const existingUser = await prisma.userToFeedbackSection.findFirst({
+      existingUser = await prisma.userToFeedbackSection.findFirst({
         where: {
           userId: currentUser.id,
           feedbackSectionId: sectionId,
         },
       });
 
-      if (existingUser) {
+      if (existingUser)
         throw new Error("User already belongs to feedback section!");
-      }
+    } catch (error) {
+      throw new Error("Error while adding user to feedback section");
+    }
 
-      const addedUser = await prisma.userToFeedbackSection.create({
+    let addedUser;
+
+    try {
+      addedUser = await prisma.userToFeedbackSection.create({
         data: {
           userId: userId,
           feedbackSectionId: sectionId,
@@ -43,11 +51,11 @@ export const addUsersToFeedbackSection = action(
         currentUser.id,
         "Added user to feedback section"
       );
-
-      revalidatePath(`/section/${sectionId}`);
-      return { success: addedUser };
     } catch {
-      throw new Error("Adding user to feedback section failed!");
+      throw new Error("Error while adding user to feedback section");
     }
+
+    revalidatePath(`/section/${sectionId}`);
+    return { success: addedUser };
   }
 );

@@ -25,7 +25,10 @@ export function FormSelect({
       <SelectContent>
         <SelectGroup className="text-grey ">
           {selectValues.map((value) => (
-            <SelectItem key={value} value={value.toLowerCase()}>
+            <SelectItem
+              key={value}
+              value={value.toLowerCase().trim().split(" ").join("")}
+            >
               {value}
             </SelectItem>
           ))}

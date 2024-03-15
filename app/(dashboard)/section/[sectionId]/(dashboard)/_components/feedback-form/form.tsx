@@ -13,30 +13,44 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-  addFeedbackInputs,
-  addFeedbackSubmitHandler,
+  createFeedbackInputs,
+  createFeedbackSubmitHandler,
 } from "@/models/@product-actions-types";
-import { addFeedbackSchema } from "@/schemas/@product-actions-schemas";
+import {
+  createFeedbackSchema,
+} from "@/schemas/@product-actions-schemas";
 import { FormSelect } from "./form-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePathname } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
+import { createFeedback } from "@/server-actions/product/feedback/create-feedback";
+import { toast } from "sonner";
+import { updateFeedback } from "@/server-actions/product/feedback/update-feedback";
 
-interface IAddFeedbackForm {
+interface IcreateFeedbackForm {
   formInformationValues: IFeedbackFormValues[];
   formTagsValues: IFeedbackFormTagsValues[];
   currentUserId: string;
+  formType: "create" | "update";
+  feedbackId?: string;
 }
 
-export default function AddFeedbackForm({
+export default function FeedbackForm({
   formInformationValues,
   formTagsValues,
   currentUserId,
-}: IAddFeedbackForm) {
+  formType,
+  feedbackId,
+}: IcreateFeedbackForm) {
+  const toastId = "feedback-form-toast";
   const pathname = usePathname();
+
   const sectionId = pathname.split("/")[2];
 
-  const form = useForm<addFeedbackInputs>({
-    resolver: zodResolver(addFeedbackSchema),
+  const isCreateForm = formType === "create";
+
+  const form = useForm<createFeedbackInputs>({
+    resolver: zodResolver(createFeedbackSchema),
     defaultValues: {
       sectionId,
       userId: currentUserId,
@@ -47,15 +61,49 @@ export default function AddFeedbackForm({
     },
   });
 
-  const onProcess: addFeedbackSubmitHandler = (values) => {
-    console.log(values);
+  const { execute: executeCreateFeedback } = useAction(createFeedback, {
+    onSuccess() {
+      toast.dismiss(toastId);
+      toast.success("Feedback created successfully");
+    },
+    onError() {
+      toast.dismiss(toastId);
+      toast.error("Error while creating feedback");
+    },
+    onExecute() {
+      toast.loading("Creating feedback...", { id: toastId });
+    },
+  });
+
+  const { execute: executeUpdateFeedback } = useAction(updateFeedback, {
+    onSuccess() {
+      toast.dismiss(toastId);
+      toast.success("Feedback updated successfully");
+    },
+    onError() {
+      toast.dismiss(toastId);
+      toast.error("Error while updating feedback");
+    },
+    onExecute() {
+      toast.loading("Updating feedback...", { id: toastId });
+    },
+  });
+
+  const onProcess: createFeedbackSubmitHandler = (values) => {
+    if (isCreateForm) {
+      executeCreateFeedback(values);
+    }
+
+    if (!isCreateForm && feedbackId) {
+      executeUpdateFeedback({ ...values, feedbackId: feedbackId });
+    }
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="pt-4 flex flex-col sm:gap-8 h-full"
+        className="pt-4 flex flex-col sm:gap-20 h-full"
       >
         <Tabs defaultValue="information">
           <TabsList className="px-0 gap-x-3">
@@ -130,7 +178,8 @@ export default function AddFeedbackForm({
           className="w-full bg-pink hover:bg-pink hover:opacity-70 
           hover:transition-all hover:duration-300 mt-auto"
         >
-          Add Feedback
+          {isCreateForm && " Add Feedback"}
+          {!isCreateForm && "Edit Feedback"}
         </Button>
       </form>
     </Form>

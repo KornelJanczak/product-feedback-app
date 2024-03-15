@@ -17,24 +17,26 @@ export const updateFeedback = action(
     status,
     title,
   }) => {
+    if (
+      !userId ||
+      !feedbackId ||
+      !sectionId ||
+      !category ||
+      !detail ||
+      !status ||
+      !title
+    )
+      throw new Error("Invalid input");
+
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser || currentUser.id !== userId)
+      throw new Error("User not found");
+
+    let updateFeedback;
+
     try {
-      if (
-        !userId ||
-        !feedbackId ||
-        !sectionId ||
-        !category ||
-        !detail ||
-        !status ||
-        !title
-      )
-        throw new Error("Invalid input");
-
-      const currentUser = await getCurrentUser();
-
-      if (!currentUser || currentUser.id !== userId)
-        throw new Error("User not found");
-
-      const updateFeedback = await prisma.feedbackToFeedbackSection.update({
+      updateFeedback = await prisma.feedbackToFeedbackSection.update({
         where: {
           id: feedbackId,
         },
@@ -46,21 +48,21 @@ export const updateFeedback = action(
           detail,
         },
       });
-
-      if (!updateFeedback) throw new Error("Error while updating feedback");
-
-      await createActivityForFeedbackSection(
-        sectionId,
-        currentUser.id,
-        `Updated ${title} feedback by id=${feedbackId}`
-      );
-
-      revalidatePath(`/section/${sectionId}`);
-      revalidatePath(`/section/${sectionId}/feedback/${feedbackId}`);
-
-      return { success: updateFeedback };
     } catch {
       throw new Error("Error while updating feedback");
     }
+
+    if (!updateFeedback) throw new Error("Error while updating feedback");
+
+    await createActivityForFeedbackSection(
+      sectionId,
+      currentUser.id,
+      `Updated ${title} feedback by id=${feedbackId}`
+    );
+
+    revalidatePath(`/section/${sectionId}`);
+    revalidatePath(`/section/${sectionId}/feedback/${feedbackId}`);
+
+    return { success: updateFeedback };
   }
 );

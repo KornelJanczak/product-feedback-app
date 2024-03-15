@@ -1,6 +1,6 @@
 import {
   createFeedbackSectionSchema,
-  addFeedbackSchema,
+ createFeedbackSchema,
 } from "@/schemas/@product-actions-schemas";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 
@@ -15,8 +15,8 @@ export type createFeedbackSectionReturn =
 export type createFeedbackSectionSubmitHandler =
   SubmitHandler<createFeedbackSectionInputs>;
 
-export type addFeedbackInputs = z.infer<typeof addFeedbackSchema>;
+export type createFeedbackInputs = z.infer<typeof createFeedbackSchema>;
 
-export type addFeedbackReturn = UseFormReturn<addFeedbackInputs>;
+export type createFeedbackReturn = UseFormReturn<createFeedbackInputs>;
 
-export type addFeedbackSubmitHandler = SubmitHandler<addFeedbackInputs>;
+export type createFeedbackSubmitHandler = SubmitHandler<createFeedbackInputs>;

@@ -3,22 +3,24 @@ import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import createActivityForFeedbackSection from "@/lib/product/create-activity-for-feedback-section";
 import getCurrentUser from "@/lib/user/get-current-user";
-import { addFeedbackSchema } from "@/schemas/@product-actions-schemas";
+import { createFeedbackSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";
 
-export const addFeedback = action(
-  addFeedbackSchema,
+export const createFeedback = action(
+  createFeedbackSchema,
   async ({ userId, sectionId, category, detail, status, title }) => {
+    if (!userId || !sectionId || !category || !detail || !status || !title)
+      throw new Error("Invalid input");
+
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser || currentUser.id !== userId)
+      throw new Error("User not found");
+
+    let feedback;
+
     try {
-      if (!userId || !sectionId || !category || !detail || !status || !title)
-        throw new Error("Invalid input");
-
-      const currentUser = await getCurrentUser();
-
-      if (!currentUser || currentUser.id !== userId)
-        throw new Error("User not found");
-
-      const feedback = await prisma.feedbackToFeedbackSection.create({
+      feedback = await prisma.feedbackToFeedbackSection.create({
         data: {
           feedbackSectionId: sectionId,
           title,
@@ -28,19 +30,17 @@ export const addFeedback = action(
           authorId: userId,
         },
       });
-
-      if (!feedback) throw new Error("Error while adding feedback");
-
-      await createActivityForFeedbackSection(
-        sectionId,
-        currentUser.id,
-        `Added new feedback id=${currentUser.id}`
-      );
-
-      revalidatePath(`/section/${sectionId}`);
-      return { success: feedback };
     } catch {
       throw new Error("Error while adding feedback");
     }
+
+    await createActivityForFeedbackSection(
+      sectionId,
+      currentUser.id,
+      `Added new feedback id=${currentUser.id}`
+    );
+
+    revalidatePath(`/section/${sectionId}`);
+    return { success: feedback };
   }
 );

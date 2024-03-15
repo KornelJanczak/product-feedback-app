@@ -53,7 +53,7 @@ export const giveAdminRoleSchema = z.object({
   sectionId: z.string(),
 });
 
-export const addFeedbackSchema = z.object({
+export const createFeedbackSchema = z.object({
   ...basicFeedbackSchema,
   sectionId: z.string(),
 });

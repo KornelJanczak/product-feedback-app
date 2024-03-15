@@ -1,8 +1,8 @@
-import Container from "./container";
+import FormContainer from "./form-container";
 import FormDialog from "./form-dialog";
 import FormDrawer from "./form-drawer";
 
-export default function AddFeedback({
+export default function CreateFeedback({
   currentUser,
   currentUserIsAdmin,
 }: {
@@ -12,13 +12,13 @@ export default function AddFeedback({
   return (
     <>
       <FormDrawer>
-        <Container
+        <FormContainer
           currentUser={currentUser}
           currentUserIsAdmin={currentUserIsAdmin}
         />
       </FormDrawer>
       <FormDialog>
-        <Container
+        <FormContainer
           currentUser={currentUser}
           currentUserIsAdmin={currentUserIsAdmin}
         />
