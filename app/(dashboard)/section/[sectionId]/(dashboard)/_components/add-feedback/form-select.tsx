@@ -1,42 +1,34 @@
 import * as React from "react";
-
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ControllerRenderProps } from "react-hook-form";
 
 export function FormSelect({
   onChange,
   selectValues,
+  selectPlaceholder,
 }: {
   onChange: (value: string) => void;
   selectValues: string[];
+  selectPlaceholder: string;
 }) {
   return (
     <Select onValueChange={onChange}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Feature" />
+        <SelectValue placeholder={selectPlaceholder} />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup className="text-grey ring-[pink]">
-          {/* <SelectLabel className="text-grey">All</SelectLabel> */}
+        <SelectGroup className="text-grey ">
           {selectValues.map((value) => (
-            <SelectItem key={value} value={value}>
-              {value.toLowerCase()}
+            <SelectItem key={value} value={value.toLowerCase()}>
+              {value}
             </SelectItem>
           ))}
-          {/* <SelectItem value="all">All</SelectItem>
-          <SelectItem value="ui">UI</SelectItem>
-          <SelectItem value="ux">UX</SelectItem>
-          <SelectItem value="enhancement">Enhancement</SelectItem>
-          <SelectItem value="bug">Bug</SelectItem>
-          <SelectItem value="feature">Feature</SelectItem> */}
         </SelectGroup>
       </SelectContent>
     </Select>

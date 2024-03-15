@@ -102,3 +102,14 @@ interface IFeedbackSectionUser {
   firstName?: string | null;
   email?: string | null;
 }
+
+interface IFeedbackFormValues {
+  name: "title" | "detail" | "category" | "status";
+  label: string;
+  description: string;
+}
+
+interface IFeedbackFormTagsValues extends IFeedbackFormValues {
+  selectValues: string[];
+  selectPlaceholder: string;
+}

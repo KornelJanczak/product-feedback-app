@@ -30,7 +30,10 @@ export default async function ActionPanel({
       className="flex items-center justify-center px-5 py-5 gap-2 
      sm:justify-start sm:items-end sm:py-0 sm:ml-auto"
     >
-      <AddFeedback currentUser={currentUser} />
+      <AddFeedback
+        currentUser={currentUser}
+        currentUserIsAdmin={currentUserIsAdmin}
+      />
       <AddUsers currentUser={currentUser} sectionUsers={sectionUsers} />
       <SectionSettingsCard
         currentUserId={currentUser.id}

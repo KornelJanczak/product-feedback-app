@@ -1,8 +1,6 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,64 +14,41 @@ import {
 import { Input } from "@/components/ui/input";
 import {
   addFeedbackInputs,
-  addFeedbackReturn,
   addFeedbackSubmitHandler,
 } from "@/models/@product-actions-types";
 import { addFeedbackSchema } from "@/schemas/@product-actions-schemas";
 import { FormSelect } from "./form-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { usePathname } from "next/navigation";
 
-interface IFormValues {
-  name: "title" | "detail" | "category" | "status";
-  label: string;
-  description: string;
+interface IAddFeedbackForm {
+  formInformationValues: IFeedbackFormValues[];
+  formTagsValues: IFeedbackFormTagsValues[];
+  currentUserId: string;
 }
 
-interface IFormTagsValues extends IFormValues {
-  selectValues: string[];
-}
+export default function AddFeedbackForm({
+  formInformationValues,
+  formTagsValues,
+  currentUserId,
+}: IAddFeedbackForm) {
+  const pathname = usePathname();
+  const sectionId = pathname.split("/")[2];
 
-const formInformationValues: IFormValues[] = [
-  {
-    name: "title",
-    label: "Title",
-    description: "Add a short, descriptive headline",
-  },
-  {
-    name: "detail",
-    label: "Detail",
-    description:
-      "Include any specific comments on what should be improved, added, etc.",
-  },
-];
-
-const formTagsValues: IFormTagsValues[] = [
-  {
-    name: "category",
-    label: "Category",
-    description: "Choose a category for your feedback",
-    selectValues: ["All", "UI", "UX", "Enhancement", "Bug", "Feature"],
-  },
-  {
-    name: "status",
-    label: "Status",
-    description: "Choose a status for your feedback",
-    selectValues: ["In Progress", "Live", "Planned"],
-  },
-];
-
-export default function AddFeedbackForm() {
   const form = useForm<addFeedbackInputs>({
     resolver: zodResolver(addFeedbackSchema),
     defaultValues: {
+      sectionId,
+      userId: currentUserId,
       title: "",
-      userId: "",
-      sectionId: "",
-      category: "",
       detail: "",
-      status: "inProgress",
+      category: undefined,
+      status: undefined,
     },
   });
+
+
+
 
   const onProcess: addFeedbackSubmitHandler = (values) => {
     console.log(values);
@@ -102,7 +77,7 @@ export default function AddFeedbackForm() {
           </TabsList>
           <TabsContent value="information" className="h-full">
             {formInformationValues.map(
-              ({ name, description, label }: IFormValues) => (
+              ({ name, description, label }: IFeedbackFormValues) => (
                 <FormField
                   key={name}
                   control={form.control}
@@ -123,7 +98,13 @@ export default function AddFeedbackForm() {
           </TabsContent>
           <TabsContent value="tags" className="h-full">
             {formTagsValues.map(
-              ({ name, description, label, selectValues }: IFormTagsValues) => (
+              ({
+                name,
+                description,
+                label,
+                selectValues,
+                selectPlaceholder,
+              }: IFeedbackFormTagsValues) => (
                 <FormField
                   key={name}
                   control={form.control}
@@ -135,6 +116,7 @@ export default function AddFeedbackForm() {
                       <FormControl>
                         <FormSelect
                           selectValues={selectValues}
+                          selectPlaceholder={selectPlaceholder}
                           onChange={field.onChange}
                         />
                       </FormControl>
@@ -156,17 +138,4 @@ export default function AddFeedbackForm() {
       </form>
     </Form>
   );
-}
-
-{
-  /* <FormItem>
-            <FormLabel>Category</FormLabel>
-            <FormDescription>
-              Choose a category for your feedback
-            </FormDescription>
-            <FormControl>
-              <FormSelect />
-            </FormControl>
-            <FormMessage />
-          </FormItem> */
 }

@@ -18,9 +18,9 @@ const basicFeedbackSchema = {
   category: z.string(),
   detail: z.string(),
   status: z.union([
-    z.literal("inProgress"),
-    z.literal("Planned"),
-    z.literal("Live"),
+    z.literal("inprogress"),
+    z.literal("planned"),
+    z.literal("live"),
   ]),
   title: z
     .string()
