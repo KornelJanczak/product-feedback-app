@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fullstack Feedback Product app: Next.js 14, TS, Prisma, PostgreSQL, Tailwind, ShadcnUI ( In Progress)
 
-## Getting Started
+Key Features:
+- Next Auth by credentials
+- Friend request send, cancel
+- Friend add, delete
+- Public profile create
+- Public profile background image add, update, delete
+- Avatar image add, update, delete
+- Manage account data (firstname, lastname, username, email)
+- Manage profile data (company, prefer role, location, github link)
+- Feedback section create, leave from this, (admin: delete, update section image)
+- Feedback section activity log
+- Feedback section add friends (admin: give admin, kick member)
+- Feebacks roadmap view 
+- Feedback create, delete, update
+- Comment create, delete, update,
+- Comment replies create, delete, update
+- Modern ui with shadcn UI
+- Responsive design
+- 100% written in TS
 
-First, run the development server:
+## Built with 🛠
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Tools 
+---|  
+Server actions |
+Next safe action |
+Zod | 
+Zustand | 
+Uploadthing | 
+Use hooks | 
+Sonner | 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<h2>What I've learned?</h2>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Deepended my knowladge in Tailwind, Prisma, Server Actions
+- Use zod with server actions and react hook form
+- Upload image by uploadthing and AWS bucket (it was my first approach, but i switched to uploadthing)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<h2>What next?</h2>
 
-## Learn More
+- In meantime I'll add notifications fc.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  
