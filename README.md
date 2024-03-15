@@ -1,6 +1,6 @@
 # Fullstack Feedback Product app: Next.js 14, TS, Prisma, PostgreSQL, Tailwind, ShadcnUI ( In Progress)
 
-![section-ss](public/assets/ss/section-ss.png)
+![section-ss](public/ss/section-ss.png)
 
 Key Features 🔑:
 - Next Auth by credentials
