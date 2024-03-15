@@ -47,7 +47,7 @@ model FeedbackSection{
 
 model ActivityToFeedbackSection {
    id String @id @default(cuid())
-   feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id])
+   feedbackSection FeedbackSection @relation(fields: [feedbackSectionId], references: [id], onDelete: Cascade)
    feedbackSectionId String
    authorId String
    description String
