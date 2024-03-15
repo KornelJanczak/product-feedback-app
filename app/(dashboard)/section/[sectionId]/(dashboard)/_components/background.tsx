@@ -20,14 +20,18 @@ export default async function Background({
   const image64 = image ? await getBase64(image) : null;
 
   if (!currentUserIsAdmin)
-    <ImageBackground image={image} image64={image64} className="h-44" />;
+    <ImageBackground
+      image={image}
+      image64={image64}
+      className="h-52 lg:h-80"
+    />;
 
   if (currentUserIsAdmin)
     return (
       <ImageBackground
         image={image}
         image64={image64}
-        className="h-44"
+        className="h-52 lg:h-80"
         buttonsWithoutImage={
           <ImageUploaderButton
             actionType="feedbackSectionBackgroundImage"

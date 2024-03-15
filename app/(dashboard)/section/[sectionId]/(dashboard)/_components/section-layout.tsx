@@ -106,8 +106,10 @@ export default async function SectionLayout({
 
     return (
       <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
-        <section className="px-0 md:container lg:w-full lg:px-0 ">
-          <Suspense fallback={<ImageBackgroundSkeleton className="h-44" />}>
+        <section className="px-0 lg:container lg:w-full lg:px-0 ">
+          <Suspense
+            fallback={<ImageBackgroundSkeleton className="h-52 lg:h-80" />}
+          >
             <Background
               image={feedbackSection?.bgImage}
               sectionId={sectionId}
