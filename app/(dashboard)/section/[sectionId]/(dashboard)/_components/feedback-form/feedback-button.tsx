@@ -2,7 +2,7 @@ import FormContainer from "./form-container";
 import FormDialog from "./form-dialog";
 import FormDrawer from "./form-drawer";
 
-export default function CreateFeedback({
+export default function FeedbackButton({
   currentUser,
   currentUserIsAdmin,
 }: {

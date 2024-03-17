@@ -1,5 +1,5 @@
 import FormHeader from "@/components/create-form/form-header";
-import FeedbackForm from "./form";
+import FeedbackForm from "./feedback-form";
 
 const formInformationValues: IFeedbackFormValues[] = [
   {
