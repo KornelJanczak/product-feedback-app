@@ -113,3 +113,24 @@ interface IFeedbackFormTagsValues extends IFeedbackFormValues {
   selectValues: string[];
   selectPlaceholder: string;
 }
+
+interface Author {
+  id: string;
+  image: string;
+  userName: string;
+  lastName: string;
+  firstName: string;
+}
+
+interface Feedback {
+  id: string;
+  feedbackSectionId: string;
+  authorId: string;
+  title: string;
+  detail: string;
+  status: string; // Adjust status values as needed
+  count: number;
+  createdAt: Date;
+  updatedAt: Date;
+  author: Author;
+}

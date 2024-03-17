@@ -1,6 +1,9 @@
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
+import Container from "./_components/container";
+import Card from "./_components/card";
+import { Suspense } from "react";
 async function getSuggestions(sectionId: string) {
   if (!sectionId) return null;
 
@@ -44,13 +47,13 @@ async function getSuggestions(sectionId: string) {
   const suggestions = section.suggestions.map((suggestion) => {
     const members = section.members.map((member) => {
       if (member.user.id === suggestion.authorId) {
-        return member.user;
+        return { ...member.user, isAdmin: false };
       }
     });
 
     const admins = section.admins.map((admin) => {
       if (admin.user.id === suggestion.authorId) {
-        return admin.user;
+        return { ...admin.user, isAdmin: true };
       }
     });
 
@@ -74,5 +77,22 @@ export default async function SectionDashboard({
 
   const suggestions = await getSuggestions(sectionId);
 
-  return <section className="md:container px-5">Section</section>;
+  if (!suggestions) return <div></div>;
+
+  if (suggestions)
+    return (
+      <section className="md:container px-5">
+        <Suspense fallback={<p>Loading...</p>}>
+          <Container>
+            {suggestions.map((suggestion) => (
+              <Card
+                key={suggestion.id}
+                currentUserId={currentUser.id}
+                {...suggestion}
+              />
+            ))}
+          </Container>
+        </Suspense>
+      </section>
+    );
 }
