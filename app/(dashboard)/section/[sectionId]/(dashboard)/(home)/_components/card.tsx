@@ -1,6 +1,7 @@
 import UserAvatar from "@/components/user/user-avatar";
 import { Settings, Heart, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import SettingsPopover from "./settings-popover";
 
 interface ICard {
   id: string;
@@ -12,14 +13,7 @@ interface ICard {
   category: string;
   createdAt: Date;
   updatedAt: Date;
-  author?: {
-    id: string;
-    image: string | null;
-    userName: string;
-    lastName: string | null;
-    firstName: string | null;
-    isAdmin: boolean;
-  };
+  author?: IAuthor;
 }
 
 export default function Card({
@@ -54,10 +48,7 @@ export default function Card({
     const modifiedCategory = firstCategoryLetter + category.slice(1);
 
     return (
-      <Link
-        href={`/section/${feedbackSectionId}/suggestion/${id}`}
-        className="flex flex-col px-4 py-3 rounded-md bg-basicWhite"
-      >
+      <div className="flex flex-col px-4 py-3 rounded-md bg-basicWhite">
         <div className="flex flex-row justify-between">
           <div className="flex gap-1.5">
             <UserAvatar className="h-10 w-10" userImage={author.image} />
@@ -70,19 +61,19 @@ export default function Card({
               </span>
             </div>
           </div>
-          {hasAccessToSettings && (
-            <Settings width={20} height={20} color="#3A4374" />
-          )}
+          {hasAccessToSettings && <SettingsPopover />}
         </div>
         <div className="flex flex-col pt-2">
-          <h3 className="text-dark font-semibold px-1">{title}</h3>
-          <p className="text-grey text-sm sm:text-base text-wrap break-all px-1">
-            {detail}
-          </p>
-          <span className="text-blue text-sm sm:text-base font-semibold px-3 pt-3">
-            {modifiedCategory}
-          </span>
-          <div className="flex justify-between items-center pt-3 px-3">
+          <Link href={`/section/${feedbackSectionId}/suggestion/${id}`}>
+            <h3 className="text-dark font-semibold px-1">{title}</h3>
+            <p className="text-grey text-sm sm:text-base text-wrap break-all px-1 pb-2">
+              {detail}
+            </p>
+            <span className="text-blue text-sm sm:text-base font-semibold px-3">
+              {modifiedCategory}
+            </span>
+          </Link>
+          <div className="flex justify-between items-center pt-2 px-3">
             <button className="flex justify-center items-center gap-1">
               <Heart width={20} height={20} color="blue" />
               <span className="text-dark font-semibold">0</span>
@@ -93,7 +84,7 @@ export default function Card({
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     );
   }
 }

@@ -24,6 +24,15 @@ interface ICurrentUser {
   image?: string | null;
 }
 
+interface IAuthor {
+  id: string;
+  image: string | null;
+  userName: string;
+  lastName: string | null;
+  firstName: string | null;
+  isAdmin: boolean;
+}
+
 interface IFriend {
   id: string;
   userName: string;

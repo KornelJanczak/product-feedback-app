@@ -32,6 +32,7 @@ async function getSuggestions(sectionId: string) {
             select: {
               id: true,
               image: true,
+              email: true,
               userName: true,
               lastName: true,
               firstName: true,
@@ -41,8 +42,6 @@ async function getSuggestions(sectionId: string) {
       },
     },
   });
-
-
 
   if (!section) return null;
 
@@ -62,9 +61,6 @@ async function getSuggestions(sectionId: string) {
     return { ...suggestion, author: members[0] || admins[0] };
   });
 
-
-  console.log(section.suggestions[0]);
-  
   if (!section) return null;
 
   return suggestions;
