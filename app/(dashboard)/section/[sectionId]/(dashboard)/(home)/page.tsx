@@ -42,6 +42,8 @@ async function getSuggestions(sectionId: string) {
     },
   });
 
+
+
   if (!section) return null;
 
   const suggestions = section.suggestions.map((suggestion) => {
@@ -60,6 +62,9 @@ async function getSuggestions(sectionId: string) {
     return { ...suggestion, author: members[0] || admins[0] };
   });
 
+
+  console.log(section.suggestions[0]);
+  
   if (!section) return null;
 
   return suggestions;
@@ -81,7 +86,7 @@ export default async function SectionDashboard({
 
   if (suggestions)
     return (
-      <section className="md:container px-5">
+      <section className="md:container px-5 py-5">
         <Suspense fallback={<p>Loading...</p>}>
           <Container>
             {suggestions.map((suggestion) => (
