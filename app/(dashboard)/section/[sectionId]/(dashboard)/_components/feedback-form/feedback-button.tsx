@@ -1,6 +1,5 @@
 import FormContainer from "./form-container";
 import FormDialog from "./form-dialog";
-import FormDrawer from "./form-drawer";
 
 export default function FeedbackButton({
   currentUser,
@@ -10,19 +9,11 @@ export default function FeedbackButton({
   currentUserIsAdmin: boolean;
 }) {
   return (
-    <>
-      <FormDrawer>
-        <FormContainer
-          currentUser={currentUser}
-          currentUserIsAdmin={currentUserIsAdmin}
-        />
-      </FormDrawer>
-      <FormDialog>
-        <FormContainer
-          currentUser={currentUser}
-          currentUserIsAdmin={currentUserIsAdmin}
-        />
-      </FormDialog>
-    </>
+    <FormDialog>
+      <FormContainer
+        currentUser={currentUser}
+        currentUserIsAdmin={currentUserIsAdmin}
+      />
+    </FormDialog>
   );
 }

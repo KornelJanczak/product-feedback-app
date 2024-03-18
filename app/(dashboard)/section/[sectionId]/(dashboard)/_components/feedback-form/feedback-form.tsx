@@ -101,7 +101,7 @@ export default function FeedbackForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="pt-4 flex flex-col sm:gap-20 h-full"
+        className="pt-4 flex flex-col gap-16 sm:gap-20 h-full"
       >
         <Tabs defaultValue="information">
           <TabsList className="px-0 gap-x-3 bg-basicWhite">

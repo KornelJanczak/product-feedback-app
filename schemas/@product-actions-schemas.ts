@@ -17,11 +17,7 @@ const basicFeedbackSchema = {
   userId: z.string(),
   category: z.string(),
   detail: z.string(),
-  status: z.union([
-    z.literal("inprogress"),
-    z.literal("planned"),
-    z.literal("live"),
-  ]),
+  status: z.string(),
   title: z
     .string()
     .min(2, { message: "Title must contain at least 2 character's" }),
