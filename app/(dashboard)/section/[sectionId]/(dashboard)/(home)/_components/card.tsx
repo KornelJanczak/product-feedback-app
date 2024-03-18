@@ -89,7 +89,7 @@ export default function Card({
               sectionId={sectionId}
             />
             <div className="flex justify-center items-center gap-1">
-              <MessageCircle width={20} height={20} color="grey" fill="grey" />
+              <MessageCircle width={20} height={20} color="#CDD2EE" fill="#CDD2EE" />
               <span className="text-dark font-semibold">0</span>
             </div>
           </div>

@@ -49,9 +49,7 @@ async function getFeedbackSections(
       },
       include: {
         suggestions: {
-          select: {
-            count: true,
-          },
+
         },
         members: {
           select: {

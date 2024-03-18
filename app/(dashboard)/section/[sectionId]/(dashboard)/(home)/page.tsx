@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Container from "./_components/container";
 import Card from "./_components/card";
 import { Suspense } from "react";
+import NoResult from "@/components/no-result";
 async function getSuggestions(sectionId: string) {
   if (!sectionId) return null;
 
@@ -78,20 +79,28 @@ export default async function SectionDashboard({
 
   const suggestions = await getSuggestions(sectionId);
 
-  if (!suggestions) return <div></div>;
+  if (!suggestions)
+    return (
+      <NoResult
+        title="There no suggestions!"
+        description="Feel free to submit new feedback if you'd like to see additional suggestions."
+      />
+    );
 
   if (suggestions)
     return (
       <section className="md:container px-5 py-5">
         <Suspense fallback={<p>Loading...</p>}>
           <Container>
-            {suggestions.map((suggestion) => (
-              <Card
-                key={suggestion.id}
-                currentUserId={currentUser.id}
-                {...suggestion}
-              />
-            ))}
+            {suggestions
+              .sort((a, b) => b.likedBy.length - a.likedBy.length)
+              .map((suggestion) => (
+                <Card
+                  key={suggestion.id}
+                  currentUserId={currentUser.id}
+                  {...suggestion}
+                />
+              ))}
           </Container>
         </Suspense>
       </section>
