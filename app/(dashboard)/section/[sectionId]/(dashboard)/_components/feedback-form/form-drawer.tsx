@@ -11,7 +11,7 @@ export default function FormDrawer({ children }: { children: ReactNode }) {
   return (
     <Drawer>
       <DrawerTrigger
-        className="flex sm:hidden items-center justify-center gap-0.5 bg-pink text-darkWhite text-nowrap px-3 py-1 rounded-md 
+        className="hidden sm:hidden items-center justify-center gap-0.5 bg-pink text-darkWhite text-nowrap px-3 py-1 rounded-md 
         hover:bg-pink hover:opacity-70 hover:transition-all hover:duration-300 w-6/12"
       >
         <PlusIcon width={18} height={18} color="#fff" />

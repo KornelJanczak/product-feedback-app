@@ -36,13 +36,12 @@ export default function Card({
   if (!author) return null;
 
   if (author) {
+
     const isAdmin = author.isAdmin;
     const isCurrentUser = currentUserId === author.id;
-
     const hasAccessToSettings = isAdmin || isCurrentUser;
 
     const firstCategoryLetter = category.split("")[0].toUpperCase();
-
     const modifiedCategory = firstCategoryLetter + category.slice(1);
 
     return (
