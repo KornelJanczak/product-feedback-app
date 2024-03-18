@@ -5,10 +5,45 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { deleteFeedback } from "@/server-actions/product/feedback/delete-feedback";
 import { Settings, Trash2 } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
+import { toast } from "sonner";
 
-export default function SettingsPopover() {
-  const onClickHandler = () => {};
+interface ISettingsPopover {
+  feedbackId: string;
+  sectionId: string;
+  currentUserId: string;
+}
+
+export default function SettingsPopover({
+  feedbackId,
+  sectionId,
+  currentUserId,
+}: ISettingsPopover) {
+  const toastId = "delete-feedback-toast";
+
+  const { execute } = useAction(deleteFeedback, {
+    onExecute() {
+      toast.loading("Deleting feedback...", { id: toastId });
+    },
+    onError() {
+      toast.dismiss(toastId);
+      toast.error("Failed to delete feedback!");
+    },
+    onSuccess() {
+      toast.dismiss(toastId);
+      toast.success("Feedback deleted!");
+    },
+  });
+
+  const onClickHandler = () => {
+    execute({
+      feedbackId,
+      sectionId,
+      currentUserId,
+    });
+  };
 
   return (
     <Popover>

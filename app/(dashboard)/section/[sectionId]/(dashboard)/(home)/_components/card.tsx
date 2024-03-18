@@ -61,7 +61,13 @@ export default function Card({
               </span>
             </div>
           </div>
-          {hasAccessToSettings && <SettingsPopover />}
+          {hasAccessToSettings && (
+            <SettingsPopover
+              feedbackId={id}
+              sectionId={feedbackSectionId}
+              currentUserId={currentUserId}
+            />
+          )}
         </div>
         <div className="flex flex-col pt-2">
           <Link href={`/section/${feedbackSectionId}/suggestion/${id}`}>

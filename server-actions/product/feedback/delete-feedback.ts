@@ -21,7 +21,7 @@ export const deleteFeedback = action(
     try {
       feedbackSection = await prisma.feedbackSection.findUnique({
         where: {
-          id: feedbackId,
+          id: sectionId,
         },
         select: {
           admins: {
