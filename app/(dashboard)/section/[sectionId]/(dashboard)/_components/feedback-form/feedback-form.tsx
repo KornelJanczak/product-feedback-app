@@ -16,9 +16,7 @@ import {
   createFeedbackInputs,
   createFeedbackSubmitHandler,
 } from "@/models/@product-actions-types";
-import {
-  createFeedbackSchema,
-} from "@/schemas/@product-actions-schemas";
+import { createFeedbackSchema } from "@/schemas/@product-actions-schemas";
 import { FormSelect } from "./form-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePathname } from "next/navigation";
@@ -106,10 +104,10 @@ export default function FeedbackForm({
         className="pt-4 flex flex-col sm:gap-20 h-full"
       >
         <Tabs defaultValue="information">
-          <TabsList className="px-0 gap-x-3">
+          <TabsList className="px-0 gap-x-3 bg-basicWhite">
             <TabsTrigger
               value="information"
-              className="px-0 data-[state=active]:bg-darkWhite data-[state=active]:text-pink "
+              className="px-0 data-[state=active]:bg-basicWhite data-[state=active]:text-pink "
             >
               Information
             </TabsTrigger>

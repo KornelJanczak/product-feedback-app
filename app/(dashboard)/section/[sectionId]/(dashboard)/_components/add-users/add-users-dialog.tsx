@@ -12,7 +12,7 @@ export default function AddUsersDialog({ children }: { children: ReactNode }) {
         <UserPlus2Icon width={18} height={18} color="#fff" />
         Add User
       </DialogTrigger>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent className="bg-basicWhite">{children}</DialogContent>
     </Dialog>
   );
 }

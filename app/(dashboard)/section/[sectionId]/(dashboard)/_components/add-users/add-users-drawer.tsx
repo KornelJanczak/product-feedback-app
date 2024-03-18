@@ -18,7 +18,7 @@ export default function AddUsersDrawer({ children }: { children: ReactNode }) {
         <UserPlus2Icon width={18} height={18} color="#fff" />
         Add User
       </DrawerTrigger>
-      <DrawerContent className="h-5/6 bg-darkWhite">
+      <DrawerContent className="h-5/6 bg-basicWhite">
         {children}
         <DrawerClose className="pb-4 pt-5 px-4">
           <Button className="w-full bg-dark text-darkWhite" variant="outline">

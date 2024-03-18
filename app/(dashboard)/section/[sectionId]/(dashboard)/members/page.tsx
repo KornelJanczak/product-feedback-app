@@ -64,7 +64,7 @@ export default async function MembersPage({
 
   return (
     <section className="md:container lg:max-w-2xl min-h-screen">
-      <div className="px-5 py-2 md:bg-basicWhite md:py-6 md:rounded-md">
+      <div className="px-5 py-2 mt-6 bg-basicWhite md:py-6 md:rounded-md">
         <Container
           currentUser={currentUser}
           admins={sectionMembers!.admins}

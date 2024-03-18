@@ -106,7 +106,7 @@ export default async function SectionLayout({
 
     return (
       <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
-        <section className="px-0 lg:container lg:w-full lg:px-0 ">
+        <section className="px-0 lg:container lg:w-full lg:px-0 bg-basicWhite rounded-md">
           <Suspense
             fallback={<ImageBackgroundSkeleton className="h-52 lg:h-80" />}
           >
@@ -117,7 +117,7 @@ export default async function SectionLayout({
               currentUserIsAdmin={currentUserIsAdmin}
             />
           </Suspense>
-          <div className="sm:flex sm:flex-row sm:w-full pb-4">
+          <div className="sm:flex sm:flex-row sm:w-full pb-4 ">
             <Suspense
               fallback={
                 <MainInformationSkeleton membersNumber={sectionUsers.length} />
