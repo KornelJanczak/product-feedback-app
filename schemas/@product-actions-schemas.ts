@@ -23,6 +23,12 @@ const basicFeedbackSchema = {
     .min(2, { message: "Title must contain at least 2 character's" }),
 };
 
+const idsFeedbackSchema = {
+  currentUserId: z.string(),
+  feedbackId: z.string(),
+  sectionId: z.string(),
+};
+
 export const deleteFeedbackSectionSchema = z.object({
   ...basicProductSchema,
 });
@@ -61,7 +67,7 @@ export const updateFeedbackSchema = z.object({
 });
 
 export const deleteFeedbackSchema = z.object({
-  currentUserId: z.string(),
-  feedbackId: z.string(),
-  sectionId: z.string(),
+  ...idsFeedbackSchema,
 });
+
+export const likeFeedbackSchema = z.object({ ...idsFeedbackSchema });

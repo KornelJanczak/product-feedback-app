@@ -81,7 +81,7 @@ model FeedbackToFeedbackSection{
   category String
   detail String
   status String
-  count  Int @default(0)
+  likedBy String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -99,7 +99,7 @@ model CommentsToSuggestion{
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  count Int @default(0)
+
 }
 
 model RepliesToComments{
@@ -111,7 +111,7 @@ model RepliesToComments{
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  count Int @default(0)
+
 }
 
 
