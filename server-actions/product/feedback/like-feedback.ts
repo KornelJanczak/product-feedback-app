@@ -3,6 +3,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { action } from "@/lib/clients/safe-action-client";
 import { likeFeedbackSchema } from "@/schemas/@product-actions-schemas";
 import prisma from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export const likeFeedback = action(
   likeFeedbackSchema,
@@ -34,7 +35,27 @@ export const likeFeedback = action(
 
     const isLiked = feedback.likedBy.includes(currentUserId);
 
-    if (isLiked) throw new Error("Feedback already liked");
+    if (isLiked) {
+      try {
+        feedback = await prisma.feedbackToFeedbackSection.update({
+          where: {
+            id: feedbackId,
+          },
+          data: {
+            likedBy: {
+              set: feedback.likedBy.filter((id) => id !== currentUserId),
+            },
+          },
+        });
+      } catch {
+        throw new Error("Failed to unlike feedback");
+      }
+
+      if (!feedback) throw new Error("Failed to unlike feedback");
+
+      revalidatePath(`/section/${sectionId}`);
+      return { success: feedback };
+    }
 
     try {
       feedback = await prisma.feedbackToFeedbackSection.update({
@@ -53,6 +74,7 @@ export const likeFeedback = action(
 
     if (!feedback) throw new Error("Failed to like feedback");
 
+    revalidatePath(`/section/${sectionId}`);
     return { success: feedback };
   }
 );
