@@ -59,3 +59,9 @@ export const updateFeedbackSchema = z.object({
   feedbackId: z.string(),
   sectionId: z.string(),
 });
+
+export const deleteFeedbackSchema = z.object({
+  currentUserId: z.string(),
+  feedbackId: z.string(),
+  sectionId: z.string(),
+});
