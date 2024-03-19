@@ -79,7 +79,7 @@ export default async function SectionDashboard({
 
   const suggestions = await getSuggestions(sectionId);
 
-  if (!suggestions)
+  if (!suggestions || suggestions.length === 0)
     return (
       <NoResult
         title="There no suggestions!"
@@ -89,20 +89,18 @@ export default async function SectionDashboard({
 
   if (suggestions)
     return (
-      <section className="md:container px-5 py-5">
-        <Suspense fallback={<p>Loading...</p>}>
-          <Container>
-            {suggestions
-              .sort((a, b) => b.likedBy.length - a.likedBy.length)
-              .map((suggestion) => (
-                <Card
-                  key={suggestion.id}
-                  currentUserId={currentUser.id}
-                  {...suggestion}
-                />
-              ))}
-          </Container>
-        </Suspense>
-      </section>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Container>
+          {suggestions
+            .sort((a, b) => b.likedBy.length - a.likedBy.length)
+            .map((suggestion) => (
+              <Card
+                key={suggestion.id}
+                currentUserId={currentUser.id}
+                {...suggestion}
+              />
+            ))}
+        </Container>
+      </Suspense>
     );
 }
