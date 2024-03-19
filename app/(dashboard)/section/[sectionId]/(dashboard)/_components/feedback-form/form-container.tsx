@@ -1,4 +1,4 @@
-import FormHeader from "@/components/create-form/form-header";
+import FormHeader from "@/components/form/form-header";
 import FeedbackForm from "./feedback-form";
 
 const formInformationValues: IFeedbackFormValues[] = [

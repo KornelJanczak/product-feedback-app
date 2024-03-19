@@ -12,7 +12,7 @@ import SearchIcon from "@/public/icons/search";
 import { RefObject } from "react";
 import SearchInput from "@/components/search-input";
 
-export default function FilterBarDrawer({
+export default function MobileDrawer({
   className,
   mobileInputRef,
 }: {

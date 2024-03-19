@@ -2,7 +2,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import BackButton from "./_components/back-button";
 import AddForm from "./_components/form";
 import { redirect } from "next/navigation";
-import FormHeader from "@/components/create-form/form-header";
+import FormHeader from "@/components/form/form-header";
 import getUserFriends from "@/lib/user/get-user-friends";
 
 export default async function AddSectionPage({

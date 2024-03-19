@@ -14,7 +14,7 @@ export const addUsersToFeedbackSection = action(
     // Add user to feedback section
     const currentUser = await getCurrentUser();
 
-    if (!currentUser || userId !== currentUser.id)
+    if (!currentUser)
       throw new Error("Unauthorized!");
 
     let existingUser;
