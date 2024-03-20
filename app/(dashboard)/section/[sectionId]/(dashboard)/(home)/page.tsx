@@ -5,15 +5,43 @@ import Container from "./_components/container";
 import Card from "./_components/card";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
-async function getSuggestions(sectionId: string) {
+
+interface ISearchParams {
+  filterBy?: string;
+  suggestionTitle?: string;
+  sortBy?: string;
+}
+
+async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
   if (!sectionId) return null;
+
+  const { filterBy, suggestionTitle } = searchParams;
+
+  let categoryFilter;
+  const titleFilter = suggestionTitle
+    ? searchParams.suggestionTitle
+    : undefined;
+
+  if (filterBy) {
+    categoryFilter = filterBy === "all" ? undefined : searchParams.filterBy;
+  }
+
+  const feedbacks = await prisma.feedbackToFeedbackSection.findMany({
+    where: {
+      title: {
+        contains: titleFilter,
+      },
+      category: categoryFilter,
+    },
+  });
+
+  if (!feedbacks) return null;
 
   const section = await prisma.feedbackSection.findUnique({
     where: {
       id: sectionId,
     },
     select: {
-      suggestions: true,
       members: {
         select: {
           user: {
@@ -46,7 +74,7 @@ async function getSuggestions(sectionId: string) {
 
   if (!section) return null;
 
-  const suggestions = section.suggestions.map((suggestion) => {
+  const suggestions = feedbacks.map((suggestion) => {
     const members = section.members.map((member) => {
       if (member.user.id === suggestion.authorId) {
         return { ...member.user, isAdmin: false };
@@ -69,15 +97,17 @@ async function getSuggestions(sectionId: string) {
 
 export default async function SectionDashboard({
   params,
+  searchParams,
 }: {
   params: { sectionId: string };
+  searchParams: ISearchParams;
 }) {
   const { sectionId } = params;
   const currentUser = await getCurrentUser();
 
   if (!currentUser) return redirect("/login");
 
-  const suggestions = await getSuggestions(sectionId);
+  const suggestions = await getSuggestions(sectionId, searchParams);
 
   if (!suggestions || suggestions.length === 0)
     return (
