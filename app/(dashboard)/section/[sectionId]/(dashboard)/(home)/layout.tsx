@@ -11,7 +11,7 @@ const sortValues = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <section className="md:container px-5 py-5">
+    <section className="md:container px-5 py-5 mt-5">
       <SearchBar
         route="?suggestionTitle="
         className=" rounded-md py-2 px-3"
@@ -23,5 +23,3 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </section>
   );
 }
-
-

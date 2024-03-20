@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import Container from "./_components/container";
+import Container, { ContainerSkeleton } from "./_components/container";
 import Card from "./_components/card";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
@@ -126,7 +126,9 @@ export default async function SectionDashboard({
   if (suggestions) {
     sortSuggestions(suggestions, searchParams.sortBy);
     return (
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense
+        fallback={<ContainerSkeleton skeletonCount={suggestions.length} />}
+      >
         <Container>
           {suggestions.map((suggestion) => (
             <Card

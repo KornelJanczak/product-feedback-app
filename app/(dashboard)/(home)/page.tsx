@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import FilterBar from "./_components/filter-bar";
 import Container from "./_components/container";
 import getCurrentUser from "@/lib/user/get-current-user";
 import prisma from "@/lib/db";
