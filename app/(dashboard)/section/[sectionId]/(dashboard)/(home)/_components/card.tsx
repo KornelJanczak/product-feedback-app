@@ -1,5 +1,5 @@
 import UserAvatar from "@/components/user/user-avatar";
-import { Heart, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import SettingsPopover from "./settings-popover";
 import LikeButton from "./like-button";
@@ -34,8 +34,6 @@ export default function Card({
     const isAdmin = author.isAdmin;
     const isCurrentUser = currentUserId === author.id;
     const hasAccessToSettings = isAdmin || isCurrentUser;
-
-   
 
     switch (category) {
       case "ui":
@@ -89,7 +87,12 @@ export default function Card({
               sectionId={sectionId}
             />
             <div className="flex justify-center items-center gap-1">
-              <MessageCircle width={20} height={20} color="#CDD2EE" fill="#CDD2EE" />
+              <MessageCircle
+                width={20}
+                height={20}
+                color="#CDD2EE"
+                fill="#CDD2EE"
+              />
               <span className="text-dark font-semibold">0</span>
             </div>
           </div>
