@@ -7,6 +7,7 @@ import NoResult from "@/components/no-result";
 import SectionCard from "./_components/section-card";
 import { Suspense } from "react";
 import { ContainerSkeleton } from "./_components/container";
+import SortFeedbackSections from "@/lib/product/sort-feedback-sections";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -21,7 +22,6 @@ async function getFeedbackSections(
       lastName: true,
       firstName: true,
       image: true,
-      // profile: true,
     };
 
     const userFeedbackSections = await prisma.feedbackSection.findMany({
@@ -48,9 +48,7 @@ async function getFeedbackSections(
         ],
       },
       include: {
-        suggestions: {
-
-        },
+        suggestions: {},
         members: {
           select: {
             user: {
@@ -93,27 +91,10 @@ export default async function HomePage({
     sectionTitle
   );
 
-  switch (sortBy) {
-    case "least-members":
-      sortSections(feedbackSections, "least", "members");
-      break;
+  const isExist = feedbackSections && feedbackSections.length > 0;
 
-    case "most-members":
-      sortSections(feedbackSections, "most", "members");
-      break;
-
-    case "most-suggestions":
-      sortSections(feedbackSections, "most", "suggestions");
-      break;
-
-    case "least-suggestions":
-      sortSections(feedbackSections, "least", "suggestions");
-      break;
-  }
-
-  const isExist = feedbackSections!.length > 0;
-
-  if (isExist)
+  if (isExist) {
+    SortFeedbackSections(sortBy, feedbackSections);
     return (
       <Suspense
         fallback={
@@ -137,6 +118,7 @@ export default async function HomePage({
         </Container>
       </Suspense>
     );
+  }
 
   if (!isExist)
     return (
@@ -145,30 +127,4 @@ export default async function HomePage({
         description="Have big commercial project? Create your own section and work with your team together!"
       />
     );
-}
-
-function sortSections(
-  feedbackSections: any,
-  sortType: "least" | "most",
-  sortBy: "suggestions" | "members"
-) {
-  feedbackSections.sort((a: any, b: any) => {
-    if (sortBy === "members") {
-      const first = [...a.members, ...a.admins];
-      const second = [b.members, ...a.admins];
-
-      if (sortType == "least") return first.length - second.length;
-      if (sortType == "most") return second.length - first.length;
-    }
-
-    if (sortBy === "suggestions") {
-      const first = a.suggestions.length;
-      const second = b.suggestions.length;
-
-      if (sortType == "least") return first.length - second.length;
-      if (sortType == "most") return second.length - first.length;
-    }
-  });
-
-  return feedbackSections;
 }
