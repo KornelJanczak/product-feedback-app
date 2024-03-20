@@ -1,15 +1,4 @@
-import {
-  AdminToFeedbackSection,
-  FeedbackSection,
-  FeedbackToFeedbackSection,
-  UserToFeedbackSection,
-} from "@prisma/client";
 
-interface ISortFeedbackSection extends FeedbackSection {
-  admins: AdminToFeedbackSection[];
-  members: UserToFeedbackSection[];
-  suggestions: FeedbackToFeedbackSection[];
-}
 
 export default function SortFeedbackSections(
   sortBy: string,

@@ -13,6 +13,7 @@ interface ICard {
   detail: string;
   status: string;
   category: string;
+  commentsCount?: number;
   createdAt: Date;
   updatedAt: Date;
   author?: IAuthor;
@@ -24,6 +25,7 @@ export default function Card({
   likedBy,
   currentUserId,
   title,
+  commentsCount,
   detail,
   category,
   author,
@@ -93,7 +95,7 @@ export default function Card({
                 color="#CDD2EE"
                 fill="#CDD2EE"
               />
-              <span className="text-dark font-semibold">0</span>
+              <span className="text-dark font-semibold">{commentsCount}</span>
             </div>
           </div>
         </div>

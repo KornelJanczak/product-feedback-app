@@ -48,7 +48,7 @@ async function getFeedbackSections(
         ],
       },
       include: {
-        suggestions: {},
+        feedbacks: {},
         members: {
           select: {
             user: {
@@ -103,11 +103,11 @@ export default async function HomePage({
       >
         <Container>
           {feedbackSections?.map(
-            ({ id, title, members, admins, suggestions }) => (
+            ({ id, title, members, admins, feedbacks }) => (
               <SectionCard
                 key={id}
                 sectionId={id}
-                suggestionsNumber={suggestions.length}
+                suggestionsNumber={feedbacks.length}
                 currentUserId={currentUserId}
                 title={title as string}
                 members={members}

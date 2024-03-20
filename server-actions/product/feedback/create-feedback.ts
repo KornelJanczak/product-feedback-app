@@ -1,7 +1,7 @@
 "use server";
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
-import createActivityForFeedbackSection from "@/lib/product/create-activity-for-feedback-section";
+import createActivityForFeedbackSection from "@/lib/product/create-activity";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { createFeedbackSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";

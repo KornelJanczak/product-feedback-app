@@ -5,6 +5,7 @@ import Container from "./_components/container";
 import Card from "./_components/card";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
+import sortSuggestions from "@/lib/product/sort-suggestions";
 
 interface ISearchParams {
   filterBy?: string;
@@ -32,6 +33,9 @@ async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
         contains: titleFilter,
       },
       category: categoryFilter,
+    },
+    include: {
+      comments: true,
     },
   });
 
@@ -71,6 +75,8 @@ async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
       },
     },
   });
+
+  console.log(section);
 
   if (!section) return null;
 
@@ -117,20 +123,21 @@ export default async function SectionDashboard({
       />
     );
 
-  if (suggestions)
+  if (suggestions) {
+    sortSuggestions(suggestions, searchParams.sortBy);
     return (
       <Suspense fallback={<p>Loading...</p>}>
         <Container>
-          {suggestions
-            .sort((a, b) => b.likedBy.length - a.likedBy.length)
-            .map((suggestion) => (
-              <Card
-                key={suggestion.id}
-                currentUserId={currentUser.id}
-                {...suggestion}
-              />
-            ))}
+          {suggestions.map((suggestion) => (
+            <Card
+              key={suggestion.id}
+              currentUserId={currentUser.id}
+              commentsCount={suggestion.comments.length}
+              {...suggestion}
+            />
+          ))}
         </Container>
       </Suspense>
     );
+  }
 }
