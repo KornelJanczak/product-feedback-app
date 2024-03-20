@@ -41,11 +41,11 @@ export function SelectSort({ sortValues }: { sortValues: ISortSelect[] }) {
       </SelectTrigger>
       <SelectContent className="bg-darkWhite focus-visible:ring-0 border-0 focus:ring-0">
         <SelectGroup className="bg-darkWhite text-grey focus-visible:ring-0 ">
-          <SelectItem value="/" className="hover:text-pink hidden">
+          <SelectItem value="/" className=" hidden">
             Sort by
           </SelectItem>
           {sortValues.map(({ value, label }) => (
-            <SelectItem key={value} value={value} className="hover:text-pink">
+            <SelectItem key={value} value={value}>
               {label}
             </SelectItem>
           ))}

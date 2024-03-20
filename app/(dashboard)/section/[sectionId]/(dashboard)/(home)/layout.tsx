@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <section className="md:container px-5 py-5">
       <SearchBar
         route="?suggestionTitle="
-        className=" rounded-md py-2 px-2"
+        className=" rounded-md py-2 px-3"
         selectBar={<SelectSort sortValues={sortValues} />}
         button={<FilterPopover />}
       />
