@@ -50,7 +50,7 @@ export default function Card({
     const modifiedCategory = firstCategoryLetter + category.slice(1);
 
     return (
-      <div className="flex flex-col px-4 py-3 rounded-md bg-basicWhite">
+      <div className="flex flex-col px-4 py-3 h-48  rounded-md bg-basicWhite">
         <div className="flex flex-row justify-between">
           <div className="flex gap-1.5">
             <UserAvatar className="h-10 w-10" userImage={author.image} />
