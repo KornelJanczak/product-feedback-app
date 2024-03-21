@@ -22,25 +22,28 @@ export interface ITransformedFeedbackSection
   author: UserObject;
 }
 
-export default function addUserObject(
-  transformedData: IFeedbackSectionWithComments[] | ActivityToFeedbackSection[],
-  feedbackSection: IFeedbackSection
-) {
-  const dataWithUserObject = transformedData.map((suggestion) => {
+export interface ITransformedActivity extends ActivityToFeedbackSection {
+  author: UserObject;
+}
+
+export default function addUserObject<
+  T extends IFeedbackSectionWithComments[] | ActivityToFeedbackSection[]
+>(transformedData: T, feedbackSection: IFeedbackSection) {
+  const dataWithUserObject = transformedData.map((object) => {
     const members = feedbackSection.members.map((member) => {
-      if (member.user.id === suggestion.authorId) {
+      if (member.user.id === object.authorId) {
         return { ...member.user, isAdmin: false };
       }
     });
 
     const admins = feedbackSection.admins.map((admin) => {
-      if (admin.user.id === suggestion.authorId) {
+      if (admin.user.id === object.authorId) {
         return { ...admin.user, isAdmin: true };
       }
     });
 
     return {
-      ...suggestion,
+      ...object,
       author: members[0] || admins[0],
     };
   });

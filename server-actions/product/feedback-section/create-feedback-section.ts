@@ -36,7 +36,7 @@ export const createFeedbackSection = action(
       await createActivityForFeedbackSection(
         feedbackSection.id,
         currentUserId,
-        "Created feedback feedbackSection"
+        "Created feedback section"
       );
     } catch {
       throw new Error("Error while creating feedback feedbackSection");

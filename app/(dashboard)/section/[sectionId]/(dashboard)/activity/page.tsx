@@ -1,5 +1,7 @@
 import prisma from "@/lib/db";
-import addUserObject from "@/lib/product/add-user-object";
+import addUserObject, {
+  ITransformedActivity,
+} from "@/lib/product/add-user-object";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import Container from "./_components/container";
@@ -44,9 +46,10 @@ async function getActivity(sectionId: string) {
 
   if (!section) return null;
 
-  const activityLog = addUserObject(section.activity, section);
-
-  console.log(activityLog);
+  const activityLog = addUserObject(
+    section.activity,
+    section
+  ) as ITransformedActivity[];
 
   return activityLog;
 }
@@ -61,13 +64,17 @@ export default async function ActivityPage({
 
   const activityLog = await getActivity(params.sectionId);
 
-  console.log(activityLog);
   if (activityLog)
     return (
       <section className="md:container px-5 py-5 mt-5">
         <Container>
-          {activityLog.map(({ id, author }) => (
-            <Card key={id} />
+          {activityLog.map(({ id, description, createdAt, author }) => (
+            <Card
+              key={id}
+              description={description}
+              createdAt={createdAt}
+              author={author}
+            />
           ))}
         </Container>
       </section>

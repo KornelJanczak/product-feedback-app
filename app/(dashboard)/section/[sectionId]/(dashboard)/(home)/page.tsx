@@ -9,16 +9,11 @@ import sortSuggestions from "@/lib/product/sort-suggestions";
 import addUserObject, {
   ITransformedFeedbackSection,
 } from "@/lib/product/add-user-object";
-import { FeedbackToFeedbackSection } from "@prisma/client";
 
 interface ISearchParams {
   filterBy?: string;
   suggestionTitle?: string;
   sortBy?: string;
-}
-
-interface chuj extends FeedbackToFeedbackSection {
-  comments: any;
 }
 
 async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
