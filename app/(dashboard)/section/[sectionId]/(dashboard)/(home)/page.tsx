@@ -32,6 +32,7 @@ async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
 
   const feedbacks = await prisma.feedbackToFeedbackSection.findMany({
     where: {
+      feedbackSectionId: sectionId,
       title: {
         contains: titleFilter,
       },
