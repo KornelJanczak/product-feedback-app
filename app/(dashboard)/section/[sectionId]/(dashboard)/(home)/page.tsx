@@ -6,13 +6,19 @@ import Card from "./_components/card";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
 import sortSuggestions from "@/lib/product/sort-suggestions";
-import addUserObject from "@/lib/product/add-user-object";
-import { FeedbackSection, FeedbackToFeedbackSection } from "@prisma/client";
+import addUserObject, {
+  ITransformedFeedbackSection,
+} from "@/lib/product/add-user-object";
+import { FeedbackToFeedbackSection } from "@prisma/client";
 
 interface ISearchParams {
   filterBy?: string;
   suggestionTitle?: string;
   sortBy?: string;
+}
+
+interface chuj extends FeedbackToFeedbackSection {
+  comments: any;
 }
 
 async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
@@ -80,7 +86,10 @@ async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
 
   if (!section) return null;
 
-  const suggestions = addUserObject(feedbacks, section);
+  const suggestions = addUserObject(
+    feedbacks,
+    section
+  ) as ITransformedFeedbackSection[];
 
   if (!section) return null;
 
