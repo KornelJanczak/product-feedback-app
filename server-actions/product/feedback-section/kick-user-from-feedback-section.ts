@@ -81,7 +81,7 @@ export const kickUserFromFeedbackSection = action(
       await createActivityForFeedbackSection(
         sectionId,
         currentUser.id,
-        `Kicked user from feedback section id=${kickedUserId}`
+        `Kicked user from feedback section`
       );
 
       revalidatePath(`/section/${sectionId}/members`);

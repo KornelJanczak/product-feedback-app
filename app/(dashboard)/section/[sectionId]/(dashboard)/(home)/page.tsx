@@ -6,6 +6,8 @@ import Card from "./_components/card";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
 import sortSuggestions from "@/lib/product/sort-suggestions";
+import addUserObject from "@/lib/product/add-user-object";
+import { FeedbackSection, FeedbackToFeedbackSection } from "@prisma/client";
 
 interface ISearchParams {
   filterBy?: string;
@@ -76,25 +78,9 @@ async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
     },
   });
 
-  console.log(section);
-
   if (!section) return null;
 
-  const suggestions = feedbacks.map((suggestion) => {
-    const members = section.members.map((member) => {
-      if (member.user.id === suggestion.authorId) {
-        return { ...member.user, isAdmin: false };
-      }
-    });
-
-    const admins = section.admins.map((admin) => {
-      if (admin.user.id === suggestion.authorId) {
-        return { ...admin.user, isAdmin: true };
-      }
-    });
-
-    return { ...suggestion, author: members[0] || admins[0] };
-  });
+  const suggestions = addUserObject(feedbacks, section);
 
   if (!section) return null;
 

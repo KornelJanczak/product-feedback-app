@@ -72,7 +72,7 @@ export const giveAdminRoleInFeedbackSection = action(
       await createActivityForFeedbackSection(
         sectionId,
         currentUser.id,
-        `Gave admin role to id=${memberId} `
+        `Gave admin role to other user`
       );
 
       revalidatePath(`/section/${sectionId}/members`);
