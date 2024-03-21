@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const routes = [
   { title: "Suggestions", href: "" },
   { title: "Members", href: "members" },
+  { title: "Activity", href: "activity" },
 ];
 
 export default async function SectionRoutes({

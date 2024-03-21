@@ -18,13 +18,16 @@ export default function RouteItem({
 
   const isSuggestions = pathname.endsWith(sectionId);
 
+  const isActivity = pathname.endsWith("activity");
+
   return (
     <Link
       href={`/section/${sectionId}/${href}`}
       className={cn(
         "text-grey font-semibold text-lg transition-all duration-300 hover:text-slate-600",
         isMember && href == "members" && "text-pink hover:text-pink",
-        isSuggestions && href == "" && "text-pink hover:text-pink"
+        isSuggestions && href == "" && "text-pink hover:text-pink",
+        isActivity && href == "activity" && "text-pink hover:text-pink"
       )}
     >
       {title}
