@@ -1,6 +1,7 @@
 "use server";
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
+import createActivityForFeedbackSection from "@/lib/product/create-activity";
 import { leaveFromSectionSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";
 
@@ -52,6 +53,11 @@ export const leaveFromFeedbackSection = action(
           },
         });
 
+        await createActivityForFeedbackSection(
+          sectionId,
+          userId,
+          "User left from feedback section"
+        );
 
         return { success: deletedMember };
       }
@@ -104,6 +110,11 @@ export const leaveFromFeedbackSection = action(
             data: randomMemberValues,
           });
 
+          await createActivityForFeedbackSection(
+            sectionId,
+            userId,
+            "User left from feedback section"
+          );
 
           return { success: createUserAsAdmin };
         } else {

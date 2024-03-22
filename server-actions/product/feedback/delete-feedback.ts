@@ -4,6 +4,7 @@ import { action } from "@/lib/clients/safe-action-client";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { deleteFeedbackSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";
+import createActivityForFeedbackSection from "@/lib/product/create-activity";
 
 export const deleteFeedback = action(
   deleteFeedbackSchema,
@@ -68,6 +69,13 @@ export const deleteFeedback = action(
             id: feedbackId,
           },
         });
+
+        await createActivityForFeedbackSection(
+          sectionId,
+          currentUserId,
+          `Deleted suggestion`
+        );
+
         revalidatePath(`/section${sectionId}`);
         return { success: deletedFeedback };
       } catch {

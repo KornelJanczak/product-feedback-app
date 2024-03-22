@@ -57,7 +57,7 @@ export const updateFeedback = action(
     await createActivityForFeedbackSection(
       sectionId,
       currentUser.id,
-      `Updated ${title} feedback by id=${feedbackId}`
+      `Updated ${title} suggestion by `
     );
 
     revalidatePath(`/section/${sectionId}`);
