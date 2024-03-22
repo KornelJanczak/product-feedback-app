@@ -25,7 +25,7 @@ export default async function ProfileAvatar({
   viewType: "accountView" | "profileView";
 }) {
   const firstAndLastNameExist = firstName && lastName;
-
+  await new Promise((resolve) => setTimeout(resolve, 4000));
   const accountView = viewType === "accountView";
 
   return (
@@ -73,11 +73,16 @@ export const ProfileAvatarSkeleton = () => {
   return (
     <div className="absolute top-28 w-full flex flex-col items-center justify-center sm:top-40 lg:top-48">
       <div className="relative">
-        <Skeleton className="w-40 h-40 rounded-full" />
+        <Skeleton className="w-40 h-40 rounded-full bg-skeletonTheme " />
       </div>
       <div className="flex justify-center items-center px-5">
-        <Skeleton className="w-20 h-4" />
+        <div className="pt-2">
+          <Skeleton className="w-60 h-8 bg-skeletonTheme" />
+        </div>
       </div>
+      <span className="pt-4">
+        <Skeleton className="w-80 h-6" />
+      </span>
     </div>
   );
 };
