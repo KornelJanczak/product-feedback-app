@@ -5,9 +5,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import Link from "next/link";
 import _ from "lodash";
 import { redirect } from "next/navigation";
-import ProfileAvatar, {
-  ProfileAvatarSkeleton,
-} from "../_components/profile-avatar";
+import ProfileAvatar from "../_components/profile-avatar";
 import ActionButton from "../_components/action-button";
 import setProfileInformation from "../_components/set-profile-information";
 import MainInformation from "./_components/main-information";
