@@ -25,6 +25,7 @@ export default function Card({
   feedbackSectionId: sectionId,
   likedBy,
   currentUserId,
+  currentUserIsAdmin,
   title,
   commentsCount,
   detail,
@@ -35,8 +36,8 @@ export default function Card({
 
   if (author) {
     const isAdmin = author.isAdmin;
-    const isCurrentUser = currentUserId === author.id;
-    const hasAccessToSettings = isAdmin || isCurrentUser;
+    const isAuthor = currentUserId === author.id;
+    const hasAccessToSettings = currentUserIsAdmin || isAuthor;
 
     switch (category) {
       case "ui":
