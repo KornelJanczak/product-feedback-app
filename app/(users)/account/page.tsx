@@ -18,26 +18,30 @@ async function getUserProfile(currentUser: User) {
       where: {
         id: currentUser.id,
       },
-      include: {
-        profile: true,
-        friends: true,
+      select: {
+        id: true,
+        userName: true,
+        firstName: true,
+        lastName: true,
+        image: true,
+        email: true,
+        createDate: true,
+        profile: {
+          select: {
+            preferRole: true,
+            description: true,
+            location: true,
+            company: true,
+            gitHub: true,
+            bgImage: true,
+          },
+        },
       },
     });
 
     if (!user) return null;
 
-    const sanitizedUser: IUserAccountView = {
-      id: user.id,
-      userName: user.userName,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      image: user.image,
-      email: user.email,
-      createDate: user.createDate,
-      profile: user.profile,
-    };
-
-    return sanitizedUser;
+    return user;
   } catch {
     return null;
   }
@@ -46,11 +50,9 @@ async function getUserProfile(currentUser: User) {
 export default async function AccountPage() {
   const currentUser = await getCurrentUser();
 
-  if (!currentUser) redirect("/login");
+  if (!currentUser) return redirect("/login");
 
-  const userProfile: IUserAccountView | null = await getUserProfile(
-    currentUser
-  );
+  const userProfile = await getUserProfile(currentUser);
 
   if (!userProfile) throw new Error("User profile load error!");
 
