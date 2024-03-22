@@ -19,14 +19,17 @@ export default async function Background({
 }: IBackground) {
   const image64 = image ? await getBase64(image) : null;
 
-  if (!currentUserIsAdmin)
-    <ImageBackground
-      image={image}
-      image64={image64}
-      className="h-52 lg:h-80"
-    />;
+  if (!currentUserIsAdmin) {
+    return (
+      <ImageBackground
+        image={image}
+        image64={image64}
+        className="h-52 lg:h-80"
+      />
+    );
+  }
 
-  if (currentUserIsAdmin)
+  if (currentUserIsAdmin) {
     return (
       <ImageBackground
         image={image}
@@ -62,4 +65,5 @@ export default async function Background({
         }
       />
     );
+  }
 }
