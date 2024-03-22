@@ -3,7 +3,6 @@ import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import Background from "./background";
-import NoResult from "@/components/no-result";
 import MainInformation, { MainInformationSkeleton } from "./main-information";
 import ActionPanel, { ActionPanelSkeleton } from "./action-panel";
 import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
@@ -86,12 +85,7 @@ export default async function SectionLayout({
   const feedbackSection = await getFeedbackSection(currentUser.id, sectionId);
 
   if (!feedbackSection) {
-    return (
-      <NoResult
-        title="We can't find this section!"
-        description="If you wan't manage your product with friends, create your own section!"
-      />
-    );
+    throw Error("We can't find this section!");
   }
 
   if (feedbackSection) {
