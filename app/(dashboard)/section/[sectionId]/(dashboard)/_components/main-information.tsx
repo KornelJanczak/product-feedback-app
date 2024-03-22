@@ -11,10 +11,9 @@ export default async function MainInformation({
   title,
   sectionUsers,
 }: IHeader) {
-  await new Promise((resolve) => setTimeout(resolve, 4000));
   return (
     <div className="px-5">
-      <h1 className="text-bold text-secondDark text-2xl sm:text-3xl md:text-4xl py-2">
+      <h1 className="text-bold text-secondDark text-2xl  md:text-4xl py-2">
         {title}
       </h1>
       <div className="flex flex-col">
@@ -29,7 +28,7 @@ export default async function MainInformation({
             <UserAvatar key={user?.id} userImage={user?.image} />
           ))}
         </div>
-      </div>
+      </div>``
     </div>
   );
 }
@@ -42,11 +41,11 @@ export const MainInformationSkeleton = ({
   return (
     <div className="px-5">
       <div className="py-2">
-        <Skeleton className="w-52 h-8 rounded bg-skeletonTheme"></Skeleton>
+        <Skeleton className="w-52 h-8 md:h-10 rounded bg-skeletonTheme"></Skeleton>
       </div>
       <div className="flex flex-col">
         <div className="flex gap-x-1">
-          <Skeleton className="h-6 w-32 rounded bg-skeletonTheme" />
+          <Skeleton className="h-6 w-32 md:h-7 rounded bg-skeletonTheme" />
         </div>
         <div className="flex flex-row pt-2">
           {[...new Array(membersNumber)].map((_, i) => (
