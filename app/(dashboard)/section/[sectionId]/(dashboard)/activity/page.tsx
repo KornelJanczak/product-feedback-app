@@ -4,8 +4,9 @@ import addUserObject, {
 } from "@/lib/product/add-user-object";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import Container from "./_components/container";
+import Container, { ContainerSkeleton } from "./_components/container";
 import Card from "./_components/card";
+import { Suspense } from "react";
 
 async function getActivity(sectionId: string) {
   const section = await prisma.feedbackSection.findUnique({
@@ -66,17 +67,21 @@ export default async function ActivityPage({
 
   if (activityLog)
     return (
-      <section className="md:container px-5 py-5 mt-5">
-        <Container>
-          {activityLog.map(({ id, description, createdAt, author }) => (
-            <Card
-              key={id}
-              description={description}
-              createdAt={createdAt}
-              author={author}
-            />
-          ))}
-        </Container>
+      <section className="md:container px-5 py-5 mt-5 min-h-screen  bg-basicWhite">
+        <Suspense
+          fallback={<ContainerSkeleton skeletonCount={activityLog.length} />}
+        >
+          <Container>
+            {activityLog.map(({ id, description, createdAt, author }) => (
+              <Card
+                key={id}
+                description={description}
+                createdAt={createdAt}
+                author={author}
+              />
+            ))}
+          </Container>
+        </Suspense>
       </section>
     );
 }
