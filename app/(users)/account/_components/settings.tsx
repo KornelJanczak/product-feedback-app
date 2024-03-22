@@ -24,8 +24,6 @@ export default async function Settings({
   accountValue,
   profileValue,
 }: ISettings) {
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-
   const accountSettings = setAccountInformation(accountValue);
   const profileSettings: ProfileInformation[] =
     setProfileInformation(profileValue);

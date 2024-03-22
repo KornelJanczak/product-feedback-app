@@ -8,7 +8,7 @@ import Settings, { SettingsSkeleton } from "./_components/settings";
 import { Suspense } from "react";
 import Background from "./_components/background";
 import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
-import Friends from "./_components/friends";
+import Friends, { FriendsSkeleton } from "./_components/friends";
 
 async function getUserProfile(currentUser: User) {
   try {
@@ -90,8 +90,6 @@ export default async function AccountPage() {
 
   const formatedDate = createDate.toLocaleDateString("en-US", dateOptions);
 
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-
   return (
     <div className="relative">
       <Suspense fallback={<ImageBackgroundSkeleton />}>
@@ -115,7 +113,7 @@ export default async function AccountPage() {
         <Suspense fallback={<SettingsSkeleton />}>
           <Settings profileValue={profileValue} accountValue={accountValue} />
         </Suspense>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<FriendsSkeleton />}>
           <Friends currentUser={currentUser} />
         </Suspense>
       </div>
