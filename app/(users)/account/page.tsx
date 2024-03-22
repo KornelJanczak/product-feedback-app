@@ -4,7 +4,7 @@ import ProfileAvatar, {
   ProfileAvatarSkeleton,
 } from "../_components/profile-avatar";
 import prisma from "@/lib/db";
-import Settings from "./_components/settings";
+import Settings, { SettingsSkeleton } from "./_components/settings";
 import { Suspense } from "react";
 import Background from "./_components/background";
 import { ImageBackgroundSkeleton } from "@/components/image-uploading/image-background-skeleton";
@@ -112,10 +112,12 @@ export default async function AccountPage() {
         </ProfileAvatar>
       </Suspense>
       <div className="lg:mt-32 md:rounded xl:flex xl:gap-x-10 xl:pt-4">
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<SettingsSkeleton />}>
           <Settings profileValue={profileValue} accountValue={accountValue} />
         </Suspense>
-        <Friends currentUser={currentUser} />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Friends currentUser={currentUser} />
+        </Suspense>
       </div>
     </div>
   );

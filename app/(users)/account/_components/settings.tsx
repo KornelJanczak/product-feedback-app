@@ -1,6 +1,8 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import setAccountInformation from "../../_components/set-account-information";
 import setProfileInformation from "../../_components/set-profile-information";
 import { SettingsAcordion } from "./settings-accordion";
+import { Separator } from "@/components/ui/separator";
 
 interface ISettings {
   accountValue: {
@@ -22,6 +24,8 @@ export default async function Settings({
   accountValue,
   profileValue,
 }: ISettings) {
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+
   const accountSettings = setAccountInformation(accountValue);
   const profileSettings: ProfileInformation[] =
     setProfileInformation(profileValue);
@@ -33,3 +37,18 @@ export default async function Settings({
     />
   );
 }
+
+export const SettingsSkeleton = () => {
+  return (
+    <div className="w-full p-5 mt-44 md:mt-40 lg:order-1 lg:p-4 xl:w-7/12 xl:mt-14 xl:p-2">
+      <div className="py-4">
+        <Skeleton className="h-10 w-full rounded bg-skeletonTheme" />
+      </div>
+      <Separator />
+      <div className="py-4">
+        <Skeleton className="h-10 w-full rounded bg-skeletonTheme" />
+      </div>
+      <Separator />
+    </div>
+  );
+};
