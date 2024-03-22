@@ -1,9 +1,9 @@
-
-
-export default function SortFeedbackSections(
+export default function sortFeedbackSections(
   sortBy: string,
   feedbackSections: any
 ) {
+  console.log(feedbackSections);
+
   switch (sortBy) {
     case "least-members":
       feedbackSections.sort(
@@ -25,13 +25,13 @@ export default function SortFeedbackSections(
 
     case "most-suggestions":
       feedbackSections.sort(
-        (a: any, b: any) => b.suggestions.length - a.suggestions.length
+        (a: any, b: any) => b.feedbacks.length - a.feedbacks.length
       );
       break;
 
     case "least-suggestions":
       feedbackSections.sort(
-        (a: any, b: any) => a.suggestions.length - b.suggestions.length
+        (a: any, b: any) => a.feedbacks.length - b.feedbacks.length
       );
       console.log(feedbackSections);
       break;

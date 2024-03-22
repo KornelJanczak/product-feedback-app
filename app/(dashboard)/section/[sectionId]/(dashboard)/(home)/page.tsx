@@ -16,7 +16,11 @@ interface ISearchParams {
   sortBy?: string;
 }
 
-async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
+async function getSuggestions(
+  sectionId: string,
+  searchParams: ISearchParams,
+  currentUserId: string
+) {
   if (!sectionId) return null;
 
   const { filterBy, suggestionTitle } = searchParams;
@@ -89,7 +93,11 @@ async function getSuggestions(sectionId: string, searchParams: ISearchParams) {
 
   if (!section) return null;
 
-  return suggestions;
+  const currentUserIsAdmin = section.admins.some(
+    ({ user }) => user.id === currentUserId
+  );
+
+  return { suggestions, currentUserIsAdmin };
 }
 
 export default async function SectionDashboard({
@@ -104,9 +112,9 @@ export default async function SectionDashboard({
 
   if (!currentUser) return redirect("/login");
 
-  const suggestions = await getSuggestions(sectionId, searchParams);
+  const data = await getSuggestions(sectionId, searchParams, currentUser.id);
 
-  if (!suggestions || suggestions.length === 0)
+  if (!data || data.suggestions.length === 0)
     return (
       <NoResult
         title="There no suggestions!"
@@ -114,17 +122,18 @@ export default async function SectionDashboard({
       />
     );
 
-  if (suggestions) {
-    sortSuggestions(suggestions, searchParams.sortBy);
+  if (data.suggestions) {
+    sortSuggestions(data.suggestions, searchParams.sortBy);
     return (
       <Suspense
-        fallback={<ContainerSkeleton skeletonCount={suggestions.length} />}
+        fallback={<ContainerSkeleton skeletonCount={data.suggestions.length} />}
       >
         <Container>
-          {suggestions.map((suggestion) => (
+          {data.suggestions.map((suggestion) => (
             <Card
               key={suggestion.id}
               currentUserId={currentUser.id}
+              currentUserIsAdmin={data.currentUserIsAdmin}
               commentsCount={suggestion.comments.length}
               {...suggestion}
             />

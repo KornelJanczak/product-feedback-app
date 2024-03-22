@@ -8,6 +8,7 @@ interface ICard {
   id: string;
   feedbackSectionId: string;
   currentUserId: string;
+  currentUserIsAdmin: boolean;
   likedBy: string[];
   title: string;
   detail: string;
@@ -58,9 +59,12 @@ export default function Card({
               <h4 className="text-dark font-semibold">
                 {author.firstName + " " + author.lastName}
               </h4>
-              <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
-                Admin
-              </span>
+              {isAdmin && (
+                <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
+                  Admin
+                </span>
+              )}
+              {!isAdmin && <span className="text-sm text-grey">Member</span>}
             </div>
           </div>
           {hasAccessToSettings && (

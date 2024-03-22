@@ -6,7 +6,7 @@ import NoResult from "@/components/no-result";
 import SectionCard from "./_components/section-card";
 import { Suspense } from "react";
 import { ContainerSkeleton } from "./_components/container";
-import SortFeedbackSections from "@/lib/product/sort-feedback-sections";
+import sortFeedbackSections from "@/lib/product/sort-feedback-sections";
 
 async function getFeedbackSections(
   currentUserId: string,
@@ -92,8 +92,11 @@ export default async function HomePage({
 
   const isExist = feedbackSections && feedbackSections.length > 0;
 
+  console.log(feedbackSections);
+  
+
   if (isExist) {
-    SortFeedbackSections(sortBy, feedbackSections);
+    sortFeedbackSections(sortBy, feedbackSections);
     return (
       <Suspense
         fallback={
