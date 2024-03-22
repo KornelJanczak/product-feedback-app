@@ -15,7 +15,7 @@ interface ICardSettings {
   className?: string;
   sectionId: string;
   align?: "center" | "end" | "start";
-  settings: {
+  settings?: {
     icon: LucideIcon;
     href: string;
     label: string;
@@ -39,7 +39,7 @@ export default function SectionSettingsCard({
       </PopoverTrigger>
       <PopoverContent className="w-full" align={align}>
         <ul className="flex flex-col gap-1.5 text-dark font-semi text-sm sm:text-base">
-          {settings.map(({ href, label, icon: Icon }) => (
+          {settings?.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}

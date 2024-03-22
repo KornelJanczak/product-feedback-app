@@ -17,13 +17,7 @@ export default async function ActionPanel({
   currentUserIsAdmin,
   sectionUsers,
 }: IActionPanel) {
-  const settings = [
-    {
-      icon: ActivityIcon,
-      href: `/section/${sectionId}/activity`,
-      label: "Activity",
-    },
-  ];
+  await new Promise((resolve) => setTimeout(resolve, 4000));
 
   return (
     <div
@@ -39,7 +33,6 @@ export default async function ActionPanel({
         currentUserId={currentUser.id}
         currentUserIsAdmin={currentUserIsAdmin}
         sectionId={sectionId}
-        settings={settings}
         className="flex items-center justify-center w-1/12 sm:w-auto"
         align="end"
       />
@@ -53,7 +46,7 @@ export const ActionPanelSkeleton = () => {
       className="flex items-center justify-center px-5 py-5 gap-2
        sm:justify-start sm:items-end sm:py-0 sm:ml-auto"
     >
-      <Skeleton className="bg-skeletonTheme px-3 h-8 rounded-md w-5/12 sm:w-36" />
+      <Skeleton className="bg-skeletonTheme px-3 h-8 rounded-md w-6/12 sm:w-36" />
       <Skeleton className="bg-skeletonTheme px-3 h-8 rounded-md w-5/12 sm:w-28" />
       <Skeleton className="bg-skeletonTheme px-3 h-8 rounded-md w-1/12 sm:w-7" />
     </div>

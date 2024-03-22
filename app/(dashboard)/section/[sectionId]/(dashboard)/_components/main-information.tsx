@@ -28,7 +28,7 @@ export default async function MainInformation({
             <UserAvatar key={user?.id} userImage={user?.image} />
           ))}
         </div>
-      </div>``
+      </div>
     </div>
   );
 }
