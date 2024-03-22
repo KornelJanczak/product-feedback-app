@@ -13,12 +13,14 @@ interface IFeedbackSection {
   admins: any[];
 }
 
-interface IFeedbackSectionWithComments extends FeedbackToFeedbackSection {
+interface IFeedbackSectionWithFeedbacks extends FeedbackToFeedbackSection {
   comments: CommentsToFeedback[];
 }
 
+
+
 export interface ITransformedFeedbackSection
-  extends IFeedbackSectionWithComments {
+  extends IFeedbackSectionWithFeedbacks {
   author: UserObject;
 }
 
@@ -27,7 +29,7 @@ export interface ITransformedActivity extends ActivityToFeedbackSection {
 }
 
 export default function addUserObject<
-  T extends IFeedbackSectionWithComments[] | ActivityToFeedbackSection[]
+  T extends IFeedbackSectionWithFeedbacks[] | ActivityToFeedbackSection[]
 >(transformedData: T, feedbackSection: IFeedbackSection) {
   const dataWithUserObject = transformedData.map((object) => {
     const members = feedbackSection.members.map((member) => {

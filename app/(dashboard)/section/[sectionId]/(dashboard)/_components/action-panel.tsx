@@ -17,8 +17,6 @@ export default async function ActionPanel({
   currentUserIsAdmin,
   sectionUsers,
 }: IActionPanel) {
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-
   return (
     <div
       className="flex items-center justify-center px-5 py-5 gap-2 

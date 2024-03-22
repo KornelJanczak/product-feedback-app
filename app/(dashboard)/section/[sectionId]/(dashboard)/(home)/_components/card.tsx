@@ -77,7 +77,7 @@ export default function Card({
           )}
         </div>
         <div className="flex flex-col pt-2">
-          <Link href={`/section/${sectionId}/suggestion/${id}`}>
+          <Link href={`/section/${sectionId}/feedback/${id}`}>
             <h3 className="text-dark font-semibold px-1">{title}</h3>
             <p className="text-grey text-sm sm:text-base text-wrap break-all px-1 pb-2">
               {detail}
