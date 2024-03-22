@@ -11,59 +11,7 @@ export default async function MainInformation({
   title,
   sectionUsers,
 }: IHeader) {
-  const arr = [
-    {
-      image: null,
-      id: "das",
-      userName: "das",
-      lastName: "das",
-      firstName: "das",
-      email: "das",
-    },
-    {
-      image: null,
-      id: "das",
-      userName: "das",
-      lastName: "das",
-      firstName: "das",
-      email: "das",
-    },
-    {
-      image: null,
-      id: "das",
-      userName: "das",
-      lastName: "das",
-      firstName: "das",
-      email: "das",
-    },
-    {
-      image: null,
-      id: "das",
-      userName: "das",
-      lastName: "das",
-      firstName: "das",
-      email: "das",
-    },
-    {
-      image: null,
-      id: "das",
-      userName: "das",
-      lastName: "das",
-      firstName: "das",
-      email: "das",
-    },
-    // {
-    //   image: null,
-    //   id: "das",
-    //   userName: "das",
-    //   lastName: "das",
-    //   firstName: "das",
-    //   email: "das",
-    // },
-
-    ...sectionUsers,
-  ];
-
+  await new Promise((resolve) => setTimeout(resolve, 4000));
   return (
     <div className="px-5">
       <h1 className="text-bold text-secondDark text-2xl sm:text-3xl md:text-4xl py-2">
@@ -96,7 +44,7 @@ export const MainInformationSkeleton = ({
       <div className="py-2">
         <Skeleton className="w-52 h-8 rounded bg-skeletonTheme"></Skeleton>
       </div>
-      <div className="flex flex-col pt-1">
+      <div className="flex flex-col">
         <div className="flex gap-x-1">
           <Skeleton className="h-6 w-32 rounded bg-skeletonTheme" />
         </div>
