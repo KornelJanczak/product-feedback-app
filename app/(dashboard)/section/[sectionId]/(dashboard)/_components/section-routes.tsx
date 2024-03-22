@@ -32,8 +32,11 @@ export default async function SectionRoutes({
 
 export const SectionRoutesSkeleton = () => {
   return (
-    <div className="flex flex-col px-5 py-2">
-      <Skeleton className="w-48 bg-skeletonTheme py-3" />
+    <div className="flex flex-col px-5 pt-2">
+      <Separator />
+      <div className="py-3">
+        <Skeleton className="w-64 bg-skeletonTheme h-7" />
+      </div>
     </div>
   );
 };
