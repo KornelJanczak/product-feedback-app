@@ -2,12 +2,14 @@ import FormContainer from "./form-container";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { PlusIcon } from "lucide-react";
 
-export default function CreateFeedbackButton({
+export default function FeedbackActionButton({
   currentUser,
   currentUserIsAdmin,
+  actionType,
 }: {
   currentUser: ICurrentUser;
   currentUserIsAdmin: boolean;
+  actionType: "create" | "update";
 }) {
   return (
     <Dialog>
@@ -22,6 +24,7 @@ export default function CreateFeedbackButton({
         <FormContainer
           currentUser={currentUser}
           currentUserIsAdmin={currentUserIsAdmin}
+          actionType={actionType}
         />
       </DialogContent>
     </Dialog>

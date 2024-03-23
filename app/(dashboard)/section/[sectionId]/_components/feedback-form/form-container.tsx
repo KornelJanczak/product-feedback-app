@@ -35,9 +35,11 @@ const formTagsValues: IFeedbackFormTagsValues[] = [
 export default function FormContainer({
   currentUser,
   currentUserIsAdmin,
+  actionType
 }: {
   currentUser: ICurrentUser;
   currentUserIsAdmin: boolean;
+  actionType: "create" | "update";
 }) {
   return (
     <>
@@ -64,7 +66,7 @@ export default function FormContainer({
         formInformationValues={formInformationValues}
         formTagsValues={formTagsValues}
         currentUserId={currentUser.id}
-        formType="create"
+        actionType={actionType}
       />
     </>
   );

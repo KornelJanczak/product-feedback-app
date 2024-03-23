@@ -1,8 +1,7 @@
 import AddUsers from "./add-users/add-users";
 import SectionSettingsCard from "@/app/(dashboard)/_components/section-settings-card";
-import { ActivityIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import CreateFeedbackButton from "../../_components/feedback-form/create-feedback-button";
+import FeedbackActionButton from "../../_components/feedback-form/feedback-action-button";
 
 interface IActionPanel {
   currentUser: User;
@@ -22,7 +21,7 @@ export default async function ActionPanel({
       className="flex items-center justify-center px-5 py-5 gap-2 
      sm:justify-start sm:items-end sm:py-0 sm:ml-auto"
     >
-      <CreateFeedbackButton
+      <FeedbackActionButton
         currentUser={currentUser}
         currentUserIsAdmin={currentUserIsAdmin}
       />

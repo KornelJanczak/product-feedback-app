@@ -29,7 +29,7 @@ interface IcreateFeedbackForm {
   formInformationValues: IFeedbackFormValues[];
   formTagsValues: IFeedbackFormTagsValues[];
   currentUserId: string;
-  formType: "create" | "update";
+  actionType: "create" | "update";
   feedbackId?: string;
 }
 
@@ -37,7 +37,7 @@ export default function FeedbackForm({
   formInformationValues,
   formTagsValues,
   currentUserId,
-  formType,
+  actionType,
   feedbackId,
 }: IcreateFeedbackForm) {
   const toastId = "feedback-form-toast";
@@ -45,7 +45,7 @@ export default function FeedbackForm({
 
   const sectionId = pathname.split("/")[2];
 
-  const isCreateForm = formType === "create";
+  const isCreateForm = actionType === "create";
 
   const form = useForm<createFeedbackInputs>({
     resolver: zodResolver(createFeedbackSchema),
