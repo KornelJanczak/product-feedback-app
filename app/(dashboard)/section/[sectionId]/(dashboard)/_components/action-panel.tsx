@@ -2,7 +2,7 @@ import AddUsers from "./add-users/add-users";
 import SectionSettingsCard from "@/app/(dashboard)/_components/section-settings-card";
 import { ActivityIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import CreateFeedbackButton from "./feedback-form/create-feedback-button";
+import CreateFeedbackButton from "../../_components/feedback-form/create-feedback-button";
 
 interface IActionPanel {
   currentUser: User;

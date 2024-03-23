@@ -1,8 +1,10 @@
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import Container, { ContainerSkeleton } from "./_components/container";
-import Card from "./_components/card";
+import Container, {
+  ContainerSkeleton,
+} from "../../_components/feedback-card/container";
+import Card from "../../_components/feedback-card/card";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
 import sortSuggestions from "@/lib/product/sort-suggestions";

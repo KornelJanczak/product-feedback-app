@@ -23,9 +23,9 @@ interface ICard {
 export default function Card({
   id,
   feedbackSectionId: sectionId,
-  likedBy,
   currentUserId,
   currentUserIsAdmin,
+  likedBy,
   title,
   commentsCount,
   detail,

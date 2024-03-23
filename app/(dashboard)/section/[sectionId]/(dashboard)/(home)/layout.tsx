@@ -1,6 +1,6 @@
 import SearchBar from "@/components/search-bar/search-bar";
 import { SelectSort } from "@/components/search-bar/select-sort";
-import FilterPopover from "./_components/filter-popover";
+import FilterPopover from "../../_components/feedback-card/filter-popover";
 
 const sortValues = [
   { value: "most-comments", label: "Most Comments" },

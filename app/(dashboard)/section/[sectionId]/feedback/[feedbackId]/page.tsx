@@ -104,8 +104,6 @@ export default async function FeedbackPage(params: {
     feedbackId: string;
   };
 }) {
-  console.log(params.params.sectionId);
-
   const sectionId = params.params.sectionId;
   const feedbackId = params.params.feedbackId;
 
@@ -116,7 +114,6 @@ export default async function FeedbackPage(params: {
   const feedback = await getFeedback(sectionId, feedbackId, currentUser.id);
 
   console.log(feedback);
-  
 
-  return <div></div>;
+  return <></>;
 }
