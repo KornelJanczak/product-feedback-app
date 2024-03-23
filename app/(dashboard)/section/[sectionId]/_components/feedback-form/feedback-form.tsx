@@ -28,6 +28,10 @@ import { updateFeedback } from "@/server-actions/product/feedback/update-feedbac
 interface IcreateFeedbackForm {
   formInformationValues: IFeedbackFormValues[];
   formTagsValues: IFeedbackFormTagsValues[];
+  title?: string;
+  detail?: string;
+  status?: string;
+  category?: string;
   currentUserId: string;
   actionType: "create" | "update";
   feedbackId?: string;
@@ -39,6 +43,10 @@ export default function FeedbackForm({
   currentUserId,
   actionType,
   feedbackId,
+  title,
+  detail,
+  status,
+  category,
 }: IcreateFeedbackForm) {
   const toastId = "feedback-form-toast";
   const pathname = usePathname();
@@ -52,10 +60,10 @@ export default function FeedbackForm({
     defaultValues: {
       sectionId,
       userId: currentUserId,
-      title: "",
-      detail: "",
-      category: undefined,
-      status: undefined,
+      title: title || "",
+      detail: detail || "",
+      category: category || undefined,
+      status: status || undefined,
     },
   });
 

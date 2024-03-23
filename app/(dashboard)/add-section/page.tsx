@@ -1,5 +1,5 @@
 import getCurrentUser from "@/lib/user/get-current-user";
-import BackButton from "./_components/back-button";
+import BackButton from "@/components/back-button";
 import AddForm from "./_components/form";
 import { redirect } from "next/navigation";
 import FormHeader from "@/components/form/form-header";

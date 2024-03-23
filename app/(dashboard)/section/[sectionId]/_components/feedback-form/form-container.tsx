@@ -1,6 +1,18 @@
 import FormHeader from "@/components/form/form-header";
 import FeedbackForm from "./feedback-form";
 
+interface IFormContainer {
+  currentUser: ICurrentUser;
+  currentUserIsAdmin: boolean;
+  feedbackId?: string;
+  title?: string;
+  detail?: string;
+  status?: string;
+  category?: string;
+  headerTitle: string;
+  actionType: "create" | "update";
+}
+
 const formInformationValues: IFeedbackFormValues[] = [
   {
     name: "title",
@@ -35,18 +47,21 @@ const formTagsValues: IFeedbackFormTagsValues[] = [
 export default function FormContainer({
   currentUser,
   currentUserIsAdmin,
-  actionType
-}: {
-  currentUser: ICurrentUser;
-  currentUserIsAdmin: boolean;
-  actionType: "create" | "update";
-}) {
+  feedbackId,
+  actionType,
+  headerTitle,
+  title,
+  detail,
+  status,
+  category,
+}: IFormContainer) {
   return (
     <>
       <FormHeader
-        headerTitle="Create new Feedback"
+        headerTitle={headerTitle}
         className="pt-0"
         headerClassName="pt-3"
+        actionType={actionType}
         userName={currentUser.name}
         lastName={currentUser.lastName}
         firstName={currentUser.firstName}
@@ -65,8 +80,13 @@ export default function FormContainer({
       <FeedbackForm
         formInformationValues={formInformationValues}
         formTagsValues={formTagsValues}
+        feedbackId={feedbackId}
         currentUserId={currentUser.id}
         actionType={actionType}
+        title={title}
+        detail={detail}
+        status={status}
+        category={category}
       />
     </>
   );

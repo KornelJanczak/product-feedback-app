@@ -1,6 +1,7 @@
 import PlusGradientIcon from "@/public/icons/plus-gradient";
 import UserAvatar from "@/components/user/user-avatar";
 import { cn } from "@/lib/utils";
+import FeedbackEditIcon from "@/public/icons/feedback-edit";
 
 interface IFormHeader {
   userImage?: string | null;
@@ -11,6 +12,7 @@ interface IFormHeader {
   headerTitle: string;
   userName: string;
   additonalContent?: React.ReactNode;
+  actionType: "create" | "update";
 }
 
 export default function FormHeader({
@@ -22,13 +24,18 @@ export default function FormHeader({
   additonalContent,
   className,
   headerClassName,
+  actionType,
 }: IFormHeader) {
+  const isCreate = actionType === "create";
+  const isUpdate = actionType === "update";
+
   const showName =
     firstName && lastName ? `${firstName} ${lastName}` : `${userName}`;
 
   return (
     <div className={cn("pt-6", className)}>
-      <PlusGradientIcon />
+      {isCreate && <PlusGradientIcon />}
+      {isUpdate && <FeedbackEditIcon />}
       <h2
         className={cn(
           "text-lg sm:text-xl md:text-2xl text-secondDark font-bold pt-6",

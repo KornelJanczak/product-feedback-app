@@ -1,6 +1,8 @@
+import BackButton from "@/components/back-button";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
+import FeedbackActionButton from "../../_components/feedback-form/feedback-action-button";
 
 export async function getFeedback(
   sectionId: string,
@@ -64,20 +66,26 @@ export async function getFeedback(
 
   if (!section) throw new Error("Section not found");
 
-  if (
-    !section.members.find(({ user }) => user.id === currentUserId) &&
-    !section.admins.find(({ user }) => user.id === currentUserId)
-  )
+  const currentUserIsMember = section.members.some(
+    ({ user }) => user.id === currentUserId
+  );
+
+  const currentUserIsAdmin = section.admins.some(
+    ({ user }) => user.id === currentUserId
+  );
+
+  if (!currentUserIsMember && !currentUserIsAdmin)
     throw new Error("Unauthorized");
 
-  const user =
+  const author =
     section.members.find(({ user }) => user.id === feedback.authorId) ||
     section.admins.find(({ user }) => user.id === feedback.authorId);
 
-  if (!user) throw new Error("User not found");
+  if (!author) throw new Error("User not found");
 
   const updatedFeedback = {
-    author: user.user,
+    author: author.user,
+    currentUserIsAdmin: currentUserIsAdmin,
     title: feedback.title,
     category: feedback.category,
     detail: feedback.detail,
@@ -115,5 +123,21 @@ export default async function FeedbackPage(params: {
 
   console.log(feedback);
 
-  return <></>;
+  return (
+    <main className="md:container">
+      <div>
+        <BackButton href={`/section/${sectionId}`} />
+        <FeedbackActionButton
+          currentUser={currentUser}
+          currentUserIsAdmin={feedback.currentUserIsAdmin}
+          actionType="update"
+          headerTitle={`Editing ${"`" + feedback.title + "`"}`}
+          title={feedback.title}
+          detail={feedback.detail}
+          status={feedback.status}
+          category={feedback.category}
+        />
+      </div>
+    </main>
+  );
 }

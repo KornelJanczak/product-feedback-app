@@ -24,6 +24,8 @@ export default async function ActionPanel({
       <FeedbackActionButton
         currentUser={currentUser}
         currentUserIsAdmin={currentUserIsAdmin}
+        actionType="create"
+        headerTitle="Create New Feedback"
       />
       {<AddUsers currentUser={currentUser} sectionUsers={sectionUsers} />}
       <SectionSettingsCard
