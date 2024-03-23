@@ -20,7 +20,7 @@ interface ICard {
   author?: IAuthor;
 }
 
-export default function FeedbackCard({
+export default async function FeedbackCard({
   id,
   feedbackSectionId: sectionId,
   currentUserId,

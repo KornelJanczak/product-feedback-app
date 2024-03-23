@@ -15,7 +15,7 @@ interface IFeedbackActionButton {
   actionType: "create" | "update";
 }
 
-export default function FeedbackActionButton({
+export default async function FeedbackActionButton({
   currentUser,
   currentUserIsAdmin,
   feedbackId,
