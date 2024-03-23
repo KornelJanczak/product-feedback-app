@@ -67,7 +67,7 @@ export default async function ActivityPage({
 
   if (activityLog)
     return (
-      <section className="md:container px-5 py-5 mt-5 min-h-screen  bg-basicWhite">
+      <section className="md:container px-5 py-5 mt-5 lg:max-w-3xl bg-basicWhite">
         <Suspense
           fallback={<ContainerSkeleton skeletonCount={activityLog.length} />}
         >

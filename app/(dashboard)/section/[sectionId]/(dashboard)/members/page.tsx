@@ -63,7 +63,7 @@ export default async function MembersPage({
   const sectionMembers = await getSectionMembers(sectionId);
 
   return (
-    <section className="md:container lg:max-w-3xl min-h-screen">
+    <section className="md:container lg:max-w-3xl">
       <div className="px-5 py-2 mt-6 bg-basicWhite md:py-6 md:rounded-md">
         <Container
           currentUser={currentUser}
