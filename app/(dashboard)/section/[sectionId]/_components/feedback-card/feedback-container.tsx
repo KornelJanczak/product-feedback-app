@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default async function Container({
+export default async function FeedbackContainer({
   children,
 }: {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ export default async function Container({
   return <div className="flex flex-col gap-6 px-1 py-5">{children}</div>;
 }
 
-export const ContainerSkeleton = ({
+export const FeedbackContainerSkeleton = ({
   skeletonCount,
 }: {
   skeletonCount: number;

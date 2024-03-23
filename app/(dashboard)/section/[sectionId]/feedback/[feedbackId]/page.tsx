@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import FeedbackActionButton from "../../_components/feedback-form/feedback-action-button";
+import FeedbackCard from "../../_components/feedback-card/feedback-card";
 
 export async function getFeedback(
   sectionId: string,
@@ -77,14 +78,20 @@ export async function getFeedback(
   if (!currentUserIsMember && !currentUserIsAdmin)
     throw new Error("Unauthorized");
 
-  const author =
-    section.members.find(({ user }) => user.id === feedback.authorId) ||
-    section.admins.find(({ user }) => user.id === feedback.authorId);
+  const authorIsMember = section.members.find(
+    ({ user }) => user.id === feedback.authorId
+  );
+
+  const authorIsAdmin = section.admins.find(
+    ({ user }) => user.id === feedback.authorId
+  );
+
+  const author = authorIsMember || authorIsAdmin;
 
   if (!author) throw new Error("User not found");
 
   const updatedFeedback = {
-    author: author.user,
+    author: { ...author.user, isAdmin: authorIsAdmin ? true : false },
     currentUserIsAdmin: currentUserIsAdmin,
     title: feedback.title,
     category: feedback.category,
@@ -125,7 +132,7 @@ export default async function FeedbackPage(params: {
 
   return (
     <main className="md:container">
-      <div>
+      <div className="flex justify-center items-center p-5">
         <BackButton href={`/section/${sectionId}`} />
         <FeedbackActionButton
           currentUser={currentUser}
@@ -138,6 +145,21 @@ export default async function FeedbackPage(params: {
           category={feedback.category}
         />
       </div>
+      <section className="px-5">
+        <FeedbackCard
+          id={feedbackId}
+          feedbackSectionId={sectionId}
+          currentUserId={currentUser.id}
+          currentUserIsAdmin={feedback.currentUserIsAdmin}
+          likedBy={feedback.likedBy}
+          title={feedback.title}
+          detail={feedback.detail}
+          status={feedback.status}
+          category={feedback.category}
+          commentsCount={feedback.comments.length}
+          author={feedback.author}
+        />
+      </section>
     </main>
   );
 }

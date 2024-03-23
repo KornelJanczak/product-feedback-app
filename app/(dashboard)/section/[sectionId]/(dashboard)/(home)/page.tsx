@@ -1,10 +1,9 @@
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import Container, {
-  ContainerSkeleton,
-} from "../../_components/feedback-card/container";
-import Card from "../../_components/feedback-card/card";
+import FeedbackCard from "../../_components/feedback-card/feedback-card";
+import FeedbackContainer from "../../_components/feedback-card/feedback-container";
+import { FeedbackContainerSkeleton } from "../../_components/feedback-card/feedback-container";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
 import sortSuggestions from "@/lib/product/sort-suggestions";
@@ -128,11 +127,13 @@ export default async function SectionDashboard({
     sortSuggestions(data.suggestions, searchParams.sortBy);
     return (
       <Suspense
-        fallback={<ContainerSkeleton skeletonCount={data.suggestions.length} />}
+        fallback={
+          <FeedbackContainerSkeleton skeletonCount={data.suggestions.length} />
+        }
       >
-        <Container>
+        <FeedbackContainer>
           {data.suggestions.map((suggestion) => (
-            <Card
+            <FeedbackCard
               key={suggestion.id}
               currentUserId={currentUser.id}
               currentUserIsAdmin={data.currentUserIsAdmin}
@@ -140,7 +141,7 @@ export default async function SectionDashboard({
               {...suggestion}
             />
           ))}
-        </Container>
+        </FeedbackContainer>
       </Suspense>
     );
   }

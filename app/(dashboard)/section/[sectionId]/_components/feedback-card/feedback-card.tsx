@@ -15,12 +15,12 @@ interface ICard {
   status: string;
   category: string;
   commentsCount?: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   author?: IAuthor;
 }
 
-export default function Card({
+export default function FeedbackCard({
   id,
   feedbackSectionId: sectionId,
   currentUserId,
