@@ -6,6 +6,7 @@ import FeedbackActionButton from "../../_components/feedback-form/feedback-actio
 import FeedbackCard from "../../_components/feedback-card/feedback-card";
 import CommentContainer from "./_components/comment-container";
 import { CreateCommentForm } from "./_components/create-comment-form";
+import CommentCard from "./_components/comment-card";
 
 async function getFeedback(
   sectionId: string,
@@ -102,12 +103,16 @@ async function getFeedback(
     likedBy: feedback.likedBy,
     comments: feedback.comments.map((comment) => ({
       ...comment,
-      author: section.members.find(({ user }) => user.id === comment.authorId)
-        ?.user,
+      author:
+        section.members.find(({ user }) => user.id === comment.authorId)
+          ?.user ||
+        section.admins.find(({ user }) => user.id === comment.authorId)?.user,
       replies: comment.replies.map((reply) => ({
         ...reply,
-        author: section.members.find(({ user }) => user.id === reply.authorId)
-          ?.user,
+        author:
+          section.members.find(({ user }) => user.id === reply.authorId)
+            ?.user ||
+          section.admins.find(({ user }) => user.id === reply.authorId)?.user,
       })),
     })),
   };
@@ -131,25 +136,32 @@ export default async function FeedbackPage(params: {
   const feedback = await getFeedback(sectionId, feedbackId, currentUser.id);
 
   const isCommentsExist = feedback.comments.length > 0;
+  const currentUserIsAuthor = feedback.author.id === currentUser.id;
 
-  console.log(feedback);
+  const totalComments = feedback.comments.length;
+  const totalReplies = feedback.comments.reduce(
+    (count, comment) => count + comment.replies.length,
+    0
+  );
 
   return (
-    <main className="md:container">
+    <main className="md:container flex flex-col justify-between h-min-h-screen">
       <div className="flex justify-center items-center p-5">
         <BackButton href={`/section/${sectionId}`} />
-        <FeedbackActionButton
-          currentUser={currentUser}
-          currentUserIsAdmin={feedback.currentUserIsAdmin}
-          actionType="update"
-          headerTitle={`Editing ${"`" + feedback.title + "`"}`}
-          title={feedback.title}
-          detail={feedback.detail}
-          status={feedback.status}
-          category={feedback.category}
-        />
+        {(feedback.currentUserIsAdmin || currentUserIsAuthor) && (
+          <FeedbackActionButton
+            currentUser={currentUser}
+            currentUserIsAdmin={feedback.currentUserIsAdmin}
+            actionType="update"
+            headerTitle={`Editing ${"`" + feedback.title + "`"}`}
+            title={feedback.title}
+            detail={feedback.detail}
+            status={feedback.status}
+            category={feedback.category}
+          />
+        )}
       </div>
-      <section className="px-5">
+      <section className="flex flex-col justify-between h-full px-5">
         <FeedbackCard
           id={feedbackId}
           feedbackSectionId={sectionId}
@@ -164,14 +176,19 @@ export default async function FeedbackPage(params: {
           author={feedback.author}
         />
         {isCommentsExist && (
-          <CommentContainer>
+          <CommentContainer commentsCount={totalComments + totalReplies}>
             {feedback.comments.map((comment) => (
-              <div key={comment.id}></div>
+              <CommentCard
+                key={comment.id}
+                author={comment.author as IAuthor}
+                content={comment.content}
+                currentUserIsAdmin={true}
+              />
             ))}
           </CommentContainer>
         )}
-        <CreateCommentForm feedbackId={feedbackId} sectionId={sectionId} />
       </section>
+      <CreateCommentForm feedbackId={feedbackId} sectionId={sectionId} />
     </main>
   );
 }

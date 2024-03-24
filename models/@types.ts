@@ -27,6 +27,7 @@ interface ICurrentUser {
 interface IAuthor {
   id: string;
   image: string | null;
+  email?: string;
   userName: string;
   lastName: string | null;
   firstName: string | null;

@@ -5,6 +5,7 @@ import createActivityForFeedbackSection from "@/lib/product/create-activity";
 import checkMembershipInSection from "@/lib/product/check-membership-in-section";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { createCommentSchema } from "@/schemas/@product-actions-schemas";
+import { revalidatePath } from "next/cache";
 
 export const createComment = action(
   createCommentSchema,
@@ -44,6 +45,7 @@ export const createComment = action(
       "Create comment to feedback"
     );
 
+    revalidatePath(`/section/${sectionId}/feedback/${feedbackId}`);
     return { success: comment };
   }
 );
