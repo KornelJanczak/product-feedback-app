@@ -3,6 +3,7 @@ import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import SettingsPopover from "./settings-popover";
 import LikeButton from "./like-button";
+import { cn } from "@/lib/utils";
 
 interface ICard {
   id: string;
@@ -14,6 +15,7 @@ interface ICard {
   detail: string;
   status: string;
   category: string;
+  className?: string;
   commentsCount?: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -26,6 +28,7 @@ export default async function FeedbackCard({
   currentUserId,
   currentUserIsAdmin,
   likedBy,
+  className,
   title,
   commentsCount,
   detail,
@@ -52,7 +55,12 @@ export default async function FeedbackCard({
     const modifiedCategory = firstCategoryLetter + category.slice(1);
 
     return (
-      <div className="flex flex-col px-4 py-3 h-48  rounded-md bg-basicWhite">
+      <div
+        className={cn(
+          "flex flex-col px-4 py-3 h-48  rounded-md bg-basicWhite",
+          className
+        )}
+      >
         <div className="flex flex-row justify-between">
           <div className="flex gap-1.5">
             <Link
