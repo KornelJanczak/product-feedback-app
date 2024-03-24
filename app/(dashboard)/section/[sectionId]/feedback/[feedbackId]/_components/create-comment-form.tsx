@@ -12,7 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
 import { createCommentSchema } from "@/schemas/@product-actions-schemas";
 import {
@@ -34,19 +33,9 @@ export function CreateCommentForm({
   feedbackId: string;
   sectionId: string;
 }) {
-  const [value, setValue] = useState("");
-  const [remainingChars, setRemainingChars] = useState(limit);
-
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value;
-    if (newValue.length <= limit) {
-      setValue(newValue);
-      setRemainingChars(limit - newValue.length);
-    }
-  };
-
   const form = useForm<createCommentInputs>({
     resolver: zodResolver(createCommentSchema),
+
     defaultValues: {
       feedbackId,
       sectionId,
@@ -67,6 +56,7 @@ export function CreateCommentForm({
 
   const onProcess: createCommentSubmitHandler = (values) => {
     execute(values);
+    form.reset();
   };
 
   return (
@@ -83,13 +73,12 @@ export function CreateCommentForm({
               <div className="flex justify-between">
                 <FormLabel>Add comment</FormLabel>
                 <span className="text-grey text-sm sm:text-base">
-                  {limit} Characters left
+                  {limit} Characters max
                 </span>
               </div>
               <FormControl>
                 <div className="relative">
                   <Textarea
-                    // onChange={handleChange}
                     placeholder="Type your comment here"
                     className="w-full h-auto pr-10"
                     {...field}

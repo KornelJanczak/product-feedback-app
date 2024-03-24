@@ -26,6 +26,7 @@ export default async function AddSectionPage({
       <BackButton />
       <div className="px-2 sm:pt-3 sm:px-6">
         <FormHeader
+          actionType="create"
           headerTitle="Create New Section"
           userName={name}
           firstName={firstName}

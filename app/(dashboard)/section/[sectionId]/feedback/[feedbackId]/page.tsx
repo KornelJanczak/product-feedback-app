@@ -7,6 +7,7 @@ import FeedbackCard from "../../_components/feedback-card/feedback-card";
 import CommentContainer from "./_components/comment-container";
 import { CreateCommentForm } from "./_components/create-comment-form";
 import CommentCard from "./_components/comment-card";
+import transformFeedbackObject from "@/lib/product/transform-feedback-object";
 
 async function getFeedback(
   sectionId: string,
@@ -15,27 +16,6 @@ async function getFeedback(
 ) {
   if (!sectionId || !feedbackId || !currentUserId)
     throw new Error("Invalid parameters");
-
-  const feedback = await prisma.feedbackToFeedbackSection.findUnique({
-    where: {
-      id: feedbackId,
-    },
-    select: {
-      authorId: true,
-      title: true,
-      category: true,
-      detail: true,
-      status: true,
-      likedBy: true,
-      comments: {
-        include: {
-          replies: true,
-        },
-      },
-    },
-  });
-
-  if (!feedback) throw new Error("Feedback not found");
 
   const select = {
     id: true,
@@ -49,6 +29,9 @@ async function getFeedback(
   const section = await prisma.feedbackSection.findUnique({
     where: {
       id: sectionId,
+      feedbacks: {
+        some: { id: feedbackId },
+      },
     },
     select: {
       members: {
@@ -65,15 +48,38 @@ async function getFeedback(
           },
         },
       },
+      feedbacks: {
+        where: {
+          id: feedbackId,
+        },
+        select: {
+          authorId: true,
+          title: true,
+          category: true,
+          detail: true,
+          status: true,
+          likedBy: true,
+          comments: {
+            include: {
+              replies: true,
+            },
+          },
+        },
+      },
     },
   });
+
+  console.log(section);
+
+  if (!section?.feedbacks || !section) return null;
+
+  const feedback = section.feedbacks[0];
 
   if (!section) throw new Error("Section not found");
 
   const currentUserIsMember = section.members.some(
     ({ user }) => user.id === currentUserId
   );
-
   const currentUserIsAdmin = section.admins.some(
     ({ user }) => user.id === currentUserId
   );
@@ -103,11 +109,19 @@ async function getFeedback(
     likedBy: feedback.likedBy,
     comments: feedback.comments.map((comment) => ({
       ...comment,
-      author:
-        section.members.find(({ user }) => user.id === comment.authorId)
+      author: {
+        isAdmin: section.admins.some(
+          ({ user }) => user.id === comment.authorId
+        ),
+        ...(section.members.find(({ user }) => user.id === comment.authorId)
           ?.user ||
-        section.admins.find(({ user }) => user.id === comment.authorId)?.user,
+          section.admins.find(({ user }) => user.id === comment.authorId)
+            ?.user),
+      },
       replies: comment.replies.map((reply) => ({
+        isAdmin: section.admins.some(
+          ({ user }) => user.id === comment.authorId
+        ),
         ...reply,
         author:
           section.members.find(({ user }) => user.id === reply.authorId)
@@ -116,6 +130,8 @@ async function getFeedback(
       })),
     })),
   };
+
+  // const updatedFeedback = transformFeedbackObject(section, currentUserId);
 
   return updatedFeedback;
 }
@@ -135,6 +151,8 @@ export default async function FeedbackPage(params: {
 
   const feedback = await getFeedback(sectionId, feedbackId, currentUser.id);
 
+  if (!feedback) throw new Error("Feedback not found");
+
   const isCommentsExist = feedback.comments.length > 0;
   const currentUserIsAuthor = feedback.author.id === currentUser.id;
 
@@ -145,8 +163,8 @@ export default async function FeedbackPage(params: {
   );
 
   return (
-    <main className="md:container flex flex-col justify-between h-min-h-screen">
-      <div className="flex justify-center items-center p-5">
+    <main className="relative md:container flex flex-col justify-between">
+      <div className="fixed top-0 z-10 w-full flex justify-center items-center px-5 py-3 bg-basicWhite">
         <BackButton href={`/section/${sectionId}`} />
         {(feedback.currentUserIsAdmin || currentUserIsAuthor) && (
           <FeedbackActionButton
@@ -161,7 +179,7 @@ export default async function FeedbackPage(params: {
           />
         )}
       </div>
-      <section className="flex flex-col justify-between h-full px-5">
+      <section className="flex flex-col justify-between h-full px-5 mt-16">
         <FeedbackCard
           id={feedbackId}
           feedbackSectionId={sectionId}
@@ -179,10 +197,13 @@ export default async function FeedbackPage(params: {
           <CommentContainer commentsCount={totalComments + totalReplies}>
             {feedback.comments.map((comment) => (
               <CommentCard
+                id={comment.id}
+                createdAt={comment.createdAt}
                 key={comment.id}
                 author={comment.author as IAuthor}
                 content={comment.content}
                 currentUserIsAdmin={true}
+                currentUserIsAuthor={currentUserIsAuthor}
               />
             ))}
           </CommentContainer>

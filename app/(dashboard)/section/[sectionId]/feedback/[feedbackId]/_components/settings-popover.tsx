@@ -3,14 +3,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Settings } from "lucide-react";
 
 export default function SettingsPopover() {
   return (
     <Popover>
       <PopoverTrigger className="bg-none text-blue text-sm sm:text-base font-semibold cursor-pointer ml-auto mb-auto">
-        Reply
+        <Settings color="#3A4374" width={20} height={20} />
       </PopoverTrigger>
-      <PopoverContent>Place content for the popover here.</PopoverContent>
+      <PopoverContent align="end" className="w-full">
+        Place
+      </PopoverContent>
     </Popover>
   );
 }
