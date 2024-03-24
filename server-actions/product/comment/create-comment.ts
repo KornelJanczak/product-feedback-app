@@ -2,6 +2,7 @@
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import createActivityForFeedbackSection from "@/lib/product/create-activity";
+import checkMembershipInSection from "@/lib/product/check-membership-in-section";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { createCommentSchema } from "@/schemas/@product-actions-schemas";
 
@@ -15,21 +16,10 @@ export const createComment = action(
 
     if (!currentUser) throw new Error("User not found");
 
-    let currentUserIsMember;
-
-    try {
-      currentUserIsMember = await prisma.feedbackSection.findUnique({
-        where: {
-          id: sectionId,
-          OR: [
-            { members: { some: { userId: currentUser.id } } },
-            { admins: { some: { userId: currentUser.id } } },
-          ],
-        },
-      });
-    } catch {
-      throw new Error("Failed to find section");
-    }
+    const currentUserIsMember = await checkMembershipInSection(
+      sectionId,
+      currentUser.id
+    );
 
     if (!currentUserIsMember)
       throw new Error("Current user is not a member of this section");

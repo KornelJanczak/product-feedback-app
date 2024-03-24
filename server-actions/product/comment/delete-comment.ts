@@ -4,6 +4,7 @@ import { action } from "@/lib/clients/safe-action-client";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { deleteCommentSchema } from "@/schemas/@product-actions-schemas";
 import prisma from "@/lib/db";
+import checkMembershipInSection from "@/lib/product/check-membership-in-section";
 
 export const deleteComment = action(
   deleteCommentSchema,
@@ -15,20 +16,12 @@ export const deleteComment = action(
 
     if (!currentUser) throw new Error("User not found");
 
-    let currentUserIsMember;
+    const currentUserIsMember = await checkMembershipInSection(
+      sectionId,
+      currentUser.id
+    );
 
-    try {
-      currentUserIsMember = await prisma.feedbackSection.findUnique({
-        where: {
-          id: sectionId,
-          OR: [
-            { members: { some: { userId: currentUser.id } } },
-            { admins: { some: { userId: currentUser.id } } },
-          ],
-        },
-      });
-    } catch {
-      throw new Error("Failed to find section");
-    }
+    if (!currentUserIsMember)
+      throw new Error("Current user is not a member of this section");
   }
 );

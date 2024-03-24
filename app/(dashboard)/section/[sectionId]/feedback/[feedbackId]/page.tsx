@@ -4,6 +4,8 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import FeedbackActionButton from "../../_components/feedback-form/feedback-action-button";
 import FeedbackCard from "../../_components/feedback-card/feedback-card";
+import CommentContainer from "./_components/comment-container";
+import NoResult from "@/components/no-result";
 
 export async function getFeedback(
   sectionId: string,
@@ -128,6 +130,8 @@ export default async function FeedbackPage(params: {
 
   const feedback = await getFeedback(sectionId, feedbackId, currentUser.id);
 
+  const isCommentsExist = feedback.comments.length > 0;
+
   console.log(feedback);
 
   return (
@@ -159,9 +163,13 @@ export default async function FeedbackPage(params: {
           commentsCount={feedback.comments.length}
           author={feedback.author}
         />
-      </section>
-      <section>
-        
+        {isCommentsExist && (
+          <CommentContainer>
+            {feedback.comments.map((comment) => (
+              <div key={comment.id}></div>
+            ))}
+          </CommentContainer>
+        )}
       </section>
     </main>
   );

@@ -1,12 +1,12 @@
 import prisma from "../db";
 
-export default async function currentUserIsMember(
+export default async function checkMembershipInSection(
   sectionId: string,
   currentUserId: string
 ) {
-  let currentUserIsMember;
+  let section;
   try {
-    currentUserIsMember = await prisma.feedbackSection.findUnique({
+    section = await prisma.feedbackSection.findUnique({
       where: {
         id: sectionId,
         OR: [
@@ -15,8 +15,11 @@ export default async function currentUserIsMember(
         ],
       },
     });
-    return currentUserIsMember;
   } catch {
     throw new Error("Failed to find section");
   }
+
+  if (!section) return null;
+
+  return section;
 }
