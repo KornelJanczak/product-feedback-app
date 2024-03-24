@@ -73,8 +73,7 @@ export const deleteFeedbackSchema = z.object({
 export const likeFeedbackSchema = z.object({ ...idsFeedbackSchema });
 
 export const createCommentSchema = z.object({
-  userId: z.string(),
+  sectionId: z.string(),
   feedbackId: z.string(),
   content: z.string(),
-  
 });
