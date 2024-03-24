@@ -1,7 +1,7 @@
 "use server";
-
 import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
+import createActivityForFeedbackSection from "@/lib/product/create-activity";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { createCommentSchema } from "@/schemas/@product-actions-schemas";
 
@@ -47,6 +47,12 @@ export const createComment = action(
     } catch {
       throw new Error("Failed to create comment");
     }
+
+    await createActivityForFeedbackSection(
+      sectionId,
+      currentUser.id,
+      "Create comment to feedback"
+    );
 
     return { success: comment };
   }

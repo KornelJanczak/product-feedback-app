@@ -1,13 +1,5 @@
 import * as z from "zod";
 
-export const createFeedbackSectionSchema = z.object({
-  title: z
-    .string()
-    .min(2, { message: "Title must contain at least 2 character's" }),
-  currentUserId: z.string().min(2),
-  membersIds: z.array(z.string()),
-});
-
 const basicProductSchema = {
   userId: z.string(),
   sectionId: z.string(),
@@ -23,11 +15,24 @@ const basicFeedbackSchema = {
     .min(2, { message: "Title must contain at least 2 character's" }),
 };
 
+const basicCommentSchema = {
+  sectionId: z.string(),
+  feedbackId: z.string(),
+};
+
 const idsFeedbackSchema = {
   currentUserId: z.string(),
   feedbackId: z.string(),
   sectionId: z.string(),
 };
+
+export const createFeedbackSectionSchema = z.object({
+  title: z
+    .string()
+    .min(2, { message: "Title must contain at least 2 character's" }),
+  currentUserId: z.string().min(2),
+  membersIds: z.array(z.string()),
+});
 
 export const deleteFeedbackSectionSchema = z.object({
   ...basicProductSchema,
@@ -73,7 +78,11 @@ export const deleteFeedbackSchema = z.object({
 export const likeFeedbackSchema = z.object({ ...idsFeedbackSchema });
 
 export const createCommentSchema = z.object({
-  sectionId: z.string(),
-  feedbackId: z.string(),
+  ...basicCommentSchema,
   content: z.string(),
+});
+
+export const deleteCommentSchema = z.object({
+  ...basicCommentSchema,
+  commentId: z.string(),
 });
