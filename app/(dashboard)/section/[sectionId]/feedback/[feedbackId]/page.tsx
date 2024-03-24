@@ -5,9 +5,9 @@ import { redirect } from "next/navigation";
 import FeedbackActionButton from "../../_components/feedback-form/feedback-action-button";
 import FeedbackCard from "../../_components/feedback-card/feedback-card";
 import CommentContainer from "./_components/comment-container";
-import NoResult from "@/components/no-result";
+import { CreateCommentForm } from "./_components/create-comment-form";
 
-export async function getFeedback(
+async function getFeedback(
   sectionId: string,
   feedbackId: string,
   currentUserId: string
@@ -170,6 +170,7 @@ export default async function FeedbackPage(params: {
             ))}
           </CommentContainer>
         )}
+        <CreateCommentForm feedbackId={feedbackId} sectionId={sectionId} />
       </section>
     </main>
   );
