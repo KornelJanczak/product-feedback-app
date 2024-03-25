@@ -32,9 +32,9 @@ interface IcreateFeedbackForm {
   detail?: string;
   status?: string;
   category?: string;
+  feedbackId?: string;
   currentUserId: string;
   actionType: "create" | "update";
-  feedbackId?: string;
 }
 
 export default function FeedbackForm({
@@ -54,6 +54,7 @@ export default function FeedbackForm({
   const sectionId = pathname.split("/")[2];
 
   const isCreateForm = actionType === "create";
+  const isUpdateForm = actionType === "update";
 
   const form = useForm<createFeedbackInputs>({
     resolver: zodResolver(createFeedbackSchema),
@@ -100,7 +101,7 @@ export default function FeedbackForm({
       executeCreateFeedback(values);
     }
 
-    if (!isCreateForm && feedbackId) {
+    if (isUpdateForm && feedbackId) {
       executeUpdateFeedback({ ...values, feedbackId: feedbackId });
     }
   };
@@ -185,7 +186,7 @@ export default function FeedbackForm({
           hover:transition-all hover:duration-300 mt-auto"
         >
           {isCreateForm && " Add Feedback"}
-          {!isCreateForm && "Edit Feedback"}
+          {isUpdateForm && "Edit Feedback"}
         </Button>
       </form>
     </Form>

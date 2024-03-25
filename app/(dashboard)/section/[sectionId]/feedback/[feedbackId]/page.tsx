@@ -172,6 +172,7 @@ export default async function FeedbackPage(params: {
             currentUserIsAdmin={feedback.currentUserIsAdmin}
             actionType="update"
             headerTitle={`Editing ${"`" + feedback.title + "`"}`}
+            feedbackId={feedbackId}
             title={feedback.title}
             detail={feedback.detail}
             status={feedback.status}

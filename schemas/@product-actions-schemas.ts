@@ -20,6 +20,12 @@ const basicCommentSchema = {
   feedbackId: z.string(),
 };
 
+const basicReplySchema = {
+  sectionId: z.string(),
+  feedbackId: z.string(),
+  commentId: z.string(),
+};
+
 const idsFeedbackSchema = {
   currentUserId: z.string(),
   feedbackId: z.string(),
@@ -85,4 +91,10 @@ export const createCommentSchema = z.object({
 export const deleteCommentSchema = z.object({
   ...basicCommentSchema,
   commentId: z.string(),
+});
+
+export const createReplySchema = z.object({
+  ...basicReplySchema,
+
+  content: z.string(),
 });
