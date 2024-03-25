@@ -10,7 +10,7 @@ export default async function CommentContainer({
       <h3 className="text-secondDark text-semibold text-lg sm:text-xl md:text-2xl">
         {commentsCount} Comments
       </h3>
-      <div className="flex flex-col gap-4">{children}</div>
+      <div className="flex flex-col gap-6">{children}</div>
     </div>
   );
 }

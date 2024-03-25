@@ -150,6 +150,10 @@ interface ICommentCard {
   author?: IAuthor | null;
   createdAt: Date;
   content: string;
+  commentHasReplies?: boolean;
+  cardType: "comment" | "reply";
+  setOpenReplyContainer?: () => void;
+  openReplyContainer?: boolean;
   currentUserIsAdmin: boolean;
   currentUserIsAuthor: boolean;
 }

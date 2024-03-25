@@ -202,6 +202,7 @@ export default async function FeedbackPage(params: {
                 currentUserIsAdmin={feedback.currentUserIsAdmin}
                 currentUserIsAuthor={currentUserIsAuthor}
                 comment={comment as ICommentWithAuthor}
+                //@ts-ignore
                 replies={comment.replies as ICommentWithAuthor[]}
               />
             ))}
