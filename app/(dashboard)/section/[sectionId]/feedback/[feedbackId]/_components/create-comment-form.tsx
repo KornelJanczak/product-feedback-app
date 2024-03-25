@@ -11,7 +11,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { createCommentSchema } from "@/schemas/@product-actions-schemas";
 import {
@@ -22,7 +21,6 @@ import {
 import { useAction } from "next-safe-action/hooks";
 import { createComment } from "@/server-actions/product/comment/create-comment";
 import ClipLoader from "react-spinners/ClipLoader";
-import { SendHorizonal } from "lucide-react";
 import TextAreaCard from "./textarea-card";
 
 const limit = 250;

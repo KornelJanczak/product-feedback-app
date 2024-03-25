@@ -95,6 +95,5 @@ export const deleteCommentSchema = z.object({
 
 export const createReplySchema = z.object({
   ...basicReplySchema,
-
   content: z.string(),
 });

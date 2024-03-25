@@ -3,6 +3,25 @@ import { SendHorizonal } from "lucide-react";
 import { ControllerRenderProps } from "react-hook-form";
 import ClipLoader from "react-spinners/ClipLoader";
 
+type CommentField = ControllerRenderProps<
+  {
+    feedbackId: string;
+    sectionId: string;
+    content: string;
+  },
+  "content"
+>;
+
+type ReplyField = ControllerRenderProps<
+  {
+    feedbackId: string;
+    sectionId: string;
+    commentId: string;
+    content: string;
+  },
+  "content"
+>;
+
 export default function TextAreaCard({
   isPending,
   placeholder,
@@ -10,10 +29,7 @@ export default function TextAreaCard({
 }: {
   isPending: boolean;
   placeholder: string;
-  field: ControllerRenderProps<
-    { feedbackId: string; sectionId: string; content: string },
-    "content"
-  >;
+  field: CommentField | ReplyField;
 }) {
   return (
     <div className="relative">
