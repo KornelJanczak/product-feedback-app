@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import TextAreaCard from "./textarea-card";
 import { useAction } from "next-safe-action/hooks";
 import { createReply } from "@/server-actions/product/comment/create-reply";
@@ -20,10 +19,14 @@ import {
 } from "@/models/@product-actions-types";
 import { toast } from "sonner";
 
-export default function ReplyBox({ commentId }: { commentId: string }) {
+export default function ReplyBox({
+  commentId,
+  setReplyBoxComment,
+}: {
+  commentId: string;
+  setReplyBoxComment: () => void;
+}) {
   const param = useParams();
-
-  console.log(param);
 
   const form = useForm<createReplyInputs>({
     resolver: zodResolver(createReplySchema),
@@ -38,6 +41,7 @@ export default function ReplyBox({ commentId }: { commentId: string }) {
   const { execute, status } = useAction(createReply, {
     onSuccess() {
       toast.success("Reply posted successfully");
+      setReplyBoxComment();
     },
     onError() {
       toast.error("Failed to post reply");
@@ -54,7 +58,7 @@ export default function ReplyBox({ commentId }: { commentId: string }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="w-full space-y-4 pl-10 pt-3 rounded-md bg-basicWhite"
+        className="w-full space-y-4  pt-3 rounded-md bg-basicWhite"
       >
         <FormField
           control={form.control}

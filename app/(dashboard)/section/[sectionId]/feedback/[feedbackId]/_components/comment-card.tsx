@@ -7,15 +7,6 @@ import AdminTag from "../../../_components/admin-tag";
 import { formatDistanceToNow } from "date-fns";
 import ReplyBox from "./reply-box";
 
-interface ICommentCard {
-  id: string;
-  author?: IAuthor | null;
-  createdAt: Date;
-  content: string;
-  currentUserIsAdmin: boolean;
-  currentUserIsAuthor: boolean;
-}
-
 export default function CommentCard({
   id,
   author,
@@ -46,7 +37,7 @@ export default function CommentCard({
     const hasAccesToSettings = currentUserIsAdmin || currentUserIsAuthor;
 
     return (
-      <div className="flex flex-col p-3 rounded-md bg-basicWhite">
+      <div className="flex flex-col w-full p-3 rounded-md bg-basicWhite">
         <div className="flex flex-col">
           <div className="flex ">
             <Link href={`/profile?id=${author.id}`}>
@@ -60,7 +51,7 @@ export default function CommentCard({
                 {author.isAdmin && <AdminTag />}
               </div>
               <span className="text-sm sm:text-base text-grey">
-                {author.userName}
+                @{author.userName}
               </span>
             </div>
             {hasAccesToSettings && <SettingsPopover />}
@@ -80,7 +71,12 @@ export default function CommentCard({
             </span>
           </div>
         </div>
-        {replyBoxCommentId && <ReplyBox commentId={id} />}
+        {replyBoxCommentId && (
+          <ReplyBox
+            commentId={id}
+            setReplyBoxComment={() => setReplyBoxCommentId(null)}
+          />
+        )}
       </div>
     );
   }

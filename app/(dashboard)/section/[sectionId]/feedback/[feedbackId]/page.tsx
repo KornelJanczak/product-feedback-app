@@ -6,7 +6,7 @@ import FeedbackActionButton from "../../_components/feedback-form/feedback-actio
 import FeedbackCard from "../../_components/feedback-card/feedback-card";
 import CommentContainer from "./_components/comment-container";
 import { CreateCommentForm } from "./_components/create-comment-form";
-import CommentCard from "./_components/comment-card";
+import Comment, { ICommentWithAuthor } from "./_components/comment";
 import transformFeedbackObject from "@/lib/product/transform-feedback-object";
 
 async function getFeedback(
@@ -197,14 +197,12 @@ export default async function FeedbackPage(params: {
         {isCommentsExist && (
           <CommentContainer commentsCount={totalComments + totalReplies}>
             {feedback.comments.map((comment) => (
-              <CommentCard
-                id={comment.id}
-                createdAt={comment.createdAt}
+              <Comment
                 key={comment.id}
-                author={comment.author as IAuthor}
-                content={comment.content}
-                currentUserIsAdmin={true}
+                currentUserIsAdmin={feedback.currentUserIsAdmin}
                 currentUserIsAuthor={currentUserIsAuthor}
+                comment={comment as ICommentWithAuthor}
+                replies={comment.replies as ICommentWithAuthor[]}
               />
             ))}
           </CommentContainer>

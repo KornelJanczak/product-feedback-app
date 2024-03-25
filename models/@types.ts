@@ -144,3 +144,19 @@ interface Feedback {
   updatedAt: Date;
   author: Author;
 }
+
+interface ICommentCard {
+  id: string;
+  author?: IAuthor | null;
+  createdAt: Date;
+  content: string;
+  currentUserIsAdmin: boolean;
+  currentUserIsAuthor: boolean;
+}
+
+interface IComment {
+  currentUserIsAdmin: boolean;
+  currentUserIsAuthor: boolean;
+  comment: ICommentCard;
+  replies: ICommentCard[];
+}
