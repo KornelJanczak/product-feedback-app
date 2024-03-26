@@ -6,7 +6,7 @@ import FeedbackActionButton from "../../_components/feedback-form/feedback-actio
 import FeedbackCard from "../../_components/feedback-card/feedback-card";
 import CommentContainer from "./_components/comment-container";
 import { CreateCommentForm } from "./_components/create-comment-form";
-import Comment, { ICommentWithAuthor } from "./_components/comment";
+import Comment from "./_components/comment";
 import transformFeedbackObject from "@/lib/product/transform-feedback-object";
 
 async function getFeedback(
@@ -202,7 +202,6 @@ export default async function FeedbackPage(params: {
                 currentUserIsAdmin={feedback.currentUserIsAdmin}
                 currentUserIsAuthor={currentUserIsAuthor}
                 comment={comment as ICommentWithAuthor}
-                //@ts-ignore
                 replies={comment.replies as ICommentWithAuthor[]}
               />
             ))}

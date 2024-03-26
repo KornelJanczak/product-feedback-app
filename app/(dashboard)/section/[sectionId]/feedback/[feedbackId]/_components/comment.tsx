@@ -4,9 +4,7 @@ import CommentCard from "./comment-card";
 import { CommentsToFeedback } from "@prisma/client";
 import { useState } from "react";
 
-export interface ICommentWithAuthor extends CommentsToFeedback {
-  author: IAuthor | undefined;
-}
+
 
 export default function Comment({
   comment,

@@ -159,8 +159,13 @@ interface ICommentCard {
 }
 
 interface IComment {
-  currentUserIsAdmin: boolean;
-  currentUserIsAuthor: boolean;
-  comment: ICommentCard;
-  replies: ICommentCard[];
+  id: string;
+  authorId: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface ICommentWithAuthor extends IComment {
+  author: IAuthor | undefined;
 }
