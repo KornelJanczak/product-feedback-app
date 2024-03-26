@@ -21,9 +21,11 @@ import { toast } from "sonner";
 
 export default function ReplyBox({
   commentId,
+  authorUsername,
   setReplyBoxComment,
 }: {
   commentId: string;
+  authorUsername: string;
   setReplyBoxComment: () => void;
 }) {
   const param = useParams();
@@ -31,7 +33,7 @@ export default function ReplyBox({
   const form = useForm<createReplyInputs>({
     resolver: zodResolver(createReplySchema),
     defaultValues: {
-      content: "",
+      content: `@${authorUsername} `,
       commentId,
       sectionId: param.sectionId as string,
       feedbackId: param.feedbackId as string,
@@ -58,7 +60,7 @@ export default function ReplyBox({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="w-full space-y-4  pt-3 rounded-md bg-basicWhite"
+        className="w-full space-y-4 pt-3 rounded-mdbg-basicWhite"
       >
         <FormField
           control={form.control}

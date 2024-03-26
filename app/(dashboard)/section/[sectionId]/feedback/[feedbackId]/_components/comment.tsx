@@ -1,10 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import CommentCard from "./comment-card";
-import { CommentsToFeedback } from "@prisma/client";
 import { useState } from "react";
-
-
 
 export default function Comment({
   comment,
@@ -42,7 +39,7 @@ export default function Comment({
             {replies.map((reply) => (
               <div key={reply.id} className="flex gap-2 w-full pl-4">
                 <CommentCard
-                  id={reply.id}
+                  id={comment.id}
                   cardType="reply"
                   createdAt={reply.createdAt}
                   author={reply.author}

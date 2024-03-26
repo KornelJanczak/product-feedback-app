@@ -7,7 +7,6 @@ import FeedbackCard from "../../_components/feedback-card/feedback-card";
 import CommentContainer from "./_components/comment-container";
 import { CreateCommentForm } from "./_components/create-comment-form";
 import Comment from "./_components/comment";
-import transformFeedbackObject from "@/lib/product/transform-feedback-object";
 
 async function getFeedback(
   sectionId: string,

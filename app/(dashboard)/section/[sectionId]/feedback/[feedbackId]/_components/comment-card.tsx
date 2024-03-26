@@ -39,6 +39,15 @@ export default function CommentCard({
   });
 
   if (author) {
+    let userName;
+    let commentContent;
+
+    if (content.startsWith("@")) {
+      const splitContent = content.split(" ");
+      userName = `@${splitContent[0].slice(1)} `;
+      commentContent = splitContent.slice(1).join(" ");
+    }
+
     const isComment = cardType === "comment";
     const isReply = cardType === "reply";
     const hasAccesToSettings = currentUserIsAdmin || currentUserIsAuthor;
@@ -66,7 +75,10 @@ export default function CommentCard({
               {hasAccesToSettings && <SettingsPopover />}
             </div>
             <span className="text-sm text-grey text-wrap break-all pt-3">
-              {content}
+              <strong className="text-sm text-pink font-semibold">
+                {userName}
+              </strong>
+              {commentContent || content}
             </span>
             <div className="flex justify-between pt-2">
               <button
@@ -83,6 +95,7 @@ export default function CommentCard({
           {replyBoxCommentId && (
             <ReplyBox
               commentId={id}
+              authorUsername={author.userName}
               setReplyBoxComment={() => setReplyBoxCommentId(null)}
             />
           )}
