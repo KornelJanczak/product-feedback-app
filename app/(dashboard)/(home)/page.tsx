@@ -93,7 +93,6 @@ export default async function HomePage({
   const isExist = feedbackSections && feedbackSections.length > 0;
 
   console.log(feedbackSections);
-  
 
   if (isExist) {
     sortFeedbackSections(sortBy, feedbackSections);

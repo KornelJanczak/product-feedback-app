@@ -63,12 +63,16 @@ export const deleteFeedback = action(
 
     if (currentUserIsAuthor || currentUserIsAdmin) {
       let deletedFeedback;
+      console.log(feedbackId);
+
       try {
         deletedFeedback = await prisma.feedbackToFeedbackSection.delete({
           where: {
             id: feedbackId,
           },
         });
+
+        console.log(deleteFeedback);
 
         await createActivityForFeedbackSection(
           sectionId,
@@ -78,8 +82,8 @@ export const deleteFeedback = action(
 
         revalidatePath(`/section${sectionId}`);
         return { success: deletedFeedback };
-      } catch {
-        throw new Error("Feedback deleting failed!");
+      } catch (err) {
+        throw new Error(err);
       }
     } else {
       throw new Error("Unauthorized");

@@ -9,7 +9,7 @@ import ReplyBox from "./reply-box";
 import { CornerDownRight } from "lucide-react";
 
 export default function CommentCard({
-  id,
+  commentId,
   author,
   content,
   createdAt,
@@ -25,10 +25,10 @@ export default function CommentCard({
   );
 
   const toggleReplyBox = () => {
-    if (replyBoxCommentId === id) {
+    if (replyBoxCommentId === commentId) {
       setReplyBoxCommentId(null);
     } else {
-      setReplyBoxCommentId(id);
+      setReplyBoxCommentId(commentId);
     }
   };
 
@@ -58,7 +58,7 @@ export default function CommentCard({
         <div className="flex flex-col p-3 rounded-md bg-basicWhite">
           <div className="flex flex-col">
             <div className="flex ">
-              <Link href={`/profile?id=${author.id}`}>
+              <Link href={`/profile?commentId=${author.id}`}>
                 <UserAvatar userImage={author.image} />
               </Link>
               <div className="flex flex-col pl-2">
@@ -94,7 +94,7 @@ export default function CommentCard({
           </div>
           {replyBoxCommentId && (
             <ReplyBox
-              commentId={id}
+              commentId={commentId}
               authorUsername={author.userName}
               setReplyBoxComment={() => setReplyBoxCommentId(null)}
             />

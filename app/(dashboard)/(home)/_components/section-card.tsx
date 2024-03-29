@@ -13,7 +13,6 @@ type sectionUser = {
     lastName?: string | null;
     firstName?: string | null;
     image?: string | null;
-    // profile: Profile;
   };
 }[];
 

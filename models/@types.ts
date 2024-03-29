@@ -146,7 +146,8 @@ interface Feedback {
 }
 
 interface ICommentCard {
-  id: string;
+  commentId: string;
+  replyId?: string;
   author?: IAuthor | null;
   createdAt: Date;
   content: string;

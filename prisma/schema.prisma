@@ -104,7 +104,7 @@ model CommentsToFeedback{
 
 model RepliesToComments{
   id String @id @default(cuid())
-  comment CommentsToFeedback @relation(fields: [commentId], references: [id])
+  comment CommentsToFeedback @relation(fields: [commentId], references: [id], onDelete: Cascade)
   commentId String
   authorId String
   content String

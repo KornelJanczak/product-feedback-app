@@ -1,3 +1,4 @@
+import ActionAlertDialog from "@/components/action-alert-dialog";
 import {
   Popover,
   PopoverContent,
@@ -12,7 +13,7 @@ export default function SettingsPopover() {
         <Settings color="#3A4374" width={20} height={20} />
       </PopoverTrigger>
       <PopoverContent align="end" className="w-full">
-        Place
+        {/* <ActionAlertDialog description="This action " /> */}
       </PopoverContent>
     </Popover>
   );

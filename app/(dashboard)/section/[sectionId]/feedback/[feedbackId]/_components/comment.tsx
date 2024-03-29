@@ -16,15 +16,17 @@ export default function Comment({
 }) {
   const [openReplyContainer, setOpenReplyContainer] = useState<boolean>(false);
 
+  const isReplies = replies.length > 0;
+
   return (
     <div>
       <CommentCard
-        id={comment.id}
+        commentId={comment.id}
         cardType="comment"
         createdAt={comment.createdAt}
         author={comment.author}
         content={comment.content}
-        commentHasReplies={replies.length > 0}
+        commentHasReplies={isReplies}
         openReplyContainer={openReplyContainer}
         setOpenReplyContainer={() => {
           setOpenReplyContainer(true);
@@ -39,7 +41,7 @@ export default function Comment({
             {replies.map((reply) => (
               <div key={reply.id} className="flex gap-2 w-full pl-4">
                 <CommentCard
-                  id={comment.id}
+                  commentId={comment.id}
                   cardType="reply"
                   createdAt={reply.createdAt}
                   author={reply.author}
