@@ -35,6 +35,7 @@ interface IcreateFeedbackForm {
   feedbackId?: string;
   currentUserId: string;
   actionType: "create" | "update";
+  handleOpenForm: () => void;
 }
 
 export default function FeedbackForm({
@@ -47,6 +48,7 @@ export default function FeedbackForm({
   detail,
   status,
   category,
+  handleOpenForm,
 }: IcreateFeedbackForm) {
   const toastId = "feedback-form-toast";
   const pathname = usePathname();
@@ -68,33 +70,44 @@ export default function FeedbackForm({
     },
   });
 
-  const { execute: executeCreateFeedback } = useAction(createFeedback, {
-    onSuccess() {
-      toast.dismiss(toastId);
-      toast.success("Feedback created successfully");
-    },
-    onError() {
-      toast.dismiss(toastId);
-      toast.error("Error while creating feedback");
-    },
-    onExecute() {
-      toast.loading("Creating feedback...", { id: toastId });
-    },
-  });
+  const { execute: executeCreateFeedback, status: createStatus } = useAction(
+    createFeedback,
+    {
+      onSuccess() {
+        toast.dismiss(toastId);
+        toast.success("Feedback created successfully");
+        handleOpenForm();
+      },
+      onError() {
+        toast.dismiss(toastId);
+        toast.error("Error while creating feedback");
+      },
+      onExecute() {
+        toast.loading("Creating feedback...", { id: toastId });
+      },
+    }
+  );
 
-  const { execute: executeUpdateFeedback } = useAction(updateFeedback, {
-    onSuccess() {
-      toast.dismiss(toastId);
-      toast.success("Feedback updated successfully");
-    },
-    onError() {
-      toast.dismiss(toastId);
-      toast.error("Error while updating feedback");
-    },
-    onExecute() {
-      toast.loading("Updating feedback...", { id: toastId });
-    },
-  });
+  const { execute: executeUpdateFeedback, status: updateStatus } = useAction(
+    updateFeedback,
+    {
+      onSuccess() {
+        toast.dismiss(toastId);
+        toast.success("Feedback updated successfully");
+        handleOpenForm();
+      },
+      onError() {
+        toast.dismiss(toastId);
+        toast.error("Error while updating feedback");
+      },
+      onExecute() {
+        toast.loading("Updating feedback...", { id: toastId });
+      },
+    }
+  );
+
+  const isExecuting =
+    createStatus === "executing" || updateStatus === "executing";
 
   const onProcess: createFeedbackSubmitHandler = (values) => {
     if (isCreateForm) {
@@ -104,6 +117,8 @@ export default function FeedbackForm({
     if (isUpdateForm && feedbackId) {
       executeUpdateFeedback({ ...values, feedbackId: feedbackId });
     }
+
+    form.reset();
   };
 
   return (
@@ -182,6 +197,7 @@ export default function FeedbackForm({
         </Tabs>
         <Button
           type="submit"
+          disabled={isExecuting}
           className="w-full bg-pink hover:bg-pink hover:opacity-70 
           hover:transition-all hover:duration-300 mt-auto"
         >

@@ -1,5 +1,12 @@
+"use client";
 import FormHeader from "@/components/form/form-header";
 import FeedbackForm from "./feedback-form";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
+import AdminTag from "../admin-tag";
+import { PlusIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { set } from "lodash";
 
 interface IFormContainer {
   currentUser: ICurrentUser;
@@ -10,6 +17,7 @@ interface IFormContainer {
   status?: string;
   category?: string;
   headerTitle: string;
+
   actionType: "create" | "update";
 }
 
@@ -55,39 +63,64 @@ export default function FormContainer({
   status,
   category,
 }: IFormContainer) {
-  return (
-    <>
-      <FormHeader
-        headerTitle={headerTitle}
-        className="pt-0"
-        headerClassName="pt-3"
-        actionType={actionType}
-        userName={currentUser.name}
-        lastName={currentUser.lastName}
-        firstName={currentUser.firstName}
-        userImage={currentUser.image}
-        additonalContent={
-          currentUserIsAdmin ? (
-            <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
-              Admin
-            </span>
-          ) : (
-            <span className="text-grey text-sm">Member</span>
-          )
-        }
-      />
+  const [openForm, setOpenForm] = useState<boolean>(false);
+  const isCreateForm = actionType === "create";
+  const isEditForm = actionType === "update";
 
-      <FeedbackForm
-        formInformationValues={formInformationValues}
-        formTagsValues={formTagsValues}
-        feedbackId={feedbackId}
-        currentUserId={currentUser.id}
-        actionType={actionType}
-        title={title}
-        detail={detail}
-        status={status}
-        category={category}
-      />
-    </>
+  const handleOpenForm = () => {
+    setOpenForm((openForm) => !openForm);
+  };
+
+  return (
+    <Dialog open={openForm} onOpenChange={handleOpenForm}>
+      <DialogTrigger
+        className={cn(
+          "flex sm:flex items-center justify-center gap-0 text-darkWhite text-nowrap px-3 py-1 rounded-md hover:opacity-70 hover:transition-all hover:duration-300",
+          isCreateForm && "bg-pink hover:bg-pink w-6/12 sm:w-auto",
+          isEditForm && "bg-blue hover:bg-blue"
+        )}
+      >
+        {isCreateForm && (
+          <>
+            <PlusIcon width={18} height={18} color="#fff" />
+            New feedback
+          </>
+        )}
+        {isEditForm && "Edit Feedback"}
+      </DialogTrigger>
+      <DialogContent>
+        <FormHeader
+          headerTitle={headerTitle}
+          className="pt-0"
+          headerClassName="pt-3"
+          actionType={actionType}
+          userName={currentUser.name}
+          lastName={currentUser.lastName}
+          firstName={currentUser.firstName}
+          userImage={currentUser.image}
+          additonalContent={
+            <>
+              {currentUserIsAdmin && <AdminTag />}
+              {!currentUserIsAdmin && (
+                <span className="text-grey text-sm">Member</span>
+              )}
+            </>
+          }
+        />
+
+        <FeedbackForm
+          formInformationValues={formInformationValues}
+          formTagsValues={formTagsValues}
+          feedbackId={feedbackId}
+          currentUserId={currentUser.id}
+          actionType={actionType}
+          title={title}
+          detail={detail}
+          status={status}
+          category={category}
+          handleOpenForm={handleOpenForm}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }
