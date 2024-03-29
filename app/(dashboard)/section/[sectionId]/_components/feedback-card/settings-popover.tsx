@@ -8,6 +8,8 @@ import {
 import { deleteFeedback } from "@/server-actions/product/feedback/delete-feedback";
 import { Settings, Trash2 } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface ISettingsPopover {
@@ -16,12 +18,17 @@ interface ISettingsPopover {
   currentUserId: string;
 }
 
+type Params = { feedbackId?: string; sectionId: string };
+
 export default function SettingsPopover({
   feedbackId,
   sectionId,
   currentUserId,
 }: ISettingsPopover) {
+  const params: Params = useParams();
+  const router = useRouter();
   const toastId = "delete-feedback-toast";
+  const feedbackView = params.feedbackId;
 
   const { execute } = useAction(deleteFeedback, {
     onExecute() {
@@ -34,6 +41,9 @@ export default function SettingsPopover({
     onSuccess() {
       toast.dismiss(toastId);
       toast.success("Feedback deleted!");
+      if (feedbackView) {
+        router.push(`/section/${sectionId}`);
+      }
     },
   });
 

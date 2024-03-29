@@ -82,8 +82,8 @@ export const deleteFeedback = action(
 
         revalidatePath(`/section${sectionId}`);
         return { success: deletedFeedback };
-      } catch (err) {
-        throw new Error(err);
+      } catch (error) {
+        throw new Error("Failed to delete feedback");
       }
     } else {
       throw new Error("Unauthorized");
