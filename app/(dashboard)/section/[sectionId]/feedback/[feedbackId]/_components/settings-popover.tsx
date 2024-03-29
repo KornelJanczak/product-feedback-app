@@ -5,8 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { deleteComment } from "@/server-actions/product/comment/delete-comment";
-import { deleteReply } from "@/server-actions/product/comment/delete-reply";
+import { deleteCommentOrReply } from "@/server-actions/product/comment/delete-comment-or-reply";
 import { Settings } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useParams } from "next/navigation";
@@ -28,43 +27,43 @@ export default function SettingsPopover({
   const toastId = "delete-toast";
   const isComment = cardyType === "comment";
   const isReply = cardyType === "reply";
+
   const { sectionId, feedbackId }: Params = useParams();
 
-  const { execute: deleteCommentExecute } = useAction(deleteComment, {
-    onExecute() {
-      toast.loading("Deleting comment...", { id: toastId });
-    },
-    onSuccess() {
-      toast.dismiss(toastId);
-      toast.success("Comment deleted successfully");
-    },
-    onError() {
-      toast.dismiss(toastId);
-      toast.error("Failed to delete comment");
-    },
-  });
-
-  const { execute: deleteReplyExecute } = useAction(deleteReply, {
-    onExecute() {
-      toast.loading("Deleting reply...", { id: toastId });
-    },
-    onSuccess() {
-      toast.dismiss(toastId);
-      toast.success("Reply deleted successfully");
-    },
-    onError() {
-      toast.dismiss(toastId);
-      toast.error("Failed to delete reply");
-    },
-  });
+  const { execute: deleteCommentOrReplyExecute } = useAction(
+    deleteCommentOrReply,
+    {
+      onExecute() {
+        toast.loading(`Deleting ${cardyType}...`, { id: toastId });
+      },
+      onSuccess() {
+        toast.dismiss(toastId);
+        toast.success(`We deleted the ${cardyType} successfully`);
+      },
+      onError() {
+        toast.dismiss(toastId);
+        toast.error(`Failed to delete ${cardyType}`);
+      },
+    }
+  );
 
   const executeDeleteHandler = () => {
     if (isComment) {
-      deleteCommentExecute({ feedbackId, commentId, sectionId });
+      deleteCommentOrReplyExecute({
+        feedbackId,
+        commentId,
+        sectionId,
+        actionType: cardyType,
+      });
     }
 
     if (isReply && replyId) {
-      deleteReplyExecute({ feedbackId, replyId, sectionId });
+      deleteCommentOrReplyExecute({
+        feedbackId,
+        replyId,
+        sectionId,
+        actionType: cardyType,
+      });
     }
   };
 

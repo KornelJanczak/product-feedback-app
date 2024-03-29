@@ -87,17 +87,14 @@ export const createCommentSchema = z.object({
   content: z.string(),
 });
 
-export const deleteCommentSchema = z.object({
-  ...basicCommentSchema,
-  commentId: z.string(),
-});
-
 export const createReplySchema = z.object({
   ...basicReplySchema,
   content: z.string(),
 });
 
-export const deleteReplySchema = z.object({
+export const deleteCommentOrReplySchema = z.object({
   ...basicCommentSchema,
-  replyId: z.string(),
+  actionType: z.enum(["comment", "reply"]),
+  commentId: z.string().optional(),
+  replyId: z.string().optional(),
 });
