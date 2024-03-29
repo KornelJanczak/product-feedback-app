@@ -1,5 +1,6 @@
 "use client";
 import ActionAlertDialog from "@/components/action-alert-dialog";
+import DeleteTag from "@/components/delete-tag";
 import {
   Popover,
   PopoverContent,
@@ -66,12 +67,7 @@ export default function SettingsPopover({
       >
         <ActionAlertDialog
           onContinueHandler={onClickHandler}
-          triggerChildren={
-            <div className="flex justify-center items-center gap-1 text-sm text-grey">
-              <Trash2 width={18} height={18} color="#647196" />
-              Delete
-            </div>
-          }
+          triggerChildren={<DeleteTag />}
           description={"The following action will delete this feedback."}
         />
       </PopoverContent>

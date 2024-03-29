@@ -41,6 +41,7 @@ export default function Comment({
             {replies.map((reply) => (
               <div key={reply.id} className="flex gap-2 w-full pl-4">
                 <CommentCard
+                  replyId={reply.id}
                   commentId={comment.id}
                   cardType="reply"
                   createdAt={reply.createdAt}

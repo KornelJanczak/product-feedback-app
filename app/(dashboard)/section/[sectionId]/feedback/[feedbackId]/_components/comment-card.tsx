@@ -9,16 +9,17 @@ import ReplyBox from "./reply-box";
 import { CornerDownRight } from "lucide-react";
 
 export default function CommentCard({
+  cardType,
   commentId,
+  replyId,
   author,
-  content,
-  createdAt,
   currentUserIsAdmin,
   currentUserIsAuthor,
+  content,
+  createdAt,
   setOpenReplyContainer,
   commentHasReplies,
   openReplyContainer,
-  cardType,
 }: ICommentCard) {
   const [replyBoxCommentId, setReplyBoxCommentId] = useState<string | null>(
     null
@@ -49,7 +50,6 @@ export default function CommentCard({
     }
 
     const isComment = cardType === "comment";
-    const isReply = cardType === "reply";
     const hasAccesToSettings = currentUserIsAdmin || currentUserIsAuthor;
     const isShowReplies = isComment && !openReplyContainer && commentHasReplies;
 
@@ -72,7 +72,13 @@ export default function CommentCard({
                   @{author.userName}
                 </span>
               </div>
-              {hasAccesToSettings && <SettingsPopover />}
+              {hasAccesToSettings && (
+                <SettingsPopover
+                  commentId={commentId}
+                  replyId={replyId}
+                  cardyType={cardType}
+                />
+              )}
             </div>
             <span className="text-sm text-grey text-wrap break-all pt-3">
               <strong className="text-sm text-pink font-semibold">
