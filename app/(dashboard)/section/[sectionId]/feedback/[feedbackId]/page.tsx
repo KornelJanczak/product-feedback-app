@@ -162,7 +162,7 @@ export default async function FeedbackPage(params: {
   );
 
   return (
-    <main className="relative md:container flex flex-col justify-between">
+    <main className="relative flex flex-col justify-between">
       <div className="fixed top-0 z-10 w-full flex justify-center items-center px-5 py-3 bg-basicWhite">
         <BackButton href={`/section/${sectionId}`} />
         {(feedback.currentUserIsAdmin || currentUserIsAuthor) && (
@@ -179,7 +179,7 @@ export default async function FeedbackPage(params: {
           />
         )}
       </div>
-      <section className="flex flex-col justify-between h-full px-5 mt-16">
+      <section className="flex flex-col justify-between h-full px-5 mt-16 md:container">
         <FeedbackCard
           id={feedbackId}
           feedbackSectionId={sectionId}

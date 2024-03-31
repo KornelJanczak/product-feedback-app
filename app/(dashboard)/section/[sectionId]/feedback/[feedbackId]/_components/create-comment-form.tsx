@@ -62,7 +62,7 @@ export function CreateCommentForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="fixed bottom-0 w-full space-y-4 px-5 py-5  rounded-md bg-basicWhite"
+        className="fixed bottom-0 w-full space-y-4 px-5 py-5 rounded-md bg-basicWhite md:container md:mx-auto"
       >
         <FormField
           control={form.control}
@@ -70,7 +70,9 @@ export function CreateCommentForm({
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between">
-                <FormLabel>Add comment</FormLabel>
+                <FormLabel className="text-sm sm:text-base">
+                  Add comment
+                </FormLabel>
                 <span className="text-grey text-sm sm:text-base">
                   {limit} Characters max
                 </span>

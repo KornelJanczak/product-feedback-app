@@ -35,7 +35,7 @@ export default function TextAreaCard({
     <div className="relative">
       <Textarea
         placeholder={placeholder}
-        className="w-full h-auto pr-10"
+        className="w-full h-auto pr-10 text-sm sm:text-base"
         {...field}
       />
       <button type="submit" className="absolute top-2 right-2">
