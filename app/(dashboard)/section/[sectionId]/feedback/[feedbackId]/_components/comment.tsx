@@ -36,7 +36,7 @@ export default function Comment({
       />
       {openReplyContainer && (
         <div className="flex flex-row pl-6 pt-2">
-          <Separator orientation="vertical" className=" h-30" />
+          <Separator orientation="vertical" className="h-30" />
           <div className="flex w-full flex-col gap-3">
             {replies.map((reply) => (
               <div key={reply.id} className="flex gap-2 w-full pl-4">

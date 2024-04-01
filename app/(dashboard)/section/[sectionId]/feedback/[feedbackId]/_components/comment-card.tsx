@@ -55,7 +55,7 @@ export default function CommentCard({
 
     return (
       <div className="w-full">
-        <div className="flex flex-col p-3 rounded-md bg-basicWhite">
+        <div className="flex flex-col px-3 py-3.5 rounded-md bg-basicWhite">
           <div className="flex flex-col">
             <div className="flex ">
               <Link href={`/profile?commentId=${author.id}`}>
