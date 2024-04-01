@@ -62,7 +62,7 @@ export function CreateCommentForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="fixed bottom-0 w-full space-y-4 px-5 py-5 rounded-md bg-basicWhite md:container md:mx-auto"
+        className="fixed bottom-0 w-full space-y-4 px-5 py-5 rounded-md bg-basicWhite md:container md:right-0 md:left-0 md:mx-auto"
       >
         <FormField
           control={form.control}
