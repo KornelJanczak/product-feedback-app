@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,7 +14,6 @@ import { toast } from "sonner";
 import { createCommentSchema } from "@/schemas/@product-actions-schemas";
 import {
   createCommentInputs,
-  createCommentReturn,
   createCommentSubmitHandler,
 } from "@/models/@product-actions-types";
 import { useAction } from "next-safe-action/hooks";

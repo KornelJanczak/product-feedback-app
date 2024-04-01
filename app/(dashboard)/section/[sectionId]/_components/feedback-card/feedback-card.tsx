@@ -4,6 +4,7 @@ import Link from "next/link";
 import SettingsPopover from "./settings-popover";
 import LikeButton from "./like-button";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ICard {
   id: string;
@@ -121,3 +122,11 @@ export default async function FeedbackCard({
     );
   }
 }
+
+export const FeedbackCardSkeleton = () => {
+  return (
+    <div className="h-48 rounded-md">
+      <Skeleton className="bg-skeletonTheme h-48 w-full" />
+    </div>
+  );
+};

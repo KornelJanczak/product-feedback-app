@@ -2,7 +2,9 @@ import BackButton from "@/components/back-button";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import FeedbackActionButton from "../../_components/feedback-form/feedback-action-button";
-import FeedbackCard from "../../_components/feedback-card/feedback-card";
+import FeedbackCard, {
+  FeedbackCardSkeleton,
+} from "../../_components/feedback-card/feedback-card";
 import CommentContainer, {
   CommentContainerSkeleton,
 } from "./_components/comment-container";
@@ -58,7 +60,7 @@ export default async function FeedbackPage(params: {
         )}
       </div>
       <section className="flex flex-col justify-between h-full px-5 mt-24 md:container lg:max-w-4xl xl:max-w-6xl">
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<FeedbackCardSkeleton />}>
           <FeedbackCard
             id={feedbackId}
             feedbackSectionId={sectionId}
