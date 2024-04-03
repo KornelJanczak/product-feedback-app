@@ -4,7 +4,7 @@ import { action } from "@/lib/clients/safe-action-client";
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { giveAdminRoleSchema } from "@/schemas/@product-actions-schemas";
-import createActivityForFeedbackSection from "@/lib/product/create-activity";
+import createActivityForFeedbackSection from "@/lib/product/helpers/create-activity";
 
 export const giveAdminRoleInFeedbackSection = action(
   giveAdminRoleSchema,

@@ -4,7 +4,7 @@ import { kickUserFromFeedbackSectionSchema } from "@/schemas/@product-actions-sc
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import getCurrentUser from "@/lib/user/get-current-user";
-import createActivityForFeedbackSection from "@/lib/product/create-activity";
+import createActivityForFeedbackSection from "@/lib/product/helpers/create-activity";
 
 export const kickUserFromFeedbackSection = action(
   kickUserFromFeedbackSectionSchema,

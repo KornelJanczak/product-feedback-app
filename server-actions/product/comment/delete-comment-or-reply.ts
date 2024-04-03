@@ -3,9 +3,9 @@ import { action } from "@/lib/clients/safe-action-client";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { deleteCommentOrReplySchema } from "@/schemas/@product-actions-schemas";
 import prisma from "@/lib/db";
-import checkMembershipInSection from "@/lib/product/check-membership-in-section";
+import checkMembershipInSection from "@/lib/product/helpers/check-membership-in-section";
 import { revalidatePath } from "next/cache";
-import createActivityForFeedbackSection from "@/lib/product/create-activity";
+import createActivityForFeedbackSection from "@/lib/product/helpers/create-activity";
 
 export const deleteCommentOrReply = action(
   deleteCommentOrReplySchema,

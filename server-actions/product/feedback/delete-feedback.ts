@@ -4,7 +4,7 @@ import { action } from "@/lib/clients/safe-action-client";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { deleteFeedbackSchema } from "@/schemas/@product-actions-schemas";
 import { revalidatePath } from "next/cache";
-import createActivityForFeedbackSection from "@/lib/product/create-activity";
+import createActivityForFeedbackSection from "@/lib/product/helpers/create-activity";
 
 export const deleteFeedback = action(
   deleteFeedbackSchema,

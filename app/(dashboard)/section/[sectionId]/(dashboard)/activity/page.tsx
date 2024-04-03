@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
 import addUserObject, {
   ITransformedActivity,
-} from "@/lib/product/add-user-object";
+} from "@/lib/product/helpers/add-user-object";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import Container, { ContainerSkeleton } from "./_components/container";

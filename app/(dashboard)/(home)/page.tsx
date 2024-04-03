@@ -6,7 +6,7 @@ import NoResult from "@/components/no-result";
 import SectionCard from "./_components/section-card";
 import { Suspense } from "react";
 import { ContainerSkeleton } from "./_components/container";
-import sortFeedbackSections from "@/lib/product/sort-feedback-sections";
+import sortFeedbackSections from "@/lib/product/helpers/sort-feedback-sections";
 
 async function getFeedbackSections(
   currentUserId: string,

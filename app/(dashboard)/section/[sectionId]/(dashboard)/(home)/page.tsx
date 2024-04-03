@@ -1,4 +1,3 @@
-import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import FeedbackCard from "../../_components/feedback-card/feedback-card";
@@ -6,99 +5,13 @@ import FeedbackContainer from "../../_components/feedback-card/feedback-containe
 import { FeedbackContainerSkeleton } from "../../_components/feedback-card/feedback-container";
 import { Suspense } from "react";
 import NoResult from "@/components/no-result";
-import sortSuggestions from "@/lib/product/sort-suggestions";
-import addUserObject, {
-  ITransformedFeedbackSection,
-} from "@/lib/product/add-user-object";
+import sortSuggestions from "@/lib/product/helpers/sort-suggestions";
+import getSuggestions from "@/lib/product/get-suggestions";
 
 interface ISearchParams {
   filterBy?: string;
   suggestionTitle?: string;
   sortBy?: string;
-}
-
-async function getSuggestions(
-  sectionId: string,
-  searchParams: ISearchParams,
-  currentUserId: string
-) {
-  if (!sectionId) return null;
-
-  const { filterBy, suggestionTitle } = searchParams;
-
-  let categoryFilter;
-  const titleFilter = suggestionTitle
-    ? searchParams.suggestionTitle
-    : undefined;
-
-  if (filterBy) {
-    categoryFilter = filterBy === "all" ? undefined : searchParams.filterBy;
-  }
-
-  const feedbacks = await prisma.feedbackToFeedbackSection.findMany({
-    where: {
-      feedbackSectionId: sectionId,
-      title: {
-        contains: titleFilter,
-      },
-      category: categoryFilter,
-    },
-    include: {
-      comments: true,
-    },
-  });
-
-  if (!feedbacks) return null;
-
-  const section = await prisma.feedbackSection.findUnique({
-    where: {
-      id: sectionId,
-    },
-    select: {
-      members: {
-        select: {
-          user: {
-            select: {
-              id: true,
-              image: true,
-              userName: true,
-              lastName: true,
-              firstName: true,
-            },
-          },
-        },
-      },
-      admins: {
-        select: {
-          user: {
-            select: {
-              id: true,
-              image: true,
-              email: true,
-              userName: true,
-              lastName: true,
-              firstName: true,
-            },
-          },
-        },
-      },
-    },
-  });
-
-  if (!section) return null;
-
-  const suggestions = addUserObject(
-    feedbacks,
-    section
-  ) as ITransformedFeedbackSection[];
-
-  if (!section) return null;
-
-  const currentUserIsAdmin = section.admins.some(
-    ({ user }) => user.id === currentUserId
-  );
-
-  return { suggestions, currentUserIsAdmin };
 }
 
 export default async function SectionDashboard({
@@ -113,7 +26,14 @@ export default async function SectionDashboard({
 
   if (!currentUser) return redirect("/login");
 
-  const data = await getSuggestions(sectionId, searchParams, currentUser.id);
+  const { filterBy, suggestionTitle } = searchParams;
+
+  const data = await getSuggestions({
+    sectionId,
+    titleFilter: suggestionTitle,
+    categoryFilter: filterBy === "all" ? undefined : filterBy,
+    currentUserId: currentUser.id,
+  });
 
   if (!data || data.suggestions.length === 0)
     return (

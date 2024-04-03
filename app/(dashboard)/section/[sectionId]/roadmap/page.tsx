@@ -1,32 +1,9 @@
 import BackButton from "@/components/back-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import checkMembershipInSection from "@/lib/product/check-membership-in-section";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
-import prisma from "@/lib/db";
+import getSuggestions from "@/lib/product/get-suggestions";
 import FeedbackActionButton from "../_components/feedback-form/feedback-action-button";
-
-async function getSuggestion(currentUserId: string, sectionId: string) {
-  if (!currentUserId || !sectionId) throw new Error("Invalid params");
-
-  const membership = await checkMembershipInSection(sectionId, currentUserId);
-
-  if (!membership) throw new Error("You are not a member of this section");
-
-  let suggestions;
-
-  try {
-    suggestions = await prisma.feedbackToFeedbackSection.findMany({
-      where: {
-        feedbackSectionId: sectionId,
-      },
-    });
-  } catch {
-    throw new Error("Failed to get suggestions");
-  }
-
-  console.log(suggestions);
-}
 
 export default async function RoadMapPage({
   params,
@@ -39,10 +16,29 @@ export default async function RoadMapPage({
 
   const { sectionId } = params;
 
-  const suggestions = await getSuggestion(currentUser.id, sectionId);
+  const data = await getSuggestions({
+    currentUserId: currentUser.id,
+    sectionId,
+  });
+
+  if (!data) throw new Error("No data found");
+
+  const { suggestions, currentUserIsAdmin } = data;
+
+  const plannedSuggestions = suggestions.filter(
+    (suggestion) => suggestion.status === "Planned"
+  );
+
+  const inProgressSuggestions = suggestions.filter(
+    (suggestion) => suggestion.status === "In Progress"
+  );
+
+  const liveSuggestions = suggestions.filter(
+    (suggestion) => suggestion.status === "Live"
+  );
 
   return (
-    <main>
+    <>
       <div className="flex justify-between items-center px-5 py-4 bg-secondDark">
         <div className="flex flex-col gap-2">
           <BackButton />
@@ -50,7 +46,7 @@ export default async function RoadMapPage({
         </div>
         <FeedbackActionButton
           currentUser={currentUser}
-          currentUserIsAdmin={true}
+          currentUserIsAdmin={currentUserIsAdmin || false}
           actionType="create"
           headerTitle="Add new feedback"
           className="w-auto my-auto py-1.5"
@@ -67,7 +63,6 @@ export default async function RoadMapPage({
         </TabsContent>
         <TabsContent value="password">Change your password here.</TabsContent>
       </Tabs>
-      aaaaa
-    </main>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import prisma from "../db";
+import prisma from "../../db";
 
 export default async function createActivityForFeedbackSection(
   sectionId: string,
