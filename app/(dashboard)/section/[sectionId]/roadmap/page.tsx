@@ -25,17 +25,7 @@ export default async function RoadMapPage({
 
   const { suggestions, currentUserIsAdmin } = data;
 
-  const plannedSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "Planned"
-  );
 
-  const inProgressSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "In Progress"
-  );
-
-  const liveSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "Live"
-  );
 
   return (
     <>

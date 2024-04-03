@@ -29,8 +29,8 @@ body {
     --secondary-foreground: 231, 100%, 97%;
 
     --bg-muted: 216, 12.2%, 83.9%;
-    --muted: 216, 12.2%, 83.9%;
-    --muted-foreground: 231, 33%, 34%; 
+    --muted: 0, 0%, 100%;
+    --muted-foreground: 224, 20%, 49%;
 
     --accent: 210, 40%, 96.1%;
     --accent-foreground: 279, 96%, 55%;
