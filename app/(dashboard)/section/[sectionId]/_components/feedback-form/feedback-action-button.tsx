@@ -1,20 +1,22 @@
 import FormContainer from "./form-container";
 
-interface IFeedbackActionButton {
+export interface IFeedbackAction {
   currentUser: ICurrentUser;
   currentUserIsAdmin: boolean;
-  feedbackId?: string;
+  actionType: "create" | "update";
   headerTitle: string;
+  className?: string;
+  feedbackId?: string;
   title?: string;
   detail?: string;
   status?: string;
   category?: string;
-  actionType: "create" | "update";
 }
 
 export default async function FeedbackActionButton({
   currentUser,
   currentUserIsAdmin,
+  className,
   feedbackId,
   headerTitle,
   actionType,
@@ -22,7 +24,7 @@ export default async function FeedbackActionButton({
   detail,
   status,
   category,
-}: IFeedbackActionButton) {
+}: IFeedbackAction) {
   return (
     <FormContainer
       currentUser={currentUser}
@@ -30,6 +32,7 @@ export default async function FeedbackActionButton({
       actionType={actionType}
       feedbackId={feedbackId}
       headerTitle={headerTitle}
+      className={className}
       title={title}
       detail={detail}
       status={status}

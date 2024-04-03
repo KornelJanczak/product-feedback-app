@@ -6,20 +6,7 @@ import { useState } from "react";
 import AdminTag from "../admin-tag";
 import { PlusIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { set } from "lodash";
-
-interface IFormContainer {
-  currentUser: ICurrentUser;
-  currentUserIsAdmin: boolean;
-  feedbackId?: string;
-  title?: string;
-  detail?: string;
-  status?: string;
-  category?: string;
-  headerTitle: string;
-
-  actionType: "create" | "update";
-}
+import { IFeedbackAction } from "./feedback-action-button";
 
 const formInformationValues: IFeedbackFormValues[] = [
   {
@@ -56,13 +43,14 @@ export default function FormContainer({
   currentUser,
   currentUserIsAdmin,
   feedbackId,
+  className,
   actionType,
   headerTitle,
   title,
   detail,
   status,
   category,
-}: IFormContainer) {
+}: IFeedbackAction) {
   const [openForm, setOpenForm] = useState<boolean>(false);
   const isCreateForm = actionType === "create";
   const isEditForm = actionType === "update";
@@ -77,7 +65,8 @@ export default function FormContainer({
         className={cn(
           "flex sm:flex items-center justify-center gap-0 text-darkWhite text-nowrap px-3 py-1 rounded-md hover:opacity-70 hover:transition-all hover:duration-300",
           isCreateForm && "bg-pink hover:bg-pink w-6/12 sm:w-auto",
-          isEditForm && "bg-blue hover:bg-blue"
+          isEditForm && "bg-blue hover:bg-blue",
+          className
         )}
       >
         {isCreateForm && (

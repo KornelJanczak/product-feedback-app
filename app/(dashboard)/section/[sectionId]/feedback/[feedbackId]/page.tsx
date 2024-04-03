@@ -8,7 +8,6 @@ import FeedbackCard, {
 import CommentContainer, {
   CommentContainerSkeleton,
 } from "./_components/comment-container";
-import { CreateCommentForm } from "./_components/create-comment-form";
 import Comment from "./_components/comment";
 import getFeedback from "@/lib/product/get-feedback";
 import { Suspense } from "react";
