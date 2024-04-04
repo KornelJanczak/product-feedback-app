@@ -29,7 +29,10 @@ export default async function RoadmapPage({
     <>
       <header className="flex justify-between items-center px-5 py-4 bg-secondDark">
         <div className="flex flex-col gap-2">
-          <BackButton />
+          <BackButton
+            className="text-middleWhite"
+            href={`/section/${sectionId}`}
+          />
           <h2 className="text-basicWhite font-semibold pl-0.5">Roadmap</h2>
         </div>
         <FeedbackActionButton
