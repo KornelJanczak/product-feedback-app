@@ -1,65 +1,76 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ITransformedFeedbackSection } from "@/lib/product/helpers/add-user-object";
 import { cn } from "@/lib/utils";
+import SuggestionColumn from "./suggestions-column";
 
-const tabsOptions = [
+type Variants = "planned" | "in-progress" | "live";
+
+export interface ISuggestionRoadmap {
+  label: string;
+  description: string;
+  variant: Variants;
+  theme: string;
+}
+
+const roadmapOptions: ISuggestionRoadmap[] = [
   {
-    value: "planned",
     label: "Planned",
-    className: "data-[state=active]:before:bg-orange",
+    description: "Ideas prioritized for research",
+    variant: "planned",
+    theme: "bg-orange",
   },
   {
-    value: "in-progress",
     label: "In-Progress",
-    className: "data-[state=active]:before:bg-primary",
+    description: "Features currently being developed",
+    variant: "in-progress",
+    theme: "bg-primary",
   },
   {
-    value: "live",
     label: "Live",
-    className: "data-[state=active]:before:bg-lighterBlue",
+    description: "Released features",
+    variant: "live",
+    theme: "bg-lighterBlue",
   },
 ];
+
+const tabClassName =
+  "relative w-1/3 flex flex-col py-2.5 data-[state=active]:before:content-[''] data-[state=active]:before:absolute data-[state=active]:before:left-0 data-[state=active]:before:right-0 data-[state=active]:before:bottom-0 data-[state=active]:before:h-1 ";
 
 export default function SuggestionsRoadmap({
   suggestions,
 }: {
   suggestions: ITransformedFeedbackSection[];
 }) {
-  const plannedSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "planned"
-  );
-
-  const inProgressSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "in-progress"
-  );
-
-  const liveSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "live"
-  );
-
-  const tabClassName =
-    "relative w-1/3 flex flex-col py-2.5 data-[state=active]:before:content-[''] data-[state=active]:before:absolute data-[state=active]:before:left-0 data-[state=active]:before:right-0 data-[state=active]:before:bottom-0  data-[state=active]:before:h-1 ";
-
   return (
-    <section>
+    <>
       <Tabs defaultValue="in-progress" className="w-full sm:hidden p-0">
         <TabsList className="w-full items-center justify-around text-lightGrey font-bold p-0 border border-b-lightGrey">
-          {tabsOptions.map(({ value, label, className }) => (
+          {roadmapOptions.map(({ variant, label, theme }) => (
             <TabsTrigger
-              key={value}
-              value={value}
-              className={cn(tabClassName, className)}
+              key={variant}
+              value={variant}
+              className={cn(
+                tabClassName,
+                `data-[state=active]:before:${theme}`
+              )}
             >
               <p>{label}</p>
             </TabsTrigger>
           ))}
         </TabsList>
-        <TabsContent value="account">
-          Make changes to your account here.
-        </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
+        {roadmapOptions.map(({ variant, label, theme, description }) => (
+          <TabsContent value={variant} key={variant}>
+            <SuggestionColumn
+              variant={variant}
+              label={label}
+              theme={theme}
+              description={description}
+              suggestions={suggestions}
+            />
+          </TabsContent>
+        ))}
       </Tabs>
-      <div className="hidden sm:grid">{/* desktop content */}</div>
-    </section>
+      <section className="hidden sm:grid">{/* desktop content */}</section>
+    </>
   );
 }

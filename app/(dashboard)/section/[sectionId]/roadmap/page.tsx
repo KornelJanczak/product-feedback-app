@@ -1,5 +1,4 @@
 import BackButton from "@/components/back-button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import getSuggestions from "@/lib/product/get-suggestions";
@@ -28,7 +27,7 @@ export default async function RoadMapPage({
 
   return (
     <>
-      <div className="flex justify-between items-center px-5 py-4 bg-secondDark">
+      <header className="flex justify-between items-center px-5 py-4 bg-secondDark">
         <div className="flex flex-col gap-2">
           <BackButton />
           <h2 className="text-basicWhite font-semibold pl-0.5">Roadmap</h2>
@@ -40,8 +39,10 @@ export default async function RoadMapPage({
           headerTitle="Add new feedback"
           className="w-auto my-auto py-1.5"
         />
-      </div>
-      <SuggestionsRoadmap suggestions={suggestions} />
+      </header>
+      <main className="pb-6">
+        <SuggestionsRoadmap suggestions={suggestions} />
+      </main>
     </>
   );
 }
