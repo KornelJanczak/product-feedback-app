@@ -7,22 +7,22 @@ export default function SuggestionsRoadmap({
   suggestions: ITransformedFeedbackSection[];
 }) {
   const plannedSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "Planned"
+    (suggestion) => suggestion.status === "planned"
   );
 
   const inProgressSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "In Progress"
+    (suggestion) => suggestion.status === "in-progress"
   );
 
   const liveSuggestions = suggestions.filter(
-    (suggestion) => suggestion.status === "Live"
+    (suggestion) => suggestion.status === "live"
   );
 
   return (
     <section>
-      <Tabs defaultValue="in-progress" className="w-full sm:hidden">
-        <TabsList className="w-full items-center justify-around font-bold">
-          <TabsTrigger className="font-bold" value="planned">
+      <Tabs defaultValue="in-progress" className="w-full sm:hidden p-0">
+        <TabsList className="w-full items-center justify-around font-bold p-0">
+          <TabsTrigger value="planned" className="">
             Planned
           </TabsTrigger>
           <TabsTrigger value="in-progress">In-Progress</TabsTrigger>

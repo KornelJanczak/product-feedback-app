@@ -77,7 +77,7 @@ export default function FormContainer({
         )}
         {isEditForm && "Edit Feedback"}
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="py-5 bg-basicWhite">
         <FormHeader
           headerTitle={headerTitle}
           className="pt-0"

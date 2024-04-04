@@ -125,7 +125,7 @@ export default function FeedbackForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onProcess)}
-        className="pt-4 flex flex-col gap-16 sm:gap-20 h-full"
+        className="pt-4 flex flex-col gap-8 sm:gap-20 h-full"
       >
         <Tabs defaultValue="information">
           <TabsList className="px-0 gap-x-3 bg-basicWhite">
@@ -199,7 +199,7 @@ export default function FeedbackForm({
           type="submit"
           disabled={isExecuting}
           className="w-full bg-pink hover:bg-pink hover:opacity-70 
-          hover:transition-all hover:duration-300 mt-auto"
+          hover:transition-all hover:duration-300 mt-0"
         >
           {isCreateForm && " Add Feedback"}
           {isUpdateForm && "Edit Feedback"}
