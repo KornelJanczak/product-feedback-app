@@ -5,6 +5,16 @@ import SettingsPopover from "./settings-popover";
 import LikeButton from "./like-button";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import AdminTag from "../admin-tag";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import AuthorInfoPanel from "../author-info-panel";
 
 interface ICard {
   id: string;
@@ -56,32 +66,21 @@ export default async function FeedbackCard({
     const modifiedCategory = firstCategoryLetter + category.slice(1);
 
     return (
-      <div
+      <Card
         className={cn(
           "flex flex-col px-4 py-3 h-48  rounded-md bg-basicWhite",
           className
         )}
       >
-        <div className="flex flex-row justify-between">
-          <div className="flex gap-1.5">
-            <Link
-              href={`/profile?id=${author.id}`}
-              className="hover:opacity-70 hover:transition-all hover:duration-300"
-            >
-              <UserAvatar className="h-10 w-10" userImage={author.image} />
-            </Link>
-            <div>
-              <h4 className="text-dark font-semibold">
-                {author.firstName + " " + author.lastName}
-              </h4>
-              {isAdmin && (
-                <span className="text-sm text-pink bg-[#d68ffd] px-1 font-semibold rounded mr-auto">
-                  Admin
-                </span>
-              )}
-              {!isAdmin && <span className="text-sm text-grey">Member</span>}
-            </div>
-          </div>
+        <CardHeader className="flex flex-row justify-between p-0">
+          <AuthorInfoPanel
+            authorId={author.id}
+            firstName={author.firstName}
+            lastName={author.lastName}
+            userName={author.userName}
+            image={author.image}
+            isAdmin={isAdmin}
+          />
           {hasAccessToSettings && (
             <SettingsPopover
               feedbackId={id}
@@ -89,36 +88,38 @@ export default async function FeedbackCard({
               currentUserId={currentUserId}
             />
           )}
-        </div>
-        <div className="flex flex-col pt-2">
-          <Link href={`/section/${sectionId}/feedback/${id}`}>
-            <h3 className="text-dark font-semibold px-1">{title}</h3>
-            <p className="text-grey text-sm sm:text-base text-wrap break-all px-1 pb-2">
+        </CardHeader>
+        <Link href={`/section/${sectionId}/feedback/${id}`}>
+          <CardContent className="flex flex-col pt-2 px-0 pb-0">
+            <CardTitle className="text-sm sm:text-base text-dark font-semibold px-1">
+              {title}
+            </CardTitle>
+            <CardDescription className="text-grey text-sm sm:text-base text-wrap break-all px-1 pb-2">
               {detail}
-            </p>
+            </CardDescription>
             <span className="text-blue text-sm sm:text-base font-semibold px-3">
               {modifiedCategory}
             </span>
-          </Link>
-          <div className="flex justify-between items-center pt-2 px-3">
-            <LikeButton
-              likedBy={likedBy}
-              currentUserId={currentUserId}
-              feedbackId={id}
-              sectionId={sectionId}
+          </CardContent>
+        </Link>
+        <CardFooter className="flex justify-between items-center pt-2 px-3">
+          <LikeButton
+            likedBy={likedBy}
+            currentUserId={currentUserId}
+            feedbackId={id}
+            sectionId={sectionId}
+          />
+          <div className="flex justify-center items-center gap-1">
+            <MessageCircle
+              width={20}
+              height={20}
+              color="#CDD2EE"
+              fill="#CDD2EE"
             />
-            <div className="flex justify-center items-center gap-1">
-              <MessageCircle
-                width={20}
-                height={20}
-                color="#CDD2EE"
-                fill="#CDD2EE"
-              />
-              <span className="text-dark font-semibold">{commentsCount}</span>
-            </div>
+            <span className="text-dark font-semibold">{commentsCount}</span>
           </div>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     );
   }
 }

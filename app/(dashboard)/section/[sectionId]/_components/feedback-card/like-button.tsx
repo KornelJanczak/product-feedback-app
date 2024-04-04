@@ -19,8 +19,6 @@ export default function LikeButton({
   const isLiked = likedBy.some((id) => id === currentUserId);
   const likeCount = likedBy.length;
 
-  console.log(isLiked);
-
   const { execute } = useAction(likeFeedback);
 
   const onClickHandler = () => {

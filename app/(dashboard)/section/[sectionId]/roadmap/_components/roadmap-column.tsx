@@ -1,18 +1,19 @@
 import { ITransformedFeedbackSection } from "@/lib/product/helpers/add-user-object";
-import { ISuggestionRoadmap } from "./suggestions-roadmap";
-import SuggestionCard from "./suggestion-card";
+import { IRoadmap } from "./roadmap";
+import RoadmapCard from "./roadmap-card";
 
-interface ISuggestionColumn extends ISuggestionRoadmap {
+export interface IRoadmapColumn extends IRoadmap {
   suggestions: ITransformedFeedbackSection[];
+  currentUserId: string;
 }
 
-export default function SuggestionColumn({
+export default function RoadmapColumn({
   suggestions,
+  currentUserId,
   variant,
   label,
   description,
-  theme,
-}: ISuggestionColumn) {
+}: IRoadmapColumn) {
   const filteredSuggestions = suggestions.filter(
     (suggestion) => suggestion.status === variant
   );
@@ -25,13 +26,14 @@ export default function SuggestionColumn({
         <h3 className="text-lg text-secondDark font-semibold">{`${label} (${suggestionNumber})`}</h3>
         <p className="text-sm sm:text-base pt-0.5">{description}</p>
       </div>
-      <div className="flex flex-col gap-y-4 pt-3.5">
+      <div className="flex flex-col gap-y-6 pt-3.5">
         {filteredSuggestions.map((suggestion) => (
-          <SuggestionCard
+          <RoadmapCard
             key={suggestion.id}
+            currentUserId={currentUserId}
             suggestion={suggestion}
             label={label}
-            theme={theme}
+            variant={variant}
           />
         ))}
       </div>

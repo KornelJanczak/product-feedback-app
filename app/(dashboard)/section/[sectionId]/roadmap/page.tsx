@@ -3,9 +3,9 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import getSuggestions from "@/lib/product/get-suggestions";
 import FeedbackActionButton from "../_components/feedback-form/feedback-action-button";
-import SuggestionsRoadmap from "./_components/suggestions-roadmap";
+import Roadmap from "./_components/roadmap";
 
-export default async function RoadMapPage({
+export default async function RoadmapPage({
   params,
 }: {
   params: { sectionId: string };
@@ -41,7 +41,7 @@ export default async function RoadMapPage({
         />
       </header>
       <main className="pb-6">
-        <SuggestionsRoadmap suggestions={suggestions} />
+        <Roadmap suggestions={suggestions} currentUserId={currentUser.id} />
       </main>
     </>
   );
