@@ -4,6 +4,7 @@ import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import getSuggestions from "@/lib/product/get-suggestions";
 import FeedbackActionButton from "../_components/feedback-form/feedback-action-button";
+import SuggestionsRoadmap from "./_components/suggestions-roadmap";
 
 export default async function RoadMapPage({
   params,
@@ -25,8 +26,6 @@ export default async function RoadMapPage({
 
   const { suggestions, currentUserIsAdmin } = data;
 
-
-
   return (
     <>
       <div className="flex justify-between items-center px-5 py-4 bg-secondDark">
@@ -42,17 +41,7 @@ export default async function RoadMapPage({
           className="w-auto my-auto py-1.5"
         />
       </div>
-      <Tabs defaultValue="in-progress" className="w-full">
-        <TabsList className="w-full items-center justify-around">
-          <TabsTrigger value="planned">Planned</TabsTrigger>
-          <TabsTrigger value="in-progress">In-Progress</TabsTrigger>
-          <TabsTrigger value="live">Live</TabsTrigger>
-        </TabsList>
-        <TabsContent value="account">
-          Make changes to your account here.
-        </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
-      </Tabs>
+      <SuggestionsRoadmap suggestions={suggestions} />
     </>
   );
 }

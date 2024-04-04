@@ -86,6 +86,7 @@ export default withUt({
         secondDark: "#3A4374",
         skeletonTheme: "#0000002c",
         grey: "#647196",
+        lightGrey: "#CDD2EE",
         orange: "#F49F85",
         basicWhite: "#ffffff",
         middleWhite: "#F2F4FF",
