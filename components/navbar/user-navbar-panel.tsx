@@ -5,7 +5,7 @@ import SidebarRoutes from "./sidebar-routes";
 export default function UserNavBarPanel({
   currentUser,
 }: {
-  currentUser?: ICurrentUser;
+  currentUser?: ICurrentUser | null;
 }) {
   return (
     <div
@@ -17,7 +17,7 @@ export default function UserNavBarPanel({
     lg:items-center lg:h-32 lg:w-full
     "
     >
-      <UserDetailCard currentUser={currentUser}>
+      <UserDetailCard currentUser={currentUser!}>
         <UserAvatar
           className="h-16 w-16 lg:m-auto"
           userImage={currentUser?.image}

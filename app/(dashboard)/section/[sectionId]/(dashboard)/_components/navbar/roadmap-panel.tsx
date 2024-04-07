@@ -33,7 +33,13 @@ async function getFeedbacks(sectionId: string) {
   };
 }
 
-export default async function RoadmapPanel({ params }: { params: string }) {
+export default async function RoadmapPanel({
+  params,
+  className,
+}: {
+  params: string;
+  className?: string;
+}) {
   const {
     numberOfPlannedFeedbacks,
     numberOfInprogressFeedbacks,
@@ -59,7 +65,12 @@ export default async function RoadmapPanel({ params }: { params: string }) {
   ];
 
   return (
-    <div className="flex flex-col px-3 pt-6">
+    <div
+      className={cn(
+        "px-3 pt-6 flex flex-col md:hidden md:px-0 md:w-96",
+        className
+      )}
+    >
       <div className="flex justify-between items-center">
         <h3 className="text-lg text-secondDark font-semibold">Roadmap</h3>
         <Link

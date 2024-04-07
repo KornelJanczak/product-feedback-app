@@ -8,7 +8,7 @@ export default function MobileSidebar({
   currentUser,
   params,
 }: {
-  currentUser: ICurrentUser | null;
+  currentUser?: ICurrentUser | null;
   params: string;
 }) {
   return (
