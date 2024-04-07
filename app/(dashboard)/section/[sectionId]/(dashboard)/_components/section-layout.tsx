@@ -99,43 +99,41 @@ export default async function SectionLayout({
     ];
 
     return (
-      <main className="bg-darkWhite lg:col-start-2 lg:col-end-5 lg:w-full">
-        <section className="px-0 lg:container lg:w-full lg:px-0 bg-basicWhite rounded-md">
+      <>
+        <Suspense
+          fallback={<ImageBackgroundSkeleton className="h-52 lg:h-80" />}
+        >
+          <Background
+            image={feedbackSection?.bgImage}
+            sectionId={sectionId}
+            sectionTitle={feedbackSection.title}
+            currentUserIsAdmin={currentUserIsAdmin}
+          />
+        </Suspense>
+        <div className="sm:flex sm:flex-row sm:w-full pb-4 ">
           <Suspense
-            fallback={<ImageBackgroundSkeleton className="h-52 lg:h-80" />}
+            fallback={
+              <MainInformationSkeleton membersNumber={sectionUsers.length} />
+            }
           >
-            <Background
-              image={feedbackSection?.bgImage}
+            <MainInformation
+              title={feedbackSection.title}
+              sectionUsers={sectionUsers}
+            />
+          </Suspense>
+          <Suspense fallback={<ActionPanelSkeleton />}>
+            <ActionPanel
+              currentUser={currentUser}
+              sectionUsers={sectionUsers}
               sectionId={sectionId}
-              sectionTitle={feedbackSection.title}
               currentUserIsAdmin={currentUserIsAdmin}
             />
           </Suspense>
-          <div className="sm:flex sm:flex-row sm:w-full pb-4 ">
-            <Suspense
-              fallback={
-                <MainInformationSkeleton membersNumber={sectionUsers.length} />
-              }
-            >
-              <MainInformation
-                title={feedbackSection.title}
-                sectionUsers={sectionUsers}
-              />
-            </Suspense>
-            <Suspense fallback={<ActionPanelSkeleton />}>
-              <ActionPanel
-                currentUser={currentUser}
-                sectionUsers={sectionUsers}
-                sectionId={sectionId}
-                currentUserIsAdmin={currentUserIsAdmin}
-              />
-            </Suspense>
-          </div>
-          <Suspense fallback={<SectionRoutesSkeleton />}>
-            <SectionRoutes sectionId={sectionId} />
-          </Suspense>
-        </section>
-      </main>
+        </div>
+        <Suspense fallback={<SectionRoutesSkeleton />}>
+          <SectionRoutes sectionId={sectionId} />
+        </Suspense>
+      </>
     );
   }
 }
