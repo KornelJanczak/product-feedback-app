@@ -65,7 +65,7 @@ export default function LoginForm() {
           </span>
         </div>
         <Button
-          className="w-full flex gap-1 items-center justify-center"
+          className="w-full flex gap-1 items-center justify-center bg-[#0d0c0c] hover:opacity-80 hover:transition hover:duration-300 hover:bg-[#0d0c0c]"
           onClick={() => signIn("github", { redirect: false })}
         >
           <GithubIcon />

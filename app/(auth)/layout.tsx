@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <header className="container pt-6 ">
-        <h2 className="text-2xl font-bold pb-6 text-secondDark border-b-2 border-grey">
+        <h2 className="text-2xl font-bold pb-6 text-secondDark border-b border-lightGrey">
           Feedback Product
         </h2>
       </header>
