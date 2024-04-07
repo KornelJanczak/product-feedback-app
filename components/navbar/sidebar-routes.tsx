@@ -1,3 +1,4 @@
+"use client"
 import { Layout, UsersRound } from "lucide-react";
 import SidebarItem from "./sidebar-item";
 import { LogOutIcon, Settings } from "lucide-react";
@@ -37,7 +38,7 @@ export default function SidebarRoutes() {
           <SidebarItem key={href} href={href} icon={icon} label={label} />
         ))}
       </div>
-      <div className="flex flex-row justify-center gap-x-2 sm:hidden">
+      <div className="flex flex-row justify-center gap-x-2 md:hidden">
         <SidebarItem
           key={accountRoute.href}
           href={accountRoute.href}

@@ -2,8 +2,8 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import IconHamburger from "@/public/icons/icon-hamburger";
 import SidebarRoutes from "./sidebar-routes";
-import { useSession } from "next-auth/react";
 import UserInfoCard from "./user-info-card";
+import { useSession } from "next-auth/react";
 
 export default function MobileSidebar() {
   const { data: session } = useSession();

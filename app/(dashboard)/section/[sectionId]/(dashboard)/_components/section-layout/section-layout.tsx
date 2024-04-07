@@ -73,11 +73,11 @@ async function getFeedbackSection(currentUserId: string, sectionId: string) {
 
 export default async function SectionLayout({
   params,
+  currentUser,
 }: {
   params: { sectionId: string };
+  currentUser: ICurrentUser | null;
 }) {
-  const currentUser = await getCurrentUser();
-
   const { sectionId } = params;
 
   if (!currentUser) return redirect("/login");
