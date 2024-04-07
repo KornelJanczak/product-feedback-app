@@ -3,7 +3,7 @@
 ![section-ss](public/ss/section-ss.png)
 
 Key Features 🔑:
-- Next Auth by credentials
+- Next Auth by credentials, github
 - Friend request send, cancel
 - Friend add, delete
 - Public profile create
