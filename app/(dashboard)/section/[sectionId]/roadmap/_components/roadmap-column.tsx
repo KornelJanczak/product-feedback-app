@@ -1,7 +1,7 @@
 import { ITransformedFeedbackSection } from "@/lib/product/helpers/add-user-object";
 import { IRoadmap } from "./roadmap";
 import RoadmapCard from "./roadmap-card";
-import NoResult from "@/components/no-result";
+
 
 export interface IRoadmapColumn extends IRoadmap {
   suggestions: ITransformedFeedbackSection[];
@@ -38,12 +38,6 @@ export default function RoadmapColumn({
               variant={variant}
             />
           ))}
-        {suggestionNumber === 0 && (
-          <NoResult
-            title={`There is no feedback!`}
-            description={"Add new feedbacks if you want to see them here!"}
-          />
-        )}
       </div>
     </div>
   );

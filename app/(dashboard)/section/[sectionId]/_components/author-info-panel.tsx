@@ -22,7 +22,7 @@ export default function AuthorInfoPanel({
   isAdmin,
   className,
 }: IAuthorHeader) {
-  const displeyName = firstName ? `${firstName} ${lastName}` : `@${userName}`;
+  const displayName = firstName ? `${firstName} ${lastName}` : `${userName}`;
 
   return (
     <div className={cn("flex gap-1.5", className)}>
@@ -33,7 +33,7 @@ export default function AuthorInfoPanel({
         <UserAvatar className="h-10 w-10" userImage={image} />
       </Link>
       <div>
-        <h4 className="text-dark font-semibold">{displeyName}</h4>
+        <h4 className="text-dark font-semibold">{displayName}</h4>
         {isAdmin && <AdminTag />}
         {!isAdmin && <span className="text-sm text-grey">Member</span>}
       </div>

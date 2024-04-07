@@ -28,6 +28,12 @@ export default function UserCard({
   children,
   contentBoxClassName,
 }: IUserCard) {
+  let displayHeaderName = `${firstName} ${lastName}`;
+
+  if (!firstName || !lastName) {
+    displayHeaderName = userName;
+  }
+
   return (
     <li
       className={cn(
@@ -51,7 +57,7 @@ export default function UserCard({
         )}
       >
         <h3 className="text-dark font-medium text-lg sm:text-xl">
-          {firstName} {lastName}
+          {displayHeaderName}
         </h3>
         <span className="text-grey text-sm sm:text-base">@{userName}</span>
         {actionButton}
