@@ -19,8 +19,6 @@ export interface IRoadmap extends IRoadmapFeedback {
 const tabClassName =
   "relative w-1/3 flex flex-col py-2.5 data-[state=active]:before:content-[''] data-[state=active]:before:absolute data-[state=active]:before:left-0 data-[state=active]:before:right-0 data-[state=active]:before:bottom-0 data-[state=active]:before:h-1 ";
 
-
-
 const gradientVariants = cva(tabClassName, {
   variants: {
     variant: {
@@ -39,7 +37,7 @@ const roadmapOptions: IRoadmap[] = [
   },
   {
     label: "In-Progress",
-    description: "Features currently being developed",
+    description: "Currently being developed",
     variant: "inprogress",
   },
   {
@@ -58,7 +56,7 @@ export default function Roadmap({
 }) {
   return (
     <>
-      <Tabs defaultValue="inprogress" className="w-full sm:hidden p-0">
+      <Tabs defaultValue="inprogress" className="w-full md:hidden p-0">
         <TabsList className="w-full items-center justify-around text-lightGrey font-bold p-0 border border-b-lightGrey">
           {roadmapOptions.map(({ variant, label }) => (
             <TabsTrigger
@@ -82,7 +80,18 @@ export default function Roadmap({
           </TabsContent>
         ))}
       </Tabs>
-      <section className="hidden sm:grid">{/* desktop content */}</section>
+      <section className="hidden md:grid md:grid-cols-3 md:container md:px-0">
+        {roadmapOptions.map(({ variant, label, description }) => (
+          <RoadmapColumn
+            key={variant}
+            currentUserId={currentUserId}
+            variant={variant}
+            label={label}
+            description={description}
+            suggestions={suggestions}
+          />
+        ))}
+      </section>
     </>
   );
 }

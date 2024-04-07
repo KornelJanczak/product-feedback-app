@@ -21,7 +21,7 @@ interface IRoadmapCard extends IRoadmapFeedback {
   currentUserId: string;
 }
 
-const borderColorsVariants = cva("border-t-8", {
+const borderColorsVariants = cva("border-t-8 h-full", {
   variants: {
     variant: {
       planned: `border-t-orange`,

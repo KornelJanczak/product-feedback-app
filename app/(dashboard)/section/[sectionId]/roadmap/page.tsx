@@ -27,7 +27,7 @@ export default async function RoadmapPage({
 
   return (
     <>
-      <header className="flex justify-between items-center px-5 py-4 bg-secondDark">
+      <header className="flex justify-between items-center px-5 py-4 bg-secondDark md:container md:rounded-md md:my-5">
         <div className="flex flex-col gap-2">
           <BackButton
             className="text-middleWhite"
