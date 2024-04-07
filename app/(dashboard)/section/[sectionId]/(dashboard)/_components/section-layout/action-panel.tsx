@@ -1,7 +1,7 @@
-import AddUsers from "./add-users/add-users";
+import AddUsers from "../add-users/add-users";
 import SectionSettingsCard from "@/app/(dashboard)/_components/section-settings-card";
 import { Skeleton } from "@/components/ui/skeleton";
-import FeedbackActionButton from "../../_components/feedback-form/feedback-action-button";
+import FeedbackActionButton from "../../../_components/feedback-form/feedback-action-button";
 
 interface IActionPanel {
   currentUser: User;

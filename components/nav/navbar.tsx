@@ -8,7 +8,6 @@ import NavBarBackground from "./navbar-background";
 
 export default function Nav() {
   const session = useSession();
-
   const currentUser: ICurrentUser = session.data?.user as ICurrentUser;
 
   return (
