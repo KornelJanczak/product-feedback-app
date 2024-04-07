@@ -14,7 +14,7 @@ export default async function SectionRoutes({
   sectionId: string;
 }) {
   return (
-    <div className="flex flex-col px-5 pt-2">
+    <div className="flex flex-col px-5 pt-2 bg-basicWhite rounded-md">
       <Separator />
       <div className="flex gap-3 py-3">
         {routes.map(({ title, href }) => (

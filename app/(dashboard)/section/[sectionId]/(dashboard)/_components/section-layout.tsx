@@ -110,7 +110,7 @@ export default async function SectionLayout({
             currentUserIsAdmin={currentUserIsAdmin}
           />
         </Suspense>
-        <div className="sm:flex sm:flex-row sm:w-full pb-4 ">
+        <div className="sm:flex sm:flex-row sm:w-full pb-4 bg-basicWhite ">
           <Suspense
             fallback={
               <MainInformationSkeleton membersNumber={sectionUsers.length} />
