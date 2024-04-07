@@ -24,8 +24,8 @@ export default function RoadmapColumn({
   return (
     <div className="flex flex-col px-5 md:px-2 ">
       <div className="flex flex-col pt-4">
-        <h3 className="text-lg text-secondDark font-semibold">{`${label} (${suggestionNumber})`}</h3>
-        <p className="text-sm sm:text-base pt-0.5">{description}</p>
+        <h3 className="text-lg md:text-base text-secondDark font-semibold">{`${label} (${suggestionNumber})`}</h3>
+        <p className="text-sm lg:text-base pt-0.5">{description}</p>
       </div>
       <div className="flex flex-col gap-y-6 pt-3.5">
         {suggestionNumber > 0 &&

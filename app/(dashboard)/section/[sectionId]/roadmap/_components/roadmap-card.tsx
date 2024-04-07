@@ -58,8 +58,8 @@ export default function RoadmapCard({
         <div className="flex justify-between items-center">
           <AuthorInfoPanel authorId={author.id} {...author} />
           <div className="flex items-center gap-2">
-            <span className={cn(backgroundColorsVariants({ variant }))}></span>
-            <span className="text-sm sm:text-base text-grey">{label}</span>
+            <span className={cn(backgroundColorsVariants({ variant }))}/>
+            <span className="text-sm lg:text-base text-grey">{label}</span>
           </div>
         </div>
       </CardHeader>
@@ -67,13 +67,13 @@ export default function RoadmapCard({
         href={`/section/${suggestion.feedbackSectionId}/feedback/${suggestion.id}`}
       >
         <CardContent className="flex flex-col pb-4 px-5">
-          <CardTitle className="text-sm sm:text-base text-dark">
+          <CardTitle className="text-sm lg:text-base text-dark">
             {suggestion.title}
           </CardTitle>
           <CardDescription className="pt-1">
             {suggestion.detail}
           </CardDescription>
-          <span className="text-blue text-sm sm:text-base font-semibold px-2 pt-2">
+          <span className="text-blue text-sm lg:text-base font-semibold px-2 pt-2">
             {transformedCategory}
           </span>
         </CardContent>
