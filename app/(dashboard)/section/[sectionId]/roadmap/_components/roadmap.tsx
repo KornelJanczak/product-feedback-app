@@ -1,8 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ITransformedFeedbackSection } from "@/lib/product/helpers/add-user-object";
 import { cn } from "@/lib/utils";
-import RoadmapColumn from "./roadmap-column";
+import RoadmapColumn, { RoadmapColumnSkeleton } from "./roadmap-column";
 import { cva } from "class-variance-authority";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type Variants = "planned" | "inprogress" | "live";
 
@@ -47,7 +48,7 @@ const roadmapOptions: IRoadmap[] = [
   },
 ];
 
-export default function Roadmap({
+export default async function Roadmap({
   suggestions,
   currentUserId,
 }: {
@@ -68,6 +69,7 @@ export default function Roadmap({
             </TabsTrigger>
           ))}
         </TabsList>
+
         {roadmapOptions.map(({ variant, label, description }) => (
           <TabsContent value={variant} key={variant}>
             <RoadmapColumn
@@ -95,3 +97,34 @@ export default function Roadmap({
     </>
   );
 }
+
+export const RoadmapSkeleton = ({
+  skeletonCount,
+}: {
+  skeletonCount: number;
+}) => {
+  return (
+    <>
+      <div className="pb-6 md:hidden">
+        <div className="w-full">
+          <Skeleton className="bg-skeletonTheme h-10" />
+        </div>
+        <RoadmapColumnSkeleton
+          label={`${roadmapOptions[1].label} (${skeletonCount})`}
+          description={roadmapOptions[1].description}
+          skeletonCount={1}
+        />
+      </div>
+      <section className="hidden md:grid md:grid-cols-3 md:container md:px-0">
+        {roadmapOptions.map(({ label, description }) => (
+          <RoadmapColumnSkeleton
+            key={label}
+            label={label}
+            description={description}
+            skeletonCount={skeletonCount}
+          />
+        ))}
+      </section>
+    </>
+  );
+};

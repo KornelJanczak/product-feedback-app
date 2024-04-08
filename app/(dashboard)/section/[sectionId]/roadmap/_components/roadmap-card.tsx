@@ -78,7 +78,7 @@ export default function RoadmapCard({
           </span>
         </CardContent>
       </Link>
-      <CardFooter className="justify-between pb-4 px-7">
+      <CardFooter className="justify-between pb-3 px-7">
         <LikeButton
           currentUserId={currentUserId}
           likedBy={suggestion.likedBy}

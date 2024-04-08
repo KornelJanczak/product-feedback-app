@@ -1,4 +1,5 @@
 import FormContainer from "./form-container";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface IFeedbackAction {
   currentUser: ICurrentUser;
@@ -40,3 +41,11 @@ export default async function FeedbackActionButton({
     />
   );
 }
+
+export const FeedbackActionButtonSkeleton = () => {
+  return (
+    <div className="rounded-md">
+      <Skeleton className="w-44 h-9 bg-skeletonTheme" />
+    </div>
+  );
+};

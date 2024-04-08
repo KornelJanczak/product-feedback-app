@@ -2,8 +2,11 @@ import BackButton from "@/components/back-button";
 import getCurrentUser from "@/lib/user/get-current-user";
 import { redirect } from "next/navigation";
 import getSuggestions from "@/lib/product/get-suggestions";
-import FeedbackActionButton from "../_components/feedback-form/feedback-action-button";
-import Roadmap from "./_components/roadmap";
+import FeedbackActionButton, {
+  FeedbackActionButtonSkeleton,
+} from "../_components/feedback-form/feedback-action-button";
+import Roadmap, { RoadmapSkeleton } from "./_components/roadmap";
+import { Suspense } from "react";
 
 export default async function RoadmapPage({
   params,
@@ -25,6 +28,10 @@ export default async function RoadmapPage({
 
   const { suggestions, currentUserIsAdmin } = data;
 
+  const inProgressSuggestions = suggestions.filter(
+    (suggestion) => suggestion.status === "inprogress"
+  );
+
   return (
     <>
       <header className="flex justify-between items-center px-5 py-4 bg-secondDark md:container md:rounded-md md:my-5">
@@ -35,16 +42,22 @@ export default async function RoadmapPage({
           />
           <h2 className="text-basicWhite font-semibold pl-0.5">Roadmap</h2>
         </div>
-        <FeedbackActionButton
-          currentUser={currentUser}
-          currentUserIsAdmin={currentUserIsAdmin || false}
-          actionType="create"
-          headerTitle="Add new feedback"
-          className="w-auto my-auto py-1.5"
-        />
+        <Suspense fallback={<FeedbackActionButtonSkeleton />}>
+          <FeedbackActionButton
+            currentUser={currentUser}
+            currentUserIsAdmin={currentUserIsAdmin || false}
+            actionType="create"
+            headerTitle="Add new feedback"
+            className="w-auto my-auto py-1.5"
+          />
+        </Suspense>
       </header>
       <main className="pb-6">
-        <Roadmap suggestions={suggestions} currentUserId={currentUser.id} />
+        <Suspense
+          fallback={<RoadmapSkeleton skeletonCount={inProgressSuggestions.length} />}
+        >
+          <Roadmap suggestions={suggestions} currentUserId={currentUser.id} />
+        </Suspense>
       </main>
     </>
   );
