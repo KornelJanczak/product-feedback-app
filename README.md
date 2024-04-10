@@ -1,4 +1,4 @@
-# Fullstack Feedback Product app: Next.js 14, TS, Prisma, PostgreSQL, Tailwind, ShadcnUI ( In Progress)
+# Fullstack Feedback Product app: Next.js 14, TS, Prisma, PostgreSQL, Tailwind, ShadcnUI 
 
 ![section-ss](public/ss/section-ss.png)
 
