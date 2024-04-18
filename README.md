@@ -44,5 +44,5 @@ Sonner |
 
 - In meantime I'll add notifications fc.
 
-
+<p>Part of design is from <a href="https://www.frontendmentor.io/challenges/product-feedback-app-wbvUYqjR6" target="_blank">Frontend mentor</a></p>
   
