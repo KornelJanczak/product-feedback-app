@@ -16,8 +16,8 @@ Key Features 🔑:
 - Feedback section add friends (admin: give admin, kick member)
 - Feebacks roadmap view 
 - Feedback create, delete, update
-- Comment create, delete, update,
-- Comment replies create, delete, update
+- Comment create, delete, 
+- Comment replies create, delete
 - Modern ui with shadcn UI
 - Responsive design
 - 100% written in TS
