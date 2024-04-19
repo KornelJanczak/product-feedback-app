@@ -3,8 +3,8 @@
 ![section-ss](public/ss/section-ss.png)
 
 ## Test Account
-Email: test@example.com
-Password: Kw1234!
+- Email: test@example.com
+- Password: Kw1234!
 
 Key Features 🔑:
 - Next Auth by credentials, github
