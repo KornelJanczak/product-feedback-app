@@ -1,6 +1,10 @@
-# Fullstack Feedback Product app: Next.js 14, TS, Prisma, PostgreSQL, Tailwind, ShadcnUI ( In Progress)
+# Fullstack Feedback Product app: Next.js 14, TS, Prisma, PostgreSQL, Tailwind, ShadcnUI 
 
 ![section-ss](public/ss/section-ss.png)
+
+## Test Account
+- Email: test@example.com
+- Password: Kw1234!
 
 Key Features 🔑:
 - Next Auth by credentials, github
@@ -16,8 +20,8 @@ Key Features 🔑:
 - Feedback section add friends (admin: give admin, kick member)
 - Feebacks roadmap view 
 - Feedback create, delete, update
-- Comment create, delete, update,
-- Comment replies create, delete, update
+- Comment create, delete, 
+- Comment replies create, delete
 - Modern ui with shadcn UI
 - Responsive design
 - 100% written in TS
@@ -44,5 +48,5 @@ Sonner |
 
 - In meantime I'll add notifications fc.
 
-
+<p>Part of design is from <a href="https://www.frontendmentor.io/challenges/product-feedback-app-wbvUYqjR6" target="_blank">Frontend mentor</a></p>
   
