@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,7 +19,7 @@
         "name": "next"
       }
     ],
-    "baseUrl": "./",
+    "baseUrl": ".",
 
     "paths": {
       "@/*": ["./*"],
@@ -33,7 +34,7 @@
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth]",
     "jest.config.js"
-  ],
+, "jest.setup.js"  ],
   "exclude": ["node_modules"],
   "typeRoots": ["../node_modules/@types"]
 }
