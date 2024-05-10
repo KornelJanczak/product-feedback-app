@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     "incremental": true,
     "plugins": [
       {
@@ -31,7 +31,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/api/auth/[...nextauth]"
+    "app/api/auth/[...nextauth]",
+    "./__test__/setup.ts"
   ],
   "exclude": ["node_modules"],
   "typeRoots": ["../node_modules/@types"]

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "test": "vitest"
+    "test": "vitest --coverage"
   },
   "dependencies": {
     "-": "^0.0.1",
@@ -66,6 +66,9 @@
     "zustand": "^4.5.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.7",
+    "@testing-library/user-event": "^14.5.2",
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/lodash": "^4.14.202",
@@ -74,9 +77,12 @@
     "@types/react-dom": "^18",
     "@types/uniqid": "^5.3.4",
     "@types/ws": "^8.5.10",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "@vitest/coverage-v8": "^1.6.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "jsdom": "^24.0.0",
     "postcss": "^8",
     "prisma": "^5.8.1",
     "tailwindcss": "^3.3.0",
