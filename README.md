@@ -3,7 +3,7 @@
 ![section-ss](public/ss/section-ss.png)
 
 ## Test Account
-- Email: test@example.com
+- Email: test@test.com
 - Password: Kw1234!
 
 Key Features 🔑:
