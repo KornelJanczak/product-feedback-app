@@ -123,7 +123,6 @@ export const authOptions: NextAuthOptions = {
       // Allows callback URLs on the same origin
       else if (new URL(url).origin === baseUrl) return baseUrl;
       return baseUrl;
-      // return "/";
     },
   },
 };
