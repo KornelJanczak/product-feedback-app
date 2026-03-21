@@ -44,9 +44,5 @@ Sonner |
 - Use zod with server actions and react hook form
 - Upload image by uploadthing and AWS bucket (it was my first approach, but i switched to uploadthing)
 
-<h2>What next?</h2>
 
-- In meantime I'll add notifications fc.
 
-<p>Part of design is from <a href="https://www.frontendmentor.io/challenges/product-feedback-app-wbvUYqjR6" target="_blank">Frontend mentor</a></p>
-  
